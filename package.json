@@ -1,0 +1,31 @@
+{
+  "name": "buddyduel",
+  "version": "1.0.0",
+  "description": "Weekly NFL Buddy Bets",
+  "main": "app.js",
+  "repository": "git@github.com:lentz/buddyduel.git",
+  "author": "Jesse Lentz <jesselentz@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node app.js",
+    "lint": "eslint '**/*.js'",
+    "test": "mocha"
+  },
+  "engines": {
+    "node": "6.10.2"
+  },
+  "dependencies": {
+    "express": "^4.15.2",
+    "jsonpath": "^0.2.11",
+    "morgan": "^1.8.1",
+    "request": "^2.81.0"
+  },
+  "devDependencies": {
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.9.0",
+    "mocha": "^3.3.0"
+  }
+}

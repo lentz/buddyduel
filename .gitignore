@@ -25,6 +25,7 @@ node_modules
 
 /tags
 
-# e2e
+# Angular
 /e2e/*.js
 /e2e/*.map
+/dist

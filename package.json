@@ -7,14 +7,17 @@
   "author": "Jesse Lentz <jesselentz@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "prestart": "ng build --prod",
     "start": "node app.js",
-    "lint": "eslint '**/*.js'",
+    "lint": "eslint app.js 'controllers/**/*.js' 'services/**/*.js'",
     "test": "mocha"
   },
   "engines": {
     "node": "6.10.2"
   },
   "dependencies": {
+    "@angular/cli": "^1.0.3",
+    "@angular/compiler-cli": "^4.1.2",
     "@angular/common": "^4.1.2",
     "@angular/compiler": "^4.1.2",
     "@angular/core": "^4.1.2",
@@ -32,8 +35,6 @@
     "zone.js": "^0.8.10"
   },
   "devDependencies": {
-    "@angular/cli": "^1.0.3",
-    "@angular/compiler-cli": "^4.1.2",
     "@types/jasmine": "^2.5.47",
     "@types/node": "^7.0.18",
     "codelyzer": "^3.0.1",

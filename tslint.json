@@ -111,7 +111,7 @@
     "component-selector": [
       true,
       "element",
-      "app",
+      ["app", "matchup", "matchups"],
       "kebab-case"
     ],
     "use-input-property-decorator": true,

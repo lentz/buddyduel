@@ -4,11 +4,11 @@ import { Matchup } from './matchup';
 import { MatchupsService } from './matchups.service'
 
 @Component({
-  selector: 'app-matchups',
+  selector: 'matchups-list',
   providers: [MatchupsService],
-  templateUrl: './matchups.component.html',
+  templateUrl: './matchups-list.component.html',
 })
-export class MatchupsComponent {
+export class MatchupsListComponent {
   matchups: Matchup[];
   week = 1;
   pickedTeam = '';
@@ -17,7 +17,7 @@ export class MatchupsComponent {
     this.matchups = matchupsService.getMatchups(this.week);
   }
 
-  onPickTeam(team: string) {
+  onPicked(team: string) {
     this.pickedTeam = team;
   }
 }

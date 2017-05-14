@@ -1,16 +1,18 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { MatchupsComponent } from './matchups.component';
+import { MatchupDetailComponent } from './matchup-detail.component';
+import { MatchupsListComponent } from './matchups-list.component';
 import { PointSpread } from './point-spread.pipe';
 
 @NgModule({
   declarations: [
-    MatchupsComponent,
+    MatchupsListComponent,
+    MatchupDetailComponent,
     PointSpread,
   ],
   exports: [
-    MatchupsComponent,
+    MatchupsListComponent,
   ],
   imports: [
     BrowserModule,

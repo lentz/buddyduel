@@ -1,0 +1,9 @@
+<h2>Week {{ week }} Games</h2>
+<ul>
+  <matchup-detail
+    *ngFor="let matchup of matchups"
+    [matchup]="matchup"
+    (onPicked)="onPicked($event)">
+  </matchup-detail>
+</ul>
+<p>{{ pickedTeam }}</p>

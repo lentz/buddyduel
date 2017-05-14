@@ -1,0 +1,9 @@
+<li>
+  <button (click)="pick(matchup.homeTeam)">
+    {{ matchup.homeTeam }} {{ matchup.homeSpread | pointSpread }}
+  </button>
+  @
+  <button (click)="pick(matchup.awayTeam)">
+    {{ matchup.awayTeam }} {{ matchup.awaySpread | pointSpread }}
+  </button>
+</li>

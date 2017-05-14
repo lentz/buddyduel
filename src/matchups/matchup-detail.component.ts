@@ -10,7 +10,7 @@ export class MatchupDetailComponent {
   @Input() matchup: Matchup;
   @Output() onPicked = new EventEmitter<string>();
 
-  pick(team: string) {
+  pick(team: string): void {
     this.onPicked.emit(team);
   }
 }

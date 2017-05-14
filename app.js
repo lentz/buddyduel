@@ -8,9 +8,9 @@ const app = express();
 app.use(morgan('combined'));
 
 app.use('/api', routes);
-app.use(express.static(path.join(__dirname, 'dist')));
-app.get('/', (_req, res) => {
-  res.sendfile(path.join(__dirname, 'dist', 'index.html'));
+app.use(express.static(path.join(__dirname, 'public')));
+app.get('*', (_req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 app.listen(process.env.PORT || 3000);

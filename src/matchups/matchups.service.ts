@@ -1,15 +1,23 @@
 import { Injectable } from '@angular/core';
+import { Headers, Http } from '@angular/http';
+import 'rxjs/add/operator/toPromise';
 
 import { Matchup } from './matchup';
 
 @Injectable()
 export class MatchupsService {
+  private matchupsURL = 'api/matchups';
+
+  constructor(private http: Http) { }
+
   getWeek(week: number): Promise<Matchup[]> {
-    return Promise.resolve([
-      new Matchup(1, 'Eagles', -7, 'Chiefs', 7),
-      new Matchup(2, 'Ravens', -3, 'Steelers', 3),
-      new Matchup(3, 'Patriots', -6, 'Falcons', 6),
-      new Matchup(4, 'Raiders', 0, 'Seahawks', 0),
-    ]);
+    return this.http.get(`${this.matchupsURL}/${week}`)
+               .toPromise()
+               .then(response => response.json() as Matchup[])
+               .catch(this.handleError);
+  }
+
+  private handleError(error: any): Promise<any> {
+    return Promise.reject(error.message || error);
   }
 }

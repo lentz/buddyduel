@@ -1,8 +1,8 @@
 const express = require('express');
-const gamesController = require('./controllers/games');
+const matchupsController = require('./controllers/matchups');
 
 const router = express.Router();
 
-router.get('/games', gamesController.index);
+router.get('/matchups', matchupsController.index);
 
 module.exports = router;

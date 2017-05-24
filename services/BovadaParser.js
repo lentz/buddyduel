@@ -12,5 +12,6 @@ module.exports.call = json => jp
       homeSpread: Number(home.price.handicap),
       awayTeam: away.description,
       awaySpread: Number(away.price.handicap),
+      selectedTeam: home.description,
     };
   });

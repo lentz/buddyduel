@@ -4,7 +4,8 @@ export class Matchup {
     public homeTeam: string,
     public homeSpread: number,
     public awayTeam: string,
-    public awaySpread: number, ) {
+    public awaySpread: number,
+    public selectedTeam: string, ) {
 
   }
 }

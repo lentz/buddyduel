@@ -6,6 +6,8 @@ import { Matchup } from './matchup';
 
 @Injectable()
 export class MatchupsService {
+  private headers = new Headers({'Content-Type': 'application/json'});
+
   private matchupsURL = 'api/matchups';
 
   constructor(private http: Http) { }
@@ -15,6 +17,15 @@ export class MatchupsService {
                .toPromise()
                .then(response => response.json() as Matchup[])
                .catch(this.handleError);
+  }
+
+  save(matchups: Matchup[]): Promise<Matchup[]> {
+    return this.http.put(`${this.matchupsURL}`,
+                         JSON.stringify(matchups),
+                         { headers: this.headers })
+                    .toPromise()
+                    .then(() => matchups)
+                    .catch(this.handleError);
   }
 
   private handleError(error: any): Promise<any> {

@@ -16,7 +16,6 @@ export class MatchupsListComponent implements OnInit {
   private week: number;
   title: string;
   matchups: Matchup[];
-  pickedTeam = '';
 
   constructor(private matchupsService: MatchupsService,
               private route: ActivatedRoute,
@@ -33,7 +32,7 @@ export class MatchupsListComponent implements OnInit {
       .subscribe(matchups => this.matchups = matchups);
   }
 
-  onPicked(team: string): void {
-    this.pickedTeam = team;
+  save(): void {
+    this.matchupsService.save(this.matchups);
   }
 }

@@ -6,14 +6,13 @@
     <div class="d-flex flex-wrap justify-content-between">
       <matchup-detail
         *ngFor="let matchup of matchups"
-        [matchup]="matchup"
-        (onPicked)="onPicked($event)">
+        [matchup]="matchup">
       </matchup-detail>
     </div>
   </div>
 </div>
 <div class="row">
   <div class="col text-center">
-    <button class="btn btn-lg btn-success">Lock In Picks</button>
+    <button (click)="save()" class="btn btn-lg btn-success">Lock In Picks</button>
   </div>
 </div>

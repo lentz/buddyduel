@@ -22,3 +22,7 @@ module.exports.index = (req, res) => {
     }
   });
 };
+
+module.exports.update = (req, res) => {
+  res.status(200).send(req.body);
+};

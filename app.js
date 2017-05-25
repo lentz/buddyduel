@@ -1,11 +1,15 @@
 const express = require('express');
 const routes = require('./routes');
 const morgan = require('morgan');
+const bodyParser = require('body-parser');
 const path = require('path');
 
 const app = express();
 
 app.use(morgan('combined'));
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/api', routes);
 app.use(express.static(path.join(__dirname, 'public')));

@@ -5,6 +5,7 @@ export class Matchup {
     public homeSpread: number,
     public awayTeam: string,
     public awaySpread: number,
+    public startTime: number,
     public selectedTeam: string, ) {
 
   }

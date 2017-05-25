@@ -12,4 +12,7 @@
       {{ matchup.homeTeam }} {{ matchup.homeSpread | pointSpread }}
     </button>
   </div>
+  <div class="card-footer text-muted small">
+    {{ matchup.startTime | date:'EEE, MMM d h:mm a' }}
+  </div>
 </div>

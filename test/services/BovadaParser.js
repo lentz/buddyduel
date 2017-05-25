@@ -23,6 +23,7 @@ describe('BovadaParser', function() {
           homeSpread: -7.5,
           awayTeam: 'Kansas City Chiefs',
           awaySpread: 7.5,
+          startTime: 1504830600000,
         },
         {
           id: 1,
@@ -30,6 +31,7 @@ describe('BovadaParser', function() {
           homeSpread: 6.5,
           awayTeam: 'Atlanta Falcons',
           awaySpread: -6.5,
+          startTime: 1505062800000,
         },
         {
           id: 1,
@@ -37,6 +39,7 @@ describe('BovadaParser', function() {
           homeSpread: -2.5,
           awayTeam: 'Philadelphia Eagles',
           awaySpread: 2.5,
+          startTime: 1505062800000,
         },
         {
           id: 1,
@@ -44,6 +47,7 @@ describe('BovadaParser', function() {
           homeSpread: 9,
           awayTeam: 'Pittsburgh Steelers',
           awaySpread: -9,
+          startTime: 1505062800000,
         },
       ];
       assert.deepEqual(matchups, expectedMatchups);

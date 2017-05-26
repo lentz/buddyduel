@@ -15,6 +15,7 @@ import { MatchupsService } from './matchups.service'
 export class MatchupsListComponent implements OnInit {
   private week: number;
   title: string;
+  id: string;
   matchups: Matchup[];
 
   constructor(private matchupsService: MatchupsService,
@@ -24,12 +25,14 @@ export class MatchupsListComponent implements OnInit {
   ngOnInit(): void {
     this.route.params
       .switchMap((params: Params) => {
-        this.week = +params['week'];
         this.title = `Week ${this.week} Matchups - BuddyDuel`;
         this.titleService.setTitle(this.title);
-        return this.matchupsService.getWeek(this.week);
+        return this.matchupsService.getWeek(params['id']);
       })
-      .subscribe(matchups => this.matchups = matchups);
+      .subscribe(matchupWeek => {
+        this.matchups = matchupWeek.picks;
+        this.id = matchupWeek._id;
+      });
   }
 
   save(): void {

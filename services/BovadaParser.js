@@ -7,13 +7,11 @@ module.exports.call = json => jp
     const home = pointSpread.outcomes.find(team => team.type === 'H');
     const away = pointSpread.outcomes.find(team => team.type === 'A');
     return {
-      id: 1,
+      id: matchup.id,
       homeTeam: home.description,
       homeSpread: Number(home.price.handicap),
       awayTeam: away.description,
       awaySpread: Number(away.price.handicap),
       startTime: matchup.startTime,
-//      selectedTeam: home.description,
-//      status: 'winning',
     };
   });

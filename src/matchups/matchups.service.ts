@@ -3,6 +3,7 @@ import { Headers, Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 import { Matchup } from './matchup';
+import { MatchupWeek } from './matchup-week';
 
 @Injectable()
 export class MatchupsService {
@@ -12,8 +13,8 @@ export class MatchupsService {
 
   constructor(private http: Http) { }
 
-  getWeek(week: number): Promise<Matchup[]> {
-    return this.http.get(`${this.matchupsURL}/${week}`)
+  getWeek(id: string): Promise<MatchupWeek> {
+    return this.http.get(`${this.matchupsURL}/${id}`)
                .toPromise()
                .then(response => response.json() as Matchup[])
                .catch(this.handleError);

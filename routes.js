@@ -3,7 +3,7 @@ const matchupsController = require('./controllers/matchups');
 
 const router = express.Router();
 
-router.get('/matchups/:week', matchupsController.index);
-router.put('/matchups', matchupsController.update);
+router.get('/matchups/:id', matchupsController.show);
+router.put('/matchups/:id', matchupsController.update);
 
 module.exports = router;

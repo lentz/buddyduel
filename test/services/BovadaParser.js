@@ -18,7 +18,7 @@ describe('BovadaParser', function() {
       const matchups = BovadaParser.call(bovadaJSON);
       const expectedMatchups = [
         {
-          id: 1,
+          id: '2782377',
           homeTeam: 'New England Patriots',
           homeSpread: -7.5,
           awayTeam: 'Kansas City Chiefs',
@@ -26,7 +26,7 @@ describe('BovadaParser', function() {
           startTime: 1504830600000,
         },
         {
-          id: 1,
+          id: '2782436',
           homeTeam: 'Chicago Bears',
           homeSpread: 6.5,
           awayTeam: 'Atlanta Falcons',
@@ -34,7 +34,7 @@ describe('BovadaParser', function() {
           startTime: 1505062800000,
         },
         {
-          id: 1,
+          id: '2782438',
           homeTeam: 'Washington Redskins',
           homeSpread: -2.5,
           awayTeam: 'Philadelphia Eagles',
@@ -42,7 +42,7 @@ describe('BovadaParser', function() {
           startTime: 1505062800000,
         },
         {
-          id: 1,
+          id: '2782443',
           homeTeam: 'Cleveland Browns',
           homeSpread: 9,
           awayTeam: 'Pittsburgh Steelers',

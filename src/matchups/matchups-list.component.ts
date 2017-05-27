@@ -16,7 +16,7 @@ export class MatchupsListComponent implements OnInit {
   private week: number;
   title: string;
   id: string;
-  matchups: Matchup[];
+  matchups = new Array<Matchup>();
 
   constructor(private matchupsService: MatchupsService,
               private route: ActivatedRoute,
@@ -25,7 +25,7 @@ export class MatchupsListComponent implements OnInit {
   ngOnInit(): void {
     this.route.params
       .switchMap((params: Params) => {
-        this.title = `Week ${this.week} Matchups - BuddyDuel`;
+        this.title = `Week X vs Player - BuddyDuel`;
         this.titleService.setTitle(this.title);
         return this.matchupsService.getWeek(params['id']);
       })

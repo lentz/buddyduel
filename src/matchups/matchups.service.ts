@@ -13,6 +13,13 @@ export class MatchupsService {
 
   constructor(private http: Http) { }
 
+  getMatchupIds(): Promise<string[]> {
+    return this.http.get(`${this.matchupsURL}`)
+               .toPromise()
+               .then(response => response.json())
+               .catch(this.handleError);
+  }
+
   getWeek(id: string): Promise<MatchupWeek> {
     return this.http.get(`${this.matchupsURL}/${id}`)
                .toPromise()

@@ -1,9 +1,9 @@
 <div class="row">
-  <div class="col"><h2>Matchup Id {{ id }}</h2></div>
+  <div class="col"><h2>Week X</h2></div>
 </div>
 <div class="row">
   <div class="col">
-    <div class="d-flex flex-wrap justify-content-between">
+    <div class="d-flex flex-wrap justify-content-around">
       <matchup-detail
         *ngFor="let matchup of matchups"
         [matchup]="matchup">
@@ -11,8 +11,10 @@
     </div>
   </div>
 </div>
-<div class="row">
+<div *ngIf="matchups.length > 0" class="row">
   <div class="col text-center">
-    <button (click)="save()" class="btn btn-lg btn-success">Lock In Picks</button>
+    <button (click)="save()" class="btn btn-lg btn-danger">
+      <i class="fa fa-check-square-o" aria-hidden="true"></i> Lock In Picks
+    </button>
   </div>
 </div>

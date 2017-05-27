@@ -1,4 +1,4 @@
-export class Matchup {
+export class Game {
   constructor(
     public id: number,
     public homeTeam: string,

@@ -6,14 +6,14 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { MatchupsModule } from '../matchups/matchups.module';
+import { DuelsModule } from '../duels/duels.module';
 
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    MatchupsModule,
+    DuelsModule,
     AppRoutingModule,
   ],
   declarations: [

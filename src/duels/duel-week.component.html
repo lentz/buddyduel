@@ -4,14 +4,11 @@
 <div class="row">
   <div class="col">
     <div class="d-flex flex-wrap justify-content-around">
-      <matchup-detail
-        *ngFor="let matchup of matchups"
-        [matchup]="matchup">
-      </matchup-detail>
+      <duel-game *ngFor="let game of duelWeek.games" [game]="game"></duel-game>
     </div>
   </div>
 </div>
-<div *ngIf="matchups.length > 0" class="row">
+<div *ngIf="duelWeek.games.length > 0" class="row">
   <div class="col text-center">
     <button (click)="save()" class="btn btn-lg btn-danger">
       <i class="fa fa-check-square-o" aria-hidden="true"></i> Lock In Picks

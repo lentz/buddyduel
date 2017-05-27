@@ -1,0 +1,18 @@
+<div class="card text-center game-card">
+  <div class="card-block">
+    <button (click)="pick(game.awayTeam)"
+            [class.active]="isSelected(game.awayTeam)"
+            class="btn btn-outline-primary">
+      {{ game.awayTeam }} {{ game.awaySpread | pointSpread }}
+    </button>
+    <div>@</div>
+    <button (click)="pick(game.homeTeam)"
+            [class.active]="isSelected(game.homeTeam)"
+            class="btn btn-outline-primary">
+      {{ game.homeTeam }} {{ game.homeSpread | pointSpread }}
+    </button>
+  </div>
+  <div class="card-footer text-muted small">
+    {{ game.startTime | date:'EEE, MMM d h:mm a' }}
+  </div>
+</div>

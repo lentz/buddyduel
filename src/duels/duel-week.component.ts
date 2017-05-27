@@ -4,21 +4,21 @@ import { Title } from '@angular/platform-browser';
 
 import 'rxjs/add/operator/switchMap';
 
-import { Matchup } from './matchup';
-import { MatchupsService } from './matchups.service'
+import { DuelWeek } from './duel-week';
+import { Game } from './game';
+import { DuelsService } from './duels.service';
 
 @Component({
-  selector: 'matchups-list',
-  providers: [MatchupsService],
-  templateUrl: './matchups-list.component.html',
+  selector: 'duel-week',
+  providers: [DuelsService],
+  templateUrl: './duel-week.component.html',
 })
-export class MatchupsListComponent implements OnInit {
+export class DuelWeekComponent implements OnInit {
   private week: number;
   title: string;
-  id: string;
-  matchups = new Array<Matchup>();
+  duelWeek = new DuelWeek(null, null, new Array<Game>());
 
-  constructor(private matchupsService: MatchupsService,
+  constructor(private duelsService: DuelsService,
               private route: ActivatedRoute,
               private titleService: Title) { }
 
@@ -27,15 +27,14 @@ export class MatchupsListComponent implements OnInit {
       .switchMap((params: Params) => {
         this.title = `Week X vs Player - BuddyDuel`;
         this.titleService.setTitle(this.title);
-        return this.matchupsService.getWeek(params['id']);
+        return this.duelsService.getWeek(params['id']);
       })
-      .subscribe(matchupWeek => {
-        this.matchups = matchupWeek.picks;
-        this.id = matchupWeek._id;
+      .subscribe(duelWeek => {
+        this.duelWeek = duelWeek;
       });
   }
 
   save(): void {
-    this.matchupsService.save(this.matchups);
+    this.duelsService.save(this.duelWeek);
   }
 }

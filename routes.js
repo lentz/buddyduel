@@ -1,10 +1,10 @@
 const express = require('express');
-const matchupsController = require('./controllers/matchups');
+const duelWeeksController = require('./controllers/duel-weeks');
 
 const router = express.Router();
 
-router.get('/matchups', matchupsController.index);
-router.get('/matchups/:id', matchupsController.show);
-router.put('/matchups/:id', matchupsController.update);
+router.get('/duel-weeks', duelWeeksController.index);
+router.get('/duel-weeks/:id', duelWeeksController.show);
+router.put('/duel-weeks/:id', duelWeeksController.update);
 
 module.exports = router;

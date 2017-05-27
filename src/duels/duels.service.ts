@@ -2,37 +2,37 @@ import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
-import { Matchup } from './matchup';
-import { MatchupWeek } from './matchup-week';
+import { Game } from './game';
+import { DuelWeek } from './duel-week';
 
 @Injectable()
-export class MatchupsService {
+export class DuelsService {
   private headers = new Headers({'Content-Type': 'application/json'});
 
-  private matchupsURL = 'api/matchups';
+  private duelsURL = 'api/duel-weeks';
 
   constructor(private http: Http) { }
 
-  getMatchupIds(): Promise<string[]> {
-    return this.http.get(`${this.matchupsURL}`)
+  getDuelIds(): Promise<string[]> {
+    return this.http.get(`${this.duelsURL}`)
                .toPromise()
                .then(response => response.json())
                .catch(this.handleError);
   }
 
-  getWeek(id: string): Promise<MatchupWeek> {
-    return this.http.get(`${this.matchupsURL}/${id}`)
+  getWeek(id: string): Promise<DuelWeek> {
+    return this.http.get(`${this.duelsURL}/${id}`)
                .toPromise()
-               .then(response => response.json() as Matchup[])
+               .then(response => response.json() as Game[])
                .catch(this.handleError);
   }
 
-  save(matchups: Matchup[]): Promise<Matchup[]> {
-    return this.http.put(`${this.matchupsURL}`,
-                         JSON.stringify(matchups),
+  save(duelWeek: DuelWeek): Promise<Game[]> {
+    return this.http.put(`${this.duelsURL}/${duelWeek._id}`,
+                         JSON.stringify(duelWeek),
                          { headers: this.headers })
                     .toPromise()
-                    .then(() => matchups)
+                    .then(() => duelWeek)
                     .catch(this.handleError);
   }
 

@@ -14,9 +14,9 @@ describe('BovadaParser', function() {
       });
     });
 
-    it('parses the JSON and returns matchup objects', function() {
-      const matchups = BovadaParser.call(bovadaJSON);
-      const expectedMatchups = [
+    it('parses the JSON and returns game objects', function() {
+      const games = BovadaParser.call(bovadaJSON);
+      const expectedGames = [
         {
           id: '2782377',
           homeTeam: 'New England Patriots',
@@ -50,7 +50,7 @@ describe('BovadaParser', function() {
           startTime: 1505062800000,
         },
       ];
-      assert.deepEqual(matchups, expectedMatchups);
+      assert.deepEqual(games, expectedGames);
     });
   });
 });

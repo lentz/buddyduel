@@ -10,7 +10,9 @@ import { DuelsService } from '../duels/duels.service'
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  duelIds: string[];
+  duels = [ { _id: '592ba2404ea587608ebdae4d' } ]; // TODO retrieve from service
+  selectedDuelId: string;
+  duelWeekIds: string[];
 
   public constructor(private titleService: Title,
                      private duelsService: DuelsService) { }
@@ -18,8 +20,9 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     // FIXME: Make this work
     this.titleService.setTitle('BuddyDuel');
-    this.duelsService.getDuelIds().then(duelIds => {
-      this.duelIds = duelIds;
+    this.selectedDuelId = this.duels[0]._id;
+    this.duelsService.getDuelWeekIds(this.selectedDuelId).then(duelWeekIds => {
+      this.duelWeekIds = duelWeekIds;
     });
   }
 }

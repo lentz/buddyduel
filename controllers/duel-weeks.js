@@ -1,12 +1,10 @@
 /* eslint no-param-reassign: "off" */
 
-const logger = require('winston');
-const ObjectID = require('mongodb').ObjectID;
-const db = require('../db');
-const bovada = require('../lib/bovada');
-const user = require('../lib/user');
-
-const colName = 'duelweeks';
+const error = require('../lib/error');
+const bovada = require('../services/bovada');
+const User = require('../models/user');
+const Duel = require('../models/duel');
+const DuelWeek = require('../models/duelweek.js');
 
 function updateLines(duelWeek) {
   if (duelWeek.games.every(game => game.selectedTeam)) {
@@ -25,61 +23,55 @@ function updateLines(duelWeek) {
   });
 }
 
-function handleError(res, err, message) {
-  logger.error(err);
-  res.status(500).json({ message });
-}
-
 module.exports.index = (req, res) => {
-  //FIXME: Remove
-  const opponentId = 3;
-  const col = db.get().collection(colName);
-  col.find({ players: { $all: [user.current().id, opponentId] } }, { _id: true })
-     .toArray().then((results) => {
-       if (results.length === 0) return res.redirect('duel-weeks/new');
-       return res.json(results.map(result => result._id));
-     })
-    .catch(err => handleError(res, err, 'Failed retrieve duel weeks'));
+  DuelWeek.forDuel(req.query.duelId)
+  .then((duelWeeks) => {
+    if (duelWeeks.length === 0) {
+      return res.redirect(`duel-weeks/new?duelId=${req.query.duelId}`);
+    }
+    return res.json(duelWeeks.map(duelWeek => duelWeek._id));
+  })
+  .catch(err => error.send(res, err, 'Failed to retrieve duel weeks'));
 };
 
 module.exports.new = (req, res) => {
-  //FIXME: Remove
-  const opponentId = 3;
-  bovada.getLines().then((lines) => {
-    const col = db.get().collection(colName);
-    return col.insertOne({
-      players: [user.current().id, opponentId],
-      games: lines,
-    });
+  let players;
+  Duel.find(req.query.duelId)
+  .then((result) => {
+    if (!result) throw new Error('Cannot create duel week - duel not found');
+    players = result.players;
+    return bovada.getLines();
   })
-  .then(result => res.json([result.insertedId]))
-  .catch(err => handleError(res, err, 'Failed to create new duel week'));
+  .then(lines => DuelWeek.create({
+    duelId: req.query.duelId,
+    players,
+    picker: User.current().id, // TODO: Determine picker
+    games: lines,
+  }))
+  .then(result => res.status(201).json([result.insertedId]))
+  .catch(err => error.send(res, err, 'Failed to create new duel week'));
 };
 
 module.exports.show = (req, res) => {
-  const col = db.get().collection(colName);
-  col.findOne({ _id: new ObjectID(req.params.id), players: user.current().id })
-     .then((duelWeek) => {
-       if (!duelWeek) return Promise.resolve(null);
-       return updateLines(duelWeek);
-     })
-     .then((duelWeek) => {
-       if (!duelWeek) return res.status(404).json({ message: 'Duel week not found' });
-       return res.json(duelWeek);
-     })
-     .catch(err => handleError(res, err, 'Failed to display duel week'));
+  DuelWeek.find(req.params.id)
+  .then((duelWeek) => {
+    if (!duelWeek) return Promise.resolve(null);
+    return updateLines(duelWeek);
+  })
+  .then((duelWeek) => {
+    if (!duelWeek) return res.status(404).json({ message: 'Duel week not found' });
+    return res.json(duelWeek);
+  })
+  .catch(err => error.send(res, err, 'Failed to display duel week'));
 };
 
 module.exports.update = (req, res) => {
-  const col = db.get().collection(colName);
-  col.updateOne(
-    { _id: new ObjectID(req.body._id), players: user.current().id },
-    { $set: { games: req.body.games } },
-    (err, result) => {
-      if (err) return handleError(res, err, 'Failed to update duel week');
-      if (result.matchedCount === 0) {
-        return res.status(404).json({ message: 'Duel week not found' });
-      }
-      return res.json({ message: 'Picks successfully locked in' });
-    });
+  DuelWeek.updatePicks(req.body._id, req.body.games)
+  .then((result) => {
+    if (result.matchedCount === 0) {
+      return res.status(404).json({ message: 'Duel week not found' });
+    }
+    return res.json({ message: 'Picks successfully locked in' });
+  })
+  .catch(err => error.send(res, err, 'Failed to update duel week'));
 };

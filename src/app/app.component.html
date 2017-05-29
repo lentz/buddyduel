@@ -17,8 +17,10 @@
             <i class="fa fa-trophy" aria-hidden="true"></i> Duels
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="#">player1</a>
-            <a class="dropdown-item" href="#">player2</a>
+            <a *ngFor="let duel of duels" (click)="selectedDuelId = duel._id"
+               class="dropdown-item" href="#">
+              {{ duel._id }}
+            </a>
           </div>
         </li>
         <li class="nav-item dropdown">
@@ -27,9 +29,9 @@
             <i class="fa fa-calendar" aria-hidden="true"></i> Weeks
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a *ngFor="let duelId of duelIds"
-              [routerLink]="[ '/duel-weeks', duelId ]" class="dropdown-item">
-              {{ duelId }}
+            <a *ngFor="let duelWeekId of duelWeekIds"
+              [routerLink]="[ '/duel-weeks', duelWeekId ]" class="dropdown-item">
+              {{ duelWeekId }}
             </a>
           </div>
         </li>

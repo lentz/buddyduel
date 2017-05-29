@@ -9,7 +9,7 @@
   "scripts": {
     "prestart": "ng build --prod",
     "start": "node app.js",
-    "lint": "eslint app.js 'controllers/**/*.js' 'services/**/*.js'",
+    "lint": "eslint app.js 'lib/*.js' 'models/*.js' 'controllers/*.js' 'services/*.js'",
     "postlint": "ng lint --type-check",
     "test": "mocha"
   },

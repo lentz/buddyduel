@@ -13,8 +13,8 @@ export class DuelsService {
 
   constructor(private http: Http) { }
 
-  getDuelIds(): Promise<string[]> {
-    return this.http.get(`${this.duelsURL}`)
+  getDuelWeekIds(duelId: string): Promise<string[]> {
+    return this.http.get(`${this.duelsURL}?duelId=${duelId}`)
                .toPromise()
                .then(response => response.json())
                .catch(this.handleError);

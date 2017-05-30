@@ -17,7 +17,7 @@
             <i class="fa fa-trophy" aria-hidden="true"></i> Duels
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a *ngFor="let duel of duels" (click)="selectedDuelId = duel._id"
+            <a *ngFor="let duel of duels" (click)="onDuelSelect($event, duel)"
                class="dropdown-item" href="#">
               {{ duel._id }}
             </a>

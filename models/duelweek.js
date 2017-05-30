@@ -16,5 +16,8 @@ module.exports.create = duelWeek => db.get().collection(colName).insertOne(duelW
 
 module.exports.updatePicks = (id, games) => db.get().collection(colName)
   .updateOne(
-      { _id: new ObjectID(id), 'players.id': User.current().id },
-      { $set: { games } });
+  { _id: new ObjectID(id), 'players.id': User.current().id },
+  {
+    $currentDate: { updatedAt: true },
+    $set: { games },
+  });

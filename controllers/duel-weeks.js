@@ -47,6 +47,7 @@ module.exports.new = (req, res) => {
     players,
     picker: User.current().id, // TODO: Determine picker
     games: lines,
+    updatedAt: new Date(),
   }))
   .then(result => res.status(201).json([result.insertedId]))
   .catch(err => error.send(res, err, 'Failed to create new duel week'));

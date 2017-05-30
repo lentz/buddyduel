@@ -13,4 +13,13 @@ module.exports.activeForUser = userId => db.get().collection(colName)
 module.exports.create = players => db.get().collection(colName).insertOne({
   players,
   status: 'pending',
+  updatedAt: new Date(),
 });
+
+module.exports.accept = (id, player) => db.get().collection(colName).updateOne(
+  { _id: new ObjectID(id), status: 'pending' },
+  {
+    $currentDate: { updatedAt: true },
+    $set: { status: 'active' },
+    $push: { players: player },
+  });

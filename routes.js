@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.get('/duels', duelsController.index);
 router.post('/duels', duelsController.create);
+router.put('/duels/:id/accept', duelsController.accept);
 
 router.get('/duel-weeks/new', duelWeeksController.new);
 router.get('/duel-weeks', duelWeeksController.index);

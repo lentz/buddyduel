@@ -29,6 +29,11 @@ export class AppComponent implements OnInit {
     })
   }
 
+  opponentName(duel: Duel): string {
+    const myId = '1'; // FIXME with user auth
+    return duel.players.find(player => player.id !== myId).name;
+  }
+
   onDuelSelect(event: any, duel: Duel): void {
     event.preventDefault();
     this.selectedDuelId = duel._id;

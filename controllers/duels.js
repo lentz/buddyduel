@@ -16,7 +16,7 @@ module.exports.create = (req, res) => {
 
 module.exports.accept = (req, res) => {
   Duel.accept(req.params.id, User.second())
-  .then(result => {
+  .then((result) => {
     if (result.matchedCount === 0) {
       return res.status(404).json({ message: 'Unable to accept this duel' });
     }

@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  authCallbackURL: 'http://www.buddyduel.net/auth/callback',
 };

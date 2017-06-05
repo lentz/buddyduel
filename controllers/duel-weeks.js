@@ -2,7 +2,6 @@
 
 const error = require('../lib/error');
 const bovada = require('../services/bovada');
-const User = require('../models/user');
 const Duel = require('../models/duel');
 const DuelWeek = require('../models/duelweek.js');
 
@@ -24,7 +23,7 @@ function updateLines(duelWeek) {
 }
 
 module.exports.index = (req, res) => {
-  DuelWeek.forDuel(req.query.duelId)
+  DuelWeek.forDuel(req.query.duelId, req.user.sub)
   .then((duelWeeks) => {
     if (duelWeeks.length === 0) {
       return res.redirect(`duel-weeks/new?duelId=${req.query.duelId}`);
@@ -36,7 +35,7 @@ module.exports.index = (req, res) => {
 
 module.exports.new = (req, res) => {
   let players;
-  Duel.find(req.query.duelId)
+  Duel.find(req.query.duelId, req.user.sub)
   .then((result) => {
     if (!result) throw new Error('Cannot create duel week - duel not found');
     players = result.players;
@@ -45,7 +44,7 @@ module.exports.new = (req, res) => {
   .then(lines => DuelWeek.create({
     duelId: req.query.duelId,
     players,
-    picker: User.current().id, // TODO: Determine picker
+    picker: req.user.sub, // TODO: Determine picker
     games: lines,
     updatedAt: new Date(),
   }))
@@ -54,7 +53,7 @@ module.exports.new = (req, res) => {
 };
 
 module.exports.show = (req, res) => {
-  DuelWeek.find(req.params.id)
+  DuelWeek.find(req.params.id, req.user.sub)
   .then((duelWeek) => {
     if (!duelWeek) return Promise.resolve(null);
     return updateLines(duelWeek);
@@ -67,7 +66,7 @@ module.exports.show = (req, res) => {
 };
 
 module.exports.update = (req, res) => {
-  DuelWeek.updatePicks(req.body._id, req.body.games)
+  DuelWeek.updatePicks(req.body._id, req.user.sub, req.body.games)
   .then((result) => {
     if (result.matchedCount === 0) {
       return res.status(404).json({ message: 'Duel week not found' });

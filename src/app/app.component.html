@@ -11,7 +11,7 @@
     </a>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item dropdown">
+        <li *ngIf="authService.isAuthenticated()" class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-trophy" aria-hidden="true"></i> Duels
@@ -23,7 +23,7 @@
             </a>
           </div>
         </li>
-        <li class="nav-item dropdown">
+        <li *ngIf="authService.isAuthenticated()" class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-calendar" aria-hidden="true"></i> Weeks
@@ -36,9 +36,14 @@
           </div>
         </li>
       </ul>
-      <button class="btn btn-outline-info">
+      <button *ngIf="!authService.isAuthenticated()" (click)="authService.login()"
+              class="btn btn-outline-info">
         <i class="fa fa-user-circle" aria-hidden="true"></i> Login
       </button>
+      <span *ngIf="authService.isAuthenticated()" class="username">
+        {{ authService?.getUserProfile().name }} |
+        <a (click)="authService.logout($event)" href="#">Logout</a>
+      </span>
     </div>
   </div>
 </nav>

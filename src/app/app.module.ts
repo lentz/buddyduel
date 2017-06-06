@@ -8,6 +8,7 @@ import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { DuelsModule } from '../duels/duels.module';
+import { NavComponent } from '../nav/nav.component';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig({
@@ -32,6 +33,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   ],
   declarations: [
     AppComponent,
+    NavComponent,
   ],
   bootstrap: [AppComponent]
 })

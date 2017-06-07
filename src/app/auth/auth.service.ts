@@ -4,7 +4,7 @@ import 'rxjs/add/operator/filter';
 import auth0 from 'auth0-js';
 import IdTokenVerifier from 'idtoken-verifier';
 
-import { environment } from '../environments/environment';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class AuthService {

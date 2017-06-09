@@ -1,3 +1,5 @@
+import { Location } from '@angular/common';
+
 import { Player } from './player';
 
 export class Duel {

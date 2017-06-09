@@ -1,3 +1,34 @@
-<h1>Welcome to Buddy Duel!</h1>
-<h2>Your Duels</h2>
-<button class="btn btn-primary">Challenge a friend</button>
+<div class="row">
+  <div class="col"><h1>Welcome to Buddy Duel!</h1></div>
+</div>
+<div *ngIf="authService.isAuthenticated()" class="row">
+  <div class="col-7">
+    <div *ngIf="pendingDuels().length > 0">
+      <h3>Pending Duels - give the code to your friend</h3>
+      <ul>
+        <li *ngFor="let duel of pendingDuels()">
+          <pre>{{ duel._id }}</pre>
+        </li>
+      </ul>
+    </div>
+    <h3>Active Duels</h3>
+    <ul *ngIf="activeDuels().length > 0">
+      <li *ngFor="let duel of activeDuels()">{{ duel._id }}</li>
+    </ul>
+    <span *ngIf="activeDuels().length < 1">No active duels</span>
+  </div>
+  <div class="col">
+    <button (click)="createDuel()" class="btn btn-success create-duel pull-right">
+      Create a Duel
+    </button>
+    <form class="form-inline pull-right">
+      <input #duelInput type="text" class="form-control accept-duel" placeholder="Duel Code" />
+      <button (click)="acceptDuel(duelInput.value)" class="btn btn-primary">
+        Accept Duel
+      </button>
+    </form>
+  </div>
+</div>
+<div *ngIf="!authService.isAuthenticated()" class="row">
+  <div class="col"><h2>Sign up today to start dueling your friends!</h2></div>
+</div>

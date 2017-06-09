@@ -28,7 +28,7 @@ export class NavComponent implements OnInit {
   }
 
   getDuels(): void {
-    this.duelsService.getDuels()
+    this.duelsService.getDuels('active')
     .then((duels) => {
       this.duels = duels;
       if (duels.length > 0) {

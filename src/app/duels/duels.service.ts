@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Headers } from '@angular/http';
+import { Headers, URLSearchParams } from '@angular/http';
 import { AuthHttp } from 'angular2-jwt';
 import 'rxjs/add/operator/toPromise';
 
@@ -16,8 +16,10 @@ export class DuelsService {
 
   constructor(private authHttp: AuthHttp) { }
 
-  getDuels(): Promise<Duel[]> {
-    return this.authHttp.get(this.duelsURL)
+  getDuels(status?: string): Promise<Duel[]> {
+    const params = new URLSearchParams();
+    params.set('status', status);
+    return this.authHttp.get(this.duelsURL, { params: params })
                     .toPromise()
                     .then(response => response.json() as Duel[])
                     .catch(this.handleError);
@@ -35,6 +37,20 @@ export class DuelsService {
                .toPromise()
                .then(response => response.json() as Game[])
                .catch(this.handleError);
+  }
+
+  acceptDuel(duelId: string): void {
+    this.authHttp.put(`${this.duelsURL}/${duelId}/accept`, null,
+                      { headers: this.headers })
+                 .toPromise()
+                 .catch(this.handleError);
+  }
+
+  create(): Promise<Duel> {
+    return this.authHttp.post(`${this.duelsURL}`, null, { headers: this.headers })
+                        .toPromise()
+                        .then(response => response.json() as Duel)
+                        .catch(this.handleError);
   }
 
   save(duelWeek: DuelWeek): Promise<Game[]> {

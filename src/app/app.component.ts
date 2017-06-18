@@ -10,7 +10,6 @@ export class AppComponent implements OnInit {
   public constructor(private titleService: Title) { }
 
   ngOnInit(): void {
-    // FIXME: Make this work
     this.titleService.setTitle('BuddyDuel');
   }
 }

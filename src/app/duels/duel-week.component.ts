@@ -25,7 +25,7 @@ export class DuelWeekComponent implements OnInit {
   ngOnInit(): void {
     this.route.params
       .switchMap((params: Params) => {
-        this.title = `Week X vs Player - BuddyDuel`;
+        this.title = `BuddyDuel`;
         this.titleService.setTitle(this.title);
         return this.duelsService.getWeek(params['id']);
       })

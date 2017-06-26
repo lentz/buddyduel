@@ -6,6 +6,7 @@ export class DuelWeek {
   constructor(
     public _id: string,
     public duelId: number,
+    public weekNum: number,
     games: Game[], ) {
 
   }

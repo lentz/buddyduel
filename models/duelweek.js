@@ -9,8 +9,8 @@ module.exports.find = (id, cb) => db.get().collection(colName).findOne({
   _id: new ObjectID(id),
 }, cb);
 
-module.exports.forDuel = (duelId, userId) => db.get().collection(colName)
-  .find({ duelId, 'players.id': userId }).toArray();
+module.exports.forDuel = (duelId, cb) => db.get().collection(colName)
+  .find({ duelId }).toArray(cb);
 
 module.exports.create = duelWeek => db.get().collection(colName).insertOne(duelWeek);
 
@@ -36,8 +36,7 @@ module.exports.save = (duelWeek, cb) => {
       $set: duelWeek,
     },
     { upsert: true },
-    cb,
-  );
+    cb);
 };
 
 module.exports.updatePicks = (id, games, cb) => {
@@ -47,6 +46,5 @@ module.exports.updatePicks = (id, games, cb) => {
       $currentDate: { updatedAt: true },
       $set: { games },
     },
-    cb,
-  );
+    cb);
 };

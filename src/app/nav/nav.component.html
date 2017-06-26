@@ -29,9 +29,9 @@
             <i class="fa fa-calendar" aria-hidden="true"></i> Weeks
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a *ngFor="let duelWeekId of duelWeekIds"
-              [routerLink]="[ '/duel-weeks', duelWeekId ]" class="dropdown-item">
-              {{ duelWeekId }}
+            <a *ngFor="let duelWeek of duelWeeks"
+              [routerLink]="[ '/duel-weeks', duelWeek._id ]" class="dropdown-item">
+              Week {{ duelWeek.weekNum }}
             </a>
           </div>
         </li>

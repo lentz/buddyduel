@@ -16,7 +16,7 @@ import { DuelsService } from './duels.service';
 export class DuelWeekComponent implements OnInit {
   private week: number;
   title: string;
-  duelWeek = new DuelWeek(null, null, new Array<Game>());
+  duelWeek = new DuelWeek(null, null, null, new Array<Game>());
 
   constructor(private duelsService: DuelsService,
               private route: ActivatedRoute,

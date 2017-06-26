@@ -4,6 +4,7 @@ import { Title } from '@angular/platform-browser';
 import { AuthService } from '../auth/auth.service'
 import { DuelsService } from '../duels/duels.service'
 import { Duel } from '../duels/duel';
+import { DuelWeek } from '../duels/duel-week';
 
 @Component({
   selector: 'app-nav',
@@ -13,7 +14,7 @@ import { Duel } from '../duels/duel';
 })
 export class NavComponent implements OnInit {
   selectedDuelId: string;
-  duelWeekIds: string[];
+  duelWeeks: DuelWeek[];
   duels: Duel[];
 
   public constructor(private duelsService: DuelsService,
@@ -50,7 +51,7 @@ export class NavComponent implements OnInit {
   }
 
   private updateDuelWeeks(): void {
-    this.duelsService.getDuelWeekIds(this.selectedDuelId)
-    .then(duelWeekIds => this.duelWeekIds = duelWeekIds);
+    this.duelsService.getDuelWeeks(this.selectedDuelId)
+    .then(duelWeeks => this.duelWeeks = duelWeeks);
   }
 }

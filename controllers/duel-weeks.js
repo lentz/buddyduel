@@ -21,24 +21,28 @@ function updateGames(games, lines) {
   return games;
 }
 
-module.exports.index = (req, res) => {
+function syncDuelWeeks(duelId, syncCallback) {
   async.waterfall([
     async.asyncify(bovada.getLines),
     (lines, waterfall) => {
       const weekMap = _.groupBy(lines, NFLWeek.forGame);
-      async.map(Object.keys(weekMap), (weekNum, cb) => {
-        DuelWeek.findOrNew(NFLWeek.seasonYear, weekNum, req.query.duelId, (err, duelWeek) => {
+      async.map(Object.keys(weekMap), (weekNum, mapCallback) => {
+        DuelWeek.findOrNew(NFLWeek.seasonYear, weekNum, duelId, (err, duelWeek) => {
           duelWeek.games = updateGames(duelWeek.games, weekMap[weekNum]);
-          cb(null, duelWeek);
+          mapCallback(null, duelWeek);
         });
       }, waterfall);
     },
     (duelWeeks, waterfall) => async.map(duelWeeks, DuelWeek.save, waterfall),
-  ], (err, results) => {
-    if (err) { return error.send(res, err, 'Failed to get duel weeks'); }
-    return res.json(results.map(
-      result => (_.get(result, 'lastErrorObject.upserted') || _.get(result, 'value._id')),
-    ));
+  ], syncCallback);
+}
+
+module.exports.index = (req, res) => {
+  syncDuelWeeks(req.query.duelId, () => {
+    DuelWeek.forDuel(req.query.duelId, (err, duelWeeks) => {
+      if (err) { return error.send(res, err, 'Unable to list duel weeks'); }
+      return res.json(duelWeeks);
+    });
   });
 };
 

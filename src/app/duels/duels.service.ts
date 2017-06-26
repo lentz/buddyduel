@@ -25,10 +25,10 @@ export class DuelsService {
                     .catch(this.handleError);
   }
 
-  getDuelWeekIds(duelId: string): Promise<string[]> {
+  getDuelWeeks(duelId: string): Promise<DuelWeek[]> {
     return this.authHttp.get(`${this.duelWeeksURL}?duelId=${duelId}`)
                .toPromise()
-               .then(response => response.json())
+               .then(response => response.json() as DuelWeek[])
                .catch(this.handleError);
   }
 

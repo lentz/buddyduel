@@ -2,9 +2,10 @@ const error = require('../lib/error');
 const Duel = require('../models/duel');
 
 module.exports.index = (req, res) => {
-  Duel.forUser(req.user.sub, req.query.status)
-  .then(duels => res.json(duels))
-  .catch(err => error.send(res, err, 'Failed to find duels'));
+  Duel.forUser(req.user.sub, req.query.status, (err, duels) => {
+    if (err) { error.send(res, err, 'Failed to find duels'); }
+    res.json(duels);
+  });
 };
 
 module.exports.create = (req, res) => {

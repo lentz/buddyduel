@@ -1,77 +1,76 @@
 /* eslint no-param-reassign: "off" */
 
+const _ = require('lodash');
+const async = require('async');
 const error = require('../lib/error');
 const bovada = require('../services/bovada');
 const Duel = require('../models/duel');
-const DuelWeek = require('../models/duelweek.js');
+const DuelWeek = require('../models/duelweek');
+const NFLWeek = require('../services/NFLWeek');
 
-function updateLines(duelWeek) {
-  if (duelWeek.games.every(game => game.selectedTeam)) {
-    return Promise.resolve(duelWeek);
-  }
-
-  return bovada.getLines().then((lines) => {
-    duelWeek.games.filter(game => !game.selectedTeam).forEach((game) => {
-      const currentGameLine = lines.find(line => line.id === game.id);
-      if (currentGameLine) {
-        game.homeSpread = currentGameLine.homeSpread;
-        game.awaySpread = currentGameLine.awaySpread;
-      }
-    });
-    return Promise.resolve(duelWeek);
+function updateGames(games, lines) {
+  lines.forEach((line) => {
+    const existingGame = games.find(game => line.id === game.id);
+    if (existingGame === undefined) {
+      games.push(line);
+    } else if (!existingGame.selectedTeam) {
+      existingGame.homeSpread = line.homeSpread;
+      existingGame.awaySpread = line.awaySpread;
+    }
   });
+  return games;
 }
 
 module.exports.index = (req, res) => {
-  DuelWeek.forDuel(req.query.duelId, req.user.sub)
-  .then((duelWeeks) => {
-    if (duelWeeks.length === 0) {
-      return res.redirect(`duel-weeks/new?duelId=${req.query.duelId}`);
-    }
-    return res.json(duelWeeks.map(duelWeek => duelWeek._id));
-  })
-  .catch(err => error.send(res, err, 'Failed to retrieve duel weeks'));
-};
-
-module.exports.new = (req, res) => {
-  let players;
-  Duel.find(req.query.duelId, req.user.sub)
-  .then((result) => {
-    if (!result) throw new Error('Cannot create duel week - duel not found');
-    players = result.players;
-    return bovada.getLines();
-  })
-  .then(lines => DuelWeek.create({
-    duelId: req.query.duelId,
-    players,
-    picker: req.user.sub, // TODO: Determine picker
-    games: lines,
-    updatedAt: new Date(),
-  }))
-  .then(result => res.status(201).json([result.insertedId]))
-  .catch(err => error.send(res, err, 'Failed to create new duel week'));
+  async.waterfall([
+    async.asyncify(bovada.getLines),
+    (lines, waterfall) => {
+      const weekMap = _.groupBy(lines, NFLWeek.forGame);
+      async.map(Object.keys(weekMap), (weekNum, cb) => {
+        DuelWeek.findOrNew(NFLWeek.seasonYear, weekNum, req.query.duelId, (err, duelWeek) => {
+          duelWeek.games = updateGames(duelWeek.games, weekMap[weekNum]);
+          cb(null, duelWeek);
+        });
+      }, waterfall);
+    },
+    (duelWeeks, waterfall) => async.map(duelWeeks, DuelWeek.save, waterfall),
+  ], (err, results) => {
+    if (err) { return error.send(res, err, 'Failed to get duel weeks'); }
+    return res.json(results.map(
+      result => (_.get(result, 'lastErrorObject.upserted') || _.get(result, 'value._id')),
+    ));
+  });
 };
 
 module.exports.show = (req, res) => {
-  DuelWeek.find(req.params.id, req.user.sub)
-  .then((duelWeek) => {
-    if (!duelWeek) return Promise.resolve(null);
-    return updateLines(duelWeek);
-  })
-  .then((duelWeek) => {
-    if (!duelWeek) return res.status(404).json({ message: 'Duel week not found' });
+  async.parallel([
+    parallel => DuelWeek.find(req.params.id, parallel),
+    parallel => Duel.forUser(req.user.sub, 'active', parallel),
+  ], (err, results) => {
+    if (err) { return error.send(res, err, 'Failed to display duel week'); }
+    const duelWeek = results[0];
+    const duels = results[1];
+    if (!duels.map(duel => duel._id.toString()).includes(duelWeek.duelId)) {
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
     return res.json(duelWeek);
-  })
-  .catch(err => error.send(res, err, 'Failed to display duel week'));
+  });
 };
 
 module.exports.update = (req, res) => {
-  DuelWeek.updatePicks(req.body._id, req.user.sub, req.body.games)
-  .then((result) => {
-    if (result.matchedCount === 0) {
-      return res.status(404).json({ message: 'Duel week not found' });
+  async.parallel([
+    parallel => DuelWeek.find(req.body._id, parallel),
+    parallel => Duel.forUser(req.user.sub, 'active', parallel),
+  ], (err, results) => {
+    if (err) { return error.send(res, err, 'Failed to authorize update'); }
+    const duelWeek = results[0];
+    const duels = results[1];
+    if (!duels.map(duel => duel._id.toString()).includes(duelWeek.duelId)) {
+      return res.status(401).json({ message: 'Unauthorized' });
     }
-    return res.json({ message: 'Picks successfully locked in' });
-  })
-  .catch(err => error.send(res, err, 'Failed to update duel week'));
+    return DuelWeek.updatePicks(req.body._id, req.body.games, (updateErr) => {
+      if (updateErr) { return error.send(res, updateErr, 'Failed to update duel week'); }
+      return res.json({ message: 'Picks successfully locked in' });
+    });
+  });
 };

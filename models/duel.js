@@ -6,10 +6,10 @@ const colName = 'duels';
 module.exports.find = (id, userId) => db.get().collection(colName)
   .findOne({ _id: new ObjectID(id), 'players.id': userId });
 
-module.exports.forUser = (userId, status) => {
+module.exports.forUser = (userId, status, cb) => {
   const query = { 'players.id': userId };
   if (status) query.status = status;
-  return db.get().collection(colName).find(query).toArray();
+  db.get().collection(colName).find(query).toArray(cb);
 };
 
 module.exports.create = players => db.get().collection(colName).insertOne({

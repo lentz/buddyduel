@@ -35,7 +35,7 @@ export class DuelsService {
   getWeek(id: string): Promise<DuelWeek> {
     return this.authHttp.get(`${this.duelWeeksURL}/${id}`)
                .toPromise()
-               .then(response => response.json() as Game[])
+               .then(response => response.json() as DuelWeek)
                .catch(this.handleError);
   }
 
@@ -53,12 +53,12 @@ export class DuelsService {
                         .catch(this.handleError);
   }
 
-  save(duelWeek: DuelWeek): Promise<Game[]> {
+  save(duelWeek: DuelWeek): Promise<DuelWeek> {
     return this.authHttp.put(`${this.duelWeeksURL}/${duelWeek._id}`,
                          JSON.stringify(duelWeek),
                          { headers: this.headers })
                     .toPromise()
-                    .then(() => duelWeek)
+                    .then(response => response.json() as DuelWeek)
                     .catch(this.handleError);
   }
 

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
   selector: 'app-root',
@@ -7,7 +8,11 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  public constructor(private titleService: Title) { }
+  constructor(private titleService: Title,
+              private toastr: ToastsManager,
+              private vcr: ViewContainerRef, ) {
+    this.toastr.setRootViewContainerRef(vcr);
+  }
 
   ngOnInit(): void {
     this.titleService.setTitle('BuddyDuel');

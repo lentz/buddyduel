@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 import 'rxjs/add/operator/switchMap';
 
@@ -20,7 +21,9 @@ export class DuelWeekComponent implements OnInit {
 
   constructor(private duelsService: DuelsService,
               private route: ActivatedRoute,
-              private titleService: Title) { }
+              private titleService: Title,
+              private toastr: ToastsManager, ) {
+  }
 
   ngOnInit(): void {
     this.route.params
@@ -29,12 +32,12 @@ export class DuelWeekComponent implements OnInit {
         this.titleService.setTitle(this.title);
         return this.duelsService.getWeek(params['id']);
       })
-      .subscribe(duelWeek => {
-        this.duelWeek = duelWeek;
-      });
+      .subscribe(duelWeek => this.duelWeek = duelWeek);
   }
 
   save(): void {
-    this.duelsService.save(this.duelWeek);
+    this.duelsService.save(this.duelWeek)
+    .then(() => this.toastr.success('Picks locked in!', 'Success'))
+    .catch(err => this.toastr.error('Failed to save picks', 'Error'));
   }
 }

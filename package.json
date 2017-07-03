@@ -17,6 +17,7 @@
     "node": "6.10.2"
   },
   "dependencies": {
+    "@angular/animations": "4.1.2",
     "@angular/cli": "^1.0.3",
     "@angular/common": "^4.1.2",
     "@angular/compiler": "^4.1.2",
@@ -42,6 +43,7 @@
     "moment": "^2.18.1",
     "mongodb": "^2.2.27",
     "morgan": "^1.8.1",
+    "ng2-toastr": "^4.1.2",
     "request": "^2.81.0",
     "rxjs": "^5.4.0",
     "winston": "^2.3.1",
@@ -66,7 +68,6 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "mocha": "^3.3.0",
     "ts-node": "^3.0.4",
-    "tslint": "^5.2.0",
-    "typescript": "^2.3.2"
+    "tslint": "^5.2.0"
   }
 }

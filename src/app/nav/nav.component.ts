@@ -41,7 +41,7 @@ export class NavComponent implements OnInit {
 
   opponentName(duel: Duel): string {
     const myId = this.authService.getUserProfile().sub;
-    return duel.players.find(player => player.id !== myId).id;
+    return duel.players.find(player => player.id !== myId).name;
   }
 
   onDuelSelect(event: any, duel: Duel): void {

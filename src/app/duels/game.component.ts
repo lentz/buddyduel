@@ -12,7 +12,11 @@ export class GameComponent {
   @Output() onPicked = new EventEmitter<string>();
 
   pick(team: string): void {
-    this.game.selectedTeam = team;
+    if (this.game.selectedTeam === team) {
+      this.game.selectedTeam = undefined;
+    } else {
+      this.game.selectedTeam = team;
+    }
   }
 
   isSelected(team: string): boolean {

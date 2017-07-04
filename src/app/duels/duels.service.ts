@@ -39,10 +39,11 @@ export class DuelsService {
                .catch(this.handleError);
   }
 
-  acceptDuel(duelId: string): void {
-    this.authHttp.put(`${this.duelsURL}/${duelId}/accept`, null,
+  acceptDuel(duelId: string): Promise<any> {
+    return this.authHttp.put(`${this.duelsURL}/${duelId}/accept`, null,
                       { headers: this.headers })
                  .toPromise()
+                 .then(response => response.json())
                  .catch(this.handleError);
   }
 
@@ -63,6 +64,6 @@ export class DuelsService {
   }
 
   private handleError(error: any): Promise<any> {
-    return Promise.reject(error.message || error);
+    return Promise.reject(error.message || error.statusText || error);
   }
 }

@@ -15,12 +15,12 @@ module.exports.create = (req, res) => {
 };
 
 module.exports.accept = (req, res) => {
-  Duel.accept(req.params.id, { id: req.user.sub })
+  Duel.accept(req.params.id.trim(), { id: req.user.sub })
   .then((result) => {
     if (result.matchedCount === 0) {
-      return res.status(404).json({ message: 'Unable to accept this duel' });
+      return res.status(404).json({ message: 'Duel not found' });
     }
     return res.json({ message: 'Duel accepted!' });
   })
-  .catch(err => error.send(res, err, 'Failed to update duel'));
+  .catch(err => error.send(res, err, 'Failed to accept duel'));
 };

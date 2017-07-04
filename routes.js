@@ -27,12 +27,16 @@ router.use((err, req, res, next) => {
   }
 });
 
-router.get('/duels', duelsController.index);
-router.post('/duels', duelsController.create);
-router.put('/duels/:id/accept', duelsController.accept);
+router.route('/duels')
+  .get(duelsController.index)
+  .post(duelsController.create);
+router.route('/duels/:id/accept')
+  .put(duelsController.accept);
 
-router.get('/duel-weeks', duelWeeksController.index);
-router.get('/duel-weeks/:id', duelWeeksController.show);
-router.put('/duel-weeks/:id', duelWeeksController.update);
+router.route('/duel-weeks')
+  .get(duelWeeksController.index);
+router.route('/duel-weeks/:id')
+  .get(duelWeeksController.show)
+  .put(duelWeeksController.update);
 
 module.exports = router;

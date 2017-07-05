@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  authCallbackURL: 'http://localhost:3000/auth/callback',
+  authCallbackURL: 'http://macbookpro:3000/auth/callback',
 };

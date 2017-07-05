@@ -54,14 +54,14 @@ export class DuelsService {
     return this.authHttp.put(`${this.duelsURL}/${duelId}/accept`, null,
                       { headers: this.headers })
                  .toPromise()
-                 .then(response => response.json())
+                 .then(() => this.getDuels())
                  .catch(this.handleError);
   }
 
-  create(): Promise<Duel> {
+  create(): Promise<any> {
     return this.authHttp.post(`${this.duelsURL}`, null, { headers: this.headers })
                         .toPromise()
-                        .then(response => response.json() as Duel)
+                        .then(() => this.getDuels())
                         .catch(this.handleError);
   }
 

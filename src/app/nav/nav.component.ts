@@ -27,7 +27,7 @@ export class NavComponent implements OnInit {
   }
 
   getDuels(): void {
-    this.duelsService.getDuels('active')
+    this.duelsService.getDuels()
     .then((duels) => {
       if (duels.length > 0) {
         this.selectedDuelId = duels[0]._id

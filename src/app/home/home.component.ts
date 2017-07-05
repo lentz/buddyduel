@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 import { AuthService } from '../auth/auth.service';
@@ -10,16 +10,10 @@ import { Duel } from '../duels/duel';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
   public constructor(public duelsService: DuelsService,
                      public authService: AuthService,
                      private toastr: ToastsManager, ) { }
-
-  ngOnInit(): void {
-    if (this.authService.isAuthenticated()) {
-      this.duelsService.getDuels();
-    }
-  }
 
   acceptDuel(duelId: string): void {
     this.duelsService.acceptDuel(duelId)

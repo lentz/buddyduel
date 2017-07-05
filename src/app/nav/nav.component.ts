@@ -15,7 +15,7 @@ export class NavComponent implements OnInit {
   selectedDuelId: string;
   duelWeeks: DuelWeek[];
 
-  public constructor(private duelsService: DuelsService,
+  public constructor(public duelsService: DuelsService,
                      public authService: AuthService, ) { }
 
   ngOnInit(): void {

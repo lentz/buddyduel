@@ -1,17 +1,24 @@
-<div class="row">
-  <div class="col"><h2>Week {{ duelWeek.weekNum }}</h2></div>
-</div>
-<div class="row">
-  <div class="col">
-    <div class="d-flex flex-wrap justify-content-around">
-      <duel-game *ngFor="let game of duelWeek.games" [game]="game"></duel-game>
+<div *ngIf="duelWeek">
+  <div class="row">
+    <div class="col-5">
+      <h2>Week {{ duelWeek.weekNum }}</h2>
+    </div>
+    <div class="col">
+      <p class="pull-right font-italic">Picked by {{ duelWeek.picker.name }}</p>
     </div>
   </div>
-</div>
-<div *ngIf="canModifyPicks()" class="row">
-  <div class="col text-center">
-    <button (click)="save()" class="btn btn-lg btn-danger">
-      <i class="fa fa-check-square-o" aria-hidden="true"></i> Lock In Picks
-    </button>
+  <div class="row">
+    <div class="col">
+      <div class="d-flex flex-wrap justify-content-around">
+        <duel-game *ngFor="let game of duelWeek.games" [game]="game"></duel-game>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="canModifyPicks()" class="row">
+    <div class="col text-center">
+      <button (click)="save()" class="btn btn-lg btn-danger">
+        <i class="fa fa-check-square-o" aria-hidden="true"></i> Lock In Picks
+      </button>
+    </div>
   </div>
 </div>

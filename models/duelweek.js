@@ -10,19 +10,23 @@ module.exports.find = (id, cb) => db.get().collection(colName).findOne({
 }, cb);
 
 module.exports.forDuelIds = (duelIds, cb) => db.get().collection(colName)
-  .find({ duelId: { $in: duelIds } }).toArray(cb);
+  .find({ duelId: { $in: duelIds } }).sort({ weekNum: -1 }).toArray(cb);
 
 module.exports.create = duelWeek => db.get().collection(colName).insertOne(duelWeek);
 
-module.exports.findOrNew = (year, weekNum, duelId, cb) => {
+module.exports.findOrNew = (year, weekNum, duel, cb) => {
   db.get().collection(colName).findOne(
-    { year, weekNum: Number(weekNum), duelId },
+    { year, weekNum: Number(weekNum), duelId: duel._id.toString() },
     (err, result) => {
       if (result !== null) {
         return cb(null, result);
       }
       return cb(null, {
-        year, weekNum: Number(weekNum), duelId, games: [], picker: null,
+        year,
+        weekNum: Number(weekNum),
+        duelId: duel._id.toString(),
+        games: [],
+        picker: duel.players[weekNum % 2],
       });
     });
 };

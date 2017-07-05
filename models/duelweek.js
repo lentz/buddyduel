@@ -9,8 +9,8 @@ module.exports.find = (id, cb) => db.get().collection(colName).findOne({
   _id: new ObjectID(id),
 }, cb);
 
-module.exports.forDuel = (duelId, cb) => db.get().collection(colName)
-  .find({ duelId }).toArray(cb);
+module.exports.forDuelIds = (duelIds, cb) => db.get().collection(colName)
+  .find({ duelId: { $in: duelIds } }).toArray(cb);
 
 module.exports.create = duelWeek => db.get().collection(colName).insertOne(duelWeek);
 
@@ -31,12 +31,12 @@ module.exports.save = (duelWeek, cb) => {
   delete duelWeek.updatedAt;
   db.get().collection(colName).findOneAndUpdate(
     { year: duelWeek.year, weekNum: duelWeek.weekNum, duelId: duelWeek.duelId },
-    {
-      $currentDate: { updatedAt: true },
-      $set: duelWeek,
-    },
-    { upsert: true },
-    cb);
+    { $currentDate: { updatedAt: true }, $set: duelWeek },
+    { upsert: true, returnOriginal: false },
+    (err, result) => {
+      if (err) { return cb(err); }
+      return cb(null, result.value);
+    });
 };
 
 module.exports.updatePicks = (id, games, cb) => {

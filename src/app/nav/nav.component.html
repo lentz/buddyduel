@@ -24,13 +24,13 @@
               </a>
             </div>
           </li>
-          <li *ngIf="duelWeeks && duelWeeks.length > 0" class="nav-item dropdown">
+          <li *ngIf="duelWeeks().length > 0" class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="fa fa-calendar" aria-hidden="true"></i> Weeks
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <a *ngFor="let duelWeek of duelWeeks"
+              <a *ngFor="let duelWeek of duelWeeks()"
                 [routerLink]="[ '/duel-weeks', duelWeek._id ]" class="dropdown-item">
                 Week {{ duelWeek.weekNum }}
               </a>

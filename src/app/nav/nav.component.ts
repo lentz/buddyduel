@@ -13,27 +13,33 @@ import { DuelWeek } from '../duels/duel-week';
 })
 export class NavComponent implements OnInit {
   selectedDuelId: string;
-  duelWeeks: DuelWeek[];
 
   public constructor(public duelsService: DuelsService,
                      public authService: AuthService, ) { }
 
   ngOnInit(): void {
     if (this.authService.isAuthenticated()) {
-      this.getDuels();
+      this.duelsService.updateDuels();
+      this.duelsService.updateDuelWeeks();
     } else {
-      this.authService.handleAuthentication().then(() => this.getDuels());
+      this.authService.handleAuthentication().then(() => {
+        this.duelsService.updateDuels();
+        this.duelsService.updateDuelWeeks();
+      });
     }
   }
 
-  getDuels(): void {
-    this.duelsService.getDuels()
-    .then((duels) => {
-      if (duels.length > 0) {
-        this.selectedDuelId = duels[0]._id
-        this.updateDuelWeeks();
-      }
-    });
+  duelWeeks(): DuelWeek[] {
+    return this.duelsService.duelWeeks
+               .filter(week => week.duelId === this.getSelectedDuelId());
+  }
+
+  getSelectedDuelId(): string {
+    if (this.selectedDuelId) {
+      return this.selectedDuelId;
+    } else if (this.duelsService.duels.length > 0) {
+      return this.duelsService.duels[0]._id;
+    }
   }
 
   opponentName(duel: Duel): string {
@@ -44,11 +50,5 @@ export class NavComponent implements OnInit {
   onDuelSelect(event: any, duel: Duel): void {
     event.preventDefault();
     this.selectedDuelId = duel._id;
-    this.updateDuelWeeks();
-  }
-
-  private updateDuelWeeks(): void {
-    this.duelsService.getDuelWeeks(this.selectedDuelId)
-    .then(duelWeeks => this.duelWeeks = duelWeeks);
   }
 }

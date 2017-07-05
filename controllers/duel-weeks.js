@@ -21,13 +21,13 @@ function updateGames(games, lines) {
   return games;
 }
 
-function syncDuelWeeks(duelId, syncCallback) {
+function syncDuelWeeks(duel, syncCallback) {
   async.waterfall([
     async.asyncify(bovada.getLines),
     (lines, waterfall) => {
       const weekMap = _.groupBy(lines, NFLWeek.forGame);
       async.map(Object.keys(weekMap), (weekNum, mapCallback) => {
-        DuelWeek.findOrNew(NFLWeek.seasonYear, weekNum, duelId, (err, duelWeek) => {
+        DuelWeek.findOrNew(NFLWeek.seasonYear, weekNum, duel._id.toString(), (err, duelWeek) => {
           duelWeek.games = updateGames(duelWeek.games, weekMap[weekNum]);
           mapCallback(null, duelWeek);
         });
@@ -38,11 +38,12 @@ function syncDuelWeeks(duelId, syncCallback) {
 }
 
 module.exports.index = (req, res) => {
-  syncDuelWeeks(req.query.duelId, () => {
-    DuelWeek.forDuel(req.query.duelId, (err, duelWeeks) => {
-      if (err) { return error.send(res, err, 'Unable to list duel weeks'); }
-      return res.json(duelWeeks);
-    });
+  async.waterfall([
+    waterfall => Duel.forUser(req.user.sub, 'active', waterfall),
+    (duels, waterfall) => async.map(duels, syncDuelWeeks, waterfall),
+  ], (err, duelWeeksMap) => {
+    if (err) { return error.send(res, err, 'Unable to list duel weeks'); }
+    return res.json(_.flatten(duelWeeksMap));
   });
 };
 

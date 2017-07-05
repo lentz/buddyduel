@@ -27,19 +27,17 @@ export class DuelsService {
     return this.duels.filter(duel => duel.status === 'pending');
   }
 
-  getDuels(status?: string): Promise<Duel[]> {
-    const params = new URLSearchParams();
-    params.set('status', status);
-    return this.authHttp.get(this.duelsURL, { params: params })
+  updateDuels(): Promise<Duel[]> {
+    return this.authHttp.get(this.duelsURL)
                     .toPromise()
                     .then(response => this.duels = response.json() as Duel[])
                     .catch(this.handleError);
   }
 
-  getDuelWeeks(duelId: string): Promise<DuelWeek[]> {
-    return this.authHttp.get(`${this.duelWeeksURL}?duelId=${duelId}`)
+  updateDuelWeeks(): Promise<DuelWeek[]> {
+    return this.authHttp.get(`${this.duelWeeksURL}`)
                .toPromise()
-               .then(response => response.json() as DuelWeek[])
+               .then(response => this.duelWeeks = response.json() as DuelWeek[])
                .catch(this.handleError);
   }
 
@@ -54,14 +52,17 @@ export class DuelsService {
     return this.authHttp.put(`${this.duelsURL}/${duelId}/accept`, null,
                       { headers: this.headers })
                  .toPromise()
-                 .then(() => this.getDuels())
+                 .then(() => {
+                   this.updateDuelWeeks();
+                   return this.updateDuels();
+                 })
                  .catch(this.handleError);
   }
 
   create(): Promise<any> {
     return this.authHttp.post(`${this.duelsURL}`, null, { headers: this.headers })
                         .toPromise()
-                        .then(() => this.getDuels())
+                        .then(() => this.updateDuels())
                         .catch(this.handleError);
   }
 

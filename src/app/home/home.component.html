@@ -10,7 +10,9 @@
     </div>
     <h3>Current Duels</h3>
     <ul *ngIf="duelsService.activeDuels().length > 0">
-      <li *ngFor="let duel of duelsService.activeDuels()">{{ duel._id }}</li>
+      <li *ngFor="let duel of duelsService.activeDuels()">
+        {{ duel._id }}
+      </li>
     </ul>
     <span *ngIf="duelsService.activeDuels().length < 1">
       Create a duel and send the code to a buddy to get started

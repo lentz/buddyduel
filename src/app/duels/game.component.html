@@ -1,17 +1,28 @@
 <div class="card text-center game-card">
-  <div class="card-block">
-    <button (click)="pick(game.awayTeam)"
-            [class.active]="isSelected(game.awayTeam)"
-            class="btn btn-outline-primary">
+  <div *ngIf="readOnly();else pickButtons" class="card-block">
+    <span [ngClass]="{'badge badge-primary': isSelected(game.awayTeam)}">
       {{ game.awayTeam }} {{ game.awaySpread | pointSpread }}
-    </button>
+    </span>
     <div>@</div>
-    <button (click)="pick(game.homeTeam)"
-            [class.active]="isSelected(game.homeTeam)"
-            class="btn btn-outline-primary">
+    <span [ngClass]="{'badge badge-primary': isSelected(game.homeTeam)}">
       {{ game.homeTeam }} {{ game.homeSpread | pointSpread }}
-    </button>
+    </span>
   </div>
+  <ng-template #pickButtons>
+    <div class="card-block">
+      <button (click)="pick(game.awayTeam)"
+              [class.active]="isSelected(game.awayTeam)"
+              class="btn btn-outline-primary">
+        {{ game.awayTeam }} {{ game.awaySpread | pointSpread }}
+      </button>
+      <div>@</div>
+      <button (click)="pick(game.homeTeam)"
+              [class.active]="isSelected(game.homeTeam)"
+              class="btn btn-outline-primary">
+        {{ game.homeTeam }} {{ game.homeSpread | pointSpread }}
+      </button>
+    </div>
+  </ng-template>
   <div class="card-footer text-muted small">
     {{ game.startTime | date:'EEE, MMM d h:mm a' }}
   </div>

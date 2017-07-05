@@ -37,7 +37,10 @@ export class DuelWeekComponent implements OnInit {
 
   save(): void {
     this.duelsService.save(this.duelWeek)
-    .then(() => this.toastr.success('Picks locked in!'))
+    .then(() => {
+      this.toastr.success('Picks locked in!');
+      this.duelWeek.games.forEach(game => game.updated = false);
+    })
     .catch(err => this.toastr.error('Failed to save picks'));
   }
 }

@@ -9,9 +9,13 @@ import { Game } from './game';
 })
 export class GameComponent {
   @Input() game: Game;
-  @Output() onPicked = new EventEmitter<string>();
+
+  readOnly(): boolean {
+    return this.game.selectedTeam && !this.game.updated;
+  }
 
   pick(team: string): void {
+    this.game.updated = true;
     if (this.game.selectedTeam === team) {
       this.game.selectedTeam = undefined;
     } else {

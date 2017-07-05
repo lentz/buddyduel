@@ -23,7 +23,7 @@ function updateGames(games, lines) {
 
 function syncDuelWeeks(duel, syncCallback) {
   async.waterfall([
-    async.asyncify(bovada.getLines),
+    bovada.getLines,
     (lines, waterfall) => {
       const weekMap = _.groupBy(lines, NFLWeek.forGame);
       async.map(Object.keys(weekMap), (weekNum, mapCallback) => {
@@ -62,6 +62,14 @@ module.exports.show = (req, res) => {
   });
 };
 
+function setSelections(duelWeek, pickedGames) {
+  return duelWeek.games.map((game) => {
+    const currentGame = pickedGames.find(pickedGame => pickedGame.id === game.id);
+    if (currentGame) { game.selectedTeam = currentGame.selectedTeam; }
+    return game;
+  });
+}
+
 module.exports.update = (req, res) => {
   async.parallel([
     parallel => DuelWeek.find(req.body._id, parallel),
@@ -73,7 +81,8 @@ module.exports.update = (req, res) => {
     if (!duels.map(duel => duel._id.toString()).includes(duelWeek.duelId)) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
-    return DuelWeek.updatePicks(req.body._id, req.body.games, (updateErr) => {
+    const updatedGames = setSelections(duelWeek, req.body.games);
+    return DuelWeek.updatePicks(req.body._id, updatedGames, (updateErr) => {
       if (updateErr) { return error.send(res, updateErr, 'Failed to update duel week'); }
       return res.json({ message: 'Picks successfully locked in' });
     });

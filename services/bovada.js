@@ -10,10 +10,10 @@ const options = {
   },
 };
 
-module.exports.getLines = () => new Promise((resolve, reject) => {
+module.exports.getLines = (cb) => {
   logger.info('Requesting Bovada lines');
   request(options, (err, _res, body) => {
-    if (err) reject(err);
-    resolve(BovadaParser.call(body));
+    if (err) { return cb(err); }
+    return cb(null, BovadaParser.call(body));
   });
-});
+};

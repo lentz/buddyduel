@@ -1,6 +1,7 @@
 export class Game {
   constructor(
     public id: string,
+    public updated: boolean,
     public homeTeam: string,
     public homeSpread: number,
     public awayTeam: string,

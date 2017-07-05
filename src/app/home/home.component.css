@@ -1,2 +1,4 @@
 input.accept-duel { width: 15rem; }
 button.create-duel { margin-bottom: 3rem; }
+.pending-duels { list-style: none; }
+.pending-duels input { width: 14rem; margin-top: .5rem; }

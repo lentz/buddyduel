@@ -5,9 +5,9 @@
   <div class="col-7">
     <div *ngIf="duelsService.pendingDuels().length > 0">
       <h3>Pending Duels - give the code to your friend</h3>
-      <ul>
+      <ul class="pending-duels">
         <li *ngFor="let duel of duelsService.pendingDuels()">
-          <pre>{{ duel._id }}</pre>
+          <input type="text" value="{{ duel._id }}" disabled />
         </li>
       </ul>
     </div>

@@ -4,7 +4,7 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 import { AuthService } from '../auth/auth.service';
 import { DuelsService } from '../duels/duels.service';
-import { Duel } from '../duels/duel';
+import { DuelWeek } from '../duels/duel-week';
 
 @Component({
   selector: 'app-home',
@@ -21,6 +21,12 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.titleService.setTitle('BuddyDuel');
+  }
+
+  opponentName(duelWeek: DuelWeek): string {
+    return this.duelsService.opponentForDuel(
+      this.duelsService.duels.find(duel => duel._id === duelWeek.duelId)
+    );
   }
 
   acceptDuel(): void {

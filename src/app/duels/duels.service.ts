@@ -3,6 +3,7 @@ import { Headers, URLSearchParams } from '@angular/http';
 import { AuthHttp } from 'angular2-jwt';
 import 'rxjs/add/operator/toPromise';
 
+import { AuthService } from '../auth/auth.service'
 import { Game } from './game';
 import { DuelWeek } from './duel-week';
 import { Duel } from './duel';
@@ -17,7 +18,8 @@ export class DuelsService {
   public duels = new Array<Duel>();
   public duelWeeks = new Array<DuelWeek>();
 
-  constructor(private authHttp: AuthHttp) { }
+  constructor(private authHttp: AuthHttp,
+              private authService: AuthService, ) { }
 
   activeDuels(): Duel[] {
     return this.duels.filter(duel => duel.status === 'active');
@@ -25,6 +27,15 @@ export class DuelsService {
 
   pendingDuels(): Duel[] {
     return this.duels.filter(duel => duel.status === 'pending');
+  }
+
+  duelWeeksForDuelId(duelId: string): DuelWeek[] {
+    return this.duelWeeks.filter(week => week.duelId === duelId);
+  }
+
+  opponentForDuel(duel: Duel): string {
+    const currentPlayerId = this.authService.getUserProfile().sub;
+    return duel.players.find(player => player.id !== currentPlayerId).name;
   }
 
   updateDuels(): Promise<Duel[]> {

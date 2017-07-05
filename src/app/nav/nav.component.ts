@@ -30,8 +30,11 @@ export class NavComponent implements OnInit {
   }
 
   duelWeeks(): DuelWeek[] {
-    return this.duelsService.duelWeeks
-               .filter(week => week.duelId === this.getSelectedDuelId());
+    return this.duelsService.duelWeeksForDuelId(this.getSelectedDuelId());
+  }
+
+  opponentName(duel: Duel): string {
+    return this.duelsService.opponentForDuel(duel);
   }
 
   getSelectedDuelId(): string {
@@ -40,11 +43,6 @@ export class NavComponent implements OnInit {
     } else if (this.duelsService.duels.length > 0) {
       return this.duelsService.duels[0]._id;
     }
-  }
-
-  opponentName(duel: Duel): string {
-    const myId = this.authService.getUserProfile().sub;
-    return duel.players.find(player => player.id !== myId).name;
   }
 
   onDuelSelect(event: any, duel: Duel): void {

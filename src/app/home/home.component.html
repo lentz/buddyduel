@@ -9,9 +9,11 @@
       </ul>
     </div>
     <h3>Current Duels</h3>
-    <ul *ngIf="duelsService.activeDuels().length > 0">
-      <li *ngFor="let duel of duelsService.activeDuels()">
-        {{ duel._id }}
+    <ul>
+      <li *ngFor="let duelWeek of duelsService.duelWeeks">
+        <a [routerLink]="[ '/duel-weeks', duelWeek._id ]">
+          Week {{ duelWeek.weekNum }} vs {{ opponentName(duelWeek) }}
+        </a>
       </li>
     </ul>
     <span *ngIf="duelsService.activeDuels().length < 1">

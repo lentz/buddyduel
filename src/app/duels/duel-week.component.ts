@@ -43,4 +43,8 @@ export class DuelWeekComponent implements OnInit {
     })
     .catch(err => this.toastr.error('Failed to save picks'));
   }
+
+  canModifyPicks(): boolean {
+    return this.duelWeek.games.some(game => !game.selectedTeam || game.updated);
+  }
 }

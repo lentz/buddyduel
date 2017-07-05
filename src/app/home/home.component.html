@@ -24,7 +24,8 @@
     <form class="form-inline pull-right">
       <input type="text" class="form-control accept-duel" name="acceptCode"
              [(ngModel)]="acceptCode" placeholder="Duel Code" />
-      <button (click)="acceptDuel()" class="btn btn-primary">
+      <button (click)="acceptDuel()" class="btn btn-primary"
+              [disabled]="acceptCode.length < 24">
         Accept Duel
       </button>
     </form>

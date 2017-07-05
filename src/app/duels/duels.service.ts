@@ -14,14 +14,25 @@ export class DuelsService {
   private duelWeeksURL = 'api/duel-weeks';
   private duelsURL = 'api/duels';
 
+  public duels = new Array<Duel>();
+  public duelWeeks = new Array<DuelWeek>();
+
   constructor(private authHttp: AuthHttp) { }
+
+  activeDuels(): Duel[] {
+    return this.duels.filter(duel => duel.status === 'active');
+  }
+
+  pendingDuels(): Duel[] {
+    return this.duels.filter(duel => duel.status === 'pending');
+  }
 
   getDuels(status?: string): Promise<Duel[]> {
     const params = new URLSearchParams();
     params.set('status', status);
     return this.authHttp.get(this.duelsURL, { params: params })
                     .toPromise()
-                    .then(response => response.json() as Duel[])
+                    .then(response => this.duels = response.json() as Duel[])
                     .catch(this.handleError);
   }
 

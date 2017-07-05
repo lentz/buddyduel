@@ -8,14 +8,12 @@ import { DuelWeek } from '../duels/duel-week';
 
 @Component({
   selector: 'app-nav',
-  providers: [AuthService, DuelsService],
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
   selectedDuelId: string;
   duelWeeks: DuelWeek[];
-  duels: Duel[];
 
   public constructor(private duelsService: DuelsService,
                      public authService: AuthService, ) { }
@@ -31,7 +29,6 @@ export class NavComponent implements OnInit {
   getDuels(): void {
     this.duelsService.getDuels('active')
     .then((duels) => {
-      this.duels = duels;
       if (duels.length > 0) {
         this.selectedDuelId = duels[0]._id
         this.updateDuelWeeks();

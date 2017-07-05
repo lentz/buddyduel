@@ -3,19 +3,19 @@
 </div>
 <div *ngIf="authService.isAuthenticated()" class="row">
   <div class="col-7">
-    <div *ngIf="pendingDuels().length > 0">
+    <div *ngIf="duelsService.pendingDuels().length > 0">
       <h3>Pending Duels - give the code to your friend</h3>
       <ul>
-        <li *ngFor="let duel of pendingDuels()">
+        <li *ngFor="let duel of duelsService.pendingDuels()">
           <pre>{{ duel._id }}</pre>
         </li>
       </ul>
     </div>
     <h3>Active Duels</h3>
-    <ul *ngIf="activeDuels().length > 0">
-      <li *ngFor="let duel of activeDuels()">{{ duel._id }}</li>
+    <ul *ngIf="duelsService.activeDuels().length > 0">
+      <li *ngFor="let duel of duelsService.activeDuels()">{{ duel._id }}</li>
     </ul>
-    <span *ngIf="activeDuels().length < 1">No active duels</span>
+    <span *ngIf="duelsService.activeDuels().length < 1">No active duels</span>
   </div>
   <div class="col">
     <button (click)="createDuel()" class="btn btn-success create-duel pull-right">

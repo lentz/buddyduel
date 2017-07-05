@@ -75,6 +75,6 @@ export class DuelsService {
   }
 
   private handleError(error: any): Promise<any> {
-    return Promise.reject(error.message || error.statusText || error);
+    return Promise.reject(error.json().message || error.statusText || error);
   }
 }

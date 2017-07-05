@@ -10,7 +10,8 @@
   <div class="row">
     <div class="col">
       <div class="d-flex flex-wrap justify-content-around">
-        <duel-game *ngFor="let game of duelWeek.games" [game]="game"></duel-game>
+        <duel-game *ngFor="let game of duelWeek.games"
+                   [game]="game" [isPicker]="isPicker()"></duel-game>
       </div>
     </div>
   </div>

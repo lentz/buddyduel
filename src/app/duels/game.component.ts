@@ -9,9 +9,10 @@ import { Game } from './game';
 })
 export class GameComponent {
   @Input() game: Game;
+  @Input() isPicker: boolean;
 
-  readOnly(): boolean {
-    return this.game.selectedTeam && !this.game.updated;
+  isReadOnly(): boolean {
+    return !this.isPicker || this.gameHasStarted() || this.selectionSaved();
   }
 
   pick(team: string): void {
@@ -25,5 +26,13 @@ export class GameComponent {
 
   isSelected(team: string): boolean {
     return this.game.selectedTeam === team;
+  }
+
+  private selectionSaved(): boolean {
+    return this.game.selectedTeam && !this.game.updated;
+  }
+
+  private gameHasStarted(): boolean {
+    return this.game.startTime < +new Date();
   }
 }

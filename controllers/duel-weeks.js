@@ -41,13 +41,13 @@ module.exports.index = (req, res) => {
   async.waterfall([
     waterfall => Duel.forUser(req.user.sub, 'active', waterfall),
     (duels, waterfall) => {
-      async.each(duels, updateDuelWeeks, err => {
-        if(err) { return waterfall(err); }
+      async.each(duels, updateDuelWeeks, (err) => {
+        if (err) { return waterfall(err); }
         return waterfall(null, duels);
       });
     },
     (duels, waterfall) =>
-      DuelWeek.forDuelIds(duels.map(duel => duel._id.toString()), waterfall)
+      DuelWeek.forDuelIds(duels.map(duel => duel._id.toString()), waterfall),
   ], (err, duelWeeks) => {
     if (err) { return error.send(res, err, 'Unable to list duel weeks'); }
     return res.json(duelWeeks);

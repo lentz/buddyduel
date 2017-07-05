@@ -5,6 +5,7 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 import 'rxjs/add/operator/switchMap';
 
+import { AuthService } from '../auth/auth.service'
 import { DuelWeek } from './duel-week';
 import { Game } from './game';
 import { DuelsService } from './duels.service';
@@ -15,24 +16,25 @@ import { DuelsService } from './duels.service';
   templateUrl: './duel-week.component.html',
 })
 export class DuelWeekComponent implements OnInit {
-  private week: number;
-  title: string;
   duelWeek: DuelWeek;
 
   constructor(private duelsService: DuelsService,
               private route: ActivatedRoute,
               private titleService: Title,
-              private toastr: ToastsManager, ) {
+              private toastr: ToastsManager,
+              private authService: AuthService, ) {
   }
 
   ngOnInit(): void {
+    if (!this.authService.isAuthenticated()) {
+      return this.authService.logout();
+    }
     this.route.params
-      .switchMap((params: Params) => {
-        this.title = `BuddyDuel`;
-        this.titleService.setTitle(this.title);
-        return this.duelsService.getWeek(params['id']);
-      })
-      .subscribe(duelWeek => this.duelWeek = duelWeek);
+      .switchMap((params: Params) => this.duelsService.getWeek(params['id']))
+      .subscribe(duelWeek => {
+        this.duelWeek = duelWeek;
+        this.titleService.setTitle(`BuddyDuel - Week ${duelWeek.weekNum}`);
+      });
   }
 
   save(): void {
@@ -45,6 +47,11 @@ export class DuelWeekComponent implements OnInit {
   }
 
   canModifyPicks(): boolean {
-    return this.duelWeek.games.some(game => !game.selectedTeam || game.updated);
+    return this.isPicker() &&
+      this.duelWeek.games.some(game => !game.selectedTeam || game.updated);
+  }
+
+  isPicker(): boolean {
+    return this.duelWeek.picker.id === this.authService.getUserProfile().sub
   }
 }

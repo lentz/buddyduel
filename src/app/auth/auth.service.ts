@@ -42,8 +42,8 @@ export class AuthService {
                                 .payload;
   }
 
-  logout(event: any): void {
-    event.preventDefault();
+  logout(event?: any): void {
+    if (event) { event.preventDefault(); }
     localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');

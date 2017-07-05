@@ -10,7 +10,9 @@ module.exports.find = (id, cb) => db.get().collection(colName).findOne({
 }, cb);
 
 module.exports.forDuelIds = (duelIds, cb) => db.get().collection(colName)
-  .find({ duelId: { $in: duelIds } }).sort({ weekNum: -1 }).toArray(cb);
+  .find({ duelId: { $in: duelIds } })
+  .sort({ weekNum: -1 })
+  .toArray(cb);
 
 module.exports.create = duelWeek => db.get().collection(colName).insertOne(duelWeek);
 

@@ -11,13 +11,18 @@ import { Duel } from '../duels/duel';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent {
+  acceptCode = '';
+
   public constructor(public duelsService: DuelsService,
                      public authService: AuthService,
                      private toastr: ToastsManager, ) { }
 
-  acceptDuel(duelId: string): void {
-    this.duelsService.acceptDuel(duelId)
-    .then(() => this.toastr.success('Duel accepted!'))
+  acceptDuel(): void {
+    this.duelsService.acceptDuel(this.acceptCode)
+    .then(() => {
+      this.acceptCode = '';
+      this.toastr.success('Duel accepted!')
+    })
     .catch(err => this.toastr.error(err));
   }
 

@@ -22,8 +22,9 @@
       Create a Duel
     </button>
     <form class="form-inline pull-right">
-      <input #duelInput type="text" class="form-control accept-duel" placeholder="Duel Code" />
-      <button (click)="acceptDuel(duelInput.value)" class="btn btn-primary">
+      <input type="text" class="form-control accept-duel" name="acceptCode"
+             [(ngModel)]="acceptCode" placeholder="Duel Code" />
+      <button (click)="acceptDuel()" class="btn btn-primary">
         Accept Duel
       </button>
     </form>

@@ -37,10 +37,4 @@ export class HomeComponent implements OnInit {
     })
     .catch(err => this.toastr.error(err));
   }
-
-  createDuel(): void {
-    this.duelsService.create()
-    .then(() => this.toastr.success('Duel created!'))
-    .catch(err => this.toastr.error(err));
-  }
 }

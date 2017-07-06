@@ -1,10 +1,10 @@
 <div *ngIf="authService.isAuthenticated();else unauthenticated" class="row">
-  <div class="col-7">
+  <div class="col-sm-7">
     <div *ngIf="duelsService.pendingDuels().length > 0">
-      <h3>Pending Duels - give the code to your friend</h3>
+      <h3>Pending Duels</h3><p class="font-italic">Give the code to a friend</p>
       <ul class="pending-duels">
         <li *ngFor="let duel of duelsService.pendingDuels()">
-          <input type="text" value="{{ duel._id }}" disabled />
+          <pre>{{ duel._id }}</pre>
         </li>
       </ul>
     </div>
@@ -20,11 +20,8 @@
       Create a duel and send the code to a buddy to get started
     </span>
   </div>
-  <div class="col">
-    <button (click)="createDuel()" class="btn btn-success create-duel pull-right">
-      Create a Duel
-    </button>
-    <form class="form-inline pull-right">
+  <div class="col-sm-5">
+    <form class="form-inline pull-right accept-duel">
       <input type="text" class="form-control accept-duel" name="acceptCode"
              [(ngModel)]="acceptCode" placeholder="Duel Code" />
       <button (click)="acceptDuel()" class="btn btn-primary"
@@ -41,4 +38,7 @@
   <div *ngIf="!authService.isAuthenticated()" class="row">
     <div class="col"><h2>Sign up today to start dueling your friends!</h2></div>
   </div>
+  <button (click)="authService.login()" class="btn btn-info">
+    Sign Up / Login
+  </button>
 </ng-template>

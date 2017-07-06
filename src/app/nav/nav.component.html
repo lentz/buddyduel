@@ -38,6 +38,11 @@
           </li>
         </ng-template>
       </ul>
+      <form *ngIf="authService.isAuthenticated()" class="form-inline">
+        <button (click)="createDuel()" class="btn btn-outline-success create-duel">
+          Create a Duel
+        </button>
+      </form>
       <button *ngIf="!authService.isAuthenticated()" (click)="authService.login()"
               class="btn btn-outline-info">
         <i class="fa fa-user-circle" aria-hidden="true"></i> Login

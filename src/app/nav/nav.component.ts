@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 import { AuthService } from '../auth/auth.service'
 import { DuelsService } from '../duels/duels.service'
@@ -15,7 +16,8 @@ export class NavComponent implements OnInit {
   selectedDuelId: string;
 
   public constructor(public duelsService: DuelsService,
-                     public authService: AuthService, ) { }
+                     public authService: AuthService,
+                     private toastr: ToastsManager, ) { }
 
   ngOnInit(): void {
     if (this.authService.isAuthenticated()) {
@@ -48,5 +50,11 @@ export class NavComponent implements OnInit {
   onDuelSelect(event: any, duel: Duel): void {
     event.preventDefault();
     this.selectedDuelId = duel._id;
+  }
+
+  createDuel(): void {
+    this.duelsService.create()
+    .then(() => this.toastr.success('Duel created!'))
+    .catch(err => this.toastr.error(err));
   }
 }

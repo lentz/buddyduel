@@ -7,7 +7,7 @@
   "author": "Jesse Lentz <jesselentz@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "prestart": "ng build --prod",
+    "postinstall": "ng build --prod",
     "start": "node app.js",
     "lint": "eslint app.js 'lib/*.js' 'models/*.js' 'controllers/*.js' 'services/*.js'",
     "postlint": "ng lint --type-check",

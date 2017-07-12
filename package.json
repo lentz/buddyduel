@@ -14,7 +14,7 @@
     "test": "mocha"
   },
   "engines": {
-    "node": "6.10.2"
+    "node": "6.11.1"
   },
   "dependencies": {
     "@angular/animations": "4.1.2",

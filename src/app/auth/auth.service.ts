@@ -9,7 +9,7 @@ import { environment } from '../../environments/environment';
 @Injectable()
 export class AuthService {
   auth0 = new auth0.WebAuth({
-    clientID: 'Ur0fX3b97A3iybl7g20RwsR4u9uWMWQu',
+    clientID: 'sL6CB8EzVFHvPIG4XaF7JgLAf6R90QbE',
     domain: 'app68395404.auth0.com',
     responseType: 'token id_token',
     audience: 'http://www.buddyduel.net/api',

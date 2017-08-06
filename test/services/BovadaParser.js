@@ -1,20 +1,22 @@
+/* global assert */
+
 const fs = require('fs');
 require('../support');
 const BovadaParser = require('../../services/BovadaParser');
 
-describe('BovadaParser', function() {
-  describe('#call()', function() {
+describe('BovadaParser', () => {
+  describe('#call()', () => {
     let bovadaJSON;
 
-    before(function(done) {
+    before((done) => {
       fs.readFile('./test/services/bovada-nfl.json', (err, body) => {
-        if(err) return done(err);
+        if (err) return done(err);
         bovadaJSON = body;
-        done();
+        return done();
       });
     });
 
-    it('parses the JSON and returns game objects', function() {
+    it('parses the JSON and returns game objects', () => {
       const games = BovadaParser.call(bovadaJSON);
       const expectedGames = [
         {

@@ -38,9 +38,11 @@ module.exports.accept = (req, res) => {
     waterfall => alreadyInDuel(duelId, req.user.sub, waterfall),
     waterfall => user.getInfo(req.user.sub, waterfall),
     (userInfo, waterfall) => {
-      Duel.accept(duelId,
-                  { id: req.user.sub, name: userInfo.name },
-                  waterfall);
+      Duel.accept(
+        duelId,
+        { id: req.user.sub, name: userInfo.name },
+        waterfall
+      );
     },
   ], (err, result) => {
     if (err) { return error.send(res, err, 'Failed to accept duel'); }

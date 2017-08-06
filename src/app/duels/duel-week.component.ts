@@ -14,6 +14,7 @@ import { DuelsService } from './duels.service';
   selector: 'duel-week',
   providers: [DuelsService],
   templateUrl: './duel-week.component.html',
+  styleUrls: ['./duel-week.component.css'],
 })
 export class DuelWeekComponent implements OnInit {
   duelWeek: DuelWeek;

@@ -11,6 +11,7 @@
     "start": "node app.js",
     "lint": "eslint app.js 'test/**/*.js' 'lib/*.js' 'models/*.js' 'controllers/*.js' 'services/*.js'",
     "postlint": "ng lint --type-check",
+    "pretest": "npm run lint",
     "test": "mocha"
   },
   "engines": {
@@ -45,6 +46,7 @@
     "mongodb": "^2.2.30",
     "morgan": "^1.8.2",
     "ng2-toastr": "^4.1.2",
+    "pre-commit": "^1.2.2",
     "request": "^2.81.0",
     "rxjs": "^5.4.2",
     "winston": "^2.3.1",

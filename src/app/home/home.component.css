@@ -1,8 +1,9 @@
 a { color: #E55812; }
-input.accept-duel { width: 15rem; }
-.pending-duels { list-style: none; }
+input.accept-duel { width: 16rem; }
+.pending-duels { list-style: none;  }
+.pending-duels pre { color: #ffffff; }
 form.accept-duel { margin-top: 1rem; }
-.btn-secondary { color: #00364A; border-color: #ffffff; }
-.btn-secondary:hover, .btn-secondary.active {
+.btn-light { color: #00364A; border-color: #ffffff; }
+.btn-light:hover, .btn-light.active {
   background-color: #00364A; border-color: #ffffff; color: #ffffff;
 }

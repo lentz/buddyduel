@@ -1,5 +1,5 @@
 <div class="card text-center game-card">
-  <div *ngIf="isReadOnly();else pickButtons" class="card-block">
+  <div *ngIf="isReadOnly();else pickButtons" class="card-body">
     <span [ngClass]="{'badge badge-primary': isSelected(game.awayTeam)}">
       {{ game.awayTeam }} {{ game.awaySpread | pointSpread }}
     </span>
@@ -9,7 +9,7 @@
     </span>
   </div>
   <ng-template #pickButtons>
-    <div class="card-block">
+    <div class="card-body">
       <button (click)="pick(game.awayTeam)"
               [class.active]="isSelected(game.awayTeam)"
               class="btn btn-outline-primary">

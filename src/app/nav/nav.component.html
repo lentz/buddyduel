@@ -1,14 +1,14 @@
-<nav class="navbar navbar-toggleable-sm navbar-inverse bg-inverse">
+<nav class="navbar navbar-dark navbar-expand-md">
   <div class="container">
-    <button class="navbar-toggler navbar-toggler-right" type="button"
+    <a class="navbar-brand" routerLink="/">
+      <i class="fa fa-shield fa-lg" aria-hidden="true"></i> BuddyDuel
+    </a>
+    <button class="navbar-toggler" type="button"
             data-toggle="collapse" data-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown" aria-expanded="false"
             aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand" routerLink="/">
-      <i class="fa fa-shield fa-lg" aria-hidden="true"></i> BuddyDuel
-    </a>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav mr-auto">
         <ng-template [ngIf]="authService.isAuthenticated()">
@@ -39,12 +39,12 @@
         </ng-template>
       </ul>
       <form *ngIf="authService.isAuthenticated()" class="form-inline">
-        <button (click)="createDuel()" class="btn btn-outline-secondary create-duel">
+        <button (click)="createDuel()" class="btn btn-outline-light create-duel">
           Create a Duel
         </button>
       </form>
       <button *ngIf="!authService.isAuthenticated()" (click)="authService.login()"
-              class="btn btn-outline-secondary">
+              class="btn btn-outline-light">
         <i class="fa fa-user-circle" aria-hidden="true"></i> Login
       </button>
       <span *ngIf="authService.isAuthenticated()" class="username">

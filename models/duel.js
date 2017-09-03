@@ -12,9 +12,10 @@ module.exports.forUser = (userId, status, cb) => {
   db.get().collection(colName).find(query).toArray(cb);
 };
 
-module.exports.create = (player, cb) => db.get().collection(colName).insertOne({
+module.exports.create = (player, betAmount, cb) => db.get().collection(colName).insertOne({
   players: [player],
   status: 'pending',
+  betAmount,
   updatedAt: new Date(),
 }, cb);
 

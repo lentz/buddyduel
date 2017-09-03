@@ -70,8 +70,8 @@ export class DuelsService {
                  .catch(this.handleError);
   }
 
-  create(): Promise<any> {
-    return this.authHttp.post(`${this.duelsURL}`, null, { headers: this.headers })
+  create(betAmount: number): Promise<any> {
+    return this.authHttp.post(`${this.duelsURL}`, { betAmount }, { headers: this.headers })
                         .toPromise()
                         .then(() => this.updateDuels())
                         .catch(this.handleError);

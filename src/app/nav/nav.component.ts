@@ -7,6 +7,8 @@ import { DuelsService } from '../duels/duels.service'
 import { Duel } from '../duels/duel';
 import { DuelWeek } from '../duels/duel-week';
 
+declare var jQuery: any;
+
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
@@ -14,6 +16,7 @@ import { DuelWeek } from '../duels/duel-week';
 })
 export class NavComponent implements OnInit {
   selectedDuelId: string;
+  betAmount = 0;
 
   public constructor(public duelsService: DuelsService,
                      public authService: AuthService,
@@ -53,8 +56,12 @@ export class NavComponent implements OnInit {
   }
 
   createDuel(): void {
-    this.duelsService.create()
-    .then(() => this.toastr.success('Duel created!'))
+    this.duelsService.create(this.betAmount)
+    .then(() => {
+      jQuery('#create-duel-modal').modal('hide');
+      this.betAmount = 0;
+      this.toastr.success('Duel created!');
+    })
     .catch(err => this.toastr.error(err));
   }
 }

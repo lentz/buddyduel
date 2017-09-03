@@ -24,7 +24,11 @@ module.exports.create = (req, res) => {
   async.waterfall([
     waterfall => user.getInfo(req.user.sub, waterfall),
     (userInfo, waterfall) => {
-      Duel.create({ id: req.user.sub, name: userInfo.name }, waterfall);
+      Duel.create(
+        { id: req.user.sub, name: userInfo.name },
+        req.body.betAmount,
+        waterfall
+      );
     },
   ], (err, duel) => {
     if (err) { return error.send(res, err, 'Failed to create duel'); }

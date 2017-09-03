@@ -5,8 +5,11 @@
   color: #00364A;
 }
 .username { color: #ffffff; }
-.create-duel { margin-right: 3rem; }
 .btn-outline-light { color: #ffffff; border-color: #ffffff; }
 .btn-outline-light:hover, .btn-outline-light.active {
   background-color: #ffffff; border-color: #ffffff; color: #00364A;
 }
+.create-duel { margin-right: 3rem; }
+#create-duel-modal { color: #00364A; }
+#create-duel-modal input.form-control { width: 6rem; }
+#create-duel-modal .input-group { margin: 0 .5rem 0 .5rem; }

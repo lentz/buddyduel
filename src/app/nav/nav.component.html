@@ -20,7 +20,7 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               <a *ngFor="let duel of duelsService.activeDuels()" (click)="onDuelSelect($event, duel)"
                  class="dropdown-item" href="#">
-                vs. {{ opponentName(duel) }}
+                vs. {{ opponentName(duel) }} (${{ duel.betAmount }}/game)
               </a>
             </div>
           </li>

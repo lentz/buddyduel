@@ -1,7 +1,7 @@
 a { color: #E55812; }
 input.accept-duel { width: 16rem; }
 .pending-duels { list-style: none;  }
-.pending-duels pre { color: #ffffff; }
+.pending-duels pre { color: #ffffff; display: inline; margin-right: 1rem; }
 form.accept-duel { margin-top: 1rem; }
 .btn-light { color: #00364A; border-color: #ffffff; }
 .btn-light:hover, .btn-light.active {

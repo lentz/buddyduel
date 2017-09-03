@@ -4,7 +4,7 @@
       <h3>Pending Duels</h3><p class="font-italic">Give the code to a friend</p>
       <ul class="pending-duels">
         <li *ngFor="let duel of duelsService.pendingDuels()">
-          <pre>{{ duel._id }}</pre>
+          <pre>{{ duel._id }}</pre><span>(${{ duel.betAmount }}/game)</span>
         </li>
       </ul>
     </div>

@@ -1,4 +1,4 @@
-.game-card { color: #01B8F1; width: 265px; margin-bottom: 1em; }
+.game-card { color: #01B8F1; font-size: .95rem; width: 265px; margin-bottom: 1em; }
 .game-card .card-footer { padding: 0.5rem; }
 .badge { font-size: 100%; font-weight: normal; }
 .badge-primary { background-color: #01B8F1; color: #ffffff; }

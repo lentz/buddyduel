@@ -6,6 +6,7 @@ module.exports.call = json => jp
   .query(JSON.parse(json), '$..items[?(@.type=="NFL")]')
   .map((game) => {
     const pointSpread = jp.query(game, '$..itemList[?(@.description=="Point Spread")]')[0];
+    if (!pointSpread) { return null; }
     const home = pointSpread.outcomes.find(team => team.type === 'H');
     const away = pointSpread.outcomes.find(team => team.type === 'A');
     return {
@@ -18,4 +19,4 @@ module.exports.call = json => jp
       awaySpread: Number(away.price.handicap),
       startTime: game.startTime,
     };
-  });
+  }).filter(game => game);

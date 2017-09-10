@@ -7,6 +7,12 @@
       <p class="pull-right font-italic">Picked by {{ duelWeek.picker.name }}</p>
     </div>
   </div>
+  <div *ngIf="duelWeek.record !== '0-0-0'" class="row">
+    <div class="col alert alert-warning">
+      This week's record is {{ duelWeek.record }} for winnings of
+      {{ duelWeek.winnings | currency:'USD':true }}
+    </div>
+  </div>
   <div class="row">
     <div class="col">
       <div class="d-flex flex-wrap justify-content-around">

@@ -27,6 +27,7 @@ module.exports.findOrNew = (year, weekNum, duel, cb) => {
         year,
         weekNum: Number(weekNum),
         duelId: duel._id.toString(),
+        betAmount: duel.betAmount,
         games: [],
         picker: duel.players[weekNum % 2],
       });

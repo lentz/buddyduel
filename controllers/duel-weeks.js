@@ -65,6 +65,19 @@ module.exports.show = (req, res) => {
     if (!duels.map(duel => duel._id.toString()).includes(duelWeek.duelId)) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
+    let wins = 0;
+    let losses = 0;
+    let pushes = 0;
+    duelWeek.games.forEach((game) => {
+      switch (game.result) {
+        case 'Win': wins += 1; break;
+        case 'Loss': losses += 1; break;
+        case 'Push': pushes += 1; break;
+        default:
+      }
+    });
+    duelWeek.record = `${wins}-${losses}-${pushes}`;
+    duelWeek.winnings = (wins * duelWeek.betAmount) - (losses * duelWeek.betAmount);
     return res.json(duelWeek);
   });
 };

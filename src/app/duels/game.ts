@@ -4,10 +4,13 @@ export class Game {
     public updated: boolean,
     public homeTeam: string,
     public homeSpread: number,
+    public homeScore: number,
     public awayTeam: string,
     public awaySpread: number,
+    public awayScore: number,
     public startTime: number,
-    public selectedTeam: string, ) {
+    public selectedTeam: string,
+    public result: string, ) {
 
   }
 }

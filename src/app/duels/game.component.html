@@ -3,10 +3,12 @@
     <span [ngClass]="{'badge badge-primary': isSelected(game.awayTeam)}">
       {{ game.awayTeam }} {{ game.awaySpread | pointSpread }}
     </span>
+    <span class="score badge badge-dark">{{ game.awayScore }}</span>
     <div>@</div>
     <span [ngClass]="{'badge badge-primary': isSelected(game.homeTeam)}">
       {{ game.homeTeam }} {{ game.homeSpread | pointSpread }}
     </span>
+    <span class="score badge badge-dark">{{ game.homeScore }}</span>
   </div>
   <ng-template #pickButtons>
     <div class="card-body">
@@ -23,7 +25,14 @@
       </button>
     </div>
   </ng-template>
-  <div class="card-footer text-muted small">
-    {{ game.startTime | date:'EEE, MMM d h:mm a' }}
+  <div class="card-footer">
+    <span *ngIf="game.result"
+          class="badge"
+          [ngClass]="{'badge-success': game.result === 'Win', 'badge-danger': game.result === 'Loss', 'badge-secondary': game.result === 'Push' }">
+      {{ game.result }}
+    </span>
+    <span *ngIf="!game.result" class="text-muted small">
+      {{ game.startTime | date:'EEE, MMM d h:mm a' }}
+    </span>
   </div>
 </div>

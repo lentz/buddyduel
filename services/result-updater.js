@@ -23,7 +23,11 @@ function updateScores(err, duelWeeks) {
     db.get().collection('results').findOne(
       { year: duelWeek.year, weekNum: duelWeek.weekNum }
       , (resultErr, weekResult) => {
-        if (resultErr) { throw resultErr; }
+        if (resultErr) {
+          console.error(`Error finding result for duel week: ${resultErr}`); // eslint-disable-line no-console
+          return;
+        }
+        if (!weekResult) { return; }
         const updatedGames = duelWeek.games.map((game) => {
           const gameResult = weekResult.scores.find(score => score.gameId === game.id);
           if (gameResult) {

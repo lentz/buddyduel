@@ -3,12 +3,12 @@
     <span [ngClass]="{'badge badge-primary': isSelected(game.awayTeam)}">
       {{ game.awayTeam }} {{ game.awaySpread | pointSpread }}
     </span>
-    <span class="score badge badge-dark">{{ game.awayScore }}</span>
+    <span class="score badge badge-secondary">{{ game.awayScore }}</span>
     <div>@</div>
     <span [ngClass]="{'badge badge-primary': isSelected(game.homeTeam)}">
       {{ game.homeTeam }} {{ game.homeSpread | pointSpread }}
     </span>
-    <span class="score badge badge-dark">{{ game.homeScore }}</span>
+    <span class="score badge badge-secondary">{{ game.homeScore }}</span>
   </div>
   <ng-template #pickButtons>
     <div class="card-body">

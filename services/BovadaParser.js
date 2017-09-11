@@ -1,15 +1,14 @@
 const crypto = require('crypto');
 const jp = require('jsonpath');
 const NFLWeek = require('./NFLWeek');
+const util = require('util');
 
-module.exports.call = json => jp
-  .query(JSON.parse(json), '$..items[?(@.type=="NFL")]')
-  .map((game) => {
-    const pointSpread = jp.query(game, '$..itemList[?(@.description=="Point Spread")]')[0];
-    if (!pointSpread) { return null; }
+function parseGame(game) {
+  let pointSpread;
+  try {
+    pointSpread = jp.query(game, '$..itemList[?(@.description=="Point Spread")]')[0];
     const home = pointSpread.outcomes.find(team => team.type === 'H');
     const away = pointSpread.outcomes.find(team => team.type === 'A');
-    if (!home.price || !away.price) { return null; }
     return {
       id: crypto.createHash('md5')
         .update(`${home.description}|${away.description}|${NFLWeek.seasonYear}|${NFLWeek.forGame(game)}`)
@@ -20,4 +19,13 @@ module.exports.call = json => jp
       awaySpread: Number(away.price.handicap),
       startTime: game.startTime,
     };
-  }).filter(game => game);
+  } catch (err) {
+    console.warn(`Error parsing Bovada game: ${err}\nPointSpread JSON: ${util.inspect(pointSpread)}`); // eslint-disable-line no-console
+    return null;
+  }
+}
+
+module.exports.call = json => jp
+  .query(JSON.parse(json), '$..items[?(@.type=="NFL")]')
+  .map(parseGame)
+  .filter(game => game);

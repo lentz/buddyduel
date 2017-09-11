@@ -9,6 +9,7 @@ module.exports.call = json => jp
     if (!pointSpread) { return null; }
     const home = pointSpread.outcomes.find(team => team.type === 'H');
     const away = pointSpread.outcomes.find(team => team.type === 'A');
+    if (!home.price || !away.price) { return null; }
     return {
       id: crypto.createHash('md5')
         .update(`${home.description}|${away.description}|${NFLWeek.seasonYear}|${NFLWeek.forGame(game)}`)

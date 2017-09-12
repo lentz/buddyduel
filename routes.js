@@ -21,7 +21,7 @@ const checkJwt = jwt({
 });
 
 router.use(checkJwt);
-router.use((err, req, res) => {
+router.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
   if (err.name === 'UnauthorizedError') {
     res.status(401).json({ message: `Unauthorized: ${err.message}` });
   }

@@ -9,7 +9,7 @@
   "scripts": {
     "postinstall": "ng build --prod",
     "start": "node app.js",
-    "lint": "eslint app.js 'test/**/*.js' 'lib/*.js' 'models/*.js' 'controllers/*.js' 'services/*.js'",
+    "lint": "eslint '**/*.js'",
     "postlint": "ng lint --type-check",
     "pretest": "npm run lint",
     "test": "mocha"
@@ -51,6 +51,7 @@
     "request": "^2.81.0",
     "rxjs": "^5.4.2",
     "winston": "^2.3.1",
+    "xml2js": "^0.4.19",
     "zone.js": "^0.8.16"
   },
   "devDependencies": {

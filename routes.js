@@ -12,16 +12,16 @@ const checkJwt = jwt({
     cache: true,
     rateLimit: true,
     jwksRequestsPerMinute: 5,
-    jwksUri: `https://app68395404.auth0.com/.well-known/jwks.json`
+    jwksUri: 'https://app68395404.auth0.com/.well-known/jwks.json',
   }),
 
   audience: 'http://www.buddyduel.net/api',
-  issuer: `https://app68395404.auth0.com/`,
-  algorithms: ['RS256']
+  issuer: 'https://app68395404.auth0.com/',
+  algorithms: ['RS256'],
 });
 
 router.use(checkJwt);
-router.use((err, req, res, next) => {
+router.use((err, req, res) => {
   if (err.name === 'UnauthorizedError') {
     res.status(401).json({ message: `Unauthorized: ${err.message}` });
   }

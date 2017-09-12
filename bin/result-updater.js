@@ -50,5 +50,6 @@ function updateScores(err, duelWeeks) {
 
 db.connect(process.env.MONGODB_URI, (err) => {
   if (err) { throw err; }
-  db.get().collection('duelweeks').find({ 'games.result': null }).toArray(updateScores);
+  // TODO: Scope down games needing update
+  db.get().collection('duelweeks').find({}).toArray(updateScores);
 });

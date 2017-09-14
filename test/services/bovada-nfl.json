@@ -416,6 +416,154 @@
                                 "belongsToDefault": true,
                                 "outcomes": [
                                   {
+                                    "description": "Kansas City Chiefs - 1H",
+                                    "id": "181596890",
+                                    "type": "A",
+                                    "competitorId": "2782377-2344",
+                                    "lineQualityColour": "ff0000",
+                                    "lineQualityDescription": "Restricted",
+                                    "status": "OPEN",
+                                    "price": {
+                                      "id": "555811118",
+                                      "handicap": "10",
+                                      "american": "-110",
+                                      "decimal": "1.909",
+                                      "fractional": "10/11",
+                                      "outcomeId": "181596890"
+                                    }
+                                  },
+                                  {
+                                    "description": "New England Patriots - 1H",
+                                    "id": "181596891",
+                                    "type": "H",
+                                    "competitorId": "2782377-3826",
+                                    "lineQualityColour": "ff0000",
+                                    "lineQualityDescription": "Restricted",
+                                    "status": "OPEN",
+                                    "price": {
+                                      "id": "555811112",
+                                      "handicap": "-10",
+                                      "american": "-110",
+                                      "decimal": "1.909",
+                                      "fractional": "10/11",
+                                      "outcomeId": "181596891"
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "description": "Total",
+                                "id": "39653098",
+                                "type": "TOT",
+                                "columns": "H2Columns",
+                                "mainMarketType": "TOTAL",
+                                "mainPeriod": true,
+                                "marketTypeGroup": "TOTALS",
+                                "sequence": "9",
+                                "sportCode": "AMFB",
+                                "periodType": "Match",
+                                "status": "OPEN",
+                                "displayGroups": "41",
+                                "notes": "",
+                                "belongsToDefault": true,
+                                "outcomes": [
+                                  {
+                                    "description": "Over",
+                                    "id": "181596876",
+                                    "type": "O",
+                                    "lineQualityColour": "ff0000",
+                                    "lineQualityDescription": "Restricted",
+                                    "status": "OPEN",
+                                    "price": {
+                                      "id": "560985460",
+                                      "handicap": "48.5",
+                                      "american": "-110",
+                                      "decimal": "1.909",
+                                      "fractional": "10/11",
+                                      "outcomeId": "181596876"
+                                    }
+                                  },
+                                  {
+                                    "description": "Under",
+                                    "id": "181596877",
+                                    "type": "U",
+                                    "lineQualityColour": "ff0000",
+                                    "lineQualityDescription": "Restricted",
+                                    "status": "OPEN",
+                                    "price": {
+                                      "id": "560985461",
+                                      "handicap": "48.5",
+                                      "american": "-110",
+                                      "decimal": "1.909",
+                                      "fractional": "10/11",
+                                      "outcomeId": "181596877"
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "description": "Kansas City Chiefs @ New England Patriots",
+                        "id": "2782377",
+                        "link": "/football/nfl/kansas-city-chiefs-new-england-patriots-201709072030",
+                        "baseLink": "/football/nfl/kansas-city-chiefs-new-england-patriots-201709072030",
+                        "atmosphereLink": "/api/atmosphere/eventNotification/events/A/2782377",
+                        "type": "NFL",
+                        "awayTeamFirst": true,
+                        "denySameGame": "NO",
+                        "feedCode": "2506806",
+                        "competitionId": "241",
+                        "competitors": [
+                          {
+                            "description": "New England Patriots",
+                            "id": "2782377-3826",
+                            "type": "HOME",
+                            "abbreviation": "NE",
+                            "rotationNumber": "452",
+                            "shortName": "Patriots"
+                          },
+                          {
+                            "description": "Kansas City Chiefs",
+                            "id": "2782377-2344",
+                            "type": "AWAY",
+                            "abbreviation": "KC",
+                            "rotationNumber": "451",
+                            "shortName": "Chiefs"
+                          }
+                        ],
+                        "notes": "",
+                        "numMarkets": 2,
+                        "sport": "FOOT",
+                        "startTime": 1504830600000,
+                        "status": "O",
+                        "displayGroups": [
+                          {
+                            "description": "Game Lines",
+                            "id": "41",
+                            "link": "/football/nfl/game-lines-market-group",
+                            "baseLink": "/football/nfl/game-lines-market-group",
+                            "defaultType": true,
+                            "itemList": [
+                              {
+                                "description": "Point Spread",
+                                "id": "39653100",
+                                "type": "SPR",
+                                "columns": "H2Columns",
+                                "mainMarketType": "SPREAD",
+                                "mainPeriod": true,
+                                "marketTypeGroup": "SPREAD",
+                                "sequence": "9",
+                                "sportCode": "AMFB",
+                                "periodType": "Match",
+                                "status": "OPEN",
+                                "displayGroups": "41",
+                                "notes": "",
+                                "belongsToDefault": true,
+                                "outcomes": [
+                                  {
                                     "description": "Kansas City Chiefs",
                                     "id": "181596890",
                                     "type": "A",

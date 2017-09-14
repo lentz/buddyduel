@@ -3,12 +3,17 @@ const jp = require('jsonpath');
 const NFLWeek = require('./NFLWeek');
 const util = require('util');
 
+const teamRegex = /^[\w\s\d]+$/;
+
 function parseGame(game) {
   let pointSpread;
   try {
     pointSpread = jp.query(game, '$..itemList[?(@.description=="Point Spread")]')[0];
     const home = pointSpread.outcomes.find(team => team.type === 'H');
     const away = pointSpread.outcomes.find(team => team.type === 'A');
+    if (!home.description.match(teamRegex) || !away.description.match(teamRegex)) {
+      return null;
+    }
     return {
       id: crypto.createHash('md5')
         .update(`${home.description}|${away.description}|${NFLWeek.seasonYear}|${NFLWeek.forGame(game)}`)

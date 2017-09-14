@@ -1,9 +1,15 @@
+/* eslint no-param-reassign: 0 */
+
 require('dotenv').config();
-const db = require('../db');
+const async = require('async');
+const crypto = require('crypto');
+const ObjectID = require('mongodb').ObjectID;
 const request = require('request');
 const xml2js = require('xml2js');
-const crypto = require('crypto');
-const async = require('async');
+
+const betResult = require('../lib/betResult');
+const db = require('../db');
+const NFLWeek = require('../services/NFLWeek');
 
 const teamMap = {
   ARI: 'Arizona Cardinals',
@@ -40,7 +46,7 @@ const teamMap = {
   WAS: 'Washington Redskins',
 };
 
-function updateScores(cb) {
+function getScores(cb) {
   async.waterfall([
     (waterfall) => {
       request.get('http://www.nfl.com/liveupdate/scorestrip/ss.xml', (err, _res, body) => {
@@ -75,10 +81,51 @@ function updateScores(cb) {
   });
 }
 
+function gamesWithResults(games, scores) {
+  return games.map((game) => {
+    const gameResult = scores.find(score => score.gameId === game.id);
+    if (gameResult) {
+      game.awayScore = gameResult.awayScore;
+      game.homeScore = gameResult.homeScore;
+      game.result = betResult(game);
+    }
+    return game;
+  });
+}
+
+function updateDuelWeeks(cb) {
+  async.waterfall([
+    (waterfall) => {
+      db.get().collection('results').findOne(
+        { year: NFLWeek.seasonYear, weekNum: NFLWeek.currentWeek() },
+        waterfall
+      );
+    },
+    (result, waterfall) => {
+      db.get().collection('duelweeks').find({ weekNum: NFLWeek.currentWeek() })
+        .toArray((err, duelWeeks) => {
+          if (err) { return waterfall(err); }
+          return cb(null, result, duelWeeks);
+        });
+    },
+    (result, duelWeeks, waterfall) => {
+      if (!result || result.scores.length < 1) { return cb(null, null); }
+      return async.each(duelWeeks, (duelWeek, eachCb) => {
+        db.get().collection('duelweeks').updateOne(
+          { _id: new ObjectID(duelWeek._id) },
+          { $set: { games: gamesWithResults(duelWeek.games, result.scores) } },
+          eachCb
+        );
+      }, waterfall);
+    },
+  ], cb);
+}
+
 async.series([
   async.apply(db.connect, process.env.MONGODB_URI),
-  async.apply(updateScores),
+  async.apply(getScores),
+  async.apply(updateDuelWeeks),
 ], (err) => {
   db.close(() => {});
-  if (err) { console.error('Error updating NFL scores:', err); } // eslint-disable-line no-console
+  if (err) { console.error('Error updating NFL results:', err); } // eslint-disable-line no-console
 });

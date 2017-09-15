@@ -10,6 +10,7 @@ export class Game {
     public awayScore: number,
     public startTime: number,
     public selectedTeam: string,
+    public time: string,
     public result: string, ) {
 
   }

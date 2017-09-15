@@ -2,49 +2,13 @@
 
 require('dotenv').config();
 const async = require('async');
-const crypto = require('crypto');
 const ObjectID = require('mongodb').ObjectID;
 const request = require('request');
-const xml2js = require('xml2js');
 
 const betResult = require('../lib/betResult');
 const db = require('../db');
 const NFLWeek = require('../services/NFLWeek');
-
-const teamMap = {
-  ARI: 'Arizona Cardinals',
-  ATL: 'Atlanta Falcons',
-  BAL: 'Baltimore Ravens',
-  BUF: 'Buffalo Bills',
-  CAR: 'Carolina Panthers',
-  CHI: 'Chicago Bears',
-  CIN: 'Cincinnati Bengals',
-  CLE: 'Cleveland Browns',
-  DAL: 'Dallas Cowboys',
-  DEN: 'Denver Broncos',
-  DET: 'Detroit Lions',
-  GB: 'Green Bay Packers',
-  HOU: 'Houston Texans',
-  IND: 'Indianapolis Colts',
-  JAX: 'Jacksonville Jaguars',
-  KC: 'Kansas City Chiefs',
-  LA: 'Los Angeles Rams',
-  LAC: 'Los Angeles Chargers',
-  MIA: 'Miami Dolphins',
-  MIN: 'Minnesota Vikings',
-  NE: 'New England Patriots',
-  NO: 'New Orleans Saints',
-  NYG: 'New York Giants',
-  NYJ: 'New York Jets',
-  OAK: 'Oakland Raiders',
-  PHI: 'Philadelphia Eagles',
-  PIT: 'Pittsburgh Steelers',
-  SEA: 'Seattle Seahawks',
-  SF: 'San Francisco 49ers',
-  TB: 'Tampa Bay Buccaneers',
-  TEN: 'Tennessee Titans',
-  WAS: 'Washington Redskins',
-};
+const NFLScoreParser = require('../lib/NFLScoreParser');
 
 function getScores(cb) {
   async.waterfall([
@@ -54,31 +18,15 @@ function getScores(cb) {
         return waterfall(null, body);
       });
     },
-    (xml, waterfall) => xml2js.parseString(xml, waterfall),
-  ],
-  (err, scoresJSON) => {
-    if (err) { return cb(err); }
-    return async.each(scoresJSON.ss.gms, (nflWeek, eachWeekCb) => {
-      const year = Number(nflWeek.$.y);
-      const weekNum = Number(nflWeek.$.w);
-      const scores = nflWeek.g
-        .map(game => game.$)
-        .filter(game => game.q !== 'P')
-        .map(game => ({
-          gameId: crypto.createHash('md5')
-            .update(`${teamMap[game.h]}|${teamMap[game.v]}|${year}|${weekNum}`)
-            .digest('hex'),
-          homeScore: Number(game.hs),
-          awayScore: Number(game.vs),
-        }));
+    (scoresXML, waterfall) => NFLScoreParser.parseXML(scoresXML, waterfall),
+    (result, waterfall) => {
       db.get().collection('results').findOneAndReplace(
-        { year, weekNum },
-        { year, weekNum, scores },
+        { year: result.year, weekNum: result.weekNum },
+        result,
         { upsert: true },
-        eachWeekCb
+        waterfall
       );
-    }, cb);
-  });
+    }], cb);
 }
 
 function gamesWithResults(games, scores) {
@@ -87,6 +35,7 @@ function gamesWithResults(games, scores) {
     if (gameResult) {
       game.awayScore = gameResult.awayScore;
       game.homeScore = gameResult.homeScore;
+      game.time = gameResult.time;
       game.result = betResult(game);
     }
     return game;

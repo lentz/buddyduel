@@ -26,11 +26,13 @@
     </div>
   </ng-template>
   <div class="card-footer">
-    <span *ngIf="game.result"
-          class="badge"
-          [ngClass]="{'badge-success': game.result === 'Win', 'badge-danger': game.result === 'Loss', 'badge-secondary': game.result === 'Push' }">
-      {{ game.result }}
-    </span>
+    <div *ngIf="game.result">
+      <span class="badge"
+            [ngClass]="{'badge-success': game.result === 'Win', 'badge-danger': game.result === 'Loss', 'badge-secondary': game.result === 'Push' }">
+        {{ game.result }}
+      </span>
+      <span class="text-muted small">- {{ game.time }}</span>
+    </div>
     <span *ngIf="!game.result" class="text-muted small">
       {{ game.startTime | date:'EEE, MMM d h:mm a' }}
     </span>

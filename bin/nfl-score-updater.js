@@ -105,7 +105,7 @@ function updateDuelWeeks(cb) {
       db.get().collection('duelweeks').find({ weekNum: NFLWeek.currentWeek() })
         .toArray((err, duelWeeks) => {
           if (err) { return waterfall(err); }
-          return cb(null, result, duelWeeks);
+          return waterfall(null, result, duelWeeks);
         });
     },
     (result, duelWeeks, waterfall) => {

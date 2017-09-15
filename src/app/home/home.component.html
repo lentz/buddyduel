@@ -1,35 +1,47 @@
 <div *ngIf="authService.isAuthenticated();else unauthenticated" class="row">
-  <div class="col-sm-7">
-    <div *ngIf="duelsService.pendingDuels().length > 0">
-      <h3>Pending Duels</h3><p class="font-italic">Give the code to a friend</p>
-      <ul class="pending-duels">
-        <li *ngFor="let duel of duelsService.pendingDuels()">
-          <pre>{{ duel._id }}</pre><span>(${{ duel.betAmount }}/game)</span>
-        </li>
-      </ul>
+  <div class="col-md-7">
+    <div class="card">
+      <div class="card-header">Current Duels</div>
+      <div class="card-body">
+        <ul>
+          <li *ngFor="let duelWeek of duelsService.duelWeeks">
+            <a [routerLink]="[ '/duel-weeks', duelWeek._id ]">
+              Week {{ duelWeek.weekNum }} vs {{ opponentName(duelWeek) }}
+            </a>
+          </li>
+        </ul>
+        <span *ngIf="duelsService.activeDuels().length < 1">
+          Create a duel and send the code to a buddy to get started or enter a code
+          given to you in the 'Duel Code' box and click 'Accept'.
+        </span>
+      </div>
     </div>
-    <h3>Current Duels</h3>
-    <ul>
-      <li *ngFor="let duelWeek of duelsService.duelWeeks">
-        <a [routerLink]="[ '/duel-weeks', duelWeek._id ]">
-          Week {{ duelWeek.weekNum }} vs {{ opponentName(duelWeek) }}
-        </a>
-      </li>
-    </ul>
-    <span *ngIf="duelsService.activeDuels().length < 1">
-      Create a duel and send the code to a buddy to get started or enter a code
-      given to you in the 'Duel Code' box and click 'Accept'.
-    </span>
+    <div class="card" *ngIf="duelsService.pendingDuels().length > 0">
+      <div class="card-header">Pending Duels</div>
+      <div class="card-body">
+        <h6 class="card-subtitle mb-2 text-muted">Give the code to a friend</h6>
+        <ul class="pending-duels">
+          <li *ngFor="let duel of duelsService.pendingDuels()">
+            <pre>{{ duel._id }}</pre><span>(${{ duel.betAmount }}/game)</span>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
-  <div class="col-sm-5">
-    <form class="form-inline pull-right accept-duel">
-      <input type="text" class="form-control accept-duel" name="acceptCode"
-             [(ngModel)]="acceptCode" placeholder="Duel Code" />
-      <button (click)="acceptDuel()" class="btn btn-primary"
-              [disabled]="acceptCode.length < 24">
-        Accept Duel
-      </button>
-    </form>
+  <div class="col-md-5">
+    <div class="card">
+      <div class="card-header">Accept Duel</div>
+      <div class="card-body">
+        <form class="form-inline accept-duel">
+          <input type="text" class="form-control accept-duel" name="acceptCode"
+                 [(ngModel)]="acceptCode" placeholder="Duel Code" />
+          <button (click)="acceptDuel()" class="btn btn-primary"
+                  [disabled]="acceptCode.length < 24">
+            Accept Duel
+          </button>
+        </form>
+      </div>
+    </div>
   </div>
 </div>
 <ng-template #unauthenticated>

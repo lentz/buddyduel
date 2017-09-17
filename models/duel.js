@@ -19,10 +19,12 @@ module.exports.create = (player, betAmount, cb) => db.get().collection(colName).
   updatedAt: new Date(),
 }, cb);
 
-module.exports.accept = (id, player, cb) => db.get().collection(colName).updateOne(
+module.exports.accept = (id, player, cb) => db.get().collection(colName).findOneAndUpdate(
   { _id: new ObjectID(id), status: 'pending' },
   {
     $currentDate: { updatedAt: true },
     $set: { status: 'active' },
     $push: { players: player },
-  }, cb);
+  },
+  { returnOriginal: false },
+  cb);

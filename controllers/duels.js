@@ -1,6 +1,7 @@
 const async = require('async');
 
 const Duel = require('../models/duel');
+const DuelWeekUpdater = require('../services/DuelWeekUpdater');
 const error = require('../lib/error');
 const user = require('../services/user');
 
@@ -48,11 +49,14 @@ module.exports.accept = (req, res) => {
         waterfall
       );
     },
-  ], (err, result) => {
+    (updateResult, waterfall) => {
+      if (updateResult.lastErrorObject.n < 1) {
+        return waterfall(new Error('Duel cannot be accepted'));
+      }
+      return DuelWeekUpdater.call([updateResult.value], waterfall);
+    },
+  ], (err) => {
     if (err) { return error.send(res, err, 'Failed to accept duel'); }
-    if (result.matchedCount === 0) {
-      return res.status(404).json({ message: 'Duel not found' });
-    }
     return res.json({ message: 'Duel accepted!' });
   });
 };

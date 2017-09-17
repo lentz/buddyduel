@@ -1,5 +1,4 @@
 const request = require('request');
-const logger = require('winston');
 const BovadaParser = require('../services/BovadaParser');
 
 const options = {
@@ -11,7 +10,6 @@ const options = {
 };
 
 module.exports.getLines = (cb) => {
-  logger.info('Requesting Bovada lines');
   request(options, (err, _res, body) => {
     if (err) { return cb(err); }
     return cb(null, BovadaParser.call(body));

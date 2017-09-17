@@ -63,10 +63,8 @@ export class DuelsService {
     return this.authHttp.put(`${this.duelsURL}/${duelId}/accept`, null,
                       { headers: this.headers })
                  .toPromise()
-                 .then(() => {
-                   this.updateDuelWeeks();
-                   return this.updateDuels();
-                 })
+                 .then(() => this.updateDuels())
+                 .then(() => this.updateDuelWeeks())
                  .catch(this.handleError);
   }
 

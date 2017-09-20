@@ -20,6 +20,18 @@ describe('NFLScoreParser', () => {
           awayScore: 14,
           time: 'Final',
         },
+        {
+          gameId: '44c379c456ca47f7a4c2c4f3d71fa656',
+          homeScore: 7,
+          awayScore: 3,
+          time: 'Final',
+        },
+        {
+          gameId: '31b02226c37763f96768a7ecb92fafeb',
+          homeScore: 13,
+          awayScore: 7,
+          time: 'Half',
+        },
       ],
       weekNum: 2,
       year: 2017,

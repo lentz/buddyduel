@@ -34,6 +34,7 @@ export class DuelWeekComponent implements OnInit {
       .switchMap((params: Params) => this.duelsService.getWeek(params['id']))
       .subscribe(duelWeek => {
         this.duelWeek = duelWeek;
+        this.duelWeek.games.sort((a: any, b: any) => a.startTime - b.startTime);
         this.titleService.setTitle(`BuddyDuel - Week ${duelWeek.weekNum}`);
       });
   }

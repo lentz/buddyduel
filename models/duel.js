@@ -28,3 +28,6 @@ module.exports.accept = (id, player, cb) => db.get().collection(colName).findOne
   },
   { returnOriginal: false },
   cb);
+
+module.exports.delete = (id, playerId, cb) => db.get().collection(colName).deleteOne(
+  { _id: new ObjectID(id), 'players.id': playerId }, null, cb);

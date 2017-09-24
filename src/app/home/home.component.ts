@@ -37,4 +37,12 @@ export class HomeComponent implements OnInit {
     })
     .catch(err => this.toastr.error(err));
   }
+
+  deleteDuel(duelId): void {
+    this.duelsService.deleteDuel(duelId)
+    .then(() => {
+      this.toastr.success('Duel deleted')
+    })
+    .catch(err => this.toastr.error(err));
+  }
 }

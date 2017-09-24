@@ -68,6 +68,14 @@ export class DuelsService {
                  .catch(this.handleError);
   }
 
+  deleteDuel(duelId: string): Promise<any> {
+    return this.authHttp.delete(`${this.duelsURL}/${duelId}`,
+                      { headers: this.headers })
+                 .toPromise()
+                 .then(() => this.updateDuels())
+                 .catch(this.handleError);
+  }
+
   create(betAmount: number): Promise<any> {
     return this.authHttp.post(`${this.duelsURL}`, { betAmount }, { headers: this.headers })
                         .toPromise()

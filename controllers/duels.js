@@ -60,3 +60,10 @@ module.exports.accept = (req, res) => {
     return res.json({ message: 'Duel accepted!' });
   });
 };
+
+module.exports.delete = (req, res) => {
+  Duel.delete(req.params.id, req.user.sub, (err) => {
+    if (err) { return error.send(res, err, 'Failed to delete duel'); }
+    return res.json({ message: 'Duel deleted' });
+  });
+};

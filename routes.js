@@ -30,6 +30,8 @@ router.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
 router.route('/duels')
   .get(duelsController.index)
   .post(duelsController.create);
+router.route('/duels/:id')
+  .delete(duelsController.delete);
 router.route('/duels/:id/accept')
   .put(duelsController.accept);
 

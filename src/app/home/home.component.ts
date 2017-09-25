@@ -25,7 +25,9 @@ export class HomeComponent implements OnInit {
 
   currentDuels(): DuelWeek[] {
     const maxWeek = Math.max(...this.duelsService.duelWeeks.map(week => week.weekNum));
-    return this.duelsService.duelWeeks.filter(week => week.weekNum === maxWeek);
+    return this.duelsService.duelWeeks.filter(week => {
+      return week.weekNum >= maxWeek - 1
+    });
   }
 
   opponentName(duelWeek: DuelWeek): string {

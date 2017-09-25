@@ -23,6 +23,11 @@ export class HomeComponent implements OnInit {
     this.titleService.setTitle('BuddyDuel');
   }
 
+  currentDuels(): DuelWeek[] {
+    const maxWeek = Math.max(...this.duelsService.duelWeeks.map(week => week.weekNum));
+    return this.duelsService.duelWeeks.filter(week => week.weekNum === maxWeek);
+  }
+
   opponentName(duelWeek: DuelWeek): string {
     return this.duelsService.opponentForDuel(
       this.duelsService.duels.find(duel => duel._id === duelWeek.duelId)

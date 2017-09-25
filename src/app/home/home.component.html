@@ -4,7 +4,7 @@
       <div class="card-header">Current Duels</div>
       <div class="card-body">
         <ul>
-          <li *ngFor="let duelWeek of duelsService.duelWeeks">
+          <li *ngFor="let duelWeek of currentDuels()">
             <a [routerLink]="[ '/duel-weeks', duelWeek._id ]">
               Week {{ duelWeek.weekNum }} vs {{ opponentName(duelWeek) }}
             </a>

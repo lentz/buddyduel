@@ -9,6 +9,7 @@ export class DuelWeek {
     public duelId: string,
     public weekNum: number,
     public picker: Player,
+    public players: Player[],
     public record: string,
     public winnings: number,
     games: Game[], ) {

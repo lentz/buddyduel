@@ -29,6 +29,7 @@ module.exports.findOrNew = (year, weekNum, duel, cb) => {
         duelId: duel._id.toString(),
         betAmount: duel.betAmount,
         games: [],
+        players: duel.players,
         picker: duel.players[weekNum % 2],
       });
     });

@@ -31,8 +31,8 @@ export class HomeComponent implements OnInit {
   }
 
   opponentName(duelWeek: DuelWeek): string {
-    return this.duelsService.opponentForDuel(
-      this.duelsService.duels.find(duel => duel._id === duelWeek.duelId)
+    return this.duelsService.opponentForPlayers(
+      this.duelsService.duels.find(duel => duel._id === duelWeek.duelId).players
     );
   }
 

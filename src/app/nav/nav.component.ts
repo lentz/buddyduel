@@ -39,7 +39,7 @@ export class NavComponent implements OnInit {
   }
 
   opponentName(duel: Duel): string {
-    return this.duelsService.opponentForDuel(duel);
+    return this.duelsService.opponentForPlayers(duel.players);
   }
 
   getSelectedDuelId(): string {

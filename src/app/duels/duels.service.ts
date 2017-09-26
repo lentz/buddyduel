@@ -7,6 +7,7 @@ import { AuthService } from '../auth/auth.service'
 import { Game } from './game';
 import { DuelWeek } from './duel-week';
 import { Duel } from './duel';
+import { Player } from './player';
 
 @Injectable()
 export class DuelsService {
@@ -33,9 +34,9 @@ export class DuelsService {
     return this.duelWeeks.filter(week => week.duelId === duelId);
   }
 
-  opponentForDuel(duel: Duel): string {
+  opponentForPlayers(players: Player[]): string {
     const currentPlayerId = this.authService.getUserProfile().sub;
-    return duel.players.find(player => player.id !== currentPlayerId).name;
+    return players.find(player => player.id !== currentPlayerId).name;
   }
 
   updateDuels(): Promise<Duel[]> {

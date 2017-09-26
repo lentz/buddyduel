@@ -1,10 +1,13 @@
 <div *ngIf="duelWeek">
   <div class="row">
-    <div class="col-5">
-      <h2>Week {{ duelWeek.weekNum }}</h2>
+    <div class="col-lg-8">
+      <h2 class="text-truncate">
+        Week {{ duelWeek.weekNum }}
+        <small class="text-muted">vs {{ opponentName() }}</small>
+      </h2>
     </div>
-    <div class="col">
-      <p class="pull-right font-italic">Picked by {{ duelWeek.picker.name }}</p>
+    <div class="col-lg">
+      <p class="font-italic">Picked by {{ duelWeek.picker.name }}</p>
     </div>
   </div>
   <div *ngIf="duelWeek.record !== '0-0-0'" class="row">

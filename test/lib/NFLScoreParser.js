@@ -32,6 +32,12 @@ describe('NFLScoreParser', () => {
           awayScore: 7,
           time: 'Half',
         },
+        {
+          gameId: '9f76cee41626238e38947f44e728333c',
+          homeScore: 0,
+          awayScore: 0,
+          time: 'Suspended',
+        },
       ],
       weekNum: 2,
       year: 2017,

@@ -6,14 +6,17 @@
         <small class="text-muted">vs {{ opponentName() }}</small>
       </h2>
     </div>
-    <div class="col-lg">
+    <div *ngIf="duelWeek.record === '0-0-0'" class="col-lg">
       <p class="font-italic">Picked by {{ pickedBy() }}</p>
     </div>
   </div>
   <div *ngIf="duelWeek.record !== '0-0-0'" class="row">
     <div class="col alert alert-warning">
-      This week's record is {{ duelWeek.record }} for winnings of
-      {{ duelWeek.winnings | currency:'USD':true }}
+      {{ isPicker() ? 'Your' : opponentName() + "'s" }} record this week is
+      {{ duelWeek.record }} {{ isWinning() ? 'winning' : 'losing' }}
+      <span [ngClass]="{'badge': true, 'badge-success': isWinning(), 'badge-danger': !isWinning()}">
+        {{ duelWeek.winnings | currency:'USD':true }}
+      </span>
     </div>
   </div>
   <div class="row">

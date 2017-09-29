@@ -64,4 +64,8 @@ export class DuelWeekComponent implements OnInit {
   opponentName(): string {
     return this.duelsService.opponentForPlayers(this.duelWeek.players);
   }
+
+  isWinning(): boolean {
+    return this.duelWeek.winnings >= 0;
+  }
 }

@@ -57,6 +57,10 @@ export class DuelWeekComponent implements OnInit {
     return this.duelWeek.picker.id === this.authService.getUserProfile().sub
   }
 
+  pickedBy(): string {
+    return this.isPicker() ? 'You' : this.duelWeek.picker.name;
+  }
+
   opponentName(): string {
     return this.duelsService.opponentForPlayers(this.duelWeek.players);
   }

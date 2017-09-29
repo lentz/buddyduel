@@ -7,7 +7,7 @@
       </h2>
     </div>
     <div class="col-lg">
-      <p class="font-italic">Picked by {{ duelWeek.picker.name }}</p>
+      <p class="font-italic">Picked by {{ pickedBy() }}</p>
     </div>
   </div>
   <div *ngIf="duelWeek.record !== '0-0-0'" class="row">

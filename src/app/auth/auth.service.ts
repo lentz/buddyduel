@@ -1,8 +1,11 @@
-import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import 'rxjs/add/operator/filter';
 import auth0 from 'auth0-js';
 import IdTokenVerifier from 'idtoken-verifier';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/observable/timer';
+import 'rxjs/add/observable/of';
 
 import { environment } from '../../environments/environment';
 
@@ -16,6 +19,7 @@ export class AuthService {
     redirectUri: environment.authCallbackURL,
     scope: 'openid profile email'
   });
+  private refreshSubscription: any;
 
   constructor(public router: Router) {}
 
@@ -47,7 +51,7 @@ export class AuthService {
     localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
-
+    this.unscheduleRenewal();
     this.router.navigate(['/']);
   }
 
@@ -56,10 +60,43 @@ export class AuthService {
     return new Date().getTime() < expiresAt;
   }
 
+  renewToken() {
+    this.auth0.renewAuth({
+      audience: this.auth0.baseOptions.audience,
+      redirectUri: environment.authSilentUri,
+      usePostMessage: true,
+    }, (err, authResult) => {
+      if (err) { return console.log('Error renewing token!', err); }
+      this.setSession(authResult);
+    });
+  }
+
+  scheduleRenewal() {
+    if (!this.isAuthenticated()) { return; }
+    this.unscheduleRenewal();
+
+    const expiresAt = JSON.parse(window.localStorage.getItem('expires_at'));
+    const source = Observable.of(expiresAt).flatMap(expireTime => {
+      const now = Date.now();
+      return Observable.timer(Math.max(1, expireTime - now));
+    });
+
+    this.refreshSubscription = source.subscribe(() => {
+      this.renewToken();
+      this.scheduleRenewal();
+    });
+  }
+
+  unscheduleRenewal() {
+    if (!this.refreshSubscription) { return; }
+    this.refreshSubscription.unsubscribe();
+  }
+
   private setSession(authResult): void {
     const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
     localStorage.setItem('access_token', authResult.accessToken);
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('expires_at', expiresAt);
+    this.scheduleRenewal();
   }
 }

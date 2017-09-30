@@ -1,0 +1,18 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    script(src='https://cdn.auth0.com/js/auth0/8.9/auth0.min.js')
+    script.
+      var webAuth = new auth0.WebAuth({
+        domain: 'app68395404.auth0.com',
+        clientID: 'sL6CB8EzVFHvPIG4XaF7JgLAf6R90QbE',
+        scope: 'openid profile email',
+        responseType: 'token id_token',
+        redirectUri: '#{redirectUri}'
+      });
+    script.
+      webAuth.parseHash(window.location.hash, function (err, response) {
+        parent.postMessage(err || response, '#{redirectUri}');
+      });
+  body

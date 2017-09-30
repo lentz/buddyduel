@@ -47,7 +47,6 @@
     "mongoose": "^4.11.10",
     "morgan": "^1.8.2",
     "ng2-toastr": "^4.1.2",
-    "pre-commit": "^1.2.2",
     "request": "^2.81.0",
     "rxjs": "^5.4.2",
     "winston": "^2.3.1",
@@ -70,6 +69,7 @@
     "karma-jasmine": "^1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
     "mocha": "^3.5.0",
+    "pre-commit": "^1.2.2",
     "ts-node": "^3.3.0",
     "tslint": "^5.5.0"
   }

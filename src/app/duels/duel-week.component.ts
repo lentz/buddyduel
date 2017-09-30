@@ -64,7 +64,22 @@ export class DuelWeekComponent implements OnInit {
     return this.duelsService.opponentForPlayers(this.duelWeek.players);
   }
 
+  record(): string {
+    return `${this.duelWeek.record.wins}-${this.duelWeek.record.losses}-${this.duelWeek.record.pushes}`;
+  }
+
+  winnings(): number {
+    return (this.duelWeek.record.wins * this.duelWeek.betAmount) -
+           (this.duelWeek.record.losses * this.duelWeek.betAmount);
+  }
+
   isWinning(): boolean {
-    return this.duelWeek.winnings >= 0;
+    return this.winnings() >= 0;
+  }
+
+  hasFinalGames(): boolean {
+    return this.duelWeek.record.wins > 0 ||
+           this.duelWeek.record.losses > 0 ||
+           this.duelWeek.record.pushes > 0;
   }
 }

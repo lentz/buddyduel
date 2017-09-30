@@ -1,35 +1,32 @@
 const async = require('async');
 
-const Duel = require('../models/duel');
+const Duel = require('../models/Duel');
 const DuelWeekUpdater = require('../services/DuelWeekUpdater');
 const error = require('../lib/error');
 const user = require('../services/user');
 
 function alreadyInDuel(duelId, userId, cb) {
-  Duel.forUser(userId, 'pending', (err, duels) => {
-    if (duels.map(duel => duel._id.toString()).includes(duelId)) {
-      return cb(new Error('You are already in this duel'));
-    }
+  Duel.findOne({ _id: duelId, 'players.id': userId }, (err, duel) => {
+    if (duel) { return cb(new Error(`User ${userId} already in Duel ${duelId}`)); }
     return cb();
   });
 }
 
-module.exports.index = (req, res) => {
-  Duel.forUser(req.user.sub, req.query.status, (err, duels) => {
-    if (err) { error.send(res, err, 'Failed to find duels'); }
-    res.json(duels);
+module.exports.index = (req, res) => Duel
+  .find({ 'players.id': req.user.sub }, (err, duels) => {
+    if (err) { return error.send(res, err, 'Failed to find duels'); }
+    return res.json(duels);
   });
-};
 
 module.exports.create = (req, res) => {
   async.waterfall([
     waterfall => user.getInfo(req.user.sub, waterfall),
     (userInfo, waterfall) => {
-      Duel.create(
-        { id: req.user.sub, name: userInfo.name },
-        req.body.betAmount,
-        waterfall
-      );
+      Duel.create({
+        players: [{ id: req.user.sub, name: userInfo.name }],
+        status: 'pending',
+        betAmount: req.body.betAmount,
+      }, waterfall);
     },
   ], (err, duel) => {
     if (err) { return error.send(res, err, 'Failed to create duel'); }
@@ -43,18 +40,14 @@ module.exports.accept = (req, res) => {
     waterfall => alreadyInDuel(duelId, req.user.sub, waterfall),
     waterfall => user.getInfo(req.user.sub, waterfall),
     (userInfo, waterfall) => {
-      Duel.accept(
+      Duel.findByIdAndUpdate(
         duelId,
-        { id: req.user.sub, name: userInfo.name },
+        { status: 'active', $push: { players: { id: req.user.sub, name: userInfo.name } } },
+        { new: true, runValidators: true },
         waterfall
       );
     },
-    (updateResult, waterfall) => {
-      if (updateResult.lastErrorObject.n < 1) {
-        return waterfall(new Error('Duel cannot be accepted'));
-      }
-      return DuelWeekUpdater.call([updateResult.value], waterfall);
-    },
+    (duel, waterfall) => DuelWeekUpdater.call([duel], waterfall),
   ], (err) => {
     if (err) { return error.send(res, err, 'Failed to accept duel'); }
     return res.json({ message: 'Duel accepted!' });
@@ -62,7 +55,7 @@ module.exports.accept = (req, res) => {
 };
 
 module.exports.delete = (req, res) => {
-  Duel.delete(req.params.id, req.user.sub, (err) => {
+  Duel.findOneAndRemove({ _id: req.params.id, 'players.id': req.user.sub }, (err) => {
     if (err) { return error.send(res, err, 'Failed to delete duel'); }
     return res.json({ message: 'Duel deleted' });
   });

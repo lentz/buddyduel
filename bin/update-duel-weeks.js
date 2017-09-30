@@ -1,14 +1,21 @@
 require('dotenv').config();
 const async = require('async');
-const db = require('../db');
+const mongoose = require('mongoose');
+
+const Duel = require('../models/Duel');
 const DuelWeekUpdater = require('../services/DuelWeekUpdater');
 
+mongoose.Promise = global.Promise;
+mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true });
+mongoose.connection.on('error', (err) => {
+  console.error(`Unable to connect to Mongo: ${err}`); // eslint-disable-line no-console
+  process.exit(1);
+});
 async.waterfall([
-  async.apply(db.connect, process.env.MONGODB_URI),
-  waterfall => db.get().collection('duels').find({ status: 'active' }).toArray(waterfall),
+  waterfall => Duel.find({ status: 'active' }, waterfall),
   (duels, waterfall) => DuelWeekUpdater.call(duels, waterfall),
 ],
 (err) => {
   if (err) { console.error('Error updating duel weeks:', err); } // eslint-disable-line no-console
-  db.close(() => {});
+  mongoose.connection.close();
 });

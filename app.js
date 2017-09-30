@@ -1,14 +1,21 @@
 require('dotenv').config();
-const express = require('express');
-const morgan = require('morgan');
 const bodyParser = require('body-parser');
-const path = require('path');
+const express = require('express');
 const logger = require('winston');
+const mongoose = require('mongoose');
+const morgan = require('morgan');
+const path = require('path');
 
 const routes = require('./routes');
-const db = require('./db');
 
 const app = express();
+
+mongoose.Promise = global.Promise;
+mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true });
+mongoose.connection.on('error', (err) => {
+  logger.error(`Unable to connect to Mongo: ${err}`);
+  process.exit(1);
+});
 
 app.use(morgan('combined'));
 
@@ -27,12 +34,6 @@ app.get('*', (_req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-db.connect(process.env.MONGODB_URI, (err) => {
-  if (err) {
-    logger.error('Unable to connect to Mongo');
-    process.exit(1);
-  }
-  app.listen(process.env.PORT || 3000);
-});
+app.listen(process.env.PORT || 3000);
 
 module.exports = app;

@@ -2,13 +2,14 @@
 
 require('dotenv').config();
 const async = require('async');
-const ObjectID = require('mongodb').ObjectID;
+const mongoose = require('mongoose');
 const request = require('request');
 
 const betResult = require('../lib/betResult');
-const db = require('../db');
+const DuelWeek = require('../models/DuelWeek');
 const NFLWeek = require('../services/NFLWeek');
 const NFLScoreParser = require('../lib/NFLScoreParser');
+const Result = require('../models/Result');
 
 function getScores(cb) {
   async.waterfall([
@@ -20,10 +21,10 @@ function getScores(cb) {
     },
     (scoresXML, waterfall) => NFLScoreParser.parseXML(scoresXML, waterfall),
     (result, waterfall) => {
-      db.get().collection('results').findOneAndReplace(
+      Result.findOneAndUpdate(
         { year: result.year, weekNum: result.weekNum },
         result,
-        { upsert: true },
+        { upsert: true, setDefaultsOnInsert: true, runValidators: true },
         waterfall
       );
     }], cb);
@@ -44,37 +45,37 @@ function gamesWithResults(games, scores) {
 
 function updateDuelWeeks(cb) {
   async.waterfall([
-    (waterfall) => {
-      db.get().collection('results').findOne(
-        { year: NFLWeek.seasonYear, weekNum: NFLWeek.currentWeek() },
-        waterfall
-      );
-    },
-    (result, waterfall) => {
-      db.get().collection('duelweeks').find({ weekNum: NFLWeek.currentWeek() })
-        .toArray((err, duelWeeks) => {
-          if (err) { return waterfall(err); }
-          return waterfall(null, result, duelWeeks);
-        });
-    },
+    waterfall => Result.findOne(
+      { year: NFLWeek.seasonYear, weekNum: NFLWeek.currentWeek() },
+      waterfall
+    ),
+    (result, waterfall) => DuelWeek.find(
+      { weekNum: NFLWeek.currentWeek() },
+      (err, duelWeeks) => {
+        if (err) { return waterfall(err); }
+        return waterfall(null, result, duelWeeks);
+      }
+    ),
     (result, duelWeeks, waterfall) => {
       if (!result || result.scores.length < 1) { return cb(null, null); }
       return async.each(duelWeeks, (duelWeek, eachCb) => {
-        db.get().collection('duelweeks').updateOne(
-          { _id: new ObjectID(duelWeek._id) },
-          { $set: { games: gamesWithResults(duelWeek.games, result.scores) } },
-          eachCb
-        );
+        duelWeek.games = gamesWithResults(duelWeek.games, result.scores);
+        duelWeek.save(eachCb);
       }, waterfall);
     },
   ], cb);
 }
 
+mongoose.Promise = global.Promise;
+mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true });
+mongoose.connection.on('error', (err) => {
+  console.error(`Unable to connect to Mongo: ${err}`); // eslint-disable-line no-console
+  process.exit(1);
+});
 async.series([
-  async.apply(db.connect, process.env.MONGODB_URI),
   async.apply(getScores),
   async.apply(updateDuelWeeks),
 ], (err) => {
-  db.close(() => {});
+  mongoose.connection.close();
   if (err) { console.error('Error updating NFL results:', err); } // eslint-disable-line no-console
 });

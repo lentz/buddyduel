@@ -27,16 +27,15 @@ export class DuelWeekComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (!this.authService.isAuthenticated()) {
-      return this.authService.logout();
-    }
-    this.route.params
-      .switchMap((params: Params) => this.duelsService.getWeek(params['id']))
-      .subscribe(duelWeek => {
-        this.duelWeek = duelWeek;
-        this.duelWeek.games.sort((a: any, b: any) => a.startTime - b.startTime);
-        this.titleService.setTitle(`BuddyDuel - Week ${duelWeek.weekNum}`);
-      });
+    return this.authService.checkSession(() => {
+      this.route.params
+        .switchMap((params: Params) => this.duelsService.getWeek(params['id']))
+        .subscribe(duelWeek => {
+          this.duelWeek = duelWeek;
+          this.duelWeek.games.sort((a: any, b: any) => a.startTime - b.startTime);
+          this.titleService.setTitle(`BuddyDuel - Week ${duelWeek.weekNum}`);
+        });
+    });
   }
 
   save(): void {

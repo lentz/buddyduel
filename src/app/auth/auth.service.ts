@@ -55,19 +55,32 @@ export class AuthService {
     this.router.navigate(['/']);
   }
 
+  checkSession(cb?: any): void {
+    if (!cb) { cb = () => {}; }
+    if (localStorage.hasOwnProperty('expires_at') && !this.isAuthenticated()) {
+      return this.renewToken(cb);
+    }
+    return cb();
+  }
+
   isAuthenticated(): boolean {
     const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
     return new Date().getTime() < expiresAt;
   }
 
-  renewToken() {
+  renewToken(cb?: any) {
+    if (!cb) { cb = () => {}; }
     this.auth0.renewAuth({
       audience: this.auth0.baseOptions.audience,
       redirectUri: environment.authSilentUri,
       usePostMessage: true,
     }, (err, authResult) => {
-      if (err) { return console.log('Error renewing token!', err); }
+      if (err) {
+        console.log('Error renewing token!', err);
+        return cb(err);
+      }
       this.setSession(authResult);
+      return cb();
     });
   }
 

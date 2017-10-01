@@ -51,7 +51,7 @@
   <div class="row">
     <div class="col"><h1>Welcome to Buddy Duel!</h1></div>
   </div>
-  <div *ngIf="!authService.isAuthenticated()" class="row">
+  <div class="row">
     <div class="col"><h2>Sign up today to start dueling your friends!</h2></div>
   </div>
   <button (click)="authService.login()" class="btn btn-light">

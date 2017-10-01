@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit {
                      private toastr: ToastsManager, ) { }
 
   ngOnInit(): void {
+    this.authService.checkSession();
     this.titleService.setTitle('BuddyDuel');
   }
 

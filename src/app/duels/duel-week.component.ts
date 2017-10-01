@@ -49,7 +49,9 @@ export class DuelWeekComponent implements OnInit {
 
   canModifyPicks(): boolean {
     return this.isPicker() &&
-      this.duelWeek.games.some(game => !game.selectedTeam || game.updated);
+           this.duelWeek.games.some(game => {
+             return (!game.selectedTeam && game.startTime > +new Date()) || game.updated
+           });
   }
 
   isPicker(): boolean {

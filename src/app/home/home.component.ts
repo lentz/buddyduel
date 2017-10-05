@@ -20,8 +20,18 @@ export class HomeComponent implements OnInit {
                      private toastr: ToastsManager, ) { }
 
   ngOnInit(): void {
-    this.authService.checkSession();
     this.titleService.setTitle('BuddyDuel');
+    this.authService.checkSession(() => {
+      if (this.authService.isAuthenticated()) {
+        this.duelsService.updateDuels();
+        this.duelsService.updateDuelWeeks();
+      } else {
+        this.authService.handleAuthentication().then(() => {
+          this.duelsService.updateDuels();
+          this.duelsService.updateDuelWeeks();
+        });
+      }
+    });
   }
 
   currentDuels(): DuelWeek[] {

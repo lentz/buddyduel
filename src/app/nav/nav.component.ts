@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
@@ -14,25 +14,13 @@ declare var jQuery: any;
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.css']
 })
-export class NavComponent implements OnInit {
+export class NavComponent {
   selectedDuelId: string;
   betAmount = 0;
 
   public constructor(public duelsService: DuelsService,
                      public authService: AuthService,
                      private toastr: ToastsManager, ) { }
-
-  ngOnInit(): void {
-    if (this.authService.isAuthenticated()) {
-      this.duelsService.updateDuels();
-      this.duelsService.updateDuelWeeks();
-    } else {
-      this.authService.handleAuthentication().then(() => {
-        this.duelsService.updateDuels();
-        this.duelsService.updateDuelWeeks();
-      });
-    }
-  }
 
   duelWeeks(): DuelWeek[] {
     return this.duelsService.duelWeeksForDuelId(this.getSelectedDuelId());

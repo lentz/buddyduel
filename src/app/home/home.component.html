@@ -35,7 +35,10 @@
     <div class="card">
       <div class="card-header">Accept Duel</div>
       <div class="card-body">
-        <form class="form-inline accept-duel">
+        <div *ngIf="processingAccept" class="text-center">
+          <i class="fa fa-circle-o-notch fa-spin fa-3x"></i>
+        </div>
+        <form *ngIf="!processingAccept" class="form-inline accept-duel">
           <input type="text" class="form-control accept-duel" name="acceptCode"
                  [(ngModel)]="acceptCode" placeholder="Duel Code" />
           <button (click)="acceptDuel()" class="btn btn-primary"

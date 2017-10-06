@@ -13,6 +13,7 @@ import { DuelWeek } from '../duels/duel-week';
 })
 export class HomeComponent implements OnInit {
   acceptCode = '';
+  processingAccept = false;
 
   public constructor(public duelsService: DuelsService,
                      public authService: AuthService,
@@ -48,12 +49,17 @@ export class HomeComponent implements OnInit {
   }
 
   acceptDuel(): void {
+    this.processingAccept = true;
     this.duelsService.acceptDuel(this.acceptCode)
     .then(() => {
       this.acceptCode = '';
+      this.processingAccept = false;
       this.toastr.success('Duel accepted!')
     })
-    .catch(err => this.toastr.error(err));
+    .catch(err => {
+      this.processingAccept = false;
+      this.toastr.error(err);
+    });
   }
 
   deleteDuel(duelId): void {

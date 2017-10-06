@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const shortid = require('shortid');
 
 const playerSchema = new mongoose.Schema({
   id: { type: String, required: true },
@@ -6,6 +7,7 @@ const playerSchema = new mongoose.Schema({
 }, { _id: false });
 
 const duelSchema = new mongoose.Schema({
+  code: { type: String, default: shortid.generate },
   status: { type: String, enum: ['active', 'pending'], required: true },
   betAmount: { type: Number, required: true },
   players: [{ type: playerSchema, required: true }],

@@ -5,9 +5,9 @@ const DuelWeekUpdater = require('../services/DuelWeekUpdater');
 const error = require('../lib/error');
 const user = require('../services/user');
 
-function alreadyInDuel(duelId, userId, cb) {
-  Duel.findOne({ _id: duelId, 'players.id': userId }, (err, duel) => {
-    if (duel) { return cb(new Error(`User ${userId} already in Duel ${duelId}`)); }
+function alreadyInDuel(code, userId, cb) {
+  Duel.findOne({ code, 'players.id': userId }, (err, duel) => {
+    if (duel) { return cb(new Error(`User ${userId} already in Duel ${duel.id}`)); }
     return cb();
   });
 }
@@ -35,13 +35,13 @@ module.exports.create = (req, res) => {
 };
 
 module.exports.accept = (req, res) => {
-  const duelId = req.params.id.trim();
+  const code = req.body.code.trim();
   async.waterfall([
-    waterfall => alreadyInDuel(duelId, req.user.sub, waterfall),
+    waterfall => alreadyInDuel(code, req.user.sub, waterfall),
     waterfall => user.getInfo(req.user.sub, waterfall),
     (userInfo, waterfall) => {
-      Duel.findByIdAndUpdate(
-        duelId,
+      Duel.findOneAndUpdate(
+        { code },
         { status: 'active', $push: { players: { id: req.user.sub, name: userInfo.name } } },
         { new: true, runValidators: true },
         waterfall

@@ -22,7 +22,7 @@
         <h6 class="card-subtitle mb-2 text-muted">Give the code to a friend</h6>
         <ul class="pending-duels">
           <li *ngFor="let duel of duelsService.pendingDuels()">
-            <pre>{{ duel._id }}</pre><span>(${{ duel.betAmount }}/game)</span>
+            <pre>{{ duel.code }}</pre><span>(${{ duel.betAmount }}/game)</span>
             <button (click)="deleteDuel(duel._id)" class="btn btn-sm btn-outline-danger">
               Delete
             </button>
@@ -42,7 +42,7 @@
           <input type="text" class="form-control accept-duel" name="acceptCode"
                  [(ngModel)]="acceptCode" placeholder="Duel Code" />
           <button (click)="acceptDuel()" class="btn btn-primary"
-                  [disabled]="acceptCode.length < 24">
+                  [disabled]="acceptCode.length < 7">
             Accept Duel
           </button>
         </form>

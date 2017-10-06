@@ -1,5 +1,5 @@
 a { color: #E55812; }
-input.accept-duel { width: 100%; }
+input.accept-duel { width: 50%; }
 .pending-duels { list-style: none; padding-left: 0;  }
 .pending-duels li { margin-bottom: 1rem; }
 .pending-duels pre { color: #000000; display: inline; margin-right: 1rem; }

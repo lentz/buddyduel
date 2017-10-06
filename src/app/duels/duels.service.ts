@@ -60,8 +60,8 @@ export class DuelsService {
                .catch(this.handleError);
   }
 
-  acceptDuel(duelId: string): Promise<any> {
-    return this.authHttp.put(`${this.duelsURL}/${duelId}/accept`, null,
+  acceptDuel(code: string): Promise<any> {
+    return this.authHttp.put(`${this.duelsURL}/accept`, { code },
                       { headers: this.headers })
                  .toPromise()
                  .then(() => this.updateDuels())

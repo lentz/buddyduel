@@ -32,7 +32,7 @@ router.route('/duels')
   .post(duelsController.create);
 router.route('/duels/:id')
   .delete(duelsController.delete);
-router.route('/duels/:id/accept')
+router.route('/duels/accept')
   .put(duelsController.accept);
 
 router.route('/duel-weeks')

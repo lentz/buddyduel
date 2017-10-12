@@ -1,4 +1,4 @@
-.game-card { color: #01B8F1; font-size: .95rem; width: 265px; margin-bottom: 1em; }
+.game-card { color: #01B8F1; font-size: .95rem; width: 272px; margin: 0 5px 10px 5px; }
 .game-card .card-footer { padding: 0.5rem; }
 .badge { font-size: 100%; font-weight: normal; }
 .badge-primary { background-color: #01B8F1; color: #ffffff; }
@@ -6,3 +6,6 @@
 .btn-outline-primary:hover, .btn-outline-primary.active {
   background-color: #01B8F1; border-color: #01B8F1; color: #ffffff;
 }
+.table-bordered { margin-bottom: 0; border-bottom: none; }
+.table-bordered td { border-bottom: none; }
+.score { color: #00364A; text-align: right; padding-left: .40rem; }

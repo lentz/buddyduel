@@ -17,11 +17,15 @@ export class GameComponent {
 
   pick(team: string): void {
     this.game.updated = true;
-    if (this.game.selectedTeam === team) {
-      this.game.selectedTeam = undefined;
-    } else {
-      this.game.selectedTeam = team;
-    }
+    this.game.selectedTeam = team;
+  }
+
+  clear(): void {
+    this.game.selectedTeam = undefined;
+  }
+
+  showClear(): boolean {
+    return this.game.updated && this.game.selectedTeam !== undefined;
   }
 
   isSelected(team: string): boolean {

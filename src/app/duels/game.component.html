@@ -46,8 +46,13 @@
       </span>
       <span class="text-muted small">- {{ game.time }}</span>
     </div>
-    <span *ngIf="!game.result" class="text-muted small">
+    <span *ngIf="!game.result && !showClear()" class="text-muted small">
       {{ game.startTime | date:'EEE, MMM d h:mm a' }}
     </span>
+    <button *ngIf="showClear()" (click)="clear()"
+            class="btn btn-sm btn-outline-danger">
+      <i class="fa fa-remove" aria-hidden="true"></i>
+      Clear Pick
+    </button>
   </div>
 </div>

@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  currentDuels(): DuelWeek[] {
+  currentDuelWeeks(): DuelWeek[] {
     const maxWeek = Math.max(...this.duelsService.duelWeeks.map(week => week.weekNum));
     return this.duelsService.duelWeeks
       .filter(week => week.weekNum >= maxWeek - 1)
@@ -51,9 +51,7 @@ export class HomeComponent implements OnInit {
   }
 
   opponentName(duelWeek: DuelWeek): string {
-    return this.duelsService.opponentForPlayers(
-      this.duelsService.duels.find(duel => duel._id === duelWeek.duelId).players
-    );
+    return this.duelsService.opponentForPlayers(duelWeek.players);
   }
 
   acceptDuel(): void {

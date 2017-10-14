@@ -34,7 +34,7 @@ export class DuelWeekComponent implements OnInit {
           this.duelWeek = duelWeek;
           this.duelWeek.games.sort((a: any, b: any) => a.startTime - b.startTime);
           this.titleService.setTitle(`BuddyDuel - Week ${duelWeek.weekNum}`);
-        });
+        }, err => this.toastr.error(err));
     });
   }
 

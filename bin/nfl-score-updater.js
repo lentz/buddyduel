@@ -1,4 +1,4 @@
-/* eslint no-param-reassign: 0 */
+/* eslint no-param-reassign: 0, no-console: 0 */
 
 require('dotenv').config();
 const async = require('async');
@@ -69,7 +69,7 @@ function updateDuelWeeks(cb) {
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true });
 mongoose.connection.on('error', (err) => {
-  console.error(`Unable to connect to Mongo: ${err}`); // eslint-disable-line no-console
+  console.error(`Unable to connect to Mongo: ${err}`);
   process.exit(1);
 });
 async.series([
@@ -77,5 +77,5 @@ async.series([
   async.apply(updateDuelWeeks),
 ], (err) => {
   mongoose.connection.close();
-  if (err) { console.error('Error updating NFL results:', err); } // eslint-disable-line no-console
+  if (err) { console.error('Error updating NFL results:', err); }
 });

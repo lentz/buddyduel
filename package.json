@@ -29,6 +29,7 @@
     "@angular/platform-browser": "^4.3.3",
     "@angular/platform-browser-dynamic": "^4.3.3",
     "@angular/router": "^4.3.3",
+    "@sendgrid/mail": "^6.1.4",
     "angular2-jwt": "^0.2.3",
     "async": "^2.5.0",
     "auth0-js": "^8.8.0",

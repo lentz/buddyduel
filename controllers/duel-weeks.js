@@ -13,7 +13,11 @@ module.exports.index = (req, res) => DuelWeek
 
 module.exports.show = (req, res) => DuelWeek
   .findOne({ _id: req.params.id, 'players.id': req.user.sub }, (err, duelWeek) => {
-    if (err) { return error.send(res, err, 'Failed to display duel week'); }
+    if (err) {
+      return error.send(res, err, 'Failed to display duel week');
+    } else if (!duelWeek) {
+      return res.status(404).json({ message: 'Duel week not found' });
+    }
     return res.json(duelWeek.toJSON({ virtuals: true }));
   });
 

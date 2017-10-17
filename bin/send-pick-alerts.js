@@ -23,6 +23,10 @@ function messageBody(duelWeek, games) {
   `;
 }
 
+function opponentName(duelWeek) {
+  return duelWeek.players.find(player => player.id !== duelWeek.picker.id).name;
+}
+
 function sendAlert(duelWeek, games, cb) {
   user.getInfo(duelWeek.picker.id, (err, userInfo) => {
     if (err) { return cb(err); }
@@ -30,7 +34,7 @@ function sendAlert(duelWeek, games, cb) {
     const msg = {
       to: userInfo.email,
       from: 'BuddyDuel <alerts@buddyduel.net>',
-      subject: 'Games starting soon - get your picks in!',
+      subject: `Games starting soon vs ${opponentName(duelWeek)} - get your picks in!`,
       html: messageBody(duelWeek, games),
     };
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -50,7 +54,7 @@ mongoose.connection.on('error', (err) => {
   process.exit(1);
 });
 DuelWeek.find({ weekNum: NFLWeek.currentWeek(), 'games.selectedTeam': null },
-  { picker: 1, games: 1 },
+  { picker: 1, games: 1, players: 1 },
   null,
   (err, duelWeeks) => {
     if (err) {

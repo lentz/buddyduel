@@ -30,7 +30,8 @@ export class HomeComponent implements OnInit {
         this.authService.handleAuthentication().then(() => {
           this.duelsService.updateDuels();
           this.duelsService.updateDuelWeeks();
-        });
+        })
+        .catch(err => this.toastr.error(err));
       }
     });
   }

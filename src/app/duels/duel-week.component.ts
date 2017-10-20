@@ -18,12 +18,14 @@ import { DuelsService } from './duels.service';
 })
 export class DuelWeekComponent implements OnInit {
   duelWeek: DuelWeek;
+  Math: any;
 
   constructor(private duelsService: DuelsService,
               private route: ActivatedRoute,
               private titleService: Title,
               private toastr: ToastsManager,
               private authService: AuthService, ) {
+    this.Math = Math;
   }
 
   ngOnInit(): void {
@@ -70,18 +72,19 @@ export class DuelWeekComponent implements OnInit {
     return `${this.duelWeek.record.wins}-${this.duelWeek.record.losses}-${this.duelWeek.record.pushes}`;
   }
 
-  winnings(): number {
+  weekWinnings(): number {
     return (this.duelWeek.record.wins * this.duelWeek.betAmount) -
            (this.duelWeek.record.losses * this.duelWeek.betAmount);
   }
 
-  isWinning(): boolean {
-    return this.winnings() >= 0;
+  isWinner(): boolean {
+    if (this.weekWinnings() === 0) { return true; }
+    return (this.isPicker() && this.weekWinnings() > 0) ||
+           (!this.isPicker() && this.weekWinnings() < 0)
   }
 
-  hasFinalGames(): boolean {
-    return this.duelWeek.record.wins > 0 ||
-           this.duelWeek.record.losses > 0 ||
-           this.duelWeek.record.pushes > 0;
+  hasResults(): boolean {
+    const record = this.duelWeek.record;
+    return (record.wins + record.losses + record.pushes) > 0;
   }
 }

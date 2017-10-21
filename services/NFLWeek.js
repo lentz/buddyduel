@@ -1,6 +1,6 @@
 const moment = require('moment');
 
-const weekOne = 1504742400000; // Sep 7, 2017
+const weekOne = 1504594800000; // Sep 5, 2017
 
 module.exports.seasonYear = 2017;
 

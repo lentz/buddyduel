@@ -21,6 +21,10 @@ describe('NFLWeek', () => {
       assert.equal(7, NFLWeek.forGame({ startTime: 1508760000000 }));
     });
 
+    it('is 8 for October 24th', () => {
+      assert.equal(8, NFLWeek.forGame({ startTime: 1508828460000 }));
+    });
+
     it('is 17 for December 31st', () => {
       assert.equal(17, NFLWeek.forGame({ startTime: 1514721600000 }));
     });

@@ -1,15 +1,24 @@
 /* eslint no-param-reassign: "off" */
 
-const error = require('../lib/error');
 const DuelWeek = require('../models/DuelWeek');
+const error = require('../lib/error');
+const NFLWeek = require('../services/NFLWeek');
 
-module.exports.index = (req, res) => DuelWeek
-  .find({ 'players.id': req.user.sub })
-  .sort({ weekNum: -1 })
-  .exec((err, duelWeeks) => {
-    if (err) { return error.send(res, err, 'Unable to list duel weeks'); }
-    return res.json(duelWeeks);
-  });
+module.exports.index = (req, res) => {
+  const filter = { 'players.id': req.user.sub };
+  if (req.query.duelId) {
+    filter.duelId = req.query.duelId;
+  } else if (req.query.current) {
+    filter.weekNum = { $in: [NFLWeek.currentWeek(), NFLWeek.currentWeek() - 1] };
+  }
+  DuelWeek
+    .find(filter)
+    .sort({ year: -1, weekNum: -1 })
+    .exec((err, duelWeeks) => {
+      if (err) { return error.send(res, err, 'Unable to list duel weeks'); }
+      return res.json(duelWeeks);
+    });
+};
 
 module.exports.show = (req, res) => DuelWeek
   .findOne({ _id: req.params.id, 'players.id': req.user.sub }, (err, duelWeek) => {

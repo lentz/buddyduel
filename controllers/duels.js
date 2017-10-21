@@ -12,11 +12,13 @@ function alreadyInDuel(code, userId, cb) {
   });
 }
 
-module.exports.index = (req, res) => Duel
-  .find({ 'players.id': req.user.sub }, (err, duels) => {
+module.exports.index = (req, res) => {
+  const filter = Object.assign(req.query, { 'players.id': req.user.sub });
+  Duel.find(filter, (err, duels) => {
     if (err) { return error.send(res, err, 'Failed to find duels'); }
     return res.json(duels);
   });
+};
 
 module.exports.create = (req, res) => {
   async.waterfall([

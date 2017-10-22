@@ -57,8 +57,11 @@ module.exports.accept = (req, res) => {
 };
 
 module.exports.delete = (req, res) => {
-  Duel.findOneAndRemove({ _id: req.params.id, 'players.id': req.user.sub }, (err) => {
-    if (err) { return error.send(res, err, 'Failed to delete duel'); }
-    return res.json({ message: 'Duel deleted' });
-  });
+  Duel.findOneAndRemove(
+    { _id: req.params.id, status: 'pending', 'players.id': req.user.sub },
+    (err, result) => {
+      if (err) { return error.send(res, err, 'Failed to delete duel'); }
+      if (!result) { return res.status(404).json({ message: 'Duel not found' }); }
+      return res.json({ message: 'Duel deleted' });
+    });
 };

@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { Subscription } from 'rxjs/Subscription';
 
 import { AuthService } from '../auth/auth.service';
+import { Duel } from '../duels/duel';
 import { DuelsService } from '../duels/duels.service';
 import { DuelWeek } from '../duels/duel-week';
 
@@ -14,41 +16,45 @@ import { DuelWeek } from '../duels/duel-week';
 export class HomeComponent implements OnInit {
   acceptCode = '';
   processingAccept = false;
+  currentDuelWeeks: DuelWeek[] = [];
+  pendingDuels: Duel[] = [];
+  duelCreatedSubscription: Subscription;
 
-  public constructor(public duelsService: DuelsService,
+  public constructor(private duelsService: DuelsService,
                      public authService: AuthService,
                      private titleService: Title,
-                     private toastr: ToastsManager, ) { }
+                     private toastr: ToastsManager, ) {
+    this.duelCreatedSubscription = duelsService.duelCreated$.subscribe(
+      duel => this.pendingDuels.push(duel)
+    );
+  }
 
   ngOnInit(): void {
     this.titleService.setTitle('BuddyDuel');
     this.authService.checkSession(() => {
       if (this.authService.isAuthenticated()) {
-        this.duelsService.updateDuels();
-        this.duelsService.updateDuelWeeks();
+        this.updateDuelWeeks();
+        this.updatePendingDuels();
       } else {
         this.authService.handleAuthentication().then(() => {
-          this.duelsService.updateDuels();
-          this.duelsService.updateDuelWeeks();
+          this.updateDuelWeeks();
+          this.updatePendingDuels();
         })
         .catch(err => this.toastr.error(err));
       }
     });
   }
 
-  currentDuelWeeks(): DuelWeek[] {
-    const maxWeek = Math.max(...this.duelsService.duelWeeks.map(week => week.weekNum));
-    return this.duelsService.duelWeeks
-      .filter(week => week.weekNum >= maxWeek - 1)
-      .sort((weekA, weekB) => {
-        if (weekA.weekNum !== weekB.weekNum) { return weekB.weekNum - weekA.weekNum; }
+  private updateDuelWeeks(): void {
+    this.duelsService.getDuelWeeks({ current: true })
+      .then(duelWeeks => this.currentDuelWeeks = duelWeeks)
+      .catch(err => this.toastr.error(err));
+  }
 
-        const opponentA = this.opponentName(weekA).toUpperCase();
-        const opponentB = this.opponentName(weekB).toUpperCase();
-        if (opponentA < opponentB) { return -1; }
-        if (opponentA > opponentB) { return 1; }
-        return 0;
-      });
+  private updatePendingDuels(): void {
+    this.duelsService.getDuels({ status: 'pending' })
+      .then(duels => this.pendingDuels = duels)
+      .catch(err => this.toastr.error(err));
   }
 
   opponentName(duelWeek: DuelWeek): string {
@@ -59,6 +65,7 @@ export class HomeComponent implements OnInit {
     this.processingAccept = true;
     this.duelsService.acceptDuel(this.acceptCode)
     .then(() => {
+      this.updateDuelWeeks();
       this.acceptCode = '';
       this.processingAccept = false;
       this.toastr.success('Duel accepted!')
@@ -72,6 +79,7 @@ export class HomeComponent implements OnInit {
   deleteDuel(duelId): void {
     this.duelsService.deleteDuel(duelId)
     .then(() => {
+      this.pendingDuels = this.pendingDuels.filter(duel => duel._id !== duelId);
       this.toastr.success('Duel deleted')
     })
     .catch(err => this.toastr.error(err));

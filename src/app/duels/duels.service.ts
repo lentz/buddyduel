@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Headers, URLSearchParams } from '@angular/http';
 import { AuthHttp } from 'angular2-jwt';
+import { Subject } from 'rxjs/Subject'
 import 'rxjs/add/operator/toPromise';
 
 import { AuthService } from '../auth/auth.service'
@@ -16,40 +17,28 @@ export class DuelsService {
   private duelWeeksURL = 'api/duel-weeks';
   private duelsURL = 'api/duels';
 
-  public duels = new Array<Duel>();
-  public duelWeeks = new Array<DuelWeek>();
+  private duelCreatedSource = new Subject<Duel>();
+  duelCreated$ = this.duelCreatedSource.asObservable();
 
   constructor(private authHttp: AuthHttp,
               private authService: AuthService, ) { }
-
-  activeDuels(): Duel[] {
-    return this.duels.filter(duel => duel.status === 'active');
-  }
-
-  pendingDuels(): Duel[] {
-    return this.duels.filter(duel => duel.status === 'pending');
-  }
-
-  duelWeeksForDuelId(duelId: string): DuelWeek[] {
-    return this.duelWeeks.filter(week => week.duelId === duelId);
-  }
 
   opponentForPlayers(players: Player[]): string {
     const currentPlayerId = this.authService.getUserProfile().sub;
     return players.find(player => player.id !== currentPlayerId).name;
   }
 
-  updateDuels(): Promise<Duel[]> {
-    return this.authHttp.get(this.duelsURL)
+  getDuels(params = {}): Promise<Duel[]> {
+    return this.authHttp.get(this.duelsURL, { params })
                     .toPromise()
-                    .then(response => this.duels = response.json() as Duel[])
+                    .then(response => response.json() as Duel[])
                     .catch(this.handleError);
   }
 
-  updateDuelWeeks(): Promise<DuelWeek[]> {
-    return this.authHttp.get(`${this.duelWeeksURL}`)
+  getDuelWeeks(params = {}): Promise<DuelWeek[]> {
+    return this.authHttp.get(`${this.duelWeeksURL}`, { params })
                .toPromise()
-               .then(response => this.duelWeeks = response.json() as DuelWeek[])
+               .then(response => response.json() as DuelWeek[])
                .catch(this.handleError);
   }
 
@@ -64,8 +53,6 @@ export class DuelsService {
     return this.authHttp.put(`${this.duelsURL}/accept`, { code },
                       { headers: this.headers })
                  .toPromise()
-                 .then(() => this.updateDuels())
-                 .then(() => this.updateDuelWeeks())
                  .catch(this.handleError);
   }
 
@@ -73,14 +60,13 @@ export class DuelsService {
     return this.authHttp.delete(`${this.duelsURL}/${duelId}`,
                       { headers: this.headers })
                  .toPromise()
-                 .then(() => this.updateDuels())
                  .catch(this.handleError);
   }
 
   create(betAmount: number): Promise<any> {
     return this.authHttp.post(`${this.duelsURL}`, { betAmount }, { headers: this.headers })
                         .toPromise()
-                        .then(() => this.updateDuels())
+                        .then(response => this.duelCreatedSource.next(response.json() as Duel))
                         .catch(this.handleError);
   }
 

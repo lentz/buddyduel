@@ -1,11 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 import { AuthService } from '../auth/auth.service'
 import { DuelsService } from '../duels/duels.service'
 import { Duel } from '../duels/duel';
-import { DuelWeek } from '../duels/duel-week';
 
 declare var jQuery: any;
 
@@ -14,33 +13,36 @@ declare var jQuery: any;
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.css']
 })
-export class NavComponent {
-  selectedDuelId: string;
+export class NavComponent implements OnInit {
   betAmount = 0;
+  activeDuels: Duel[] = [];
 
-  public constructor(public duelsService: DuelsService,
+  public constructor(private duelsService: DuelsService,
                      public authService: AuthService,
                      private toastr: ToastsManager, ) { }
 
-  duelWeeks(): DuelWeek[] {
-    return this.duelsService.duelWeeksForDuelId(this.getSelectedDuelId());
+
+  ngOnInit(): void {
+    // FIXME: Load after initial login
+    // FIXME: Subscribe to duel acceptance
+    this.authService.checkSession(() => {
+      if (this.authService.isAuthenticated()) {
+        this.updateActiveDuels();
+      }
+    });
+  }
+
+  private updateActiveDuels(): void {
+    this.duelsService.getDuels({ status: 'active' })
+      .then(duels => this.activeDuels = duels)
+      .catch(err => {
+        console.error(err);
+        this.toastr.error('Failed to get active duels!');
+      });
   }
 
   opponentName(duel: Duel): string {
     return this.duelsService.opponentForPlayers(duel.players);
-  }
-
-  getSelectedDuelId(): string {
-    if (this.selectedDuelId) {
-      return this.selectedDuelId;
-    } else if (this.duelsService.duels.length > 0) {
-      return this.duelsService.duels[0]._id;
-    }
-  }
-
-  onDuelSelect(event: any, duel: Duel): void {
-    event.preventDefault();
-    this.selectedDuelId = duel._id;
   }
 
   createDuel(): void {
@@ -50,6 +52,9 @@ export class NavComponent {
       this.betAmount = 0;
       this.toastr.success('Duel created!');
     })
-    .catch(err => this.toastr.error(err));
+    .catch(err => {
+      console.error(err);
+      this.toastr.error('Failed to create duel!');
+    });
   }
 }

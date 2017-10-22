@@ -12,27 +12,14 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav mr-auto">
         <ng-template [ngIf]="authService.isAuthenticated()">
-          <li *ngIf="duelsService.activeDuels().length > 0" class="nav-item dropdown">
+          <li *ngIf="activeDuels.length > 0" class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="fa fa-trophy" aria-hidden="true"></i> Duels
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <a *ngFor="let duel of duelsService.activeDuels()" (click)="onDuelSelect($event, duel)"
-                 class="dropdown-item" href="#">
+              <a *ngFor="let duel of activeDuels" class="dropdown-item" href="#">
                 vs. {{ opponentName(duel) }} (${{ duel.betAmount }}/game)
-              </a>
-            </div>
-          </li>
-          <li *ngIf="duelWeeks().length > 0" class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
-               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fa fa-calendar" aria-hidden="true"></i> Weeks
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <a *ngFor="let duelWeek of duelWeeks()"
-                [routerLink]="[ '/duel-weeks', duelWeek._id ]" class="dropdown-item">
-                Week {{ duelWeek.weekNum }}
               </a>
             </div>
           </li>

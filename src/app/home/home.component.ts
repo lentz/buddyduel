@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -13,45 +14,55 @@ import { DuelWeek } from '../duels/duel-week';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnDestroy, OnInit {
   acceptCode = '';
   processingAccept = false;
   currentDuelWeeks: DuelWeek[] = [];
   pendingDuels: Duel[] = [];
   duelCreatedSubscription: Subscription;
+  authenticatedSubscription: Subscription;
 
   public constructor(private duelsService: DuelsService,
                      public authService: AuthService,
+                     private router: Router,
                      private titleService: Title,
                      private toastr: ToastsManager, ) {
     this.duelCreatedSubscription = duelsService.duelCreated$.subscribe(
       duel => this.pendingDuels.push(duel)
     );
+    this.authenticatedSubscription = authService.authenticated$.subscribe(
+      () => {
+        this.loadDuelWeeks();
+        this.loadPendingDuels();
+      }
+    );
   }
 
   ngOnInit(): void {
     this.titleService.setTitle('BuddyDuel');
-    this.authService.checkSession(() => {
-      if (this.authService.isAuthenticated()) {
-        this.updateDuelWeeks();
-        this.updatePendingDuels();
-      } else {
-        this.authService.handleAuthentication().then(() => {
-          this.updateDuelWeeks();
-          this.updatePendingDuels();
-        })
-        .catch(err => this.toastr.error(err));
-      }
-    });
+
+    if (this.router.url.includes('access_token')) {
+      this.authService.handleAuthentication()
+      .catch(err => {
+        console.error(err);
+        this.toastr.error('An error occurred logging you in!');
+      });
+    } else {
+      this.authService.checkSession();
+    }
   }
 
-  private updateDuelWeeks(): void {
+  ngOnDestroy(): void {
+    this.authenticatedSubscription.unsubscribe();
+  }
+
+  private loadDuelWeeks(): void {
     this.duelsService.getDuelWeeks({ current: true })
       .then(duelWeeks => this.currentDuelWeeks = duelWeeks)
       .catch(err => this.toastr.error(err));
   }
 
-  private updatePendingDuels(): void {
+  private loadPendingDuels(): void {
     this.duelsService.getDuels({ status: 'pending' })
       .then(duels => this.pendingDuels = duels)
       .catch(err => this.toastr.error(err));
@@ -65,7 +76,7 @@ export class HomeComponent implements OnInit {
     this.processingAccept = true;
     this.duelsService.acceptDuel(this.acceptCode)
     .then(() => {
-      this.updateDuelWeeks();
+      this.loadDuelWeeks();
       this.acceptCode = '';
       this.processingAccept = false;
       this.toastr.success('Duel accepted!')

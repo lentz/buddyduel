@@ -3,6 +3,7 @@ import IdTokenVerifier from 'idtoken-verifier';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject'
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/observable/timer';
 import 'rxjs/add/observable/of';
@@ -21,6 +22,9 @@ export class AuthService {
   });
   private refreshSubscription: any;
 
+  private authenticatedSource = new Subject<void>();
+  authenticated$ = this.authenticatedSource.asObservable();
+
   constructor(public router: Router) {}
 
   login(): void {
@@ -28,14 +32,12 @@ export class AuthService {
   }
 
   handleAuthentication(): Promise<any> {
-    this.logout();
     return new Promise((resolve, reject) => {
       this.auth0.parseHash((err, authResult) => {
         if (err) { return reject(err); }
         if (authResult && authResult.accessToken && authResult.idToken) {
-          window.location.hash = '';
+          history.pushState(null, null, '/');
           this.setSession(authResult);
-          this.router.navigate(['/']);
           resolve();
         }
       });
@@ -49,19 +51,16 @@ export class AuthService {
 
   logout(event?: any): void {
     if (event) { event.preventDefault(); }
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('id_token');
-    localStorage.removeItem('expires_at');
+    this.clearSession();
     this.unscheduleRenewal();
     this.router.navigate(['/']);
   }
 
-  checkSession(cb?: any): void {
-    if (!cb) { cb = () => {}; }
-    if (localStorage.hasOwnProperty('expires_at') && !this.isAuthenticated()) {
-      return this.renewToken(cb);
+  checkSession(): void {
+    if (this.isAuthenticated()) { return this.authenticatedSource.next(); }
+    if (localStorage.hasOwnProperty('expires_at')) {
+      this.renewToken();
     }
-    return cb();
   }
 
   isAuthenticated(): boolean {
@@ -69,23 +68,18 @@ export class AuthService {
     return new Date().getTime() < expiresAt;
   }
 
-  renewToken(cb?: any) {
-    if (!cb) { cb = () => {}; }
+  private renewToken() {
     this.auth0.renewAuth({
       audience: this.auth0.baseOptions.audience,
       redirectUri: environment.authSilentUri,
       usePostMessage: true,
     }, (err, authResult) => {
-      if (err) {
-        console.log('Error renewing token!', err);
-        return cb(err);
-      }
-      this.setSession(authResult);
-      return cb();
+      if (err) { return console.error(err); }
+      return this.setSession(authResult);
     });
   }
 
-  scheduleRenewal() {
+  private scheduleRenewal() {
     if (!this.isAuthenticated()) { return; }
     this.unscheduleRenewal();
 
@@ -101,16 +95,24 @@ export class AuthService {
     });
   }
 
-  unscheduleRenewal() {
+  private unscheduleRenewal() {
     if (!this.refreshSubscription) { return; }
     this.refreshSubscription.unsubscribe();
   }
 
+  private clearSession(): void {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('id_token');
+    localStorage.removeItem('expires_at');
+  }
+
   private setSession(authResult): void {
+    this.clearSession();
     const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
     localStorage.setItem('access_token', authResult.accessToken);
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('expires_at', expiresAt);
+    this.authenticatedSource.next();
     this.scheduleRenewal();
   }
 }

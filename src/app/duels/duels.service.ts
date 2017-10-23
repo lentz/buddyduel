@@ -18,7 +18,11 @@ export class DuelsService {
   private duelsURL = 'api/duels';
 
   private duelCreatedSource = new Subject<Duel>();
+  private duelAcceptedSource = new Subject<Duel>();
+
   duelCreated$ = this.duelCreatedSource.asObservable();
+  duelAccepted$ = this.duelAcceptedSource.asObservable();
+
 
   constructor(private authHttp: AuthHttp,
               private authService: AuthService, ) { }
@@ -53,6 +57,7 @@ export class DuelsService {
     return this.authHttp.put(`${this.duelsURL}/accept`, { code },
                       { headers: this.headers })
                  .toPromise()
+                 .then(() => this.duelAcceptedSource.next())
                  .catch(this.handleError);
   }
 

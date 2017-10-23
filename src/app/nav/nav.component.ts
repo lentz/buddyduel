@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { Subscription } from 'rxjs/Subscription';
 
 import { AuthService } from '../auth/auth.service'
 import { DuelsService } from '../duels/duels.service'
@@ -13,26 +14,24 @@ declare var jQuery: any;
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.css']
 })
-export class NavComponent implements OnInit {
+export class NavComponent {
   betAmount = 0;
   activeDuels: Duel[] = [];
+  authenticatedSubscription: Subscription;
+  duelAcceptedSubscription: Subscription;
 
   public constructor(private duelsService: DuelsService,
                      public authService: AuthService,
-                     private toastr: ToastsManager, ) { }
-
-
-  ngOnInit(): void {
-    // FIXME: Load after initial login
-    // FIXME: Subscribe to duel acceptance
-    this.authService.checkSession(() => {
-      if (this.authService.isAuthenticated()) {
-        this.updateActiveDuels();
-      }
-    });
+                     private toastr: ToastsManager, ) {
+    this.authenticatedSubscription = authService.authenticated$.subscribe(
+      this.loadActiveDuels.bind(this)
+    );
+    this.duelAcceptedSubscription = duelsService.duelAccepted$.subscribe(
+      this.loadActiveDuels.bind(this)
+    );
   }
 
-  private updateActiveDuels(): void {
+  private loadActiveDuels(): void {
     this.duelsService.getDuels({ status: 'active' })
       .then(duels => this.activeDuels = duels)
       .catch(err => {

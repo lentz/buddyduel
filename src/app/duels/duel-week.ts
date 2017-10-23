@@ -7,6 +7,7 @@ export class DuelWeek {
   constructor(
     public _id: string,
     public duelId: string,
+    public year: number,
     public weekNum: number,
     public betAmount: number,
     public picker: Player,

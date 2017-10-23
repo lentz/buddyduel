@@ -27,7 +27,7 @@ module.exports.show = (req, res) => DuelWeek
     } else if (!duelWeek) {
       return res.status(404).json({ message: 'Duel week not found' });
     }
-    return res.json(duelWeek.toJSON({ virtuals: true }));
+    return res.json(duelWeek);
   });
 
 function setSelections(duelWeek, pickedGames) {

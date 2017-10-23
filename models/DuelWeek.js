@@ -26,7 +26,7 @@ const duelWeekSchema = new mongoose.Schema({
     time: String,
     result: String,
   }],
-}, { timestamps: true });
+}, { timestamps: true, toJSON: { virtuals: true } });
 
 duelWeekSchema.virtual('record').get(function getRecord() {
   let wins = 0;

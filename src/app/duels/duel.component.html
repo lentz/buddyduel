@@ -1,0 +1,19 @@
+<div class="row">
+  <div class="col">
+    <h2>Duel vs {{ opponentName() }}</h2>
+    <div *ngFor="let year of years()" class="card">
+      <div class="card-header">{{ year }}</div>
+      <div class="card-body">
+        <ul>
+          <li *ngFor="let duelWeek of duelWeeks" class="text-truncate">
+            <a [routerLink]="[ '/duel-weeks', duelWeek._id ]">Week {{ duelWeek.weekNum }}</a>
+            <span class="text-muted">
+              ({{ duelWeek.record.wins }}-{{ duelWeek.record.losses }}-{{ duelWeek.record.pushes }})
+              &mdash; {{ pickerName(duelWeek) }}
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

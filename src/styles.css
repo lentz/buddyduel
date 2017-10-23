@@ -1,3 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 body { background-color: #00364A; color: #ffffff; }
+a, a:hover { color: #E55812; }
+ul { list-style: none; padding-left: 0; }
 .content { margin-bottom: 2rem; }
+.card { color: #000000; margin-top: 1rem; }

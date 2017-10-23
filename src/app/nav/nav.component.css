@@ -1,7 +1,7 @@
 .navbar { background-color: #95CB15 !important; }
-.navbar-nav .nav-link:focus,
-.navbar-nav .nav-link:hover,
-.navbar-nav .nav-link {
+.navbar-collapse a:focus,
+.navbar-collapse a:hover,
+.navbar-collapse a {
   color: #00364A;
 }
 .username { color: #ffffff; }

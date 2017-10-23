@@ -1,12 +1,8 @@
-a { color: #E55812; }
 input.accept-duel { width: 50%; }
-.active-duels { list-style: none; padding-left: 0; }
 .active-duels li { margin-bottom: .5rem; }
-.pending-duels { list-style: none; padding-left: 0;  }
 .pending-duels li { margin-bottom: 1rem; }
 .pending-duels pre { color: #000000; display: inline; margin-right: 1rem; }
 .btn-light { color: #00364A; border-color: #ffffff; }
 .btn-light:hover, .btn-light.active {
   background-color: #00364A; border-color: #ffffff; color: #ffffff;
 }
-.card { color: #000000; margin-top: 1rem; }

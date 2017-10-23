@@ -18,7 +18,8 @@
               <i class="fa fa-trophy" aria-hidden="true"></i> Duels
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <a *ngFor="let duel of activeDuels" class="dropdown-item" href="#">
+              <a *ngFor="let duel of activeDuels" [routerLink]="[ '/duels', duel._id ]"
+                 class="dropdown-item">
                 vs. {{ opponentName(duel) }} (${{ duel.betAmount }}/game)
               </a>
             </div>

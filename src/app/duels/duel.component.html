@@ -1,9 +1,38 @@
 <div class="row">
   <div class="col">
-    <h2>Duel vs {{ opponentName() }}</h2>
-    <div *ngFor="let year of years()" class="card">
-      <div class="card-header">{{ year }}</div>
+    <h2 class="text-truncate">Duel vs {{ opponentName() }}</h2>
+    <div *ngIf="years().length > 1" class="card">
+      <div class="card-header font-weight-bold">All Seasons</div>
       <div class="card-body">
+        <div>
+          Your overall record: {{ userRecord() | record }}
+          <span [ngClass]="{'badge': true, 'badge-success': userWinnings() >= 0, 'badge-danger': userWinnings() < 0}">
+            {{ userWinnings() | currency:'USD':true }}
+          </span>
+        </div>
+        <div>
+          {{ opponentName() }}'s season record: {{ opponentRecord() | record }}
+          <span [ngClass]="{'badge': true, 'badge-success': opponentWinnings() >= 0, 'badge-danger': opponentWinnings() < 0}">
+            {{ opponentWinnings() | currency:'USD':true }}
+          </span>
+        </div>
+      </div>
+    </div>
+    <div *ngFor="let year of years()" class="card">
+      <div class="card-header font-weight-bold">{{ year }}</div>
+      <div class="card-body">
+        <div>
+          Your season record: {{ userRecord(year) | record }}
+          <span [ngClass]="{'badge': true, 'badge-success': userWinnings(year) >= 0, 'badge-danger': userWinnings(year) < 0}">
+            {{ userWinnings(year) | currency:'USD':true }}
+          </span>
+        </div>
+        <div>
+          {{ opponentName() }}'s season record: {{ opponentRecord(year) | record }}
+          <span [ngClass]="{'badge': true, 'badge-success': opponentWinnings(year) >= 0, 'badge-danger': opponentWinnings(year) < 0}">
+            {{ opponentWinnings(year) | currency:'USD':true }}
+          </span>
+        </div>
         <ul>
           <li *ngFor="let duelWeek of duelWeeks" class="text-truncate">
             <a [routerLink]="[ '/duel-weeks', duelWeek._id ]">Week {{ duelWeek.weekNum }}</a>

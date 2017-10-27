@@ -27,9 +27,9 @@ export class DuelsService {
   constructor(private authHttp: AuthHttp,
               private authService: AuthService, ) { }
 
-  opponentForPlayers(players: Player[]): string {
+  opponentForPlayers(players: Player[]): Player {
     const currentPlayerId = this.authService.getUserProfile().sub;
-    return players.find(player => player.id !== currentPlayerId).name;
+    return players.find(player => player.id !== currentPlayerId);
   }
 
   getDuels(params = {}): Promise<Duel[]> {

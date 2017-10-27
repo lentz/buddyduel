@@ -7,6 +7,7 @@ import { DuelWeekComponent } from './duel-week.component';
 import { DuelsRoutingModule } from './duels-routing.module';
 import { DuelsService } from './duels.service';
 import { PointSpread } from './point-spread.pipe';
+import { Record } from './record.pipe';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { PointSpread } from './point-spread.pipe';
     DuelComponent,
     DuelWeekComponent,
     PointSpread,
+    Record,
   ],
   providers: [
     DuelsService,

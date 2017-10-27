@@ -76,11 +76,7 @@ export class DuelWeekComponent implements OnInit, OnDestroy {
   }
 
   opponentName(): string {
-    return this.duelsService.opponentForPlayers(this.duelWeek.players);
-  }
-
-  record(): string {
-    return `${this.duelWeek.record.wins}-${this.duelWeek.record.losses}-${this.duelWeek.record.pushes}`;
+    return this.duelsService.opponentForPlayers(this.duelWeek.players).name;
   }
 
   isWinner(): boolean {

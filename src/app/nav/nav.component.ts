@@ -41,7 +41,7 @@ export class NavComponent {
   }
 
   opponentName(duel: Duel): string {
-    return this.duelsService.opponentForPlayers(duel.players);
+    return this.duelsService.opponentForPlayers(duel.players).name;
   }
 
   createDuel(): void {

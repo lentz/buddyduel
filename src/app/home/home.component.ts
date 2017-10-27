@@ -69,7 +69,7 @@ export class HomeComponent implements OnDestroy, OnInit {
   }
 
   opponentName(duelWeek: DuelWeek): string {
-    return this.duelsService.opponentForPlayers(duelWeek.players);
+    return this.duelsService.opponentForPlayers(duelWeek.players).name;
   }
 
   acceptDuel(): void {

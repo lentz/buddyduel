@@ -13,6 +13,7 @@ export class DuelWeek {
     public picker: Player,
     public players: Player[],
     public record: { wins: number, losses: number, pushes: number },
+    public winnings: number,
     games: Game[], ) {
 
   }

@@ -12,6 +12,12 @@ const duelWeekSchema = new mongoose.Schema({
   betAmount: { type: Number, required: true },
   players: [playerSchema],
   picker: playerSchema,
+  winnings: { type: Number, default: 0 },
+  record: {
+    wins: { type: Number, default: 0 },
+    losses: { type: Number, default: 0 },
+    pushes: { type: Number, default: 0 },
+  },
   games: [{
     _id: false,
     id: { type: String, required: true },
@@ -28,7 +34,7 @@ const duelWeekSchema = new mongoose.Schema({
   }],
 }, { timestamps: true, toJSON: { virtuals: true } });
 
-duelWeekSchema.virtual('record').get(function getRecord() {
+duelWeekSchema.method('updateRecord', function updateRecord() {
   let wins = 0;
   let losses = 0;
   let pushes = 0;
@@ -40,7 +46,9 @@ duelWeekSchema.virtual('record').get(function getRecord() {
       default:
     }
   });
-  return { wins, losses, pushes };
+  this.record = { wins, losses, pushes };
+  this.winnings = (this.record.wins * this.betAmount) -
+                  (this.record.losses * this.betAmount);
 });
 
 module.exports = mongoose.model('DuelWeek', duelWeekSchema);

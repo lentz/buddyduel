@@ -83,15 +83,10 @@ export class DuelWeekComponent implements OnInit, OnDestroy {
     return `${this.duelWeek.record.wins}-${this.duelWeek.record.losses}-${this.duelWeek.record.pushes}`;
   }
 
-  weekWinnings(): number {
-    return (this.duelWeek.record.wins * this.duelWeek.betAmount) -
-           (this.duelWeek.record.losses * this.duelWeek.betAmount);
-  }
-
   isWinner(): boolean {
-    if (this.weekWinnings() === 0) { return true; }
-    return (this.isPicker() && this.weekWinnings() > 0) ||
-           (!this.isPicker() && this.weekWinnings() < 0)
+    if (this.duelWeek.winnings === 0) { return true; }
+    return (this.isPicker() && this.duelWeek.winnings > 0) ||
+           (!this.isPicker() && this.duelWeek.winnings < 0)
   }
 
   hasResults(): boolean {

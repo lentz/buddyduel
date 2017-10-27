@@ -15,7 +15,7 @@
       {{ isPicker() ? 'Your' : opponentName() + "'s" }} record this week is
       {{ record() }}. You're {{ isWinner() ? 'winning' : 'losing' }}
       <span [ngClass]="{'badge': true, 'badge-success': isWinner(), 'badge-danger': !isWinner()}">
-        {{ this.Math.abs(weekWinnings()) | currency:'USD':true }}
+        {{ this.Math.abs(duelWeek.winnings) | currency:'USD':true }}
       </span>
     </div>
   </div>

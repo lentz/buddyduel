@@ -50,7 +50,7 @@ function updateDuelWeeks(cb) {
       waterfall
     ),
     (result, waterfall) => DuelWeek.find(
-      { weekNum: NFLWeek.currentWeek() },
+      { weekNum: result.weekNum },
       (err, duelWeeks) => {
         if (err) { return waterfall(err); }
         return waterfall(null, result, duelWeeks);
@@ -60,6 +60,7 @@ function updateDuelWeeks(cb) {
       if (!result || result.scores.length < 1) { return cb(null, null); }
       return async.each(duelWeeks, (duelWeek, eachCb) => {
         duelWeek.games = gamesWithResults(duelWeek.games, result.scores);
+        duelWeek.updateRecord();
         duelWeek.save(eachCb);
       }, waterfall);
     },

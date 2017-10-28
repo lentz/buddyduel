@@ -59,8 +59,9 @@ export class AuthService {
   checkSession(): void {
     if (this.isAuthenticated()) { return this.authenticatedSource.next(); }
     if (localStorage.hasOwnProperty('expires_at')) {
-      this.renewToken();
+      return this.renewToken();
     }
+    this.router.navigate(['/']);
   }
 
   isAuthenticated(): boolean {

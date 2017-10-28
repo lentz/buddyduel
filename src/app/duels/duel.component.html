@@ -6,13 +6,22 @@
       <div class="card-body">
         <div>
           Your overall record: {{ userRecord() | record }}
-          <span [ngClass]="{'badge': true, 'badge-success': userWinnings() >= 0, 'badge-danger': userWinnings() < 0}">
+          ({{ userRecord() | winPercentage | number:'1.3-3' }})
+        </div>
+        <div>
+          Your overall winnings:
+          <span class="badge" [ngClass]="{'badge-success': userWinnings() >= 0, 'badge-danger': userWinnings() < 0}">
             {{ userWinnings() | currency:'USD':true }}
           </span>
         </div>
+        <br />
         <div>
-          {{ opponentName() }}'s season record: {{ opponentRecord() | record }}
-          <span [ngClass]="{'badge': true, 'badge-success': opponentWinnings() >= 0, 'badge-danger': opponentWinnings() < 0}">
+          {{ opponentName() }}'s overall record: {{ opponentRecord() | record }}
+          ({{ opponentRecord() | winPercentage | number:'1.3-3' }})
+        </div>
+        <div>
+          {{ opponentName() }}'s overall winnings:
+          <span class="badge" [ngClass]="{'badge-success': opponentWinnings() >= 0, 'badge-danger': opponentWinnings() < 0}">
             {{ opponentWinnings() | currency:'USD':true }}
           </span>
         </div>
@@ -23,13 +32,22 @@
       <div class="card-body">
         <div>
           Your season record: {{ userRecord(year) | record }}
-          <span [ngClass]="{'badge': true, 'badge-success': userWinnings(year) >= 0, 'badge-danger': userWinnings(year) < 0}">
+          ({{ userRecord(year) | winPercentage | number:'1.3-3' }})
+        </div>
+        <div>
+          Your season winnings:
+          <span class="badge" [ngClass]="{'badge-success': userWinnings(year) >= 0, 'badge-danger': userWinnings(year) < 0}">
             {{ userWinnings(year) | currency:'USD':true }}
           </span>
         </div>
+        <br />
         <div>
           {{ opponentName() }}'s season record: {{ opponentRecord(year) | record }}
-          <span [ngClass]="{'badge': true, 'badge-success': opponentWinnings(year) >= 0, 'badge-danger': opponentWinnings(year) < 0}">
+          ({{ opponentRecord(year) | winPercentage | number:'1.3-3' }})
+        </div>
+        <div>
+          {{ opponentName() }}'s season winnings:
+          <span class="badge" [ngClass]="{'badge-success': opponentWinnings(year) >= 0, 'badge-danger': opponentWinnings(year) < 0}">
             {{ opponentWinnings(year) | currency:'USD':true }}
           </span>
         </div>

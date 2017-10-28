@@ -14,6 +14,7 @@ import { UserProfileService } from './user-profile.service';
 export class UserProfileComponent implements OnDestroy, OnInit {
   record = { wins: 0, losses: 0, pushes: 0 };
   winnings = 0;
+  reminderEmails: boolean;
   authenticatedSubscription: Subscription;
 
   constructor(private titleService: Title,
@@ -37,6 +38,7 @@ export class UserProfileComponent implements OnDestroy, OnInit {
       .then(profile => {
         this.record = profile.record;
         this.winnings = profile.winnings;
+        this.reminderEmails = profile.preferences.reminderEmails;
       })
       .catch(err => {
         console.error(err);

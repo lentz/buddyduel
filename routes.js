@@ -4,6 +4,7 @@ const jwksRsa = require('jwks-rsa');
 
 const duelsController = require('./controllers/duels.js');
 const duelWeeksController = require('./controllers/duel-weeks');
+const usersController = require('./controllers/users');
 
 const router = express.Router();
 
@@ -40,5 +41,8 @@ router.route('/duel-weeks')
 router.route('/duel-weeks/:id')
   .get(duelWeeksController.show)
   .put(duelWeeksController.update);
+
+router.route('/profile')
+  .get(usersController.show);
 
 module.exports = router;

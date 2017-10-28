@@ -1,0 +1,46 @@
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { Subscription } from 'rxjs/Subscription';
+
+import { AuthService } from '../auth/auth.service'
+import { UserProfileService } from './user-profile.service';
+
+@Component({
+  selector: 'app-user-profile',
+  templateUrl: './user-profile.component.html',
+  styleUrls: ['./user-profile.component.css']
+})
+export class UserProfileComponent implements OnDestroy, OnInit {
+  record = { wins: 0, losses: 0, pushes: 0 };
+  winnings = 0;
+  authenticatedSubscription: Subscription;
+
+  constructor(private titleService: Title,
+              private toastr: ToastsManager,
+              private authService: AuthService,
+              private userProfileService: UserProfileService, ) { }
+
+  ngOnInit(): void {
+    this.authenticatedSubscription = this.authService.authenticated$.subscribe(
+      this.loadProfile.bind(this)
+    );
+    this.authService.checkSession();
+  }
+
+  ngOnDestroy(): void {
+    this.authenticatedSubscription.unsubscribe();
+  }
+
+  private loadProfile(): void {
+    this.userProfileService.getProfile()
+      .then(profile => {
+        this.record = profile.record;
+        this.winnings = profile.winnings;
+      })
+      .catch(err => {
+        console.error(err);
+        this.toastr.error('Failed to load user profile');
+      });
+  }
+}

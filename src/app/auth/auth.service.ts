@@ -69,14 +69,18 @@ export class AuthService {
     return new Date().getTime() < expiresAt;
   }
 
-  private renewToken() {
+  private renewToken(): void {
     this.auth0.renewAuth({
       audience: this.auth0.baseOptions.audience,
       redirectUri: environment.authSilentUri,
       usePostMessage: true,
     }, (err, authResult) => {
-      if (err) { return console.error(err); }
-      return this.setSession(authResult);
+      if (err) {
+        console.error(err);
+        this.clearSession();
+        return this.router.navigate(['/']);
+      }
+      this.setSession(authResult);
     });
   }
 

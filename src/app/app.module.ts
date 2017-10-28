@@ -13,6 +13,9 @@ import { AuthService } from './auth/auth.service';
 import { DuelsModule } from './duels/duels.module';
 import { HomeComponent } from './home/home.component';
 import { NavComponent } from './nav/nav.component';
+import { SharedModule } from './shared/shared.module';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { UserProfileService } from './user-profile/user-profile.service';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig({
@@ -28,6 +31,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     FormsModule,
     HttpModule,
     ToastModule.forRoot(),
+    SharedModule,
     AppRoutingModule,
   ],
   providers: [
@@ -37,11 +41,13 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
       deps: [Http, RequestOptions],
     },
     AuthService,
+    UserProfileService,
   ],
   declarations: [
     AppComponent,
     HomeComponent,
     NavComponent,
+    UserProfileComponent,
   ],
   bootstrap: [AppComponent]
 })

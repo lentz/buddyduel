@@ -33,3 +33,19 @@ module.exports.getInfo = (userId, cb) => {
     },
   ], cb);
 };
+
+module.exports.updateMetadata = (userId, userMetadata, cb) => {
+  async.waterfall([
+    getToken,
+    (token, waterfall) => {
+      const options = {
+        method: 'PATCH',
+        url: `https://${process.env.AUTH0_DOMAIN}/api/v2/users/${userId}`,
+        headers: { Authorization: `Bearer ${token}` },
+        json: true,
+        body: { user_metadata: userMetadata },
+      };
+      request(options, (err, _res, body) => waterfall(err, body));
+    },
+  ], cb);
+};

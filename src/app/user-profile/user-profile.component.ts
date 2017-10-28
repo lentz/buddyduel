@@ -33,6 +33,15 @@ export class UserProfileComponent implements OnDestroy, OnInit {
     this.authenticatedSubscription.unsubscribe();
   }
 
+  savePreferences(): void {
+    this.userProfileService.updateProfile({ reminderEmails: this.reminderEmails })
+      .then(() => this.toastr.success('Preferences saved'))
+      .catch(err => {
+        console.error(err);
+        this.toastr.error('Failed to save preferences');
+      });
+  }
+
   private loadProfile(): void {
     this.userProfileService.getProfile()
       .then(profile => {

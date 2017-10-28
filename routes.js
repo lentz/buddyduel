@@ -43,6 +43,7 @@ router.route('/duel-weeks/:id')
   .put(duelWeeksController.update);
 
 router.route('/profile')
-  .get(usersController.show);
+  .get(usersController.show)
+  .put(usersController.update);
 
 module.exports = router;

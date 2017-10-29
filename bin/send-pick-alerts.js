@@ -20,6 +20,10 @@ function messageBody(duelWeek, games) {
         Make your picks now
       </a>
     </p>
+    <p></p>
+    <small>
+      You can disable these emails on your <a href="http://www.buddyduel.net/profile">BuddyDuel Profile</a>
+    </small>
   `;
 }
 
@@ -30,6 +34,8 @@ function opponentName(duelWeek) {
 function sendAlert(duelWeek, games, cb) {
   user.getInfo(duelWeek.picker.id, (err, userInfo) => {
     if (err) { return cb(err); }
+    const preferences = userInfo.user_metadata || {};
+    if (preferences.reminderEmails === false) { return cb(); }
     console.log('Sending pick alert to', userInfo.email, 'for duel week', duelWeek.id);
     const msg = {
       to: userInfo.email,

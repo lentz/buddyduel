@@ -53,6 +53,7 @@ function isApproachingUnpicked(game) {
          moment().isSameOrAfter(moment(game.startTime).subtract(1.5, 'hours'));
 }
 
+const startTime = new Date();
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true });
 mongoose.connection.on('error', (err) => {
@@ -72,7 +73,8 @@ DuelWeek.find({ weekNum: NFLWeek.currentWeek(), 'games.selectedTeam': null },
       if (unpickedGames.length < 1) { return eachCb(); }
       return sendAlert(duelWeek, unpickedGames, eachCb);
     }, (eachErr) => {
-      if (eachErr) { console.error('Error sending alerts', err); }
       mongoose.connection.close();
+      if (eachErr) { console.error('Error sending alerts', err); }
+      console.log('Completed in', new Date() - startTime, 'ms');
     });
   });

@@ -67,6 +67,7 @@ function updateDuelWeeks(cb) {
   ], cb);
 }
 
+const startTime = new Date();
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true });
 mongoose.connection.on('error', (err) => {
@@ -79,4 +80,5 @@ async.series([
 ], (err) => {
   mongoose.connection.close();
   if (err) { console.error('Error updating NFL results:', err); }
+  console.log('Completed in', new Date() - startTime, 'ms');
 });

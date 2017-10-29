@@ -23,6 +23,7 @@ export class UserProfileComponent implements OnDestroy, OnInit {
               private userProfileService: UserProfileService, ) { }
 
   ngOnInit(): void {
+    this.titleService.setTitle('My Profile | BuddyDuel');
     this.authenticatedSubscription = this.authService.authenticated$.subscribe(
       this.loadProfile.bind(this)
     );

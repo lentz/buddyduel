@@ -100,7 +100,7 @@ export class DuelComponent implements OnInit, OnDestroy {
       .subscribe(duelWeeks => {
         this.duelWeeks = duelWeeks;
         this.titleService.setTitle(
-          `BuddyDuel - ${this.duelsService.opponentForPlayers(duelWeeks[0].players).name}`
+          `vs. ${this.duelsService.opponentForPlayers(duelWeeks[0].players).name} | BuddyDuel`
         );
       }, err => this.toastr.error(err));
   }

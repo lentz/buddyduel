@@ -47,7 +47,7 @@ export class DuelWeekComponent implements OnInit, OnDestroy {
       .subscribe(duelWeek => {
         this.duelWeek = duelWeek;
         this.duelWeek.games.sort((a: any, b: any) => a.startTime - b.startTime);
-        this.titleService.setTitle(`BuddyDuel - Week ${duelWeek.weekNum}`);
+        this.titleService.setTitle(`Week ${duelWeek.weekNum} vs. ${this.opponentName()} | BuddyDuel`);
       }, err => this.toastr.error(err));
   }
 

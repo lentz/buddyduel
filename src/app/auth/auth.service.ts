@@ -75,10 +75,10 @@ export class AuthService {
       redirectUri: environment.authSilentUri,
       usePostMessage: true,
     }, (err, authResult) => {
-      if (err) {
-        console.error(err);
+      if (err || authResult.error) {
+        console.error(err || authResult);
         this.clearSession();
-        return this.router.navigate(['/']);
+        return this.login();
       }
       this.setSession(authResult);
     });

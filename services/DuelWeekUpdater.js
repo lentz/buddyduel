@@ -6,14 +6,21 @@ const bovada = require('../services/bovada');
 const DuelWeek = require('../models/DuelWeek');
 const NFLWeek = require('../services/NFLWeek');
 
+function unpickedAndNotBegun(game) {
+  return !game.selectedTeam && game.startTime > +new Date();
+}
+
 function updateGames(games, lines) {
   lines.forEach((line) => {
     const existingGame = games.find(game => line.id === game.id);
     if (existingGame === undefined) {
       games.push(line);
-    } else if (!existingGame.selectedTeam && existingGame.startTime > +new Date()) {
-      existingGame.homeSpread = line.homeSpread;
-      existingGame.awaySpread = line.awaySpread;
+    } else {
+      existingGame.startTime = line.startTime;
+      if (unpickedAndNotBegun(existingGame)) {
+        existingGame.homeSpread = line.homeSpread;
+        existingGame.awaySpread = line.awaySpread;
+      }
     }
   });
   return games;

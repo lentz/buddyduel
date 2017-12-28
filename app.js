@@ -1,6 +1,7 @@
 require('dotenv').config();
 const bodyParser = require('body-parser');
 const express = require('express');
+require('express-async-errors');
 const logger = require('winston');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
@@ -32,6 +33,10 @@ app.use('/api', routes);
 app.use(express.static(path.join(__dirname, 'public')));
 app.get('*', (_req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+app.use((err, req, res, _next) => {
+  logger.error(err);
+  res.status(500).json({ message: err.message });
 });
 
 app.listen(process.env.PORT || 3000);

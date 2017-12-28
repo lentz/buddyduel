@@ -1,7 +1,6 @@
-const request = require('request');
-const async = require('async');
+const requestPromise = require('request-promise-native');
 
-function getToken(cb) {
+async function getToken() {
   const options = {
     url: `https://${process.env.AUTH0_DOMAIN}/oauth/token`,
     headers: { 'content-type': 'application/json' },
@@ -14,38 +13,25 @@ function getToken(cb) {
     json: true,
   };
 
-  request.post(options, (err, _res, body) => {
-    if (err) { return cb(err); }
-    return cb(null, body.access_token);
-  });
+  return (await requestPromise.post(options)).access_token;
 }
 
-module.exports.getInfo = (userId, cb) => {
-  async.waterfall([
-    getToken,
-    (token, waterfall) => {
-      const options = {
-        url: `https://${process.env.AUTH0_DOMAIN}/api/v2/users/${userId}`,
-        headers: { Authorization: `Bearer ${token}` },
-        json: true,
-      };
-      request(options, (err, _res, body) => waterfall(err, body));
-    },
-  ], cb);
+module.exports.getInfo = async (userId) => {
+  const options = {
+    url: `https://${process.env.AUTH0_DOMAIN}/api/v2/users/${userId}`,
+    headers: { Authorization: `Bearer ${await getToken()}` },
+    json: true,
+  };
+  return requestPromise(options);
 };
 
-module.exports.updateMetadata = (userId, userMetadata, cb) => {
-  async.waterfall([
-    getToken,
-    (token, waterfall) => {
-      const options = {
-        method: 'PATCH',
-        url: `https://${process.env.AUTH0_DOMAIN}/api/v2/users/${userId}`,
-        headers: { Authorization: `Bearer ${token}` },
-        json: true,
-        body: { user_metadata: userMetadata },
-      };
-      request(options, (err, _res, body) => waterfall(err, body));
-    },
-  ], cb);
+module.exports.updateMetadata = async (userId, userMetadata) => {
+  const options = {
+    method: 'PATCH',
+    url: `https://${process.env.AUTH0_DOMAIN}/api/v2/users/${userId}`,
+    headers: { Authorization: `Bearer ${await getToken()}` },
+    json: true,
+    body: { user_metadata: userMetadata },
+  };
+  return requestPromise(options);
 };

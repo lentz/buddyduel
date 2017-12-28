@@ -15,7 +15,7 @@
     "heroku-postbuild": "ng build --prod"
   },
   "engines": {
-    "node": "6.11.4"
+    "node": "8.9.3"
   },
   "dependencies": {
     "@angular/animations": "^4.3.3",

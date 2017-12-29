@@ -1,7 +1,6 @@
 /* eslint no-param-reassign: "off" */
 
 const _ = require('lodash');
-const async = require('async');
 const bovada = require('../services/bovada');
 const DuelWeek = require('../models/DuelWeek');
 const NFLWeek = require('../services/NFLWeek');
@@ -26,27 +25,23 @@ function updateGames(games, lines) {
   return games;
 }
 
-module.exports.call = (duels, cb) => {
-  bovada.getLines((err, lines) => {
-    if (err) { return cb(err); }
-    const weekMap = _.groupBy(lines, NFLWeek.forGame);
-    return async.each(duels, (duel, eachDuelCb) => {
-      async.each(Object.keys(weekMap), (weekNum, eachWeekCb) => {
-        DuelWeek.findOneAndUpdate(
-          { year: NFLWeek.seasonYear, weekNum, duelId: duel.id },
-          {
-            betAmount: duel.betAmount,
-            players: duel.players,
-            picker: duel.players[weekNum % 2],
-          },
-          { upsert: true, setDefaultsOnInsert: true, runValidators: true, new: true },
-          (findErr, duelWeek) => {
-            if (findErr) { return eachWeekCb(findErr); }
-            duelWeek.games = updateGames(duelWeek.games, weekMap[weekNum]);
-            return duelWeek.save(eachWeekCb);
-          }
-        );
-      }, eachDuelCb);
-    }, cb);
-  });
+module.exports.call = async (duels) => {
+  const lines = await bovada.getLines();
+  const weekMap = _.groupBy(lines, NFLWeek.forGame);
+  // TODO: Refactor this to be simpler
+  return Promise.all(duels.map(async (duel) => { // eslint-disable-line arrow-body-style
+    return Promise.all(Object.keys(weekMap).map(async (weekNum) => {
+      const duelWeek = await DuelWeek.findOneAndUpdate(
+        { year: NFLWeek.seasonYear, weekNum, duelId: duel.id },
+        {
+          betAmount: duel.betAmount,
+          players: duel.players,
+          picker: duel.players[weekNum % 2],
+        },
+        { upsert: true, setDefaultsOnInsert: true, runValidators: true, new: true }
+      ).exec();
+      duelWeek.games = updateGames(duelWeek.games, weekMap[weekNum]);
+      return duelWeek.save();
+    }));
+  }));
 };

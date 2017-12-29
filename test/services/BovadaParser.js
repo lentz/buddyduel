@@ -8,12 +8,8 @@ describe('BovadaParser', () => {
   describe('#call()', () => {
     let bovadaJSON;
 
-    before((done) => {
-      fs.readFile('./test/services/bovada-nfl.json', (err, body) => {
-        if (err) return done(err);
-        bovadaJSON = body;
-        return done();
-      });
+    before(() => {
+      bovadaJSON = JSON.parse(fs.readFileSync('./test/services/bovada-nfl.json'));
     });
 
     it('parses the JSON and returns game objects', () => {

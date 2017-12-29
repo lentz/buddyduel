@@ -1,4 +1,4 @@
-const request = require('request');
+const requestPromise = require('request-promise-native');
 const BovadaParser = require('../services/BovadaParser');
 
 const options = {
@@ -7,11 +7,7 @@ const options = {
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36',
     Cookie: 'LANGUAGE=en; DEFLANG=en; W-CC=US; W_CUR=USD; COUNTRY=US; OQP=json=true',
   },
+  json: true,
 };
 
-module.exports.getLines = (cb) => {
-  request(options, (err, _res, body) => {
-    if (err) { return cb(err); }
-    return cb(null, BovadaParser.call(body));
-  });
-};
+module.exports.getLines = async () => BovadaParser.call(await requestPromise(options));

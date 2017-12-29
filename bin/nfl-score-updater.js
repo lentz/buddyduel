@@ -1,9 +1,8 @@
 /* eslint no-param-reassign: 0, no-console: 0 */
 
 require('dotenv').config();
-const async = require('async');
 const mongoose = require('mongoose');
-const request = require('request');
+const requestPromise = require('request-promise-native');
 
 const betResult = require('../lib/betResult');
 const DuelWeek = require('../models/DuelWeek');
@@ -11,23 +10,14 @@ const NFLWeek = require('../services/NFLWeek');
 const NFLScoreParser = require('../lib/NFLScoreParser');
 const Result = require('../models/Result');
 
-function getScores(cb) {
-  async.waterfall([
-    (waterfall) => {
-      request.get('http://www.nfl.com/liveupdate/scorestrip/ss.xml', (err, _res, body) => {
-        if (err) { return waterfall(err); }
-        return waterfall(null, body);
-      });
-    },
-    (scoresXML, waterfall) => NFLScoreParser.parseXML(scoresXML, waterfall),
-    (result, waterfall) => {
-      Result.findOneAndUpdate(
-        { year: result.year, weekNum: result.weekNum },
-        result,
-        { upsert: true, setDefaultsOnInsert: true, runValidators: true },
-        waterfall
-      );
-    }], cb);
+async function getScores() {
+  const scoresXML = await requestPromise.get('http://www.nfl.com/liveupdate/scorestrip/ss.xml');
+  const scoresJSON = await NFLScoreParser.parseXML(scoresXML);
+  Result.findOneAndUpdate(
+    { year: scoresJSON.year, weekNum: scoresJSON.weekNum },
+    scoresJSON,
+    { upsert: true, setDefaultsOnInsert: true, runValidators: true },
+  ).exec();
 }
 
 function gamesWithResults(games, scores) {
@@ -43,42 +33,32 @@ function gamesWithResults(games, scores) {
   });
 }
 
-function updateDuelWeeks(cb) {
-  async.waterfall([
-    waterfall => Result.findOne(
-      { year: NFLWeek.seasonYear, weekNum: NFLWeek.currentWeek() },
-      waterfall
-    ),
-    (result, waterfall) => DuelWeek.find(
-      { weekNum: result.weekNum },
-      (err, duelWeeks) => {
-        if (err) { return waterfall(err); }
-        return waterfall(null, result, duelWeeks);
-      }
-    ),
-    (result, duelWeeks, waterfall) => {
-      if (!result || result.scores.length < 1) { return cb(null, null); }
-      return async.each(duelWeeks, (duelWeek, eachCb) => {
-        duelWeek.games = gamesWithResults(duelWeek.games, result.scores);
-        duelWeek.updateRecord();
-        duelWeek.save(eachCb);
-      }, waterfall);
-    },
-  ], cb);
+async function updateDuelWeeks() {
+  const result = await Result.findOne(
+    { year: NFLWeek.seasonYear, weekNum: NFLWeek.currentWeek() }
+  ).exec();
+  if (!result || result.scores.length < 1) { return Promise.resolve(); }
+  const duelWeeks = await DuelWeek.find({ weekNum: result.weekNum }).exec();
+  return Promise.all(duelWeeks.map(async (duelWeek) => {
+    duelWeek.games = gamesWithResults(duelWeek.games, result.scores);
+    duelWeek.updateRecord();
+    return duelWeek.save();
+  }));
 }
 
-const startTime = new Date();
-mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true });
-mongoose.connection.on('error', (err) => {
-  console.error(`Unable to connect to Mongo: ${err}`);
-  process.exit(1);
-});
-async.series([
-  async.apply(getScores),
-  async.apply(updateDuelWeeks),
-], (err) => {
+async function run() {
+  const startTime = new Date();
+  mongoose.Promise = global.Promise;
+  mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true });
+  mongoose.connection.on('error', (err) => {
+    console.error(`Unable to connect to Mongo: ${err}`);
+    process.exit(1);
+  });
+
+  await getScores();
+  await updateDuelWeeks();
   mongoose.connection.close();
-  if (err) { console.error('Error updating NFL results:', err); }
   console.log('Completed in', new Date() - startTime, 'ms');
-});
+}
+
+run();

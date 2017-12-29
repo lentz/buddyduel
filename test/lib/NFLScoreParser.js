@@ -43,15 +43,11 @@ describe('NFLScoreParser', () => {
       year: 2017,
     };
 
-    it('parses the XML scores into JSON game results', (done) => {
-      fs.readFile('./test/lib/nfl-scores.xml', (err, scoresXML) => {
-        if (err) { return done(err); }
-        return NFLScoreParser.parseXML(scoresXML, (parseErr, gameResults) => {
-          if (parseErr) { return done(parseErr); }
-          assert.deepEqual(gameResults, expectedResult);
-          return done();
-        });
-      });
+    it('parses the XML scores into JSON game results', async () => {
+      const scoresXML = fs.readFileSync('./test/lib/nfl-scores.xml');
+      const gameResults = await NFLScoreParser.parseXML(scoresXML);
+
+      assert.deepEqual(gameResults, expectedResult);
     });
   });
 });

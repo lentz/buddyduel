@@ -10,6 +10,8 @@ const NFLWeek = require('../services/NFLWeek');
 const NFLScoreParser = require('../lib/NFLScoreParser');
 const Result = require('../models/Result');
 
+mongoose.Promise = global.Promise;
+
 async function getScores() {
   const scoresXML = await requestPromise.get('http://www.nfl.com/liveupdate/scorestrip/ss.xml');
   const scoresJSON = await NFLScoreParser.parseXML(scoresXML);
@@ -48,17 +50,17 @@ async function updateDuelWeeks() {
 
 async function run() {
   const startTime = new Date();
-  mongoose.Promise = global.Promise;
-  mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true });
-  mongoose.connection.on('error', (err) => {
-    console.error(`Unable to connect to Mongo: ${err}`);
-    process.exit(1);
-  });
+  try {
+    await mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true });
 
-  await getScores();
-  await updateDuelWeeks();
-  mongoose.connection.close();
-  console.log('Completed in', new Date() - startTime, 'ms');
+    await getScores();
+    await updateDuelWeeks();
+  } catch (err) {
+    console.error('Error updating NFL scores:', err);
+  } finally {
+    mongoose.connection.close();
+    console.log('Completed in', new Date() - startTime, 'ms');
+  }
 }
 
 run();

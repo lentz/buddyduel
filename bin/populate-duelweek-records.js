@@ -1,24 +1,26 @@
 /* eslint no-param-reassign: 0, no-console: 0 */
 
 require('dotenv').config();
-const async = require('async');
 const mongoose = require('mongoose');
 
 const DuelWeek = require('../models/DuelWeek');
 
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true });
-mongoose.connection.on('error', (err) => {
-  console.error(`Unable to connect to Mongo: ${err}`);
-  process.exit(1);
-});
 
-DuelWeek.find({}, (findErr, duelWeeks) => {
-  async.each(duelWeeks, (duelWeek, eachCb) => {
-    duelWeek.updateRecord();
-    duelWeek.save(eachCb);
-  }, (err) => {
+async function run() {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true });
+
+    const duelWeeks = await DuelWeek.find({}).exec();
+    await Promise.all(duelWeeks.map(async (duelWeek) => {
+      duelWeek.updateRecord();
+      return duelWeek.save();
+    }));
+  } catch (err) {
+    console.error('Error populating records:', err);
+  } finally {
     mongoose.connection.close();
-    if (err) { console.error('Error populating records:', err); }
-  });
-});
+  }
+}
+
+run();

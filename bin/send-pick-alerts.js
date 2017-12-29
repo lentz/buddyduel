@@ -1,13 +1,14 @@
 /* eslint no-console: 0 */
 
 require('dotenv').config();
-const async = require('async');
 const DuelWeek = require('../models/DuelWeek');
 const moment = require('moment');
 const mongoose = require('mongoose');
 const NFLWeek = require('../services/NFLWeek');
 const sgMail = require('@sendgrid/mail');
 const user = require('../services/user');
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 function messageBody(duelWeek, games) {
   return `
@@ -31,21 +32,18 @@ function opponentName(duelWeek) {
   return duelWeek.players.find(player => player.id !== duelWeek.picker.id).name;
 }
 
-function sendAlert(duelWeek, games, cb) {
-  user.getInfo(duelWeek.picker.id, (err, userInfo) => {
-    if (err) { return cb(err); }
-    const preferences = userInfo.user_metadata || {};
-    if (preferences.reminderEmails === false) { return cb(); }
-    console.log('Sending pick alert to', userInfo.email, 'for duel week', duelWeek.id);
-    const msg = {
-      to: userInfo.email,
-      from: 'BuddyDuel <alerts@buddyduel.net>',
-      subject: `Games starting soon vs ${opponentName(duelWeek)} - get your picks in!`,
-      html: messageBody(duelWeek, games),
-    };
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-    return sgMail.send(msg, cb);
-  });
+async function sendAlert(duelWeek, games) {
+  const userInfo = await user.getInfo(duelWeek.picker.id);
+  const preferences = userInfo.user_metadata || {};
+  if (preferences.reminderEmails === false) { return Promise.resolve(); }
+  console.log('Sending pick alert to', userInfo.email, 'for duel week', duelWeek.id);
+  const msg = {
+    to: userInfo.email,
+    from: 'BuddyDuel <alerts@buddyduel.net>',
+    subject: `Games starting soon vs ${opponentName(duelWeek)} - get your picks in!`,
+    html: messageBody(duelWeek, games),
+  };
+  return sgMail.send(msg);
 }
 
 function isApproachingUnpicked(game) {
@@ -53,28 +51,26 @@ function isApproachingUnpicked(game) {
          moment().isSameOrAfter(moment(game.startTime).subtract(1.5, 'hours'));
 }
 
-const startTime = new Date();
-mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true });
-mongoose.connection.on('error', (err) => {
-  console.error(`Unable to connect to Mongo: ${err}`);
-  process.exit(1);
-});
-DuelWeek.find({ weekNum: NFLWeek.currentWeek(), 'games.selectedTeam': null },
-  { picker: 1, games: 1, players: 1 },
-  null,
-  (err, duelWeeks) => {
-    if (err) {
-      console.err('Error finding unpicked duel weeks', err);
-      process.exit(1);
-    }
-    async.each(duelWeeks, (duelWeek, eachCb) => {
-      const unpickedGames = duelWeek.games.filter(game => isApproachingUnpicked(game));
-      if (unpickedGames.length < 1) { return eachCb(); }
-      return sendAlert(duelWeek, unpickedGames, eachCb);
-    }, (eachErr) => {
-      mongoose.connection.close();
-      if (eachErr) { console.error('Error sending alerts', err); }
-      console.log('Completed in', new Date() - startTime, 'ms');
-    });
+async function run() {
+  const startTime = new Date();
+  mongoose.Promise = global.Promise;
+  mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true });
+  mongoose.connection.on('error', (err) => {
+    console.error(`Unable to connect to Mongo: ${err}`);
+    process.exit(1);
   });
+  const duelWeeks = await DuelWeek.find(
+    { weekNum: NFLWeek.currentWeek(), 'games.selectedTeam': null },
+    { picker: 1, games: 1, players: 1 },
+    null
+  ).exec();
+  mongoose.connection.close();
+  await Promise.all(duelWeeks.map(async (duelWeek) => {
+    const unpickedGames = duelWeek.games.filter(game => isApproachingUnpicked(game));
+    if (unpickedGames.length < 1) { return Promise.resolve(); }
+    return sendAlert(duelWeek, unpickedGames);
+  }));
+  console.log('Completed in', new Date() - startTime, 'ms');
+}
+
+run();

@@ -1,8 +1,8 @@
 /* eslint no-param-reassign: 0, no-console: 0 */
 
 require('dotenv').config();
+const axios = require('axios');
 const mongoose = require('mongoose');
-const requestPromise = require('request-promise-native');
 
 const betResult = require('../lib/betResult');
 const DuelWeek = require('../models/DuelWeek');
@@ -13,7 +13,7 @@ const Result = require('../models/Result');
 mongoose.Promise = global.Promise;
 
 async function getScores() {
-  const scoresXML = await requestPromise.get('http://www.nfl.com/liveupdate/scorestrip/ss.xml');
+  const scoresXML = (await axios.get('http://www.nfl.com/liveupdate/scorestrip/ss.xml')).data;
   const scoresJSON = await NFLScoreParser.parseXML(scoresXML);
   Result.findOneAndUpdate(
     { year: scoresJSON.year, weekNum: scoresJSON.weekNum },

@@ -659,7 +659,7 @@
                         "link": "/football/nfl/atlanta-falcons-chicago-bears-201709101300",
                         "baseLink": "/football/nfl/atlanta-falcons-chicago-bears-201709101300",
                         "atmosphereLink": "/api/atmosphere/eventNotification/events/A/2782436",
-                        "type": "NFL",
+                        "type": "NFL, Playoffs",
                         "awayTeamFirst": true,
                         "denySameGame": "NO",
                         "feedCode": "2506808",

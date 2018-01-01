@@ -9,6 +9,7 @@ function parseGame(game) {
   let pointSpread;
   try {
     pointSpread = jp.query(game, '$..itemList[?(@.description=="Point Spread")]')[0];
+    if (!pointSpread) { return null; }
     const home = pointSpread.outcomes.find(team => team.type === 'H');
     const away = pointSpread.outcomes.find(team => team.type === 'A');
     if (!home.description.match(teamRegex) || !away.description.match(teamRegex)) {
@@ -31,6 +32,6 @@ function parseGame(game) {
 }
 
 module.exports.call = json => jp
-  .query(json, '$..items[?(@.type=="NFL")]')
+  .query(json, '$..items[?(@.type=="NFL" || @.type=="NFL, Playoffs")]')
   .map(parseGame)
   .filter(game => game);

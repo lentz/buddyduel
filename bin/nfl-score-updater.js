@@ -10,10 +10,14 @@ const NFLWeek = require('../services/NFLWeek');
 const NFLScoreParser = require('../lib/NFLScoreParser');
 const Result = require('../models/Result');
 
+const REG_SEASON_URL = 'http://www.nfl.com/liveupdate/scorestrip/ss.xml';
+const POST_SEASON_URL = 'http://www.nfl.com/liveupdate/scorestrip/postseason/ss.xml';
+
 mongoose.Promise = global.Promise;
 
 async function getScores() {
-  const scoresXML = (await axios.get('http://www.nfl.com/liveupdate/scorestrip/ss.xml')).data;
+  const scoresURL = NFLWeek.currentWeek() > 17 ? POST_SEASON_URL : REG_SEASON_URL;
+  const scoresXML = (await axios.get(scoresURL)).data;
   const scoresJSON = await NFLScoreParser.parseXML(scoresXML);
   Result.findOneAndUpdate(
     { year: scoresJSON.year, weekNum: scoresJSON.weekNum },

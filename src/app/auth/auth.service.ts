@@ -90,8 +90,7 @@ export class AuthService {
 
     const expiresAt = JSON.parse(window.localStorage.getItem('expires_at'));
     const source = Observable.of(expiresAt).flatMap(expireTime => {
-      const now = Date.now();
-      return Observable.timer(Math.max(1, expireTime - now));
+      return Observable.timer(1000 * 60 * 60); // 1 hour
     });
 
     this.refreshSubscription = source.subscribe(() => {

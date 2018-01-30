@@ -11,7 +11,7 @@
         <div>
           Your overall winnings:
           <span class="badge" [ngClass]="{'badge-success': userWinnings() >= 0, 'badge-danger': userWinnings() < 0}">
-            {{ userWinnings() | currency:'USD':true }}
+            {{ userWinnings() | currency:'USD':'symbol' }}
           </span>
         </div>
         <br />
@@ -22,7 +22,7 @@
         <div>
           {{ opponentName() }}'s overall winnings:
           <span class="badge" [ngClass]="{'badge-success': opponentWinnings() >= 0, 'badge-danger': opponentWinnings() < 0}">
-            {{ opponentWinnings() | currency:'USD':true }}
+            {{ opponentWinnings() | currency:'USD':'symbol' }}
           </span>
         </div>
       </div>
@@ -37,7 +37,7 @@
         <div>
           Your season winnings:
           <span class="badge" [ngClass]="{'badge-success': userWinnings(year) >= 0, 'badge-danger': userWinnings(year) < 0}">
-            {{ userWinnings(year) | currency:'USD':true }}
+            {{ userWinnings(year) | currency:'USD':'symbol' }}
           </span>
         </div>
         <br />
@@ -48,7 +48,7 @@
         <div>
           {{ opponentName() }}'s season winnings:
           <span class="badge" [ngClass]="{'badge-success': opponentWinnings(year) >= 0, 'badge-danger': opponentWinnings(year) < 0}">
-            {{ opponentWinnings(year) | currency:'USD':true }}
+            {{ opponentWinnings(year) | currency:'USD':'symbol' }}
           </span>
         </div>
         <ul>

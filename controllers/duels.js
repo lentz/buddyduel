@@ -7,9 +7,7 @@ async function alreadyInDuel(code, userId) {
 }
 
 module.exports.index = async (req, res) => {
-  const duels = await Duel.find(
-    Object.assign(req.query, { 'players.id': req.user.sub })
-  ).exec();
+  const duels = await Duel.find(Object.assign(req.query, { 'players.id': req.user.sub })).exec();
   return res.json(duels);
 };
 

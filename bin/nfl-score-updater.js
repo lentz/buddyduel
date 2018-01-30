@@ -40,9 +40,10 @@ function gamesWithResults(games, scores) {
 }
 
 async function updateDuelWeeks() {
-  const result = await Result.findOne(
-    { year: NFLWeek.seasonYear, weekNum: NFLWeek.currentWeek() }
-  ).exec();
+  const result = await Result.findOne({
+    year: NFLWeek.seasonYear,
+    weekNum: NFLWeek.currentWeek(),
+  }).exec();
   if (!result || result.scores.length < 1) { return Promise.resolve(); }
   const duelWeeks = await DuelWeek.find({ weekNum: result.weekNum }).exec();
   return Promise.all(duelWeeks.map(async (duelWeek) => {

@@ -4,9 +4,7 @@ const DuelWeek = require('../models/DuelWeek');
 const user = require('../services/user');
 
 async function getPerformance(userId) {
-  const duelWeeks = await DuelWeek.find(
-    { 'picker.id': userId }, { record: 1, winnings: 1 }
-  ).exec();
+  const duelWeeks = await DuelWeek.find({ 'picker.id': userId }, { record: 1, winnings: 1 }).exec();
   return duelWeeks.reduce((performance, duelWeek) => {
     performance.winnings += duelWeek.winnings;
     performance.record.wins += duelWeek.record.wins;

@@ -38,7 +38,9 @@ module.exports.call = async (duels) => {
           players: duel.players,
           picker: duel.players[weekNum % 2],
         },
-        { upsert: true, setDefaultsOnInsert: true, runValidators: true, new: true }
+        {
+          upsert: true, setDefaultsOnInsert: true, runValidators: true, new: true,
+        }
       ).exec();
       duelWeek.games = updateGames(duelWeek.games, weekMap[weekNum]);
       return duelWeek.save();

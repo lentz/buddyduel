@@ -8,7 +8,7 @@ const teamRegex = /^[\w\s\d]+$/;
 function parseGame(game) {
   let pointSpread;
   try {
-    pointSpread = jp.query(game, '$..itemList[?(@.description=="Point Spread")]')[0];
+    [pointSpread] = jp.query(game, '$..itemList[?(@.description=="Point Spread")]');
     if (!pointSpread) { return null; }
     const home = pointSpread.outcomes.find(team => team.type === 'H');
     const away = pointSpread.outcomes.find(team => team.type === 'A');

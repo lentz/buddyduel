@@ -14,9 +14,7 @@ module.exports.index = async (req, res) => {
 };
 
 module.exports.show = async (req, res) => {
-  const duelWeek = await DuelWeek.findOne(
-    { _id: req.params.id, 'players.id': req.user.sub }
-  ).exec();
+  const duelWeek = await DuelWeek.findOne({ _id: req.params.id, 'players.id': req.user.sub }).exec();
   if (!duelWeek) {
     return res.status(404).json({ message: 'Duel week not found' });
   }
@@ -32,9 +30,7 @@ function setSelections(duelWeek, pickedGames) {
 }
 
 module.exports.update = async (req, res) => {
-  const duelWeek = await DuelWeek.findOne(
-    { _id: req.body._id, 'players.id': req.user.sub }
-  ).exec();
+  const duelWeek = await DuelWeek.findOne({ _id: req.body._id, 'players.id': req.user.sub }).exec();
   duelWeek.games = setSelections(duelWeek, req.body.games);
   await duelWeek.save();
   return res.json({ message: 'Picks successfully locked in' });

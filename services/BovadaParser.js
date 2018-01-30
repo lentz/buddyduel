@@ -32,6 +32,6 @@ function parseGame(game) {
 }
 
 module.exports.call = json => jp
-  .query(json, '$..items[?(@.type=="NFL" || @.type=="NFL, Playoffs")]')
+  .query(json, '$..items[?(@.type=="NFL" || @.type=="NFL, Playoffs" || @.type=="Super Bowl")]')
   .map(parseGame)
   .filter(game => game);

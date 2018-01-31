@@ -78,5 +78,10 @@
     "pre-commit": "^1.2.2",
     "ts-node": "^4.1.0",
     "tslint": "^5.9.1"
+  },
+  "greenkeeper": {
+    "ignore": [
+      "typescript"
+    ]
   }
 }

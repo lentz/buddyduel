@@ -12,7 +12,7 @@ const routes = require('./routes');
 const app = express();
 
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true });
+mongoose.connect(process.env.MONGODB_URI);
 mongoose.connection.on('error', (err) => {
   logger.error(`Unable to connect to Mongo: ${err}`);
   process.exit(1);

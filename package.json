@@ -46,7 +46,7 @@
     "jwks-rsa": "^1.2.0",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
-    "mongoose": "^4.11.10",
+    "mongoose": "^5.0.2",
     "morgan": "^1.8.2",
     "ng2-toastr": "^4.1.2",
     "pug": "^2.0.0-rc.4",

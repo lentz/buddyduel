@@ -9,7 +9,7 @@ mongoose.Promise = global.Promise;
 
 async function run() {
   try {
-    await mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true });
+    await mongoose.connect(process.env.MONGODB_URI);
 
     const duelWeeks = await DuelWeek.find({}).exec();
     await Promise.all(duelWeeks.map(async (duelWeek) => {

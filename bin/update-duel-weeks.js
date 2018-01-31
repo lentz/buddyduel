@@ -11,7 +11,7 @@ mongoose.Promise = global.Promise;
 async function run() {
   const startTime = new Date();
   try {
-    await mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true });
+    await mongoose.connect(process.env.MONGODB_URI);
     const duels = await Duel.find({ status: 'active' }).exec();
     await DuelWeekUpdater.call(duels);
   } catch (err) {

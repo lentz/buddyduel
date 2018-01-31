@@ -56,7 +56,7 @@ async function updateDuelWeeks() {
 async function run() {
   const startTime = new Date();
   try {
-    await mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true });
+    await mongoose.connect(process.env.MONGODB_URI);
 
     await getScores();
     await updateDuelWeeks();

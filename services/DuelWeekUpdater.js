@@ -25,6 +25,12 @@ function updateGames(games, lines) {
   return games;
 }
 
+function picker(players, weekNum) {
+  // This is gross, but need to handle the Pro Bowl week
+  const pickerWeekNum = weekNum === '22' ? 21 : parseInt(weekNum, 10);
+  return players[pickerWeekNum % 2];
+}
+
 module.exports.call = async (duels) => {
   const lines = await bovada.getLines();
   const weekMap = _.groupBy(lines, NFLWeek.forGame);
@@ -36,7 +42,7 @@ module.exports.call = async (duels) => {
         {
           betAmount: duel.betAmount,
           players: duel.players,
-          picker: duel.players[weekNum % 2],
+          picker: picker(duel.players, weekNum),
         },
         {
           upsert: true, setDefaultsOnInsert: true, runValidators: true, new: true,

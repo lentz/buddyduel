@@ -65,6 +65,7 @@ async function run() {
   } finally {
     mongoose.connection.close();
     console.log('Completed in', new Date() - startTime, 'ms');
+    process.exit();
   }
 }
 

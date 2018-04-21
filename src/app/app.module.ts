@@ -19,7 +19,7 @@ import { UserProfileService } from './user-profile/user-profile.service';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig({
-    tokenGetter: (() => localStorage.getItem('access_token'))
+    tokenGetter: (() => localStorage.getItem('access_token') || 'null')
   }), http, options);
 }
 

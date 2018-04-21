@@ -9,7 +9,7 @@ export class Game {
     public awaySpread: number,
     public awayScore: number,
     public startTime: number,
-    public selectedTeam: string,
+    public selectedTeam: string | undefined,
     public time: string,
     public result: string, ) {
 

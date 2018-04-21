@@ -33,7 +33,8 @@ export class GameComponent {
   }
 
   private selectionSaved(): boolean {
-    return this.game.selectedTeam && !this.game.updated;
+    return this.game.selectedTeam !== undefined && this.game.selectedTeam !== ''
+      && !this.game.updated;
   }
 
   private gameHasStarted(): boolean {

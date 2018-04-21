@@ -87,7 +87,7 @@ export class HomeComponent implements OnDestroy, OnInit {
     });
   }
 
-  deleteDuel(duelId): void {
+  deleteDuel(duelId: string): void {
     this.duelsService.deleteDuel(duelId)
     .then(() => {
       this.pendingDuels = this.pendingDuels.filter(duel => duel._id !== duelId);

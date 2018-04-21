@@ -17,7 +17,7 @@ export class UserProfileService {
     .catch(this.handleError);
   }
 
-  updateProfile(profile): Promise<any> {
+  updateProfile(profile: { reminderEmails: boolean }): Promise<any> {
     return this.authHttp.put(this.profileURL, profile, { headers: this.headers })
       .toPromise()
       .then(response => response.json())

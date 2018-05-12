@@ -1,19 +1,14 @@
-/* global assert */
-
 const fs = require('fs');
-require('../support');
+const path = require('path');
 const BovadaParser = require('../../services/BovadaParser');
 
 describe('BovadaParser', () => {
+  beforeEach(() => expect.hasAssertions());
+
   describe('#call()', () => {
-    let bovadaJSON;
+    const bovadaJSON = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'sample-data', 'bovada-nfl.json')));
 
-    before(() => {
-      bovadaJSON = JSON.parse(fs.readFileSync('./test/services/bovada-nfl.json'));
-    });
-
-    it('parses the JSON and returns game objects', () => {
-      const games = BovadaParser.call(bovadaJSON);
+    test('parses the JSON and returns game objects', () => {
       const expectedGames = [
         {
           id: '0aba1f49b217ba4626b1838fe2f276de',
@@ -48,7 +43,42 @@ describe('BovadaParser', () => {
           startTime: 1505062800000,
         },
       ];
-      assert.deepEqual(games, expectedGames);
+
+      expect(BovadaParser.call(bovadaJSON)).toEqual(expectedGames);
+    });
+
+    test('skips games that do not have pointspreads', () => {
+      const badJSON = {
+        items: [
+          {
+            type: 'NFL',
+            itemList: [
+              {
+                description: 'Moneyline',
+              },
+            ],
+          },
+        ],
+      };
+
+      expect(BovadaParser.call(badJSON)).toEqual([]);
+    });
+
+    test('skips games that do not have outcomes', () => {
+      const badJSON = {
+        items: [
+          {
+            type: 'NFL',
+            itemList: [
+              {
+                description: 'Point Spread',
+              },
+            ],
+          },
+        ],
+      };
+
+      expect(BovadaParser.call(badJSON)).toEqual([]);
     });
   });
 });

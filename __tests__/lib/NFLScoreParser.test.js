@@ -1,10 +1,10 @@
-/* global assert */
-
 const fs = require('fs');
-require('../support');
+const path = require('path');
 const NFLScoreParser = require('../../lib/NFLScoreParser');
 
 describe('NFLScoreParser', () => {
+  beforeEach(() => expect.hasAssertions());
+
   describe('#parseXML()', () => {
     const expectedResult = {
       scores: [
@@ -43,11 +43,10 @@ describe('NFLScoreParser', () => {
       year: 2017,
     };
 
-    it('parses the XML scores into JSON game results', async () => {
-      const scoresXML = fs.readFileSync('./test/lib/nfl-scores.xml');
-      const gameResults = await NFLScoreParser.parseXML(scoresXML);
+    test('parses the XML scores into JSON game results', () => {
+      const scoresXML = fs.readFileSync(path.join(__dirname, '..', 'sample-data', 'nfl-scores.xml'));
 
-      assert.deepEqual(gameResults, expectedResult);
+      return expect(NFLScoreParser.parseXML(scoresXML)).resolves.toEqual(expectedResult);
     });
   });
 });

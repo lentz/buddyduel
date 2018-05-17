@@ -60,7 +60,7 @@
   "devDependencies": {
     "@types/auth0-js": "^8.11.2",
     "@types/jasmine": "^2.8.6",
-    "@types/node": "^9.4.0",
+    "@types/node": "^10.1.1",
     "codelyzer": "^4.1.0",
     "eslint": "^4.16.0",
     "eslint-config-airbnb": "^16.1.0",

@@ -41,6 +41,10 @@ export class DuelComponent implements OnInit, OnDestroy {
     return Array.from(new Set(this.duelWeeks.map(duelWeek => duelWeek.year)));
   }
 
+  duelWeeksFor(year: number): DuelWeek[] {
+    return this.duelWeeks.filter(duelWeek => duelWeek.year === year);
+  }
+
   userWinnings(year?: number): number {
     return this.aggregateWinnings(this.authService.getUserProfile().sub, year);
   }

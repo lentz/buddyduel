@@ -52,7 +52,7 @@
           </span>
         </div>
         <ul>
-          <li *ngFor="let duelWeek of duelWeeks" class="text-truncate">
+          <li *ngFor="let duelWeek of duelWeeksFor(year)" class="text-truncate">
             <a [routerLink]="[ '/duel-weeks', duelWeek._id ]">Week {{ duelWeek.weekNum }}</a>
             <span class="text-muted">
               ({{ duelWeek.record.wins }}-{{ duelWeek.record.losses }}-{{ duelWeek.record.pushes }})

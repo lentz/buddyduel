@@ -7,6 +7,8 @@
   "author": "Jesse Lentz <jesselentz@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "build": "ng build",
+    "build-watch": "ng build --watch",
     "start": "node app.js",
     "lint": "eslint app.js bin controllers lib models services",
     "postlint": "ng lint --type-check",

@@ -11,7 +11,7 @@ describe('BovadaParser', () => {
     test('parses the JSON and returns game objects', () => {
       const expectedGames = [
         {
-          id: '0aba1f49b217ba4626b1838fe2f276de',
+          id: '9786cb6e2bd40d72915f9270e621c952',
           homeTeam: 'New England Patriots',
           homeSpread: -7.5,
           awayTeam: 'Kansas City Chiefs',
@@ -19,7 +19,7 @@ describe('BovadaParser', () => {
           startTime: 1504830600000,
         },
         {
-          id: '0fb0aa10c6e32da7d8bccc14cc993ff8',
+          id: 'b763198f3b5d357f4be301b21baf6796',
           homeTeam: 'Chicago Bears',
           homeSpread: 6.5,
           awayTeam: 'Atlanta Falcons',
@@ -27,7 +27,7 @@ describe('BovadaParser', () => {
           startTime: 1505062800000,
         },
         {
-          id: 'f47d0c71f788349c92fba30c20a2f496',
+          id: '67d108844e962ddaa5247503d22684c5',
           homeTeam: 'Washington Redskins',
           homeSpread: -2.5,
           awayTeam: 'Philadelphia Eagles',
@@ -35,7 +35,7 @@ describe('BovadaParser', () => {
           startTime: 1505062800000,
         },
         {
-          id: '9fc396c0c44acb6e8ca8df5631d874ab',
+          id: '37dfbfdd31d6d22a65f10ab055423238',
           homeTeam: 'Cleveland Browns',
           homeSpread: 9,
           awayTeam: 'Pittsburgh Steelers',

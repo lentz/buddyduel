@@ -55,7 +55,7 @@
     "rxjs": "^5.5.6",
     "shortid": "^2.2.8",
     "typescript": "2.4.2",
-    "winston": "^2.3.1",
+    "winston": "^3.0.0",
     "xml2js": "^0.4.19",
     "zone.js": "^0.8.20"
   },

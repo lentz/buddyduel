@@ -8,7 +8,10 @@ const teamRegex = /^[\w\s\d]+$/;
 function parseGame(game) {
   let pointSpread;
   try {
-    [pointSpread] = jp.query(game, '$..itemList[?(@.description=="Point Spread")]');
+    [pointSpread] = jp.query(
+      game,
+      '$..markets[?(@.description=="Point Spread" && @.status=="O")]',
+    );
     if (!pointSpread) { return null; }
     const home = pointSpread.outcomes.find(team => team.type === 'H');
     const away = pointSpread.outcomes.find(team => team.type === 'A');
@@ -32,6 +35,6 @@ function parseGame(game) {
 }
 
 module.exports.call = json => jp
-  .query(json, '$..items[?(@.type=="NFL" || @.type=="NFL, Playoffs" || @.type=="Super Bowl")]')
+  .query(json, '$..events[*]')
   .map(parseGame)
   .filter(game => game);

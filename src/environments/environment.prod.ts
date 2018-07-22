@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  authCallbackURL: 'http://www.buddyduel.net/auth/callback',
-  authSilentUri: 'http://www.buddyduel.net/silent',
+  authCallbackURL: 'https://www.buddyduel.net/auth/callback',
+  authSilentUri: 'https://www.buddyduel.net/silent',
 };

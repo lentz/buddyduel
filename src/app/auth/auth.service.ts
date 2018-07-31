@@ -12,7 +12,7 @@ import { environment } from '../../environments/environment';
 
 @Injectable()
 export class AuthService {
-  private audience = 'http://www.buddyduel.net/api';
+  private audience = 'https://www.buddyduel.net/api';
   auth0 = new auth0.WebAuth({
     clientID: 'sL6CB8EzVFHvPIG4XaF7JgLAf6R90QbE',
     domain: 'app68395404.auth0.com',

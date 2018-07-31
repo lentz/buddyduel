@@ -18,13 +18,13 @@ function messageBody(duelWeek, games) {
       ${games.map(game => `${game.awayTeam} (${game.awaySpread}) @ ${game.homeTeam} (${game.homeSpread})`).join('<br />')}
     </p>
     <p>
-      <a href="http://www.buddyduel.net/duel-weeks/${duelWeek.id}">
+      <a href="https://www.buddyduel.net/duel-weeks/${duelWeek.id}">
         Make your picks now
       </a>
     </p>
     <p></p>
     <small>
-      You can disable these emails on your <a href="http://www.buddyduel.net/profile">BuddyDuel Profile</a>
+      You can disable these emails on your <a href="https://www.buddyduel.net/profile">BuddyDuel Profile</a>
     </small>
   `;
 }

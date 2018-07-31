@@ -16,7 +16,7 @@ const checkJwt = jwt({
     jwksUri: 'https://app68395404.auth0.com/.well-known/jwks.json',
   }),
 
-  audience: 'http://www.buddyduel.net/api',
+  audience: 'https://www.buddyduel.net/api',
   issuer: 'https://app68395404.auth0.com/',
   algorithms: ['RS256'],
 });

@@ -31,7 +31,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'pug');
 
 app.get('/silent', (req, res) => {
-  res.render('silent', { redirectUri: `${req.protocol}://${req.get('host')}` });
+  res.render('silent', { redirectUri: process.env.BASE_URL });
 });
 
 app.use('/api', routes);

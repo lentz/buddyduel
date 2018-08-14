@@ -1,11 +1,11 @@
 /* eslint no-console: 0 */
 
 require('dotenv').config();
-const DuelWeek = require('../models/DuelWeek');
 const moment = require('moment');
 const mongoose = require('mongoose');
-const NFLWeek = require('../services/NFLWeek');
 const sgMail = require('@sendgrid/mail');
+const NFLWeek = require('../services/NFLWeek');
+const DuelWeek = require('../models/DuelWeek');
 const user = require('../services/user');
 
 mongoose.Promise = global.Promise;
@@ -48,8 +48,8 @@ async function sendAlert(duelWeek, games) {
 }
 
 function isApproachingUnpicked(game) {
-  return !game.selectedTeam && game.startTime > +new Date() &&
-         moment().isSameOrAfter(moment(game.startTime).subtract(1.5, 'hours'));
+  return !game.selectedTeam && game.startTime > +new Date()
+    && moment().isSameOrAfter(moment(game.startTime).subtract(1.5, 'hours'));
 }
 
 async function run() {

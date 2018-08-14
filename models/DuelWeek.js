@@ -47,8 +47,8 @@ duelWeekSchema.method('updateRecord', function updateRecord() {
     }
   });
   this.record = { wins, losses, pushes };
-  this.winnings = (this.record.wins * this.betAmount) -
-                  (this.record.losses * this.betAmount);
+  this.winnings = (this.record.wins * this.betAmount)
+                  - (this.record.losses * this.betAmount);
 });
 
 module.exports = mongoose.model('DuelWeek', duelWeekSchema);

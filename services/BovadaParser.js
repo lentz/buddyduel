@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 const jp = require('jsonpath');
-const NFLWeek = require('./NFLWeek');
 const util = require('util');
+const NFLWeek = require('./NFLWeek');
 
 const teamRegex = /^[\w\s\d]+$/;
 

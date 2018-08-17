@@ -1,5 +1,6 @@
 require('dotenv').config();
 const bodyParser = require('body-parser');
+const { job } = require('cron');
 const express = require('express');
 require('express-async-errors');
 const mongoose = require('mongoose');
@@ -7,6 +8,7 @@ const morgan = require('morgan');
 const path = require('path');
 
 const logger = require('./lib/logger');
+const nflScoreUpdater = require('./services/NFLScoreUpdater');
 const routes = require('./routes');
 
 const app = express();
@@ -42,5 +44,9 @@ app.use((err, req, res, _next) => {
 app.listen(process.env.PORT)
   .on('listening', () => logger.info(`Listening on port ${process.env.PORT}`))
   .on('error', logger.error);
+
+job('0 * * * 0,1,8-11 *', () => {
+  nflScoreUpdater.run().catch(logger.error);
+}, null, true);
 
 module.exports = app;

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { EventSourcePolyfill } from 'ng-event-source';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -21,6 +22,7 @@ export class DuelWeekComponent implements OnInit, OnDestroy {
   duelWeek: DuelWeek;
   Math: any;
   authenticatedSubscription: Subscription;
+  private livescoresES: EventSourcePolyfill;
 
   constructor(private duelsService: DuelsService,
               private route: ActivatedRoute,
@@ -39,6 +41,7 @@ export class DuelWeekComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.authenticatedSubscription.unsubscribe();
+    this.livescoresES.close();
   }
 
   private loadDuelWeek(): void {
@@ -47,6 +50,12 @@ export class DuelWeekComponent implements OnInit, OnDestroy {
       .subscribe(duelWeek => {
         this.duelWeek = duelWeek;
         this.titleService.setTitle(`Week ${duelWeek.weekNum} vs. ${this.opponentName()} | BuddyDuel`);
+        if (this.hasLiveGames()) {
+          this.livescoresES = this.duelsService.livescoresES(duelWeek._id);
+          this.livescoresES.onmessage = (event: { data: string }) => {
+            this.duelWeek = JSON.parse(event.data);
+          };
+        }
       }, err => this.toastr.error(err));
   }
 
@@ -57,6 +66,12 @@ export class DuelWeekComponent implements OnInit, OnDestroy {
       this.duelWeek.games.forEach(game => game.updated = false);
     })
     .catch(err => this.toastr.error('Failed to save picks'));
+  }
+
+  hasLiveGames(): boolean {
+    return this.duelWeek.games.some(game => {
+      return game.time !== undefined && game.time !== 'Final';
+    });
   }
 
   canModifyPicks(): boolean {

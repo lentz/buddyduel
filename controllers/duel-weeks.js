@@ -1,5 +1,7 @@
 /* eslint no-param-reassign: "off" */
 
+const nflScoreUpdater = require('../services/NFLScoreUpdater');
+const logger = require('../lib/logger');
 const DuelWeek = require('../models/DuelWeek');
 const NFLWeek = require('../services/NFLWeek');
 
@@ -48,4 +50,18 @@ module.exports.update = async (req, res) => {
   duelWeek.games = setSelections(duelWeek, req.body.games);
   await duelWeek.save();
   return res.json({ message: 'Picks successfully locked in' });
+};
+
+module.exports.livescores = (req, res) => {
+  logger.info(`User ${req.user.sub} connected to livescores`);
+  const onUpdate = () => {
+    DuelWeek.findOne(
+      { _id: req.params.id, 'players.id': req.user.sub }
+    ).exec().then(res.json).catch(res.json);
+  };
+  nflScoreUpdater.on('update', onUpdate);
+  req.on('close', () => {
+    nflScoreUpdater.removeListener('update', onUpdate);
+    logger.info(`User ${req.user.sub} disconnected from livescores`);
+  });
 };

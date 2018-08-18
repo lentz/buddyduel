@@ -13,12 +13,26 @@ module.exports.index = async (req, res) => {
   res.json(await DuelWeek.find(filter).sort({ year: -1, weekNum: -1 }).exec());
 };
 
+function sortGames(duelWeek) {
+  duelWeek.games.sort((a, b) => {
+    if (a.startTime !== b.startTime) { return a.startTime - b.startTime; }
+    if (a.awayTeam < b.awayTeam) {
+      return -1;
+    }
+    if (a.awayTeam > b.awayTeam) {
+      return 1;
+    }
+    return 0;
+  });
+  return duelWeek;
+}
+
 module.exports.show = async (req, res) => {
   const duelWeek = await DuelWeek.findOne({ _id: req.params.id, 'players.id': req.user.sub }).exec();
   if (!duelWeek) {
     return res.status(404).json({ message: 'Duel week not found' });
   }
-  return res.json(duelWeek);
+  return res.json(sortGames(duelWeek));
 };
 
 function setSelections(duelWeek, pickedGames) {

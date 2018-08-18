@@ -2,19 +2,14 @@ require('dotenv').config();
 const bodyParser = require('body-parser');
 const express = require('express');
 require('express-async-errors');
-const winston = require('winston');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const path = require('path');
 
+const logger = require('./lib/logger');
 const routes = require('./routes');
 
 const app = express();
-
-const logger = winston.createLogger({
-  format: winston.format.simple(),
-  transports: [new winston.transports.Console()],
-});
 
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGODB_URI);

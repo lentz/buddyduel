@@ -95,6 +95,9 @@
       "@types/node"
     ]
   },
+  "nodemonConfig": {
+    "ignore": ["public/"]
+  },
   "pre-commit": [
     "lint",
     "test"

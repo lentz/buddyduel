@@ -41,7 +41,7 @@ export class DuelWeekComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.authenticatedSubscription.unsubscribe();
-    this.livescoresES.close();
+    if (this.livescoresES) { this.livescoresES.close(); }
   }
 
   private loadDuelWeek(): void {

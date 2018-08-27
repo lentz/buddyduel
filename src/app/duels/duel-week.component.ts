@@ -1,11 +1,10 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { EventSourcePolyfill } from 'ng-event-source';
-import { ToastsManager } from 'ng2-toastr/ng2-toastr';
-import { Subscription } from 'rxjs/Subscription';
-
-import 'rxjs/add/operator/switchMap';
+import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 import { AuthService } from '../auth/auth.service'
 import { DuelWeek } from './duel-week';
@@ -19,15 +18,15 @@ import { DuelsService } from './duels.service';
   styleUrls: ['./duel-week.component.css'],
 })
 export class DuelWeekComponent implements OnInit, OnDestroy {
-  duelWeek: DuelWeek;
+  duelWeek!: DuelWeek;
   Math: any;
-  authenticatedSubscription: Subscription;
-  private livescoresES: EventSourcePolyfill;
+  authenticatedSubscription!: Subscription;
+  private livescoresES: EventSourcePolyfill | undefined;
 
   constructor(private duelsService: DuelsService,
               private route: ActivatedRoute,
               private titleService: Title,
-              private toastr: ToastsManager,
+              private toastr: ToastrService,
               private authService: AuthService, ) {
     this.Math = Math;
   }
@@ -45,18 +44,23 @@ export class DuelWeekComponent implements OnInit, OnDestroy {
   }
 
   private loadDuelWeek(): void {
-    this.route.params
-      .switchMap((params: Params) => this.duelsService.getWeek(params['id']))
-      .subscribe(duelWeek => {
-        this.duelWeek = duelWeek;
-        this.titleService.setTitle(`Week ${duelWeek.weekNum} vs. ${this.opponentName()} | BuddyDuel`);
-        if (this.hasLiveGames()) {
-          this.livescoresES = this.duelsService.livescoresES(duelWeek._id);
-          this.livescoresES.onmessage = (event: { data: string }) => {
-            this.duelWeek = JSON.parse(event.data);
-          };
+    this.route.paramMap.subscribe(
+      async (params: ParamMap) => {
+        try {
+          const duelWeek = await this.duelsService.getWeek(params.get('id') as string);
+          this.duelWeek = duelWeek;
+          this.titleService.setTitle(`Week ${duelWeek.weekNum} vs. ${this.opponentName()} | BuddyDuel`);
+          if (this.hasLiveGames()) {
+            this.livescoresES = this.duelsService.livescoresES(duelWeek._id);
+            this.livescoresES.onmessage = (event: { data: string }) => {
+              this.duelWeek = JSON.parse(event.data);
+            };
+          }
+        } catch (err) {
+          this.toastr.error(err);
         }
-      }, err => this.toastr.error(err));
+      },
+    );
   }
 
   save(): void {

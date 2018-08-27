@@ -1,10 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { ToastsManager } from 'ng2-toastr/ng2-toastr';
-import { Subscription } from 'rxjs/Subscription';
-
-import 'rxjs/add/operator/switchMap';
+import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 import { AuthService } from '../auth/auth.service'
 import { DuelWeek } from './duel-week';
@@ -18,12 +17,12 @@ import { DuelsService } from './duels.service';
 })
 export class DuelComponent implements OnInit, OnDestroy {
   duelWeeks: DuelWeek[] = [];
-  authenticatedSubscription: Subscription;
+  authenticatedSubscription!: Subscription;
 
   constructor(private duelsService: DuelsService,
               private route: ActivatedRoute,
               private titleService: Title,
-              private toastr: ToastsManager,
+              private toastr: ToastrService,
               private authService: AuthService, ) { }
 
   ngOnInit(): void {
@@ -99,13 +98,18 @@ export class DuelComponent implements OnInit, OnDestroy {
   }
 
   private loadDuelWeeks(): void {
-    this.route.params
-      .switchMap((params: Params) => this.duelsService.getDuelWeeks({ duelId: params['id'] }))
-      .subscribe(duelWeeks => {
-        this.duelWeeks = duelWeeks;
-        this.titleService.setTitle(
-          `vs. ${this.duelsService.opponentForPlayers(duelWeeks[0].players).name} | BuddyDuel`
-        );
-      }, err => this.toastr.error(err));
+    this.route.paramMap.subscribe(
+      async (params: ParamMap) => {
+        try {
+          const duelWeeks = await this.duelsService.getDuelWeeks({ duelId: params.get('id') });
+          this.duelWeeks = duelWeeks;
+          this.titleService.setTitle(
+            `vs. ${this.duelsService.opponentForPlayers(duelWeeks[0].players).name} | BuddyDuel`
+          );
+        } catch (err) {
+          this.toastr.error(err);
+        }
+      },
+    );
   }
 }

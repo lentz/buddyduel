@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { ToastsManager } from 'ng2-toastr/ng2-toastr';
-import { Subscription } from 'rxjs/Subscription';
+import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 
 import { AuthService } from '../auth/auth.service';
 import { Duel } from '../duels/duel';
@@ -26,7 +26,7 @@ export class HomeComponent implements OnDestroy, OnInit {
                      public authService: AuthService,
                      private router: Router,
                      private titleService: Title,
-                     private toastr: ToastsManager, ) {
+                     private toastr: ToastrService, ) {
     this.duelCreatedSubscription = duelsService.duelCreated$.subscribe(
       duel => this.pendingDuels.push(duel)
     );

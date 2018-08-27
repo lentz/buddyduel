@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ToastsManager } from 'ng2-toastr/ng2-toastr';
-import { Subscription } from 'rxjs/Subscription';
+import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 
 import { AuthService } from '../auth/auth.service'
 import { UserProfileService } from './user-profile.service';
@@ -14,11 +14,11 @@ import { UserProfileService } from './user-profile.service';
 export class UserProfileComponent implements OnDestroy, OnInit {
   record = { wins: 0, losses: 0, pushes: 0 };
   winnings = 0;
-  reminderEmails: boolean;
-  authenticatedSubscription: Subscription;
+  reminderEmails!: boolean;
+  authenticatedSubscription!: Subscription;
 
   constructor(private titleService: Title,
-              private toastr: ToastsManager,
+              private toastr: ToastrService,
               private authService: AuthService,
               private userProfileService: UserProfileService, ) { }
 

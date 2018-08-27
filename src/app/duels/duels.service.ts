@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Headers, URLSearchParams } from '@angular/http';
-import { AuthHttp } from 'angular2-jwt';
+import { URLSearchParams } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { EventSourcePolyfill } from 'ng-event-source';
-import { Subject } from 'rxjs/Subject'
-import 'rxjs/add/operator/toPromise';
+import { Subject } from 'rxjs'
 
 import { AuthService } from '../auth/auth.service'
 import { Game } from './game';
@@ -13,7 +12,7 @@ import { Player } from './player';
 
 @Injectable()
 export class DuelsService {
-  private headers = new Headers({'Content-Type': 'application/json'});
+  private headers = { 'Content-Type': 'application/json' };
 
   private duelWeeksURL = 'api/duel-weeks';
   private duelsURL = 'api/duels';
@@ -25,7 +24,7 @@ export class DuelsService {
   duelAccepted$ = this.duelAcceptedSource.asObservable();
 
 
-  constructor(private authHttp: AuthHttp,
+  constructor(private http: HttpClient,
               private authService: AuthService, ) { }
 
   opponentForPlayers(players: Player[]): Player {
@@ -36,23 +35,23 @@ export class DuelsService {
   }
 
   getDuels(params = {}): Promise<Duel[]> {
-    return this.authHttp.get(this.duelsURL, { params })
+    return this.http.get(this.duelsURL, { params })
                     .toPromise()
-                    .then(response => response.json() as Duel[])
+                    .then((response: any) => response as Duel[])
                     .catch(this.handleError);
   }
 
   getDuelWeeks(params = {}): Promise<DuelWeek[]> {
-    return this.authHttp.get(`${this.duelWeeksURL}`, { params })
+    return this.http.get(`${this.duelWeeksURL}`, { params })
                .toPromise()
-               .then(response => response.json() as DuelWeek[])
+               .then((response: any) => response as DuelWeek[])
                .catch(this.handleError);
   }
 
   getWeek(id: string): Promise<DuelWeek> {
-    return this.authHttp.get(`${this.duelWeeksURL}/${id}`)
+    return this.http.get(`${this.duelWeeksURL}/${id}`)
                .toPromise()
-               .then(response => response.json() as DuelWeek)
+               .then((response: any) => response as DuelWeek)
                .catch(this.handleError);
   }
 
@@ -64,7 +63,7 @@ export class DuelsService {
   }
 
   acceptDuel(code: string): Promise<any> {
-    return this.authHttp.put(`${this.duelsURL}/accept`, { code },
+    return this.http.put(`${this.duelsURL}/accept`, { code },
                       { headers: this.headers })
                  .toPromise()
                  .then(() => this.duelAcceptedSource.next())
@@ -72,30 +71,30 @@ export class DuelsService {
   }
 
   deleteDuel(duelId: string): Promise<any> {
-    return this.authHttp.delete(`${this.duelsURL}/${duelId}`,
+    return this.http.delete(`${this.duelsURL}/${duelId}`,
                       { headers: this.headers })
                  .toPromise()
                  .catch(this.handleError);
   }
 
   create(betAmount: number): Promise<any> {
-    return this.authHttp.post(`${this.duelsURL}`, { betAmount }, { headers: this.headers })
+    return this.http.post(`${this.duelsURL}`, { betAmount }, { headers: this.headers })
                         .toPromise()
-                        .then(response => this.duelCreatedSource.next(response.json() as Duel))
+                        .then((response: any) => this.duelCreatedSource.next(response as Duel))
                         .catch(this.handleError);
   }
 
   save(duelWeek: DuelWeek): Promise<DuelWeek> {
-    return this.authHttp.put(`${this.duelWeeksURL}/${duelWeek._id}`,
+    return this.http.put(`${this.duelWeeksURL}/${duelWeek._id}`,
                          JSON.stringify(duelWeek),
                          { headers: this.headers })
                     .toPromise()
-                    .then(response => response.json() as DuelWeek)
+                    .then((response: any) => response as DuelWeek)
                     .catch(this.handleError);
   }
 
-  private handleError(error: any): Promise<any> {
-    if (error.json) { error = error.json().message; }
-    return Promise.reject(error.statusText || error);
+  private handleError(res: any): Promise<any> {
+    if (res.error.message) { return Promise.reject(res.error.message); }
+    return Promise.reject(res.statusText);
   }
 }

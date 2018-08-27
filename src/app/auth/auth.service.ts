@@ -2,18 +2,14 @@ import * as auth0 from 'auth0-js';
 import * as IdTokenVerifier from 'idtoken-verifier';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject'
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/observable/timer';
-import 'rxjs/add/observable/of';
+import { Observable, Subject, of, timer } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 
 @Injectable()
 export class AuthService {
   private audience = 'https://www.buddyduel.net/api';
-  auth0 = new auth0.WebAuth({
+  webAuth = new auth0.WebAuth({
     clientID: 'sL6CB8EzVFHvPIG4XaF7JgLAf6R90QbE',
     domain: 'app68395404.auth0.com',
     responseType: 'token id_token',
@@ -29,12 +25,12 @@ export class AuthService {
   constructor(public router: Router) {}
 
   login(): void {
-    this.auth0.authorize();
+    this.webAuth.authorize();
   }
 
   handleAuthentication(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.auth0.parseHash((err: Error, authResult: any) => {
+      this.webAuth.parseHash((err: auth0.Auth0Error | null, authResult: auth0.Auth0DecodedHash) => {
         if (err) { return reject(err); }
         if (authResult && authResult.accessToken && authResult.idToken) {
           history.pushState(null, '', '/');
@@ -71,11 +67,11 @@ export class AuthService {
   }
 
   private renewToken(): void {
-    this.auth0.renewAuth({
+    this.webAuth.renewAuth({
       audience: this.audience,
       redirectUri: environment.authSilentUri,
       usePostMessage: true,
-    }, (err: Error, authResult: any) => {
+    }, (err: auth0.Auth0Error | null, authResult: any) => {
       if (err || authResult.error) {
         console.error(err || authResult);
         this.clearSession();
@@ -85,14 +81,12 @@ export class AuthService {
     });
   }
 
+  // FIXME Refactor to actually work
   private scheduleRenewal() {
     if (!this.isAuthenticated()) { return; }
     this.unscheduleRenewal();
 
-    const expiresAt = JSON.parse(window.localStorage.getItem('expires_at') || '');
-    const source = Observable.of(expiresAt).flatMap(expireTime => {
-      return Observable.timer(1000 * 60 * 60); // 1 hour
-    });
+    const source = timer(1000 * 60 * 60); // 1 hour
 
     this.refreshSubscription = source.subscribe(() => {
       this.renewToken();

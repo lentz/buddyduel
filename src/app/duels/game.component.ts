@@ -8,8 +8,8 @@ import { Game } from './game';
   styleUrls: ['./game.component.css'],
 })
 export class GameComponent {
-  @Input() game: Game;
-  @Input() isPicker: boolean;
+  @Input() game!: Game;
+  @Input() isPicker!: boolean;
 
   isReadOnly(): boolean {
     return !this.isPicker || this.gameHasStarted() || this.selectionSaved();

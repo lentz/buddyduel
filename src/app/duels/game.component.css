@@ -9,3 +9,4 @@
 .table-bordered { margin-bottom: 0; border-bottom: none; }
 .table-bordered td { border-bottom: none; }
 .score { color: #00364A; text-align: right; padding-left: .40rem; }
+.spread { margin-left: 5px; }

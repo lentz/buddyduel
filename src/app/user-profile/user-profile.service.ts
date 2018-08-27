@@ -1,31 +1,29 @@
 import { Injectable } from '@angular/core';
-import { Headers } from '@angular/http';
-import { AuthHttp } from 'angular2-jwt';
-import 'rxjs/add/operator/toPromise';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class UserProfileService {
   private profileURL = 'api/profile';
-  private headers = new Headers({'Content-Type': 'application/json'});
+  private headers = { 'Content-Type': 'application/json' };
 
-  constructor(private authHttp: AuthHttp) { }
+  constructor(private http: HttpClient) { }
 
   getProfile(): Promise<any> {
-    return this.authHttp.get(this.profileURL)
+    return this.http.get(this.profileURL)
     .toPromise()
-    .then(response => response.json())
+    .then((response: any) => response)
     .catch(this.handleError);
   }
 
   updateProfile(profile: { reminderEmails: boolean }): Promise<any> {
-    return this.authHttp.put(this.profileURL, profile, { headers: this.headers })
+    return this.http.put(this.profileURL, profile, { headers: this.headers })
       .toPromise()
-      .then(response => response.json())
+      .then((response: any) => response)
       .catch(this.handleError);
   }
 
   private handleError(error: any): Promise<any> {
-    if (error.json) { error = error.json().message; }
+    if (error.message) { error = error.message; }
     return Promise.reject(error.statusText || error);
   }
 }

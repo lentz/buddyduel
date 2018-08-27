@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ToastsManager } from 'ng2-toastr/ng2-toastr';
-import { Subscription } from 'rxjs/Subscription';
+import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 
 import { AuthService } from '../auth/auth.service'
 import { DuelsService } from '../duels/duels.service'
@@ -22,7 +22,7 @@ export class NavComponent {
 
   public constructor(private duelsService: DuelsService,
                      public authService: AuthService,
-                     private toastr: ToastsManager, ) {
+                     private toastr: ToastrService, ) {
     this.authenticatedSubscription = authService.authenticated$.subscribe(
       this.loadActiveDuels.bind(this)
     );

@@ -10,7 +10,7 @@
         <span *ngIf="isReadOnly()" [ngClass]="{'badge badge-primary': isSelected(game.awayTeam)}">
           {{ game.awayTeam }}
         </span>
-        <small class="text-muted">{{ game.awaySpread | pointSpread }}</small>
+        <small class="text-muted spread">{{ game.awaySpread | pointSpread }}</small>
       </td>
       <td *ngIf="game.awayScore != null" class="score">
         <span>{{ game.awayScore }}</span>
@@ -26,7 +26,7 @@
         <span *ngIf="isReadOnly()" [ngClass]="{'badge badge-primary': isSelected(game.homeTeam)}">
           {{ game.homeTeam }}
         </span>
-        <small class="text-muted">{{ game.homeSpread | pointSpread }}</small>
+        <small class="text-muted spread">{{ game.homeSpread | pointSpread }}</small>
       </td>
       <td *ngIf="game.homeScore != null" class="score">
         <span>{{ game.homeScore }}</span>

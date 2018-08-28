@@ -99,7 +99,9 @@
     ]
   },
   "nodemonConfig": {
-    "ignore": ["public/"]
+    "ignore": [
+      "public/"
+    ]
   },
   "pre-commit": [
     "lint",

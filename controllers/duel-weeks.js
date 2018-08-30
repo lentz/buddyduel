@@ -11,6 +11,7 @@ module.exports.index = async (req, res) => {
     filter.duelId = req.query.duelId;
   } else if (req.query.current) {
     filter.weekNum = { $in: [NFLWeek.currentWeek(), NFLWeek.currentWeek() - 1] };
+    filter.year = NFLWeek.seasonYear;
   }
   res.json(await DuelWeek.find(filter).sort({ year: -1, weekNum: -1 }).exec());
 };

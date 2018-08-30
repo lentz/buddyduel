@@ -33,7 +33,10 @@ export class NavComponent {
 
   private loadActiveDuels(): void {
     this.duelsService.getDuels({ status: 'active' })
-      .then(duels => this.activeDuels = duels)
+      .then(duels => {
+        this.activeDuels = duels;
+        this.authenticatedSubscription.unsubscribe();
+      })
       .catch(err => {
         console.error(err);
         this.toastr.error('Failed to get active duels!');

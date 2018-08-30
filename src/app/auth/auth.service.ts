@@ -2,7 +2,7 @@ import * as auth0 from 'auth0-js';
 import * as IdTokenVerifier from 'idtoken-verifier';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, Subject, of, timer } from 'rxjs';
+import { Observable, Subject, Subscription, of, timer } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 
@@ -17,7 +17,7 @@ export class AuthService {
     redirectUri: environment.authCallbackURL,
     scope: 'openid profile email',
   });
-  private refreshSubscription: any;
+  private refreshSubscription: Subscription | undefined;
 
   private authenticatedSource = new Subject<void>();
   authenticated$ = this.authenticatedSource.asObservable();
@@ -81,7 +81,6 @@ export class AuthService {
     });
   }
 
-  // FIXME Refactor to actually work
   private scheduleRenewal() {
     if (!this.isAuthenticated()) { return; }
     this.unscheduleRenewal();

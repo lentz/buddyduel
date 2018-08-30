@@ -56,6 +56,7 @@ export class DuelWeekComponent implements OnInit, OnDestroy {
               this.duelWeek = JSON.parse(event.data);
             };
           }
+          this.authenticatedSubscription.unsubscribe();
         } catch (err) {
           this.toastr.error(err);
         }

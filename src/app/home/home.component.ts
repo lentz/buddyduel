@@ -58,7 +58,10 @@ export class HomeComponent implements OnDestroy, OnInit {
 
   private loadDuelWeeks(): void {
     this.duelsService.getDuelWeeks({ current: true })
-      .then(duelWeeks => this.currentDuelWeeks = duelWeeks)
+      .then(duelWeeks => {
+        this.currentDuelWeeks = duelWeeks;
+        this.authenticatedSubscription.unsubscribe();
+      })
       .catch(err => this.toastr.error(err));
   }
 

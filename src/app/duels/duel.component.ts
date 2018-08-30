@@ -106,6 +106,7 @@ export class DuelComponent implements OnInit, OnDestroy {
           this.titleService.setTitle(
             `vs. ${this.duelsService.opponentForPlayers(duelWeeks[0].players).name} | BuddyDuel`
           );
+          this.authenticatedSubscription.unsubscribe();
         } catch (err) {
           this.toastr.error(err);
         }

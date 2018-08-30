@@ -49,6 +49,7 @@ export class UserProfileComponent implements OnDestroy, OnInit {
         this.record = profile.record;
         this.winnings = profile.winnings;
         this.reminderEmails = profile.preferences.reminderEmails;
+        this.authenticatedSubscription.unsubscribe();
       })
       .catch(err => {
         console.error(err);

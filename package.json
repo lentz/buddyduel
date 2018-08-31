@@ -49,7 +49,7 @@
     "jsonpath": "^1.0.0",
     "jwks-rsa": "^1.2.0",
     "lodash": "^4.17.10",
-    "moment": "^2.18.1",
+    "moment": "^2.22.2",
     "mongoose": "^5.0.2",
     "morgan": "^1.8.2",
     "ng-event-source": "^1.0.11",

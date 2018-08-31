@@ -50,7 +50,7 @@
     "jwks-rsa": "^1.2.0",
     "lodash": "^4.17.10",
     "moment": "^2.22.2",
-    "mongoose": "^5.0.2",
+    "mongoose": "^5.2.12",
     "morgan": "^1.8.2",
     "ng-event-source": "^1.0.11",
     "ngx-toastr": "^9.0.2",

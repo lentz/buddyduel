@@ -55,7 +55,7 @@ function isApproachingUnpicked(game) {
 async function run() {
   const startTime = new Date();
   try {
-    await mongoose.connect(process.env.MONGODB_URI);
+    await mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
     const duelWeeks = await DuelWeek.find(
       { weekNum: NFLWeek.currentWeek(), 'games.selectedTeam': null },
       { picker: 1, games: 1, players: 1 },

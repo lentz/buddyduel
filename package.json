@@ -64,7 +64,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.7.0",
-    "@types/auth0-js": "^8.11.2",
+    "@types/auth0-js": "^8.11.5",
     "@types/jasmine": "^2.8.8",
     "@types/node": "^9.4.0",
     "codelyzer": "^4.4.4",

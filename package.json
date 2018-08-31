@@ -36,7 +36,7 @@
     "@sendgrid/mail": "^6.2.1",
     "auth0-js": "^9.7.3",
     "axios": "^0.18.0",
-    "body-parser": "^1.17.2",
+    "body-parser": "^1.18.3",
     "connect-sse": "^1.2.0",
     "core-js": "^2.5.0",
     "cron": "^1.4.0",

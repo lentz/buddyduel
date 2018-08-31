@@ -33,7 +33,7 @@
     "@angular/platform-server": "6.1.6",
     "@angular/router": "6.1.6",
     "@auth0/angular-jwt": "^2.0.0",
-    "@sendgrid/mail": "^6.2.1",
+    "@sendgrid/mail": "^6.3.1",
     "auth0-js": "^9.7.3",
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",

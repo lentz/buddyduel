@@ -1,6 +1,6 @@
-const crypto = require('crypto');
 const jp = require('jsonpath');
 const util = require('util');
+const createGameId = require('../lib/createGameId');
 const NFLWeek = require('./NFLWeek');
 
 const teamRegex = /^[\w\s\d]+$/;
@@ -19,9 +19,12 @@ function parseGame(game) {
       return null;
     }
     return {
-      id: crypto.createHash('md5')
-        .update(`${home.description}|${away.description}|${NFLWeek.seasonYear}|${NFLWeek.forGame(game)}`)
-        .digest('hex'),
+      id: createGameId(
+        home.description,
+        away.description,
+        NFLWeek.seasonYear,
+        NFLWeek.forGame(game),
+      ),
       homeTeam: home.description,
       homeSpread: Number(home.price.handicap),
       awayTeam: away.description,

@@ -3,23 +3,15 @@ const bodyParser = require('body-parser');
 const { job } = require('cron');
 const express = require('express');
 require('express-async-errors');
-const mongoose = require('mongoose');
 const morgan = require('morgan');
 const path = require('path');
 
 const logger = require('./lib/logger');
 const nflScoreUpdater = require('./services/NFLScoreUpdater');
 const routes = require('./routes');
+require('./lib/db');
 
 const app = express();
-
-mongoose.Promise = global.Promise;
-mongoose.set('useFindAndModify', false);
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
-mongoose.connection.on('error', (err) => {
-  logger.error(`Unable to connect to Mongo: ${err}`);
-  process.exit(1);
-});
 
 app.use(morgan('combined'));
 

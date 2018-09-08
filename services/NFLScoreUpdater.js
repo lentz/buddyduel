@@ -1,22 +1,21 @@
 /* eslint no-param-reassign: 0, no-console: 0 */
 
 const axios = require('axios');
-const crypto = require('crypto');
 const EventEmitter = require('events');
 
 const betResult = require('../lib/betResult');
 const DuelWeek = require('../models/DuelWeek');
+const logger = require('../lib/logger');
+const md5 = require('../lib/md5');
 const NFLWeek = require('../services/NFLWeek');
-const NFLScoreParser = require('../lib/NFLScoreParser');
+const parseNFLScores = require('../lib/parseNFLScores');
 const Result = require('../models/Result');
 
-const REG_SEASON_URL = 'http://www.nfl.com/liveupdate/scorestrip/ss.xml';
-const POST_SEASON_URL = 'http://www.nfl.com/liveupdate/scorestrip/postseason/ss.xml';
+const SCORES_URL = 'https://feeds.nfl.com/feeds-rs/scores.json';
 
 class NFLScoreUpdater extends EventEmitter {
   static async getScores() {
-    const scoresURL = NFLWeek.currentWeek() > 17 ? POST_SEASON_URL : REG_SEASON_URL;
-    return (await axios.get(scoresURL)).data;
+    return (await axios.get(SCORES_URL)).data;
   }
 
   static gamesWithResults(games, scores) {
@@ -48,18 +47,21 @@ class NFLScoreUpdater extends EventEmitter {
 
   async run() {
     try {
-      const scoresXML = await NFLScoreUpdater.getScores();
-      const scoresHash = crypto.createHash('md5').update(scoresXML).digest('hex');
+      const scoresJSON = await NFLScoreUpdater.getScores();
+
+      const scoresHash = md5(JSON.stringify(scoresJSON));
       if (this.lastScoreHash === scoresHash) {
         return;
       }
-
       this.lastScoreHash = scoresHash;
-      const scoresJSON = NFLScoreParser.parseXML(scoresXML);
+
+      logger.info(
+        `Updating result for ${scoresJSON.season} week ${scoresJSON.week} with ${scoresHash}`,
+      );
       this.emit('update');
       await Result.findOneAndUpdate(
-        { year: scoresJSON.year, weekNum: scoresJSON.weekNum },
-        scoresJSON,
+        { year: scoresJSON.season, weekNum: scoresJSON.week },
+        parseNFLScores(scoresJSON),
         { upsert: true, setDefaultsOnInsert: true, runValidators: true },
       ).exec();
 

@@ -1,5 +1,6 @@
 .game-card { color: #01B8F1; font-size: .95rem; width: 272px; margin: 0 5px 10px 5px; }
 .game-card .card-footer { padding: 0.5rem; }
+.time { margin-left: 5px; }
 .badge { font-size: 100%; font-weight: normal; }
 .badge-primary { background-color: #01B8F1; color: #ffffff; }
 .btn-outline-primary { color: #01B8F1; border-color: #01B8F1; }

@@ -42,7 +42,6 @@ router.route('/duel-weeks')
 router.route('/duel-weeks/:id')
   .get(duelWeeksController.show)
   .put(duelWeeksController.update);
-router.get('/duel-weeks/:id/livescores', sse, duelWeeksController.livescores);
 
 router.route('/profile')
   .get(usersController.show)

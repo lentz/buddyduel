@@ -1,9 +1,8 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { EventSourcePolyfill } from 'ng-event-source';
 import { ToastrService } from 'ngx-toastr';
-import { Subscription } from 'rxjs';
+import { Subscription, timer } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 import { AuthService } from '../auth/auth.service'
@@ -21,7 +20,7 @@ export class DuelWeekComponent implements OnInit, OnDestroy {
   duelWeek!: DuelWeek;
   Math: any;
   authenticatedSubscription!: Subscription;
-  private livescoresES: EventSourcePolyfill | undefined;
+  liveUpdateSubscription: Subscription | null;
 
   constructor(private duelsService: DuelsService,
               private route: ActivatedRoute,
@@ -29,6 +28,7 @@ export class DuelWeekComponent implements OnInit, OnDestroy {
               private toastr: ToastrService,
               private authService: AuthService, ) {
     this.Math = Math;
+    this.liveUpdateSubscription = null;
   }
 
   ngOnInit(): void {
@@ -40,22 +40,29 @@ export class DuelWeekComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.authenticatedSubscription.unsubscribe();
-    if (this.livescoresES) { this.livescoresES.close(); }
+    if (this.liveUpdateSubscription) { this.liveUpdateSubscription.unsubscribe(); }
+  }
+
+  private startLiveUpdate(): void {
+    this.liveUpdateSubscription = timer(0, 30000).subscribe(async () => {
+      if (!this.duelWeek) { return; }
+      const liveWeek = await this.duelsService.getWeek(this.duelWeek._id);
+      this.duelWeek.games = this.duelWeek.games.map(game => {
+        if (this.isLiveGame(game)) {
+          return liveWeek.games.find(liveGame => game.id === liveGame.id) || game;
+        }
+        return game;
+      });
+    });
   }
 
   private loadDuelWeek(): void {
     this.route.paramMap.subscribe(
       async (params: ParamMap) => {
         try {
-          const duelWeek = await this.duelsService.getWeek(params.get('id') as string);
-          this.duelWeek = duelWeek;
-          this.titleService.setTitle(`Week ${duelWeek.weekNum} vs. ${this.opponentName()} | BuddyDuel`);
-          if (this.hasLiveGames()) {
-            this.livescoresES = this.duelsService.livescoresES(duelWeek._id);
-            this.livescoresES.onmessage = (event: { data: string }) => {
-              this.duelWeek = JSON.parse(event.data);
-            };
-          }
+          this.duelWeek = await this.duelsService.getWeek(params.get('id') as string);
+          this.titleService.setTitle(`Week ${this.duelWeek.weekNum} vs. ${this.opponentName()} | BuddyDuel`);
+          if (this.hasLiveGames()) { this.startLiveUpdate(); }
           this.authenticatedSubscription.unsubscribe();
         } catch (err) {
           this.toastr.error(err);
@@ -74,9 +81,11 @@ export class DuelWeekComponent implements OnInit, OnDestroy {
   }
 
   hasLiveGames(): boolean {
-    return this.duelWeek.games.some(game => {
-      return game.time !== undefined && game.time !== 'Final';
-    });
+    return this.duelWeek.games.some(this.isLiveGame);
+  }
+
+  isLiveGame(game: Game): boolean {
+    return game.time !== undefined && game.time !== 'Final';
   }
 
   canModifyPicks(): boolean {

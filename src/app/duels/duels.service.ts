@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
-import { EventSourcePolyfill } from 'ng-event-source';
 import { Subject } from 'rxjs'
 
 import { AuthService } from '../auth/auth.service'
@@ -53,13 +52,6 @@ export class DuelsService {
                .toPromise()
                .then((response: any) => response as DuelWeek)
                .catch(this.handleError);
-  }
-
-  livescoresES(id: string) {
-    return new EventSourcePolyfill(
-      `${this.duelWeeksURL}/${id}/livescores`,
-      { headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` } },
-    );
   }
 
   acceptDuel(code: string): Promise<any> {

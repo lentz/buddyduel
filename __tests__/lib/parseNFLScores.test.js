@@ -23,7 +23,7 @@ describe('NFLScoreParser', () => {
         awayScore: 0,
         gameId: '8376278741ab9d1f33f6cec3fd453ad2',
         homeScore: 0,
-        time: 'Q1 14:52',
+        time: 'Suspended',
       },
       {
         awayScore: 0,

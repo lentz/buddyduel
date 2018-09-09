@@ -58,7 +58,7 @@ module.exports.livescores = (req, res) => {
   const onUpdate = () => {
     DuelWeek.findOne(
       { _id: req.params.id, 'players.id': req.user.sub }
-    ).exec().then(res.json).catch(res.json);
+    ).exec().then(duelWeek => res.json(sortGames(duelWeek))).catch(res.json);
   };
   nflScoreUpdater.on('update', onUpdate);
   req.on('close', () => {

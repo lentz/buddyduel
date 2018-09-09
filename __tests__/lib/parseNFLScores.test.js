@@ -11,7 +11,7 @@ describe('NFLScoreParser', () => {
         awayScore: 0,
         gameId: '7c97493e31aec6b4c65057b1d8717677',
         homeScore: 0,
-        time: 'Q1 15:00',
+        time: 'OT1 15:00',
       },
       {
         awayScore: 0,

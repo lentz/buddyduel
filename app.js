@@ -38,8 +38,9 @@ app.listen(process.env.PORT)
   .on('listening', () => logger.info(`Listening on port ${process.env.PORT}`))
   .on('error', logger.error);
 
+nflScoreUpdater.on('error', logger.error);
 job('0 * * * 0,1,8-11 *', () => {
-  nflScoreUpdater.run().catch(logger.error);
+  nflScoreUpdater.run();
 }, null, true);
 
 module.exports = app;

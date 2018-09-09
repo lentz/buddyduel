@@ -47,12 +47,13 @@ export class DuelWeekComponent implements OnInit, OnDestroy {
     this.liveUpdateSubscription = timer(0, 30000).subscribe(async () => {
       if (!this.duelWeek) { return; }
       const liveWeek = await this.duelsService.getWeek(this.duelWeek._id);
-      this.duelWeek.games = this.duelWeek.games.map(game => {
+      liveWeek.games = this.duelWeek.games.map(game => {
         if (this.isLiveGame(game)) {
           return liveWeek.games.find(liveGame => game.id === liveGame.id) || game;
         }
         return game;
       });
+      this.duelWeek = liveWeek;
     });
   }
 

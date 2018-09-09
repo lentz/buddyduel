@@ -8,89 +8,6 @@
         "season": 2018,
         "seasonType": "REG",
         "week": 1,
-        "gameId": 2018090600,
-        "gameKey": 57567,
-        "gameDate": "09/06/2018",
-        "gameTimeEastern": "20:20:00",
-        "gameTimeLocal": "20:20:00",
-        "isoTime": 1536279600000,
-        "homeTeamId": "3700",
-        "visitorTeamId": "0200",
-        "homeTeamAbbr": "PHI",
-        "visitorTeamAbbr": "ATL",
-        "homeDisplayName": "Philadelphia Eagles",
-        "visitorDisplayName": "Atlanta Falcons",
-        "homeNickname": "Eagles",
-        "visitorNickname": "Falcons",
-        "gameType": "REG",
-        "visitorTeam": {
-          "season": 2018,
-          "teamId": "0200",
-          "abbr": "ATL",
-          "cityState": "Atlanta",
-          "fullName": "Atlanta Falcons",
-          "nick": "Falcons",
-          "teamType": "TEAM",
-          "conferenceAbbr": "NFC",
-          "divisionAbbr": "NCS"
-        },
-        "homeTeam": {
-          "season": 2018,
-          "teamId": "3700",
-          "abbr": "PHI",
-          "cityState": "Philadelphia",
-          "fullName": "Philadelphia Eagles",
-          "nick": "Eagles",
-          "teamType": "TEAM",
-          "conferenceAbbr": "NFC",
-          "divisionAbbr": "NCE"
-        },
-        "site": {
-          "siteId": 2769,
-          "siteCity": "Philadelphia",
-          "siteFullname": "Lincoln Financial Field",
-          "siteState": "PA",
-          "roofType": "OUTDOOR"
-        }
-      },
-      "score": {
-        "time": "00:01",
-        "down": 0,
-        "yardsToGo": 0,
-        "yardline": null,
-        "yardlineSide": null,
-        "yardlineNumber": null,
-        "phase": "FINAL",
-        "phaseDescription": "FINAL",
-        "possessionTeamId": "0200",
-        "possessionTeamAbbr": "ATL",
-        "redZone": false,
-        "alertPlayType": null,
-        "visitorTeamScore": {
-          "pointTotal": 12,
-          "pointQ1": 3,
-          "pointQ2": 3,
-          "pointQ3": 0,
-          "pointQ4": 6,
-          "pointOT": 0,
-          "timeoutsRemaining": 0
-        },
-        "homeTeamScore": {
-          "pointTotal": 18,
-          "pointQ1": 0,
-          "pointQ2": 3,
-          "pointQ3": 7,
-          "pointQ4": 8,
-          "pointOT": 0,
-          "timeoutsRemaining": 1
-        }
-      }
-    },
-    {
-      "gameSchedule": {
-        "season": 2018,
-        "seasonType": "REG",
-        "week": 1,
         "gameId": 2018090900,
         "gameKey": 57568,
         "gameDate": "09/09/2018",
@@ -136,7 +53,38 @@
           "roofType": "OUTDOOR"
         }
       },
-      "score": null
+      "score": {
+        "time": "15:00",
+        "down": 0,
+        "yardsToGo": 0,
+        "yardline": null,
+        "yardlineSide": null,
+        "yardlineNumber": null,
+        "phase": "PREGAME",
+        "phaseDescription": "PREGAME",
+        "possessionTeamId": "0610",
+        "possessionTeamAbbr": "BUF",
+        "redZone": false,
+        "alertPlayType": null,
+        "visitorTeamScore": {
+          "pointTotal": 0,
+          "pointQ1": 0,
+          "pointQ2": 0,
+          "pointQ3": 0,
+          "pointQ4": 0,
+          "pointOT": 0,
+          "timeoutsRemaining": 3
+        },
+        "homeTeamScore": {
+          "pointTotal": 0,
+          "pointQ1": 0,
+          "pointQ2": 0,
+          "pointQ3": 0,
+          "pointQ4": 0,
+          "pointOT": 0,
+          "timeoutsRemaining": 3
+        }
+      }
     },
     {
       "gameSchedule": {
@@ -188,7 +136,38 @@
           "roofType": "OUTDOOR"
         }
       },
-      "score": null
+      "score": {
+        "time": "15:00",
+        "down": 0,
+        "yardsToGo": 0,
+        "yardline": null,
+        "yardlineSide": null,
+        "yardlineNumber": null,
+        "phase": "PREGAME",
+        "phaseDescription": "PREGAME",
+        "possessionTeamId": "3900",
+        "possessionTeamAbbr": "PIT",
+        "redZone": false,
+        "alertPlayType": null,
+        "visitorTeamScore": {
+          "pointTotal": 0,
+          "pointQ1": 0,
+          "pointQ2": 0,
+          "pointQ3": 0,
+          "pointQ4": 0,
+          "pointOT": 0,
+          "timeoutsRemaining": 3
+        },
+        "homeTeamScore": {
+          "pointTotal": 0,
+          "pointQ1": 0,
+          "pointQ2": 0,
+          "pointQ3": 0,
+          "pointQ4": 0,
+          "pointOT": 0,
+          "timeoutsRemaining": 3
+        }
+      }
     },
     {
       "gameSchedule": {
@@ -240,7 +219,38 @@
           "roofType": "INDOOR"
         }
       },
-      "score": null
+      "score": {
+        "time": "15:00",
+        "down": 0,
+        "yardsToGo": 0,
+        "yardline": null,
+        "yardlineSide": null,
+        "yardlineNumber": null,
+        "phase": "PREGAME",
+        "phaseDescription": "PREGAME",
+        "possessionTeamId": "0920",
+        "possessionTeamAbbr": "CIN",
+        "redZone": false,
+        "alertPlayType": null,
+        "visitorTeamScore": {
+          "pointTotal": 0,
+          "pointQ1": 0,
+          "pointQ2": 0,
+          "pointQ3": 0,
+          "pointQ4": 0,
+          "pointOT": 0,
+          "timeoutsRemaining": 3
+        },
+        "homeTeamScore": {
+          "pointTotal": 0,
+          "pointQ1": 0,
+          "pointQ2": 0,
+          "pointQ3": 0,
+          "pointQ4": 0,
+          "pointOT": 0,
+          "timeoutsRemaining": 3
+        }
+      }
     },
     {
       "gameSchedule": {
@@ -292,7 +302,38 @@
           "roofType": "OUTDOOR"
         }
       },
-      "score": null
+      "score": {
+        "time": "15:00",
+        "down": 0,
+        "yardsToGo": 0,
+        "yardline": null,
+        "yardlineSide": null,
+        "yardlineNumber": null,
+        "phase": "PREGAME",
+        "phaseDescription": "PREGAME",
+        "possessionTeamId": "2100",
+        "possessionTeamAbbr": "TEN",
+        "redZone": false,
+        "alertPlayType": null,
+        "visitorTeamScore": {
+          "pointTotal": 0,
+          "pointQ1": 0,
+          "pointQ2": 0,
+          "pointQ3": 0,
+          "pointQ4": 0,
+          "pointOT": 0,
+          "timeoutsRemaining": 3
+        },
+        "homeTeamScore": {
+          "pointTotal": 0,
+          "pointQ1": 0,
+          "pointQ2": 0,
+          "pointQ3": 0,
+          "pointQ4": 0,
+          "pointOT": 0,
+          "timeoutsRemaining": 3
+        }
+      }
     },
     {
       "gameSchedule": {
@@ -344,7 +385,38 @@
           "roofType": "INDOOR"
         }
       },
-      "score": null
+      "score": {
+        "time": "15:00",
+        "down": 0,
+        "yardsToGo": 0,
+        "yardline": null,
+        "yardlineSide": null,
+        "yardlineNumber": null,
+        "phase": "PREGAME",
+        "phaseDescription": "PREGAME",
+        "possessionTeamId": "4500",
+        "possessionTeamAbbr": "SF",
+        "redZone": false,
+        "alertPlayType": null,
+        "visitorTeamScore": {
+          "pointTotal": 0,
+          "pointQ1": 0,
+          "pointQ2": 0,
+          "pointQ3": 0,
+          "pointQ4": 0,
+          "pointOT": 0,
+          "timeoutsRemaining": 3
+        },
+        "homeTeamScore": {
+          "pointTotal": 0,
+          "pointQ1": 0,
+          "pointQ2": 0,
+          "pointQ3": 0,
+          "pointQ4": 0,
+          "pointOT": 0,
+          "timeoutsRemaining": 3
+        }
+      }
     },
     {
       "gameSchedule": {
@@ -396,7 +468,38 @@
           "roofType": "OUTDOOR"
         }
       },
-      "score": null
+      "score": {
+        "time": "15:00",
+        "down": 0,
+        "yardsToGo": 0,
+        "yardline": null,
+        "yardlineSide": null,
+        "yardlineNumber": null,
+        "phase": "PREGAME",
+        "phaseDescription": "PREGAME",
+        "possessionTeamId": "2120",
+        "possessionTeamAbbr": "HOU",
+        "redZone": false,
+        "alertPlayType": null,
+        "visitorTeamScore": {
+          "pointTotal": 0,
+          "pointQ1": 0,
+          "pointQ2": 0,
+          "pointQ3": 0,
+          "pointQ4": 0,
+          "pointOT": 0,
+          "timeoutsRemaining": 3
+        },
+        "homeTeamScore": {
+          "pointTotal": 0,
+          "pointQ1": 0,
+          "pointQ2": 0,
+          "pointQ3": 0,
+          "pointQ4": 0,
+          "pointOT": 0,
+          "timeoutsRemaining": 3
+        }
+      }
     },
     {
       "gameSchedule": {
@@ -448,7 +551,38 @@
           "roofType": "INDOOR"
         }
       },
-      "score": null
+      "score": {
+        "time": "15:00",
+        "down": 0,
+        "yardsToGo": 0,
+        "yardline": null,
+        "yardlineSide": null,
+        "yardlineNumber": null,
+        "phase": "PREGAME",
+        "phaseDescription": "PREGAME",
+        "possessionTeamId": "4900",
+        "possessionTeamAbbr": "TB",
+        "redZone": false,
+        "alertPlayType": null,
+        "visitorTeamScore": {
+          "pointTotal": 0,
+          "pointQ1": 0,
+          "pointQ2": 0,
+          "pointQ3": 0,
+          "pointQ4": 0,
+          "pointOT": 0,
+          "timeoutsRemaining": 3
+        },
+        "homeTeamScore": {
+          "pointTotal": 0,
+          "pointQ1": 0,
+          "pointQ2": 0,
+          "pointQ3": 0,
+          "pointQ4": 0,
+          "pointOT": 0,
+          "timeoutsRemaining": 3
+        }
+      }
     },
     {
       "gameSchedule": {
@@ -500,7 +634,38 @@
           "roofType": "OUTDOOR"
         }
       },
-      "score": null
+      "score": {
+        "time": "15:00",
+        "down": 0,
+        "yardsToGo": 0,
+        "yardline": null,
+        "yardlineSide": null,
+        "yardlineNumber": null,
+        "phase": "PREGAME",
+        "phaseDescription": "PREGAME",
+        "possessionTeamId": "2250",
+        "possessionTeamAbbr": "JAX",
+        "redZone": false,
+        "alertPlayType": null,
+        "visitorTeamScore": {
+          "pointTotal": 0,
+          "pointQ1": 0,
+          "pointQ2": 0,
+          "pointQ3": 0,
+          "pointQ4": 0,
+          "pointOT": 0,
+          "timeoutsRemaining": 3
+        },
+        "homeTeamScore": {
+          "pointTotal": 0,
+          "pointQ1": 0,
+          "pointQ2": 0,
+          "pointQ3": 0,
+          "pointQ4": 0,
+          "pointOT": 0,
+          "timeoutsRemaining": 3
+        }
+      }
     },
     {
       "gameSchedule": {
@@ -552,7 +717,38 @@
           "roofType": "OUTDOOR"
         }
       },
-      "score": null
+      "score": {
+        "time": "15:00",
+        "down": 0,
+        "yardsToGo": 0,
+        "yardline": null,
+        "yardlineSide": null,
+        "yardlineNumber": null,
+        "phase": "PREGAME",
+        "phaseDescription": "PREGAME",
+        "possessionTeamId": "2310",
+        "possessionTeamAbbr": "KC",
+        "redZone": false,
+        "alertPlayType": null,
+        "visitorTeamScore": {
+          "pointTotal": 0,
+          "pointQ1": 0,
+          "pointQ2": 0,
+          "pointQ3": 0,
+          "pointQ4": 0,
+          "pointOT": 0,
+          "timeoutsRemaining": 3
+        },
+        "homeTeamScore": {
+          "pointTotal": 0,
+          "pointQ1": 0,
+          "pointQ2": 0,
+          "pointQ3": 0,
+          "pointQ4": 0,
+          "pointOT": 0,
+          "timeoutsRemaining": 3
+        }
+      }
     },
     {
       "gameSchedule": {
@@ -604,7 +800,38 @@
           "roofType": "RETRACTABLE"
         }
       },
-      "score": null
+      "score": {
+        "time": "15:00",
+        "down": 0,
+        "yardsToGo": 0,
+        "yardline": null,
+        "yardlineSide": null,
+        "yardlineNumber": null,
+        "phase": "PREGAME",
+        "phaseDescription": "PREGAME",
+        "possessionTeamId": "5110",
+        "possessionTeamAbbr": "WAS",
+        "redZone": false,
+        "alertPlayType": null,
+        "visitorTeamScore": {
+          "pointTotal": 0,
+          "pointQ1": 0,
+          "pointQ2": 0,
+          "pointQ3": 0,
+          "pointQ4": 0,
+          "pointOT": 0,
+          "timeoutsRemaining": 3
+        },
+        "homeTeamScore": {
+          "pointTotal": 0,
+          "pointQ1": 0,
+          "pointQ2": 0,
+          "pointQ3": 0,
+          "pointQ4": 0,
+          "pointOT": 0,
+          "timeoutsRemaining": 3
+        }
+      }
     },
     {
       "gameSchedule": {
@@ -656,7 +883,38 @@
           "roofType": "OUTDOOR"
         }
       },
-      "score": null
+      "score": {
+        "time": "15:00",
+        "down": 0,
+        "yardsToGo": 0,
+        "yardline": null,
+        "yardlineSide": null,
+        "yardlineNumber": null,
+        "phase": "PREGAME",
+        "phaseDescription": "PREGAME",
+        "possessionTeamId": "1200",
+        "possessionTeamAbbr": "DAL",
+        "redZone": false,
+        "alertPlayType": null,
+        "visitorTeamScore": {
+          "pointTotal": 0,
+          "pointQ1": 0,
+          "pointQ2": 0,
+          "pointQ3": 0,
+          "pointQ4": 0,
+          "pointOT": 0,
+          "timeoutsRemaining": 3
+        },
+        "homeTeamScore": {
+          "pointTotal": 0,
+          "pointQ1": 0,
+          "pointQ2": 0,
+          "pointQ3": 0,
+          "pointQ4": 0,
+          "pointOT": 0,
+          "timeoutsRemaining": 3
+        }
+      }
     },
     {
       "gameSchedule": {
@@ -708,7 +966,38 @@
           "roofType": "OUTDOOR"
         }
       },
-      "score": null
+      "score": {
+        "time": "15:00",
+        "down": 0,
+        "yardsToGo": 0,
+        "yardline": null,
+        "yardlineSide": null,
+        "yardlineNumber": null,
+        "phase": "PREGAME",
+        "phaseDescription": "PREGAME",
+        "possessionTeamId": "4600",
+        "possessionTeamAbbr": "SEA",
+        "redZone": false,
+        "alertPlayType": null,
+        "visitorTeamScore": {
+          "pointTotal": 0,
+          "pointQ1": 0,
+          "pointQ2": 0,
+          "pointQ3": 0,
+          "pointQ4": 0,
+          "pointOT": 0,
+          "timeoutsRemaining": 3
+        },
+        "homeTeamScore": {
+          "pointTotal": 0,
+          "pointQ1": 0,
+          "pointQ2": 0,
+          "pointQ3": 0,
+          "pointQ4": 0,
+          "pointOT": 0,
+          "timeoutsRemaining": 3
+        }
+      }
     },
     {
       "gameSchedule": {
@@ -865,6 +1154,89 @@
         }
       },
       "score": null
+    },
+    {
+      "gameSchedule": {
+        "season": 2018,
+        "seasonType": "REG",
+        "week": 1,
+        "gameId": 2018090600,
+        "gameKey": 57567,
+        "gameDate": "09/06/2018",
+        "gameTimeEastern": "20:20:00",
+        "gameTimeLocal": "20:20:00",
+        "isoTime": 1536279600000,
+        "homeTeamId": "3700",
+        "visitorTeamId": "0200",
+        "homeTeamAbbr": "PHI",
+        "visitorTeamAbbr": "ATL",
+        "homeDisplayName": "Philadelphia Eagles",
+        "visitorDisplayName": "Atlanta Falcons",
+        "homeNickname": "Eagles",
+        "visitorNickname": "Falcons",
+        "gameType": "REG",
+        "visitorTeam": {
+          "season": 2018,
+          "teamId": "0200",
+          "abbr": "ATL",
+          "cityState": "Atlanta",
+          "fullName": "Atlanta Falcons",
+          "nick": "Falcons",
+          "teamType": "TEAM",
+          "conferenceAbbr": "NFC",
+          "divisionAbbr": "NCS"
+        },
+        "homeTeam": {
+          "season": 2018,
+          "teamId": "3700",
+          "abbr": "PHI",
+          "cityState": "Philadelphia",
+          "fullName": "Philadelphia Eagles",
+          "nick": "Eagles",
+          "teamType": "TEAM",
+          "conferenceAbbr": "NFC",
+          "divisionAbbr": "NCE"
+        },
+        "site": {
+          "siteId": 2769,
+          "siteCity": "Philadelphia",
+          "siteFullname": "Lincoln Financial Field",
+          "siteState": "PA",
+          "roofType": "OUTDOOR"
+        }
+      },
+      "score": {
+        "time": "00:01",
+        "down": 0,
+        "yardsToGo": 0,
+        "yardline": null,
+        "yardlineSide": null,
+        "yardlineNumber": null,
+        "phase": "FINAL",
+        "phaseDescription": "FINAL",
+        "possessionTeamId": "0200",
+        "possessionTeamAbbr": "ATL",
+        "redZone": false,
+        "alertPlayType": null,
+        "visitorTeamScore": {
+          "pointTotal": 12,
+          "pointQ1": 3,
+          "pointQ2": 3,
+          "pointQ3": 0,
+          "pointQ4": 6,
+          "pointOT": 0,
+          "timeoutsRemaining": 0
+        },
+        "homeTeamScore": {
+          "pointTotal": 18,
+          "pointQ1": 0,
+          "pointQ2": 3,
+          "pointQ3": 7,
+          "pointQ4": 8,
+          "pointOT": 0,
+          "timeoutsRemaining": 1
+        }
+      }
     }
   ]
 }

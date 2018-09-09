@@ -39,7 +39,7 @@ app.listen(process.env.PORT)
   .on('error', logger.error);
 
 nflScoreUpdater.on('error', logger.error);
-job('0 * * * 0,1,8-11 *', () => {
+job('*/30 * * * 0,1,8-11 *', () => {
   nflScoreUpdater.run();
 }, null, true);
 

@@ -67,6 +67,7 @@ export class AuthService {
   }
 
   private renewToken(): void {
+    console.log('Renewing JWT');
     this.webAuth.renewAuth({
       audience: this.audience,
       redirectUri: environment.authSilentUri,
@@ -85,11 +86,9 @@ export class AuthService {
     if (!this.isAuthenticated()) { return; }
     this.unscheduleRenewal();
 
-    const source = timer(1000 * 60 * 60); // 1 hour
-
-    this.refreshSubscription = source.subscribe(() => {
+    // Refresh token after 1 hour
+    this.refreshSubscription = timer(1000 * 60 * 60).subscribe(() => {
       this.renewToken();
-      this.scheduleRenewal();
     });
   }
 

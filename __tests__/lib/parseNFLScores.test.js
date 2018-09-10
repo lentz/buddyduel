@@ -41,7 +41,7 @@ describe('NFLScoreParser', () => {
         awayScore: 0,
         gameId: '17b20dbb0c8193ce772a42385bfe26b1',
         homeScore: 0,
-        time: 'Q1 14:56',
+        time: 'Final Overtime',
       },
       {
         awayScore: 0,

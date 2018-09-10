@@ -47,14 +47,12 @@ export class DuelWeekComponent implements OnInit, OnDestroy {
     this.liveUpdateSubscription = timer(30000, 30000).subscribe(async () => {
       if (!this.duelWeek) { return; }
       this.authService.checkSession();
-      const liveWeek = await this.duelsService.getWeek(this.duelWeek._id);
-      liveWeek.games = liveWeek.games.map(liveGame => {
-        if (this.isLiveGame(liveGame)) {
-          return liveGame;
-        }
-        return this.duelWeek.games.find(game => game.id === liveGame.id) || liveGame;
+      const newDuelWeek = await this.duelsService.getWeek(this.duelWeek._id);
+      newDuelWeek.games = newDuelWeek.games.map(newGame => {
+        if (newGame.startTime < +new Date()) { return newGame; }
+        return this.duelWeek.games.find(game => newGame.id === game.id) || newGame;
       });
-      this.duelWeek = liveWeek;
+      this.duelWeek = newDuelWeek;
     });
   }
 
@@ -87,7 +85,7 @@ export class DuelWeekComponent implements OnInit, OnDestroy {
   }
 
   isLiveGame(game: Game): boolean {
-    return game.time !== undefined && game.time !== 'Final';
+    return game.time !== undefined && !/Final/i.test(game.time);
   }
 
   canModifyPicks(): boolean {

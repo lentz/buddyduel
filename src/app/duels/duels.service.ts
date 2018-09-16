@@ -33,6 +33,13 @@ export class DuelsService {
     return opponent;
   }
 
+  getDuel(id: string): Promise<Duel> {
+    return this.http.get(`${this.duelsURL}/${id}`)
+      .toPromise()
+      .then((response: any) => response as Duel)
+      .catch(this.handleError);
+  }
+
   getDuels(params = {}): Promise<Duel[]> {
     return this.http.get(this.duelsURL, { params })
                     .toPromise()
@@ -60,6 +67,16 @@ export class DuelsService {
                  .toPromise()
                  .then(() => this.duelAcceptedSource.next())
                  .catch(this.handleError);
+  }
+
+  updateDuel(duel: Duel): Promise<any> {
+    return this.http.put(
+      `${this.duelsURL}/${duel._id}`,
+      duel,
+      { headers: this.headers },
+    )
+    .toPromise()
+    .catch(this.handleError);
   }
 
   deleteDuel(duelId: string): Promise<any> {

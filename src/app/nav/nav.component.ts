@@ -16,7 +16,7 @@ declare var jQuery: any;
 })
 export class NavComponent {
   betAmount = 0;
-  activeDuels: Duel[] = [];
+  duels: Duel[] = [];
   authenticatedSubscription: Subscription;
   duelAcceptedSubscription: Subscription;
 
@@ -24,22 +24,22 @@ export class NavComponent {
                      public authService: AuthService,
                      private toastr: ToastrService, ) {
     this.authenticatedSubscription = authService.authenticated$.subscribe(
-      this.loadActiveDuels.bind(this)
+      this.loadDuels.bind(this)
     );
     this.duelAcceptedSubscription = duelsService.duelAccepted$.subscribe(
-      this.loadActiveDuels.bind(this)
+      this.loadDuels.bind(this)
     );
   }
 
-  private loadActiveDuels(): void {
-    this.duelsService.getDuels({ status: 'active' })
+  private loadDuels(): void {
+    this.duelsService.getDuels({ status: 'active,suspended' })
       .then(duels => {
-        this.activeDuels = duels;
+        this.duels = duels;
         this.authenticatedSubscription.unsubscribe();
       })
       .catch(err => {
         console.error(err);
-        this.toastr.error('Failed to get active duels!');
+        this.toastr.error('Failed to get duels!');
       });
   }
 

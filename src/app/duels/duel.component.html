@@ -1,6 +1,15 @@
-<div class="row">
+<div class="row header">
   <div class="col">
     <h2 class="text-truncate">vs. {{ opponentName() }}</h2>
+  </div>
+  <div class="col">
+    <button class="btn btn-outline-secondary float-md-right" (click)="toggleStatus()">
+      {{ isActive() ? 'Suspend' : 'Re-activate' }} Duel
+    </button>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
     <div *ngIf="years().length > 1" class="card">
       <div class="card-header font-weight-bold">All Seasons</div>
       <div class="card-body">

@@ -8,7 +8,7 @@ const playerSchema = new mongoose.Schema({
 
 const duelSchema = new mongoose.Schema({
   code: { type: String, default: shortid.generate },
-  status: { type: String, enum: ['active', 'pending'], required: true },
+  status: { type: String, enum: ['active', 'pending', 'suspended'], required: true },
   betAmount: { type: Number, required: true },
   players: [{ type: playerSchema, required: true }],
 }, { timestamps: true });

@@ -12,13 +12,13 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav mr-auto">
         <ng-template [ngIf]="authService.isAuthenticated()">
-          <li *ngIf="activeDuels.length > 0" class="nav-item dropdown">
+          <li *ngIf="duels.length > 0" class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="fa fa-trophy" aria-hidden="true"></i> Duels
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <a *ngFor="let duel of activeDuels" [routerLink]="[ '/duels', duel._id ]"
+              <a *ngFor="let duel of duels" [routerLink]="[ '/duels', duel._id ]"
                  class="dropdown-item">
                 vs. {{ opponentName(duel) }} (${{ duel.betAmount }}/game)
               </a>

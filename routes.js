@@ -33,6 +33,8 @@ router.route('/duels')
   .get(duelsController.index)
   .post(duelsController.create);
 router.route('/duels/:id')
+  .get(duelsController.show)
+  .put(duelsController.update)
   .delete(duelsController.delete);
 router.route('/duels/accept')
   .put(duelsController.accept);

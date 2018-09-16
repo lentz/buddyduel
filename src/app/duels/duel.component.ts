@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 import { AuthService } from '../auth/auth.service'
+import { Duel } from './duel';
 import { DuelWeek } from './duel-week';
 import { DuelsService } from './duels.service';
 
@@ -16,8 +17,9 @@ import { DuelsService } from './duels.service';
   styleUrls: ['./duel.component.css'],
 })
 export class DuelComponent implements OnInit, OnDestroy {
-  duelWeeks: DuelWeek[] = [];
   authenticatedSubscription!: Subscription;
+  duel!: Duel;
+  duelWeeks: DuelWeek[] = [];
 
   constructor(private duelsService: DuelsService,
               private route: ActivatedRoute,
@@ -27,7 +29,7 @@ export class DuelComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.authenticatedSubscription = this.authService.authenticated$.subscribe(
-      this.loadDuelWeeks.bind(this)
+      this.loadData.bind(this)
     );
     this.authService.checkSession();
   }
@@ -78,6 +80,20 @@ export class DuelComponent implements OnInit, OnDestroy {
     return this.duelsService.opponentForPlayers(this.duelWeeks[0].players).name;
   }
 
+  isActive(): boolean {
+    return this.duel && this.duel.status === 'active';
+  }
+
+  async toggleStatus(): Promise<void> {
+    try {
+      this.duel.status = this.isActive() ? 'suspended' : 'active';
+      await this.duelsService.updateDuel(this.duel)
+      this.toastr.success('Duel updated');
+    } catch (err) {
+      this.toastr.error(err);
+    }
+  }
+
   private aggregateWinnings(pickerId: string, year?: number) {
     return this.duelWeeks
       .filter(duelWeek => year ? duelWeek.year === year : true)
@@ -97,11 +113,14 @@ export class DuelComponent implements OnInit, OnDestroy {
       }, { wins: 0, losses: 0, pushes: 0});
   }
 
-  private loadDuelWeeks(): void {
+  private loadData(): void {
     this.route.paramMap.subscribe(
       async (params: ParamMap) => {
         try {
-          const duelWeeks = await this.duelsService.getDuelWeeks({ duelId: params.get('id') });
+          const duelId = params.get('id');
+          if (!duelId) { throw new Error('Duel ID not found!'); }
+          this.duel = await this.duelsService.getDuel(duelId);
+          const duelWeeks = await this.duelsService.getDuelWeeks({ duelId: duelId });
           this.duelWeeks = duelWeeks;
           this.titleService.setTitle(
             `vs. ${this.duelsService.opponentForPlayers(duelWeeks[0].players).name} | BuddyDuel`

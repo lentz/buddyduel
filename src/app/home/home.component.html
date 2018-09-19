@@ -11,7 +11,10 @@
             </a>
           </li>
         </ul>
-        <span *ngIf="currentDuelWeeks.length < 1">
+        <div [ngClass]="{'text-center': true, 'd-none': loadComplete}">
+          <span class="fa fa-circle-o-notch fa-spin fa-2x"></span>
+        </div>
+        <span *ngIf="loadComplete && currentDuelWeeks.length < 1">
           Create a duel and send the code to a buddy to get started or enter a code
           given to you in the 'Duel Code' box and click 'Accept'.
         </span>

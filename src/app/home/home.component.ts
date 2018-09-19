@@ -21,6 +21,7 @@ export class HomeComponent implements OnDestroy, OnInit {
   pendingDuels: Duel[] = [];
   duelCreatedSubscription: Subscription;
   authenticatedSubscription: Subscription;
+  loadComplete = false;
 
   public constructor(private duelsService: DuelsService,
                      public authService: AuthService,
@@ -32,7 +33,7 @@ export class HomeComponent implements OnDestroy, OnInit {
     );
     this.authenticatedSubscription = authService.authenticated$.subscribe(
       () => {
-        this.loadDuelWeeks();
+        this.loadDuelWeeks().then(() => { this.loadComplete = true; });
         this.loadPendingDuels();
       }
     );
@@ -56,13 +57,14 @@ export class HomeComponent implements OnDestroy, OnInit {
     this.authenticatedSubscription.unsubscribe();
   }
 
-  private loadDuelWeeks(): void {
-    this.duelsService.getDuelWeeks({ current: true })
-      .then(duelWeeks => {
-        this.currentDuelWeeks = duelWeeks;
-        this.authenticatedSubscription.unsubscribe();
-      })
-      .catch(err => this.toastr.error(err));
+  private async loadDuelWeeks(): Promise<any> {
+    try {
+      this.currentDuelWeeks = await this.duelsService
+        .getDuelWeeks({ current: true });
+      this.authenticatedSubscription.unsubscribe();
+    } catch (err) {
+      this.toastr.error(err);
+    }
   }
 
   private loadPendingDuels(): void {

@@ -17,6 +17,7 @@ require('./lib/db');
 const app = express();
 
 app.use(morgan('combined'));
+app.set('trust proxy', 1);
 
 const store = new MongoDBStore({
   uri: process.env.MONGODB_URI,

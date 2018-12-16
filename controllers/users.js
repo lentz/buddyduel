@@ -6,6 +6,7 @@ const DuelWeek = require('../models/DuelWeek');
 const user = require('../services/user');
 
 const COOKIE_MAX_AGE = 1000 * 60 * 60 * 24 * 365; // 1 year
+const COOKIE_SECURE = process.env.BASE_URL.startsWith('https');
 
 async function getPerformance(userId) {
   const duelWeeks = await DuelWeek.find({ 'picker.id': userId }, { record: 1, winnings: 1 }).exec();
@@ -44,16 +45,16 @@ module.exports.authenticate = async (req, res, next) => {
   const jwt = jwtDecode(response.data.id_token);
   req.session.userId = jwt.sub;
   req.session.userName = jwt.name;
-  res.cookie('userId', jwt.sub, { maxAge: COOKIE_MAX_AGE });
-  res.cookie('userName', jwt.name, { maxAge: COOKIE_MAX_AGE });
+  res.cookie('userId', jwt.sub, { maxAge: COOKIE_MAX_AGE, secure: COOKIE_SECURE });
+  res.cookie('userName', jwt.name, { maxAge: COOKIE_MAX_AGE, secure: COOKIE_SECURE });
   next();
 };
 
 module.exports.logout = (req, res, next) => {
   req.session.destroy();
-  res.clearCookie('connect.sid');
-  res.clearCookie('userId');
-  res.clearCookie('userName');
+  res.clearCookie('connect.sid', { secure: COOKIE_SECURE });
+  res.clearCookie('userId', { secure: COOKIE_SECURE });
+  res.clearCookie('userName', { secure: COOKIE_SECURE });
   next();
 };
 

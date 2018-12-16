@@ -29,7 +29,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   cookie: {
     maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year
-    secure: process.env.BASE_URL.startsWith('https'),
+    secure: false,
   },
   store,
   resave: true,

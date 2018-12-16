@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -14,13 +14,12 @@ import { DuelWeek } from '../duels/duel-week';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
-export class HomeComponent implements OnDestroy, OnInit {
+export class HomeComponent implements OnInit {
   acceptCode = '';
   processingAccept = false;
   currentDuelWeeks: DuelWeek[] = [];
   pendingDuels: Duel[] = [];
   duelCreatedSubscription: Subscription;
-  authenticatedSubscription: Subscription;
   loadComplete = false;
 
   public constructor(private duelsService: DuelsService,
@@ -31,37 +30,20 @@ export class HomeComponent implements OnDestroy, OnInit {
     this.duelCreatedSubscription = duelsService.duelCreated$.subscribe(
       duel => this.pendingDuels.push(duel)
     );
-    this.authenticatedSubscription = authService.authenticated$.subscribe(
-      () => {
-        this.loadDuelWeeks().then(() => { this.loadComplete = true; });
-        this.loadPendingDuels();
-      }
-    );
+    if (this.authService.isAuthenticated()) {
+      this.loadDuelWeeks().then(() => { this.loadComplete = true; });
+      this.loadPendingDuels();
+    };
   }
 
   ngOnInit(): void {
     this.titleService.setTitle('BuddyDuel');
-
-    if (this.router.url.includes('access_token')) {
-      this.authService.handleAuthentication()
-      .catch(err => {
-        console.error(err);
-        this.toastr.error('An error occurred logging you in!');
-      });
-    } else {
-      this.authService.checkSession();
-    }
-  }
-
-  ngOnDestroy(): void {
-    this.authenticatedSubscription.unsubscribe();
   }
 
   private async loadDuelWeeks(): Promise<any> {
     try {
       this.currentDuelWeeks = await this.duelsService
         .getDuelWeeks({ current: true });
-      this.authenticatedSubscription.unsubscribe();
     } catch (err) {
       this.toastr.error(err);
     }

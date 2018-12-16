@@ -27,7 +27,7 @@ module.exports.getInfo = async (userId) => {
 };
 
 module.exports.updateMetadata = async (userId, userMetadata) => {
-  const response = axios.patch(
+  const response = await axios.patch(
     `https://${process.env.AUTH0_DOMAIN}/api/v2/users/${userId}`,
     { user_metadata: userMetadata },
     {

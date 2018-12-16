@@ -19,7 +19,6 @@ import { DuelsService } from './duels.service';
 export class DuelWeekComponent implements OnInit, OnDestroy {
   duelWeek!: DuelWeek;
   Math: any;
-  authenticatedSubscription!: Subscription;
   liveUpdateSubscription: Subscription | null;
 
   constructor(private duelsService: DuelsService,
@@ -32,21 +31,16 @@ export class DuelWeekComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.authenticatedSubscription = this.authService.authenticated$.subscribe(
-      this.loadDuelWeek.bind(this)
-    );
-    this.authService.checkSession();
+    this.loadDuelWeek();
   }
 
   ngOnDestroy(): void {
-    this.authenticatedSubscription.unsubscribe();
     if (this.liveUpdateSubscription) { this.liveUpdateSubscription.unsubscribe(); }
   }
 
   private startLiveUpdate(): void {
     this.liveUpdateSubscription = timer(30000, 30000).subscribe(async () => {
       if (!this.duelWeek) { return; }
-      this.authService.checkSession();
       const newDuelWeek = await this.duelsService.getWeek(this.duelWeek._id);
       newDuelWeek.games = newDuelWeek.games.map(newGame => {
         if (newGame.startTime < +new Date()) { return newGame; }
@@ -63,7 +57,6 @@ export class DuelWeekComponent implements OnInit, OnDestroy {
           this.duelWeek = await this.duelsService.getWeek(params.get('id') as string);
           this.titleService.setTitle(`Week ${this.duelWeek.weekNum} vs. ${this.opponentName()} | BuddyDuel`);
           if (this.hasLiveGames()) { this.startLiveUpdate(); }
-          this.authenticatedSubscription.unsubscribe();
         } catch (err) {
           this.toastr.error(err);
         }
@@ -96,7 +89,7 @@ export class DuelWeekComponent implements OnInit, OnDestroy {
   }
 
   isPicker(): boolean {
-    return this.duelWeek.picker.id === this.authService.getUserProfile().sub
+    return this.duelWeek.picker.id === this.authService.getUser().id
   }
 
   pickedBy(): string {

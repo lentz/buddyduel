@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
@@ -11,11 +11,10 @@ import { UserProfileService } from './user-profile.service';
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.css']
 })
-export class UserProfileComponent implements OnDestroy, OnInit {
+export class UserProfileComponent implements OnInit {
   record = { wins: 0, losses: 0, pushes: 0 };
   winnings = 0;
   reminderEmails!: boolean;
-  authenticatedSubscription!: Subscription;
 
   constructor(private titleService: Title,
               private toastr: ToastrService,
@@ -24,14 +23,7 @@ export class UserProfileComponent implements OnDestroy, OnInit {
 
   ngOnInit(): void {
     this.titleService.setTitle('My Profile | BuddyDuel');
-    this.authenticatedSubscription = this.authService.authenticated$.subscribe(
-      this.loadProfile.bind(this)
-    );
-    this.authService.checkSession();
-  }
-
-  ngOnDestroy(): void {
-    this.authenticatedSubscription.unsubscribe();
+    this.loadProfile();
   }
 
   savePreferences(): void {
@@ -49,7 +41,6 @@ export class UserProfileComponent implements OnDestroy, OnInit {
         this.record = profile.record;
         this.winnings = profile.winnings;
         this.reminderEmails = profile.preferences.reminderEmails;
-        this.authenticatedSubscription.unsubscribe();
       })
       .catch(err => {
         console.error(err);

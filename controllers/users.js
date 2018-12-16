@@ -1,7 +1,11 @@
 /* eslint no-param-reassign: 0 */
+const jwtDecode = require('jwt-decode');
+const axios = require('axios');
 
 const DuelWeek = require('../models/DuelWeek');
 const user = require('../services/user');
+
+const COOKIE_MAX_AGE = 1000 * 60 * 60 * 24 * 365; // 1 year
 
 async function getPerformance(userId) {
   const duelWeeks = await DuelWeek.find({ 'picker.id': userId }, { record: 1, winnings: 1 }).exec();
@@ -23,12 +27,42 @@ async function getPreferences(userId) {
   };
 }
 
+module.exports.authenticate = async (req, res, next) => {
+  const response = await axios.post(
+    `https://${process.env.AUTH0_DOMAIN}/oauth/token`,
+    {
+      grant_type: 'authorization_code',
+      client_id: process.env.AUTH0_CLIENT_ID,
+      client_secret: process.env.AUTH0_CLIENT_SECRET,
+      code: req.query.code,
+      redirect_uri: `${process.env.BASE_URL}/auth/callback`,
+    },
+    {
+      headers: { 'content-type': 'application/json' },
+    }
+  );
+  const jwt = jwtDecode(response.data.id_token);
+  req.session.userId = jwt.sub;
+  req.session.userName = jwt.name;
+  res.cookie('userId', jwt.sub, { maxAge: COOKIE_MAX_AGE });
+  res.cookie('userName', jwt.name, { maxAge: COOKIE_MAX_AGE });
+  next();
+};
+
+module.exports.logout = (req, res, next) => {
+  req.session.destroy();
+  res.clearCookie('connect.sid');
+  res.clearCookie('userId');
+  res.clearCookie('userName');
+  next();
+};
+
 module.exports.show = async (req, res) => res.json(Object.assign(
-  await getPerformance(req.user.sub),
-  await getPreferences(req.user.sub)
+  await getPerformance(req.session.userId),
+  await getPreferences(req.session.userId)
 ));
 
 module.exports.update = async (req, res) => {
-  await user.updateMetadata(req.user.sub, req.body);
+  await user.updateMetadata(req.session.userId, req.body);
   return res.status(204).send();
 };

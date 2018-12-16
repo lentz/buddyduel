@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
@@ -16,8 +16,7 @@ import { DuelsService } from './duels.service';
   templateUrl: './duel.component.html',
   styleUrls: ['./duel.component.css'],
 })
-export class DuelComponent implements OnInit, OnDestroy {
-  authenticatedSubscription!: Subscription;
+export class DuelComponent implements OnInit {
   duel!: Duel;
   duelWeeks: DuelWeek[] = [];
 
@@ -28,14 +27,7 @@ export class DuelComponent implements OnInit, OnDestroy {
               private authService: AuthService, ) { }
 
   ngOnInit(): void {
-    this.authenticatedSubscription = this.authService.authenticated$.subscribe(
-      this.loadData.bind(this)
-    );
-    this.authService.checkSession();
-  }
-
-  ngOnDestroy(): void {
-    this.authenticatedSubscription.unsubscribe();
+    this.loadData();
   }
 
   years(): number[] {
@@ -47,7 +39,7 @@ export class DuelComponent implements OnInit, OnDestroy {
   }
 
   userWinnings(year?: number): number {
-    return this.aggregateWinnings(this.authService.getUserProfile().sub, year);
+    return this.aggregateWinnings(this.authService.getUser().id, year);
   }
 
   opponentWinnings(year?: number): number {
@@ -59,7 +51,7 @@ export class DuelComponent implements OnInit, OnDestroy {
   }
 
   userRecord(year?: number) {
-    return this.aggregateRecord(this.authService.getUserProfile().sub, year);
+    return this.aggregateRecord(this.authService.getUser().id, year);
   }
 
   opponentRecord(year?: number) {
@@ -71,7 +63,7 @@ export class DuelComponent implements OnInit, OnDestroy {
   }
 
   pickerName(duelWeek: DuelWeek): string {
-    if (duelWeek.picker.id === this.authService.getUserProfile().sub) { return 'You'; }
+    if (duelWeek.picker.id === this.authService.getUser().id) { return 'You'; }
     return duelWeek.picker.name;
   }
 
@@ -125,7 +117,6 @@ export class DuelComponent implements OnInit, OnDestroy {
           this.titleService.setTitle(
             `vs. ${this.duelsService.opponentForPlayers(duelWeeks[0].players).name} | BuddyDuel`
           );
-          this.authenticatedSubscription.unsubscribe();
         } catch (err) {
           this.toastr.error(err);
         }

@@ -1,4 +1,3 @@
-import { JwtModule } from '@auth0/angular-jwt';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
@@ -29,11 +28,6 @@ export function getToken() {
     DuelsModule,
     FormsModule,
     HttpClientModule,
-    JwtModule.forRoot({
-      config: {
-        tokenGetter: getToken,
-      }
-    }),
     ToastrModule.forRoot(),
     SharedModule,
     AppRoutingModule,

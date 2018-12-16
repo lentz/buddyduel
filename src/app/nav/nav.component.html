@@ -32,16 +32,17 @@
           Create a Duel
         </button>
       </form>
-      <button *ngIf="!authService.isAuthenticated()" (click)="authService.login()"
-              class="btn btn-outline-light">
+      <a *ngIf="!authService.isAuthenticated()"
+         [href]="authService.loginURL"
+         class="btn btn-outline-light">
         <i class="fa fa-user-circle" aria-hidden="true"></i> Login
-      </button>
+      </a>
       <span *ngIf="authService.isAuthenticated()" class="username">
         <a [routerLink]="[ '/profile' ]">
           <i class="fa fa-user-circle" aria-hidden="true"></i>
-          {{ authService?.getUserProfile().name }}</a>
+          {{ authService?.getUser().name }}</a>
         |
-        <a (click)="authService.logout($event)" href="#">Logout</a>
+        <a [href]="authService.logoutURL">Logout</a>
       </span>
     </div>
   </div>

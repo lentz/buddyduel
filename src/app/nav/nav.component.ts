@@ -17,15 +17,14 @@ declare var jQuery: any;
 export class NavComponent {
   betAmount = 0;
   duels: Duel[] = [];
-  authenticatedSubscription: Subscription;
   duelAcceptedSubscription: Subscription;
 
   public constructor(private duelsService: DuelsService,
                      public authService: AuthService,
                      private toastr: ToastrService, ) {
-    this.authenticatedSubscription = authService.authenticated$.subscribe(
-      this.loadDuels.bind(this)
-    );
+    if (this.authService.isAuthenticated()) {
+      this.loadDuels();
+    };
     this.duelAcceptedSubscription = duelsService.duelAccepted$.subscribe(
       this.loadDuels.bind(this)
     );
@@ -35,7 +34,6 @@ export class NavComponent {
     this.duelsService.getDuels({ status: 'active,suspended' })
       .then(duels => {
         this.duels = duels;
-        this.authenticatedSubscription.unsubscribe();
       })
       .catch(err => {
         console.error(err);
@@ -59,4 +57,5 @@ export class NavComponent {
       this.toastr.error('Failed to create duel!');
     });
   }
+
 }

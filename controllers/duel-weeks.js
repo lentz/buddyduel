@@ -4,7 +4,7 @@ const DuelWeek = require('../models/DuelWeek');
 const NFLWeek = require('../services/NFLWeek');
 
 module.exports.index = async (req, res) => {
-  const filter = { 'players.id': req.user.sub };
+  const filter = { 'players.id': req.session.userId };
   if (req.query.duelId) {
     filter.duelId = req.query.duelId;
   } else if (req.query.current) {
@@ -29,7 +29,7 @@ function sortGames(duelWeek) {
 }
 
 module.exports.show = async (req, res) => {
-  const duelWeek = await DuelWeek.findOne({ _id: req.params.id, 'players.id': req.user.sub }).exec();
+  const duelWeek = await DuelWeek.findOne({ _id: req.params.id, 'players.id': req.session.userId }).exec();
   if (!duelWeek) {
     return res.status(404).json({ message: 'Duel week not found' });
   }
@@ -45,7 +45,7 @@ function setSelections(duelWeek, pickedGames) {
 }
 
 module.exports.update = async (req, res) => {
-  const duelWeek = await DuelWeek.findOne({ _id: req.body._id, 'players.id': req.user.sub }).exec();
+  const duelWeek = await DuelWeek.findOne({ _id: req.body._id, 'players.id': req.session.userId }).exec();
   duelWeek.games = setSelections(duelWeek, req.body.games);
   await duelWeek.save();
   return res.json({ message: 'Picks successfully locked in' });

@@ -27,7 +27,7 @@ export class DuelsService {
               private authService: AuthService, ) { }
 
   opponentForPlayers(players: Player[]): Player {
-    const currentPlayerId = this.authService.getUserProfile().sub;
+    const currentPlayerId = this.authService.getUser().id;
     const opponent = players.find(player => player.id !== currentPlayerId);
     if (!opponent) { throw new Error('Could not determine opponent'); }
     return opponent;

@@ -5,6 +5,5 @@
 
 export const environment = {
   production: false,
-  authCallbackURL: 'http://macbookpro:3000/auth/callback',
-  authSilentUri: 'http://macbookpro:3000/silent',
+  baseURL: 'http://macbookpro:3000',
 };

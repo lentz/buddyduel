@@ -5,11 +5,13 @@ axios.defaults.baseURL = 'https://www.bovada.lv/services/sports/event/v2/events/
 axios.defaults.headers.common['User-Agent'] = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36';
 
 module.exports.getLines = async () => {
-  const [regSeasonResp, playoffResp] = await Promise.all([
+  const [regSeasonResp, playoffResp, superBowlResp] = await Promise.all([
     axios.get('/nfl?marketFilterId=def&preMatchOnly=true&lang=en'),
     axios.get('/nfl-playoffs?marketFilterId=def&preMatchOnly=true&lang=en'),
+    axios.get('/super-bowl?marketFilterId=def&preMatchOnly=true&lang=en'),
   ]);
 
   return BovadaParser.call(regSeasonResp.data)
-    .concat(BovadaParser.call(playoffResp.data));
+    .concat(BovadaParser.call(playoffResp.data))
+    .concat(BovadaParser.call(superBowlResp.data));
 };

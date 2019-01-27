@@ -1,6 +1,5 @@
 require('dotenv').config();
 const bodyParser = require('body-parser');
-const { job } = require('cron');
 const express = require('express');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
@@ -10,7 +9,6 @@ const path = require('path');
 
 const usersController = require('./controllers/users');
 const logger = require('./lib/logger');
-const nflScoreUpdater = require('./services/NFLScoreUpdater');
 const routes = require('./routes');
 require('./lib/db');
 
@@ -53,14 +51,5 @@ app.use((err, req, res, _next) => {
   if (err.response) { logger.error(err.response.data); }
   res.status(500).json({ message: err.message });
 });
-
-app.listen(process.env.PORT)
-  .on('listening', () => logger.info(`Listening on port ${process.env.PORT}`))
-  .on('error', logger.error);
-
-nflScoreUpdater.on('error', logger.error);
-job('*/30 * * * 0,1,8-11 *', () => {
-  nflScoreUpdater.run();
-}, null, true);
 
 module.exports = app;

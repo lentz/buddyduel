@@ -14,7 +14,7 @@ require('./lib/db');
 
 const app = express();
 
-app.use(morgan('combined'));
+if (app.get('env') !== 'test') { app.use(morgan('combined')); }
 app.set('trust proxy', 1);
 
 const store = new MongoDBStore({

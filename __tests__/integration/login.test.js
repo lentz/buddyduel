@@ -1,41 +1,26 @@
 /*
  * @jest-environment node
  */
+/* eslint-disable arrow-body-style */
 process.env.MONGODB_URI = 'mongodb://localhost:27017/buddyduel-test';
-const supertest = require('supertest');
-const nock = require('nock');
+const request = require('supertest');
 const app = require('../../app');
-const db = require('../../lib/db');
-
-const testApp = supertest(app);
+const { createSession, user1 } = require('./support');
 
 describe('login API', () => {
   test('access is denied when no session cookie is present', () => {
-    return supertest(app)
+    return request(app)
       .get('/api/duels')
       .expect(401, { message: 'You are not logged in' });
   });
 
   describe('authenticated access', () => {
-    let sessionCookie;
+    test('access is allowed when the session exists', async () => {
+      const sessionCookie = await createSession(user1);
 
-    beforeAll(async () => {
-      nock(`https://${process.env.AUTH0_DOMAIN}`)
-        .post('/oauth/token')
-        .reply(200, { id_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c' });
-
-      const authResp = await testApp
-        .get('/auth/callback')
-        .expect(200);
-      sessionCookie = authResp.headers['set-cookie']
-        .find(header => /connect.sid/.test(header))
-        .split(';')[0];
-    });
-
-    test('access is allowed when the session exists', () => {
-      return testApp.get('/api/duels?status=active')
+      return request(app).get('/api/duels?status=active')
         .set('Cookie', [sessionCookie])
-        .expect(200, []);
+        .expect(200);
     });
   });
 });

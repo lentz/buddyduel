@@ -58,7 +58,7 @@
     "shortid": "^2.2.13",
     "title-case": "^2.1.1",
     "typescript": "2.9.2",
-    "winston": "^3.0.0",
+    "winston": "^3.2.1",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {

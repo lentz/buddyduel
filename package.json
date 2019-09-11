@@ -55,7 +55,7 @@
     "ngx-toastr": "^9.0.2",
     "pug": "^2.0.3",
     "rxjs": "^6.3.0",
-    "shortid": "^2.2.13",
+    "shortid": "^2.2.15",
     "title-case": "^2.1.1",
     "typescript": "2.9.2",
     "winston": "^3.2.1",

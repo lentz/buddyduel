@@ -73,7 +73,7 @@
     "eslint-plugin-import": "^2.17.3",
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.11.1",
-    "jasmine": "^3.0.0",
+    "jasmine": "^3.4.0",
     "jasmine-core": "^3.2.1",
     "jasmine-spec-reporter": "^4.2.1",
     "jest": "^24.8.0",

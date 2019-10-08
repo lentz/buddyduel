@@ -65,7 +65,7 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.7.0",
     "@types/jasmine": "^3.4.2",
-    "@types/js-cookie": "^2.2.2",
+    "@types/js-cookie": "^2.2.3",
     "@types/node": "^10.14.20",
     "codelyzer": "^5.1.2",
     "eslint": "^5.16.0",

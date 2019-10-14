@@ -20,14 +20,14 @@ function parseGame(game) {
     }
     return {
       id: createGameId(
-        home.description,
-        away.description,
+        home.description.trim(),
+        away.description.trim(),
         NFLWeek.seasonYear,
         NFLWeek.forGame(game),
       ),
-      homeTeam: home.description,
+      homeTeam: home.description.trim(),
       homeSpread: Number(home.price.handicap),
-      awayTeam: away.description,
+      awayTeam: away.description.trim(),
       awaySpread: Number(away.price.handicap),
       startTime: game.startTime,
     };

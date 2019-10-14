@@ -76,7 +76,7 @@
                 "outcomes": [
                   {
                     "id": "204283996",
-                    "description": "Atlanta Falcons",
+                    "description": " Atlanta Falcons",
                     "status": "O",
                     "type": "A",
                     "competitorId": "3172275-2542",
@@ -334,7 +334,7 @@
                 "outcomes": [
                   {
                     "id": "204286299",
-                    "description": "Houston Texans",
+                    "description": "  Houston Texans  ",
                     "status": "O",
                     "type": "A",
                     "competitorId": "3172285-2813",
@@ -348,7 +348,7 @@
                   },
                   {
                     "id": "204286300",
-                    "description": "New England Patriots",
+                    "description": "New England Patriots ",
                     "status": "O",
                     "type": "H",
                     "competitorId": "3172285-3826",

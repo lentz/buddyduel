@@ -5,6 +5,7 @@ const logger = require('./logger');
 
 mongoose.Promise = global.Promise;
 mongoose.set('useFindAndModify', false);
+mongoose.set('useUnifiedTopology', true);
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
 mongoose.connection.on('error', (err) => {
   logger.error(`Unable to connect to Mongo: ${err}`);

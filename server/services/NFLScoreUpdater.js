@@ -18,14 +18,14 @@ class NFLScoreUpdater extends EventEmitter {
     return (await axios.get(SCORES_URL)).data;
   }
 
-  static gamesWithResults(games, scores) {
+  static gamesWithResults(games, scores, opts = { setBetResult: true }) {
     return games.map((game) => {
       const gameResult = scores.find(score => score.gameId === game.id);
       if (gameResult) {
         game.awayScore = gameResult.awayScore;
         game.homeScore = gameResult.homeScore;
         game.time = gameResult.time;
-        game.result = betResult(game);
+        if (opts.setBetResult) { game.result = betResult(game); }
       }
       return game;
     });
@@ -39,7 +39,11 @@ class NFLScoreUpdater extends EventEmitter {
     if (!result || result.scores.length < 1) { return Promise.resolve(); }
     const duelWeeks = await DuelWeek.find({ weekNum: result.weekNum }).exec();
     return Promise.all(duelWeeks.map(async (duelWeek) => {
-      duelWeek.games = NFLScoreUpdater.gamesWithResults(duelWeek.games, result.scores);
+      duelWeek.games = NFLScoreUpdater.gamesWithResults(
+        duelWeek.games,
+        result.scores,
+        { setBetResult: !duelWeek.skipped },
+      );
       duelWeek.updateRecord();
       return duelWeek.save();
     }));

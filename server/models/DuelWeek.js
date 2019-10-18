@@ -13,6 +13,7 @@ const duelWeekSchema = new mongoose.Schema({
   players: [playerSchema],
   picker: playerSchema,
   winnings: { type: Number, default: 0 },
+  skipped: { type: Boolean, default: false },
   record: {
     wins: { type: Number, default: 0 },
     losses: { type: Number, default: 0 },

@@ -34,14 +34,14 @@
     </tr>
   </table>
   <div class="card-footer text-center">
-    <div *ngIf="game.result">
-      <span class="badge"
+    <div *ngIf="game.time">
+      <span *ngIf="game.result" class="badge"
             [ngClass]="{'badge-success': game.result === 'Win', 'badge-danger': game.result === 'Loss', 'badge-secondary': game.result === 'Push' }">
         {{ game.result }}
       </span>
-      <span class="text-muted small time">- {{ game.time }}</span>
+      <span class="text-muted small time">{{ game.time }}</span>
     </div>
-    <span *ngIf="!game.result && !showClear()" class="text-muted small">
+    <span *ngIf="!game.time && !showClear()" class="text-muted small">
       {{ game.startTime | date:'EEE, MMM d h:mm a' }}
     </span>
     <button *ngIf="showClear()" (click)="clear()"

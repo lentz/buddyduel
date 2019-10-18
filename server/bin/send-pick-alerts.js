@@ -2,13 +2,12 @@
 
 require('dotenv').config();
 const moment = require('moment');
-const mongoose = require('mongoose');
 const sgMail = require('@sendgrid/mail');
+const db = require('../lib/db');
 const NFLWeek = require('../services/NFLWeek');
 const DuelWeek = require('../models/DuelWeek');
 const user = require('../services/user');
 
-mongoose.Promise = global.Promise;
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 function messageBody(duelWeek, games) {
@@ -55,7 +54,6 @@ function isApproachingUnpicked(game) {
 async function run() {
   const startTime = new Date();
   try {
-    await mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
     const duelWeeks = await DuelWeek.find(
       { weekNum: NFLWeek.currentWeek(), 'games.selectedTeam': null },
       { picker: 1, games: 1, players: 1 },
@@ -69,7 +67,7 @@ async function run() {
   } catch (err) {
     console.error('Error sending pick alerts:', err);
   } finally {
-    mongoose.connection.close();
+    db.close();
     console.log('Completed in', new Date() - startTime, 'ms');
     process.exit();
   }

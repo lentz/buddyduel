@@ -4,7 +4,9 @@ const app = require('./app');
 const logger = require('./lib/logger');
 const nflScoreUpdater = require('./services/NFLScoreUpdater');
 
-nflScoreUpdater.on('error', logger.error);
+nflScoreUpdater.on('error', (err) => {
+  logger.error(`Error updating NFL scores: ${err}`);
+});
 job('*/30 * * * 0,1,8-11 *', () => {
   nflScoreUpdater.run();
 }, null, true);

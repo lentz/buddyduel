@@ -83,7 +83,7 @@
     "karma-coverage-istanbul-reporter": "^2.1.0",
     "karma-jasmine": "^2.0.1",
     "karma-jasmine-html-reporter": "^1.4.2",
-    "lint-staged": "^9.4.2",
+    "lint-staged": "^9.4.3",
     "nock": "^11.7.0",
     "pre-commit": "^1.2.2",
     "supertest": "^4.0.2",

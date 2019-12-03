@@ -57,7 +57,7 @@
     "pug": "^2.0.4",
     "rxjs": "^6.5.3",
     "shortid": "^2.2.15",
-    "title-case": "^2.1.1",
+    "title-case": "^3.0.1",
     "typescript": "3.2.4",
     "winston": "^3.2.1",
     "zone.js": "^0.8.29"

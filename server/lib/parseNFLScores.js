@@ -1,4 +1,4 @@
-const titleCase = require('title-case');
+const { capitalCase } = require('capital-case');
 const createGameId = require('./createGameId');
 
 function generateTimeString(score) {
@@ -6,7 +6,7 @@ function generateTimeString(score) {
     return `${score.phase} ${score.time}`;
   }
 
-  return titleCase(score.phase);
+  return capitalCase(score.phase);
 }
 
 module.exports = (scoresJSON) => {

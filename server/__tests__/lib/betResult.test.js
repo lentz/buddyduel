@@ -1,8 +1,6 @@
 const betResult = require('../../lib/betResult');
 
 describe('#betResult()', () => {
-  beforeEach(() => expect.hasAssertions());
-
   test('is Loss when a team was not selected', () => {
     const result = betResult({
       homeScore: 1,

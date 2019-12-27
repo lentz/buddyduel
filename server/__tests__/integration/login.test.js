@@ -1,7 +1,7 @@
 /*
  * @jest-environment node
  */
-/* eslint-disable arrow-body-style */
+/* eslint-disable arrow-body-style, jest/expect-expect */
 process.env.MONGODB_URI = 'mongodb://localhost:27017/buddyduel-test';
 const request = require('supertest');
 const app = require('../../app');

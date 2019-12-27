@@ -3,8 +3,6 @@ const path = require('path');
 const BovadaParser = require('../../services/BovadaParser');
 
 describe('BovadaParser', () => {
-  beforeEach(() => expect.hasAssertions());
-
   describe('#call()', () => {
     const bovadaJSON = JSON.parse(fs.readFileSync(path.join(
       __dirname, '..', 'sample-data', 'bovada-nfl.json',

@@ -1,8 +1,6 @@
 const NFLWeek = require('../../services/NFLWeek');
 
 describe('NFLWeek', () => {
-  beforeEach(() => expect.hasAssertions());
-
   describe('#forGame()', () => {
     test('is 1 for September 6th', () => {
       expect(NFLWeek.forGame({ startTime: Date.parse(`${NFLWeek.seasonYear}-09-06`) }))

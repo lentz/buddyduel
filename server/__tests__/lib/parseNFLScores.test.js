@@ -3,8 +3,6 @@ const path = require('path');
 const parseNFLScores = require('../../lib/parseNFLScores');
 
 describe('NFLScoreParser', () => {
-  beforeEach(() => expect.hasAssertions());
-
   const expectedResult = {
     scores: [
       {

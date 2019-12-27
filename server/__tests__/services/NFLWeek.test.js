@@ -1,6 +1,12 @@
 const NFLWeek = require('../../services/NFLWeek');
 
 describe('NFLWeek', () => {
+  describe('#currentWeek', () => {
+    test('returns the current week number', () => {
+      expect(NFLWeek.currentWeek()).toEqual(expect.any(Number));
+    });
+  });
+
   describe('#forGame()', () => {
     test('is 1 for September 6th', () => {
       expect(NFLWeek.forGame({ startTime: Date.parse(`${NFLWeek.seasonYear}-09-06`) }))

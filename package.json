@@ -85,7 +85,7 @@
     "karma-jasmine": "^3.1.0",
     "karma-jasmine-html-reporter": "^1.5.1",
     "lint-staged": "^10.0.2",
-    "nock": "^11.7.1",
+    "nock": "^11.7.2",
     "pre-commit": "^1.2.2",
     "supertest": "^4.0.2",
     "ts-node": "^8.6.2",

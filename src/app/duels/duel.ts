@@ -8,7 +8,7 @@ export class Duel {
     public code: string,
     public status: string,
     public betAmount: number,
-    public players: Player[], ) {
-
-  }
+    public players: Player[],
+    public sport: string,
+  ) { }
 }

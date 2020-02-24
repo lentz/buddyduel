@@ -55,7 +55,9 @@ export class DuelWeekComponent implements OnInit, OnDestroy {
       async (params: ParamMap) => {
         try {
           this.duelWeek = await this.duelsService.getWeek(params.get('id') as string);
-          this.titleService.setTitle(`Week ${this.duelWeek.weekNum} vs. ${this.opponentName()} | BuddyDuel`);
+          this.titleService.setTitle(
+            `${this.duelWeek.sport} Week ${this.duelWeek.weekNum} vs. ${this.opponentName()} | BuddyDuel`,
+          );
           if (this.hasLiveGames()) { this.startLiveUpdate(); }
         } catch (err) {
           this.toastr.error(err);

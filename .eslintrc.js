@@ -21,6 +21,7 @@ module.exports = {
       functions: 'ignore',
     }],
     'jest/expect-expect': 'error',
+    'no-await-in-loop': 'off',
     'no-underscore-dangle': ['error', { 'allow': ['_id'] }],
     'no-unused-vars': ['error', { 'argsIgnorePattern': '^_' } ],
   },

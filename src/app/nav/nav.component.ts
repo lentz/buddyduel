@@ -18,12 +18,15 @@ export class NavComponent {
   betAmount = 0;
   duels: Duel[] = [];
   duelAcceptedSubscription: Subscription;
+  sport = '';
+  sports: string[] = [];
 
   public constructor(private duelsService: DuelsService,
                      public authService: AuthService,
                      private toastr: ToastrService, ) {
     if (this.authService.isAuthenticated()) {
       this.loadDuels();
+      duelsService.getSports().then(sports => { this.sports = sports; });
     };
     this.duelAcceptedSubscription = duelsService.duelAccepted$.subscribe(
       this.loadDuels.bind(this)
@@ -46,7 +49,7 @@ export class NavComponent {
   }
 
   createDuel(): void {
-    this.duelsService.create(this.betAmount)
+    this.duelsService.create({ betAmount: this.betAmount, sport: this.sport })
     .then(() => {
       jQuery('#create-duel-modal').modal('hide');
       this.betAmount = 0;

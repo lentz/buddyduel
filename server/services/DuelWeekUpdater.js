@@ -2,8 +2,8 @@
 
 const _ = require('lodash');
 const bovada = require('../services/bovada');
+const { getGameWeek, sports } = require('../sports');
 const DuelWeek = require('../models/DuelWeek');
-const NFLWeek = require('../services/NFLWeek');
 
 function unpickedAndNotBegun(game) {
   return !game.selectedTeam && game.startTime > +new Date();
@@ -25,24 +25,26 @@ function updateGames(games, lines) {
   return games;
 }
 
-function picker(players, weekNum) {
+function picker(duel, weekNum) {
   // This is gross, but need to handle the Pro Bowl week
-  const pickerWeekNum = weekNum === '22' ? 21 : parseInt(weekNum, 10);
-  return players[pickerWeekNum % 2];
+  const pickerWeekNum = duel.sport === 'NFL' && weekNum === '22' ? 21 : parseInt(weekNum, 10);
+  return duel.players[pickerWeekNum % 2];
 }
 
-module.exports.call = async (duels) => {
-  const lines = await bovada.getLines();
-  const weekMap = _.groupBy(lines, NFLWeek.forGame);
+async function call(duels) {
   // TODO: Refactor this to be simpler
   return Promise.all(duels.map(async (duel) => { // eslint-disable-line arrow-body-style
+    const sport = sports.find(s => s.name === duel.sport);
+    const games = await bovada.getPreMatchLines(sport);
+    const weekMap = _.groupBy(games, game => getGameWeek(game, sport));
     return Promise.all(Object.keys(weekMap).map(async (weekNum) => {
       const duelWeek = await DuelWeek.findOneAndUpdate(
-        { year: NFLWeek.seasonYear, weekNum, duelId: duel.id },
+        { year: sport.seasonYear, weekNum, duelId: duel.id },
         {
           betAmount: duel.betAmount,
+          picker: picker(duel, weekNum),
           players: duel.players,
-          picker: picker(duel.players, weekNum),
+          sport: duel.sport,
         },
         {
           upsert: true, setDefaultsOnInsert: true, runValidators: true, new: true,
@@ -52,4 +54,6 @@ module.exports.call = async (duels) => {
       return duelWeek.save();
     }));
   }));
-};
+}
+
+module.exports.call = call;

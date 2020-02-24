@@ -4,7 +4,7 @@ require('dotenv').config();
 const moment = require('moment');
 const sgMail = require('@sendgrid/mail');
 const db = require('../lib/db');
-const NFLWeek = require('../services/NFLWeek');
+const { getCurrentWeek, sports } = require('../sports');
 const DuelWeek = require('../models/DuelWeek');
 const user = require('../services/user');
 
@@ -12,7 +12,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 function messageBody(duelWeek, games) {
   return `
-    <p>You still need to make a pick for the following games which are starting soon:</p>
+    <p>You still need to make a pick for the following ${duelWeek.sport} games which are starting soon:</p>
     <p>
       ${games.map(game => `${game.awayTeam} (${game.awaySpread}) @ ${game.homeTeam} (${game.homeSpread})`).join('<br />')}
     </p>
@@ -40,7 +40,8 @@ async function sendAlert(duelWeek, games) {
   const msg = {
     to: userInfo.email,
     from: 'BuddyDuel <alerts@buddyduel.net>',
-    subject: `Games starting soon vs ${opponentName(duelWeek)} - get your picks in!`,
+    subject: `${duelWeek.sport} games starting soon vs ${opponentName(duelWeek)}`
+     + ' - get your picks in!',
     html: messageBody(duelWeek, games),
   };
   return sgMail.send(msg);
@@ -54,16 +55,20 @@ function isApproachingUnpicked(game) {
 async function run() {
   const startTime = new Date();
   try {
-    const duelWeeks = await DuelWeek.find(
-      { weekNum: NFLWeek.currentWeek(), 'games.selectedTeam': null },
-      { picker: 1, games: 1, players: 1 },
-      null
-    ).exec();
-    await Promise.all(duelWeeks.map(async (duelWeek) => {
-      const unpickedGames = duelWeek.games.filter(game => isApproachingUnpicked(game));
-      if (unpickedGames.length < 1) { return Promise.resolve(); }
-      return sendAlert(duelWeek, unpickedGames);
+    const query = { 'games.selectedTeam': null };
+    query.$or = sports.map(sport => ({
+      sport: sport.name,
+      weekNum: getCurrentWeek(sport),
     }));
+    const duelWeeks = await DuelWeek.find(query).exec();
+
+    /* eslint-disable-next-line no-restricted-syntax */
+    for (const duelWeek of duelWeeks) {
+      const unpickedGames = duelWeek.games.filter(isApproachingUnpicked);
+      if (unpickedGames.length) {
+        await sendAlert(duelWeek, unpickedGames);
+      }
+    }
   } catch (err) {
     console.error('Error sending pick alerts:', err);
   } finally {

@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`BovadaParser #call() parses the JSON and returns game objects 1`] = `
+exports[`BovadaParser #parseGames() parses the JSON and returns game objects 1`] = `
 Array [
   Object {
     "awaySpread": 4,
     "awayTeam": "Atlanta Falcons",
     "homeSpread": -4,
     "homeTeam": "Philadelphia Eagles",
-    "id": "fc4437660b1af9bff627f2559b922ab6",
+    "id": "3172275",
     "startTime": 1536279600000,
   },
   Object {
@@ -15,7 +15,7 @@ Array [
     "awayTeam": "Houston Texans",
     "homeSpread": -7,
     "homeTeam": "New England Patriots",
-    "id": "1b1b66c41e983f8523008d71f77a54e5",
+    "id": "3172285",
     "startTime": 1536512700000,
   },
   Object {
@@ -23,7 +23,7 @@ Array [
     "awayTeam": "San Francisco 49ers",
     "homeSpread": -5.5,
     "homeTeam": "Minnesota Vikings",
-    "id": "2294b7b360150b4dfc6e0e2ff9a953d9",
+    "id": "3172278",
     "startTime": 1536512700000,
   },
   Object {
@@ -31,7 +31,7 @@ Array [
     "awayTeam": "Jacksonville Jaguars",
     "homeSpread": 3.5,
     "homeTeam": "New York Giants",
-    "id": "97f15edb2f13d3257de013a211e9abd3",
+    "id": "3172283",
     "startTime": 1536512700000,
   },
   Object {
@@ -39,7 +39,7 @@ Array [
     "awayTeam": "Cincinnati Bengals",
     "homeSpread": -2.5,
     "homeTeam": "Indianapolis Colts",
-    "id": "a124004a224a05a733eac1344869c5c0",
+    "id": "3172280",
     "startTime": 1536512700000,
   },
   Object {
@@ -47,7 +47,7 @@ Array [
     "awayTeam": "Pittsburgh Steelers",
     "homeSpread": 6,
     "homeTeam": "Cleveland Browns",
-    "id": "bb97d6d5693347d929cbad7648e1a0b7",
+    "id": "3172276",
     "startTime": 1536512700000,
   },
   Object {
@@ -55,7 +55,7 @@ Array [
     "awayTeam": "Tennessee Titans",
     "homeSpread": 2,
     "homeTeam": "Miami Dolphins",
-    "id": "76bf0888c4386d8c86f9947c9a82a56a",
+    "id": "3172286",
     "startTime": 1536512700000,
   },
   Object {
@@ -63,7 +63,7 @@ Array [
     "awayTeam": "Kansas City Chiefs",
     "homeSpread": -3,
     "homeTeam": "Los Angeles Chargers",
-    "id": "aeec512c3e74eada242a159ff85620f8",
+    "id": "3172289",
     "startTime": 1536523500000,
   },
   Object {
@@ -71,7 +71,7 @@ Array [
     "awayTeam": "Seattle Seahawks",
     "homeSpread": -2,
     "homeTeam": "Denver Broncos",
-    "id": "96ec67389f2095c8de395956a249d82c",
+    "id": "3172290",
     "startTime": 1536524700000,
   },
   Object {
@@ -79,7 +79,7 @@ Array [
     "awayTeam": "Dallas Cowboys",
     "homeSpread": -2.5,
     "homeTeam": "Carolina Panthers",
-    "id": "0511eec57c12e9db563f4878f3c733bd",
+    "id": "3172291",
     "startTime": 1536524700000,
   },
   Object {
@@ -87,7 +87,7 @@ Array [
     "awayTeam": "Washington Redskins",
     "homeSpread": 0,
     "homeTeam": "Arizona Cardinals",
-    "id": "3476bb9a8a145de4ab1b8a52e5a0e69a",
+    "id": "3172292",
     "startTime": 1536524700000,
   },
   Object {
@@ -95,7 +95,7 @@ Array [
     "awayTeam": "Chicago Bears",
     "homeSpread": -8,
     "homeTeam": "Green Bay Packers",
-    "id": "354f7444eb5be1bf4a768269b2a18113",
+    "id": "3172294",
     "startTime": 1536538800000,
   },
   Object {
@@ -103,7 +103,7 @@ Array [
     "awayTeam": "New York Jets",
     "homeSpread": -7,
     "homeTeam": "Detroit Lions",
-    "id": "19631f51b12579372c8ed5a5831114c3",
+    "id": "3172296",
     "startTime": 1536621000000,
   },
   Object {
@@ -111,7 +111,7 @@ Array [
     "awayTeam": "Los Angeles Rams",
     "homeSpread": 3,
     "homeTeam": "Oakland Raiders",
-    "id": "57b7ca9ba45c192a0168350a9596c622",
+    "id": "3172305",
     "startTime": 1536632400000,
   },
 ]

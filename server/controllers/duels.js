@@ -1,4 +1,5 @@
 const Duel = require('../models/Duel');
+const { sports } = require('../sports');
 const DuelWeekUpdater = require('../services/DuelWeekUpdater');
 
 async function alreadyInDuel(code, userId) {
@@ -22,9 +23,10 @@ module.exports.show = async (req, res) => {
 
 module.exports.create = async (req, res) => {
   const duel = await Duel.create({
-    players: [{ id: req.session.userId, name: req.session.userName }],
-    status: 'pending',
     betAmount: req.body.betAmount,
+    players: [{ id: req.session.userId, name: req.session.userName }],
+    sport: req.body.sport,
+    status: 'pending',
   });
   return res.status(201).json(duel);
 };
@@ -63,3 +65,5 @@ module.exports.delete = async (req, res) => {
   if (!result) { return res.status(404).json({ message: 'Duel not found' }); }
   return res.json({ message: 'Duel deleted' });
 };
+
+module.exports.getSports = async (req, res) => res.json(sports.map(sport => sport.name));

@@ -1,9 +1,7 @@
 const jp = require('jsonpath');
 const util = require('util');
-const createGameId = require('../lib/createGameId');
-const NFLWeek = require('./NFLWeek');
 
-const teamRegex = /^[\w\s\d]+$/;
+const teamRegex = /^[\w\s\d()#&.]+$/;
 
 function parseGame(game) {
   let pointSpread;
@@ -19,12 +17,7 @@ function parseGame(game) {
       return null;
     }
     return {
-      id: createGameId(
-        home.description.trim(),
-        away.description.trim(),
-        NFLWeek.seasonYear,
-        NFLWeek.forGame(game),
-      ),
+      id: game.id,
       homeTeam: home.description.trim(),
       homeSpread: Number(home.price.handicap),
       awayTeam: away.description.trim(),
@@ -37,7 +30,9 @@ function parseGame(game) {
   }
 }
 
-module.exports.call = json => jp
-  .query(json, '$..events[*]')
-  .map(parseGame)
-  .filter(game => game);
+module.exports.parseGames = function parseGames(json) {
+  return jp
+    .query(json, '$..events[*]')
+    .map(parseGame)
+    .filter(game => game);
+};

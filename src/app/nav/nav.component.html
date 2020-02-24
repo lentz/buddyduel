@@ -20,7 +20,7 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               <a *ngFor="let duel of duels" [routerLink]="[ '/duels', duel._id ]"
                  class="dropdown-item">
-                vs. {{ opponentName(duel) }} (${{ duel.betAmount }}/game)
+                vs. {{ opponentName(duel) }} ({{ duel.sport }} ${{ duel.betAmount }}/game)
               </a>
             </div>
           </li>
@@ -64,6 +64,14 @@
               <span class="input-group-addon">$</span>
               <input type="number" id="amount" name="amount" [(ngModel)]="betAmount"
                      class="form-control" aria-label="Game Bet Amount">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="sport">Sport:</label>
+            <div class="input-group">
+              <select class="form-control" id="sport" name="sport" [(ngModel)]="sport">
+                <option *ngFor="let value of sports" [ngValue]="value">{{ value }}<option>
+              </select>
             </div>
           </div>
         </form>

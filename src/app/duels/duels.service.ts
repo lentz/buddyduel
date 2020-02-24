@@ -86,8 +86,8 @@ export class DuelsService {
                  .catch(this.handleError);
   }
 
-  create(betAmount: number): Promise<any> {
-    return this.http.post(`${this.duelsURL}`, { betAmount }, { headers: this.headers })
+  create(duelOpts: { betAmount: number, sport: string }): Promise<any> {
+    return this.http.post(`${this.duelsURL}`, duelOpts, { headers: this.headers })
                         .toPromise()
                         .then((response: any) => this.duelCreatedSource.next(response as Duel))
                         .catch(this.handleError);
@@ -100,6 +100,14 @@ export class DuelsService {
                     .toPromise()
                     .then((response: any) => response as DuelWeek)
                     .catch(this.handleError);
+  }
+
+  getSports(): Promise<string[]> {
+    return this.http.get(`${this.duelsURL}/sports`,
+                      { headers: this.headers })
+                 .toPromise()
+                 .then((response: any) => response as string[])
+                 .catch(this.handleError);
   }
 
   private handleError(res: any): Promise<any> {

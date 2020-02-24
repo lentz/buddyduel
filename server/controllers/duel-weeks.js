@@ -1,15 +1,18 @@
 /* eslint no-param-reassign: "off" */
 
 const DuelWeek = require('../models/DuelWeek');
-const NFLWeek = require('../services/NFLWeek');
+const { getCurrentWeek, sports } = require('../sports');
 
 module.exports.index = async (req, res) => {
   const filter = { 'players.id': req.session.userId };
   if (req.query.duelId) {
     filter.duelId = req.query.duelId;
   } else if (req.query.current) {
-    filter.weekNum = { $in: [NFLWeek.currentWeek(), NFLWeek.currentWeek() - 1] };
-    filter.year = NFLWeek.seasonYear;
+    filter.$or = sports.map(sport => ({
+      sport: sport.name,
+      weekNum: { $in: [getCurrentWeek(sport), getCurrentWeek(sport) - 1] },
+      year: sport.seasonYear,
+    }));
   }
   res.json(await DuelWeek.find(filter).sort({ year: -1, weekNum: -1 }).exec());
 };

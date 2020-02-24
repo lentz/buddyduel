@@ -17,7 +17,7 @@ import { DuelsService } from './duels.service';
   styleUrls: ['./duel.component.css'],
 })
 export class DuelComponent implements OnInit {
-  duel!: Duel;
+  duel: Duel = new Duel('', '', '', 0, [], '');
   duelWeeks: DuelWeek[] = [];
 
   constructor(private duelsService: DuelsService,

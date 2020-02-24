@@ -11,6 +11,7 @@ const duelSchema = new mongoose.Schema({
   status: { type: String, enum: ['active', 'pending', 'suspended'], required: true },
   betAmount: { type: Number, required: true },
   players: [{ type: playerSchema, required: true }],
+  sport: { type: String, required: true },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Duel', duelSchema);

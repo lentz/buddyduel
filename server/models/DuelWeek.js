@@ -12,13 +12,8 @@ const duelWeekSchema = new mongoose.Schema({
   betAmount: { type: Number, required: true },
   players: [playerSchema],
   picker: playerSchema,
-  winnings: { type: Number, default: 0 },
   skipped: { type: Boolean, default: false },
-  record: {
-    wins: { type: Number, default: 0 },
-    losses: { type: Number, default: 0 },
-    pushes: { type: Number, default: 0 },
-  },
+  sport: String,
   games: [{
     _id: false,
     id: { type: String, required: true },
@@ -35,11 +30,12 @@ const duelWeekSchema = new mongoose.Schema({
   }],
 }, { timestamps: true, toJSON: { virtuals: true } });
 
-duelWeekSchema.method('updateRecord', function updateRecord() {
+function calculateRecord(duelWeek) {
   let wins = 0;
   let losses = 0;
   let pushes = 0;
-  this.games.forEach((game) => {
+
+  duelWeek.games.forEach((game) => {
     switch (game.result) {
       case 'Win': wins += 1; break;
       case 'Loss': losses += 1; break;
@@ -47,9 +43,18 @@ duelWeekSchema.method('updateRecord', function updateRecord() {
       default:
     }
   });
-  this.record = { wins, losses, pushes };
-  this.winnings = (this.record.wins * this.betAmount)
-                  - (this.record.losses * this.betAmount);
+
+  return { wins, losses, pushes };
+}
+
+duelWeekSchema.virtual('winnings').get(function winnings() {
+  const record = calculateRecord(this);
+  return (record.wins * this.betAmount)
+    - (record.losses * this.betAmount);
+});
+
+duelWeekSchema.virtual('record').get(function record() {
+  return calculateRecord(this);
 });
 
 module.exports = mongoose.model('DuelWeek', duelWeekSchema);

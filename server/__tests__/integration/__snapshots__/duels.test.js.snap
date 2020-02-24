@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`duels API GET /duels/:id getting a duel returns the duel 1`] = `
+Object {
+  "__v": 0,
+  "_id": Any<String>,
+  "betAmount": 7,
+  "code": Any<String>,
+  "createdAt": Any<String>,
+  "players": Array [
+    Object {
+      "id": "1111111111",
+      "name": "John Doe",
+    },
+  ],
+  "sport": "XFL",
+  "status": "pending",
+  "updatedAt": Any<String>,
+}
+`;
+
+exports[`duels API POST /duels creates a new duel 1`] = `
+Object {
+  "__v": 0,
+  "_id": Any<String>,
+  "betAmount": 7,
+  "code": Any<String>,
+  "createdAt": Any<String>,
+  "players": Array [
+    Object {
+      "id": "1111111111",
+      "name": "John Doe",
+    },
+  ],
+  "sport": "NFL",
+  "status": "pending",
+  "updatedAt": Any<String>,
+}
+`;

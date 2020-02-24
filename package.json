@@ -114,7 +114,7 @@
     "test"
   ],
   "lint-staged": {
-    "src/**/*.ts": "npm run postlint",
+    "src/**/*": "tslint -p src/tsconfig.app.json",
     "server/**/*.js": "eslint"
   }
 }

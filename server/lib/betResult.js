@@ -1,4 +1,6 @@
 module.exports = (game) => {
+  if (game.homeScore === undefined || game.awayScore === undefined) { return ''; }
+
   const homeResult = game.homeScore + game.homeSpread;
   const awayResult = game.awayScore + game.awaySpread;
 

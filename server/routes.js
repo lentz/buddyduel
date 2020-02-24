@@ -18,6 +18,8 @@ router.route('/duels')
   .post(duelsController.create);
 router.route('/duels/accept')
   .put(duelsController.accept);
+router.route('/duels/sports')
+  .get(duelsController.getSports);
 router.route('/duels/:id')
   .get(duelsController.show)
   .put(duelsController.update)

@@ -14,7 +14,7 @@ export class DuelWeek {
     public players: Player[],
     public record: { wins: number, losses: number, pushes: number },
     public winnings: number,
-    games: Game[], ) {
-
-  }
+    public sport: string,
+    games: Game[],
+  ) { }
 }

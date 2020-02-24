@@ -6,7 +6,7 @@
         <ul class="active-duels">
           <li *ngFor="let duelWeek of currentDuelWeeks">
             <a [routerLink]="[ '/duel-weeks', duelWeek._id ]">
-              Week {{ duelWeek.weekNum }} vs {{ opponentName(duelWeek) }}
+              {{ duelWeek.sport }} Week {{ duelWeek.weekNum }} vs {{ opponentName(duelWeek) }}
               <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
             </a>
           </li>
@@ -26,7 +26,7 @@
         <h6 class="card-subtitle mb-2 text-muted">Give the code to a friend</h6>
         <ul class="pending-duels">
           <li *ngFor="let duel of pendingDuels">
-            <pre>{{ duel.code }}</pre><span>(${{ duel.betAmount }}/game)</span>
+            <pre>{{ duel.code }}</pre><span>({{ duel.sport }} ${{ duel.betAmount }}/game)</span>
             <button (click)="deleteDuel(duel._id)" class="btn btn-sm btn-outline-danger">
               Delete
             </button>

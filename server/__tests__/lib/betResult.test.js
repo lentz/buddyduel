@@ -1,6 +1,23 @@
 const betResult = require('../../lib/betResult');
 
 describe('#betResult()', () => {
+  test('is empty string when the game does not have a score', () => {
+    expect(betResult({
+      homeScore: 1,
+      homeSpread: 1,
+      awaySpread: -1,
+      homeTeam: 'Home Team',
+      awayTeam: 'Away Team',
+    })).toEqual('');
+
+    expect(betResult({
+      homeSpread: 1,
+      awaySpread: -1,
+      homeTeam: 'Home Team',
+      awayTeam: 'Away Team',
+    })).toEqual('');
+  });
+
   test('is Loss when a team was not selected', () => {
     const result = betResult({
       homeScore: 1,

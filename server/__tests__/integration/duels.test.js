@@ -21,20 +21,13 @@ describe('duels API', () => {
       const response = await request(app)
         .post('/api/duels')
         .set('Cookie', [sessionCookie])
-        .send({ betAmount: 7 })
+        .send({ betAmount: 7, sport: 'NFL' })
         .expect(201);
 
-      expect(response.body).toEqual({
-        __v: 0,
+      expect(response.body).toMatchSnapshot({
         _id: expect.any(String),
-        betAmount: 7,
         code: expect.any(String),
         createdAt: expect.any(String),
-        players: [{
-          id: user1.id,
-          name: user1.name,
-        }],
-        status: 'pending',
         updatedAt: expect.any(String),
       });
     });
@@ -46,7 +39,7 @@ describe('duels API', () => {
       const createResponse = await request(app)
         .post('/api/duels')
         .set('Cookie', [sessionCookie])
-        .send({ betAmount: 7 })
+        .send({ betAmount: 7, sport: 'XFL' })
         .expect(201);
       const duelId = createResponse.body._id;
 
@@ -71,7 +64,7 @@ describe('duels API', () => {
       const createResponse = await request(app)
         .post('/api/duels')
         .set('Cookie', [sessionCookie])
-        .send({ betAmount: 7 })
+        .send({ betAmount: 7, sport: 'NCAAB' })
         .expect(201);
       const { code } = createResponse.body;
 
@@ -86,7 +79,7 @@ describe('duels API', () => {
       const createResponse = await request(app)
         .post('/api/duels')
         .set('Cookie', [sessionCookie])
-        .send({ betAmount: 7 })
+        .send({ betAmount: 7, sport: 'NFL' })
         .expect(201);
 
       const user2SessionCookie = await createSession(user2);
@@ -117,7 +110,7 @@ describe('duels API', () => {
       const createResponse = await request(app)
         .post('/api/duels')
         .set('Cookie', [sessionCookie])
-        .send({ betAmount: 7 })
+        .send({ betAmount: 7, sport: 'XFL' })
         .expect(201);
 
       const duelResponse = await request(app)
@@ -125,17 +118,10 @@ describe('duels API', () => {
         .set('Cookie', [sessionCookie])
         .expect(200);
 
-      expect(duelResponse.body).toEqual({
-        __v: 0,
+      expect(duelResponse.body).toMatchSnapshot({
         _id: expect.any(String),
-        betAmount: 7,
         code: expect.any(String),
         createdAt: expect.any(String),
-        players: [{
-          id: user1.id,
-          name: user1.name,
-        }],
-        status: 'pending',
         updatedAt: expect.any(String),
       });
     });
@@ -154,7 +140,7 @@ describe('duels API', () => {
       const createResponse = await request(app)
         .post('/api/duels')
         .set('Cookie', [sessionCookie])
-        .send({ betAmount: 7 })
+        .send({ betAmount: 7, sport: 'NCAAB' })
         .expect(201);
 
       await request(app)

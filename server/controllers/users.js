@@ -9,7 +9,7 @@ const COOKIE_MAX_AGE = 1000 * 60 * 60 * 24 * 365; // 1 year
 const COOKIE_SECURE = process.env.BASE_URL.startsWith('https');
 
 async function getPerformance(userId) {
-  const duelWeeks = await DuelWeek.find({ 'picker.id': userId }, { record: 1, winnings: 1 }).exec();
+  const duelWeeks = await DuelWeek.find({ 'picker.id': userId }).exec();
   return duelWeeks.reduce((performance, duelWeek) => {
     performance.winnings += duelWeek.winnings;
     performance.record.wins += duelWeek.record.wins;

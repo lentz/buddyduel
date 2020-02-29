@@ -115,7 +115,7 @@ export class DuelComponent implements OnInit {
           const duelWeeks = await this.duelsService.getDuelWeeks({ duelId: duelId });
           this.duelWeeks = duelWeeks;
           this.titleService.setTitle(
-            `vs. ${this.duelsService.opponentForPlayers(duelWeeks[0].players).name} | BuddyDuel`
+            `${this.duel.sport } vs. ${this.duelsService.opponentForPlayers(duelWeeks[0].players).name} | BuddyDuel`
           );
         } catch (err) {
           this.toastr.error(err);

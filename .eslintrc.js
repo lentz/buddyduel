@@ -1,6 +1,11 @@
 module.exports = {
+  root: true,
+  parser: '@typescript-eslint/parser',
   extends: [
-    'airbnb-base',
+    'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:import/typescript',
+    'plugin:import/recommended',
     'plugin:jest/recommended',
     'plugin:jest/style',
   ],
@@ -10,9 +15,16 @@ module.exports = {
     node: true,
   },
   plugins: [
+    '@typescript-eslint',
     'jest',
   ],
   rules: {
+    '@typescript-eslint/explicit-function-return-type': 'off', // TODO
+    '@typescript-eslint/interface-name-prefix': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-unused-vars': ['error', {
+      'argsIgnorePattern': '^_',
+    }],
     'comma-dangle': ['error', {
       arrays: 'always-multiline',
       objects: 'always-multiline',
@@ -23,6 +35,5 @@ module.exports = {
     'jest/expect-expect': 'error',
     'no-await-in-loop': 'off',
     'no-underscore-dangle': ['error', { 'allow': ['_id'] }],
-    'no-unused-vars': ['error', { 'argsIgnorePattern': '^_' } ],
   },
 };

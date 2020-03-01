@@ -1,3 +1,1 @@
-/public/*
-/protractor.conf.js
-/karma.conf.js
+/api/dist

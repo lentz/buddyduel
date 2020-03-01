@@ -7,7 +7,8 @@ import { Subscription } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { Duel } from '../duels/duel';
 import { DuelsService } from '../duels/duels.service';
-import { DuelWeek } from '../duels/duel-week';
+import { DuelWeek } from '../duel-weeks/duel-week';
+import { DuelWeeksService } from '../duel-weeks/duel-weeks.service';
 
 @Component({
   selector: 'app-home',
@@ -23,6 +24,7 @@ export class HomeComponent implements OnInit {
   loadComplete = false;
 
   public constructor(private duelsService: DuelsService,
+                     private duelWeeksService: DuelWeeksService,
                      public authService: AuthService,
                      private router: Router,
                      private titleService: Title,
@@ -42,7 +44,7 @@ export class HomeComponent implements OnInit {
 
   private async loadDuelWeeks(): Promise<any> {
     try {
-      this.currentDuelWeeks = await this.duelsService
+      this.currentDuelWeeks = await this.duelWeeksService
         .getDuelWeeks({ current: true });
     } catch (err) {
       this.toastr.error(err);

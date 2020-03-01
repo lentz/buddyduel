@@ -49,7 +49,7 @@ export class NavComponent {
   }
 
   createDuel(): void {
-    this.duelsService.create({ betAmount: this.betAmount, sport: this.sport })
+    this.duelsService.createDuel({ betAmount: this.betAmount, sport: this.sport })
     .then(() => {
       jQuery('#create-duel-modal').modal('hide');
       this.betAmount = 0;

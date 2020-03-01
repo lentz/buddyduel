@@ -8,11 +8,12 @@ import { switchMap } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service'
 import { DuelWeek } from './duel-week';
 import { Game } from './game';
-import { DuelsService } from './duels.service';
+import { DuelsService } from '../duels/duels.service';
+import { DuelWeeksService } from './duel-weeks.service';
 
 @Component({
   selector: 'duel-week',
-  providers: [DuelsService],
+  providers: [DuelWeeksService],
   templateUrl: './duel-week.component.html',
   styleUrls: ['./duel-week.component.css'],
 })
@@ -22,10 +23,12 @@ export class DuelWeekComponent implements OnInit, OnDestroy {
   liveUpdateSubscription: Subscription | null;
 
   constructor(private duelsService: DuelsService,
+              private duelWeeksService: DuelWeeksService,
               private route: ActivatedRoute,
               private titleService: Title,
               private toastr: ToastrService,
-              private authService: AuthService, ) {
+              private authService: AuthService,
+  ) {
     this.Math = Math;
     this.liveUpdateSubscription = null;
   }
@@ -41,7 +44,7 @@ export class DuelWeekComponent implements OnInit, OnDestroy {
   private startLiveUpdate(): void {
     this.liveUpdateSubscription = timer(30000, 30000).subscribe(async () => {
       if (!this.duelWeek) { return; }
-      const newDuelWeek = await this.duelsService.getWeek(this.duelWeek._id);
+      const newDuelWeek = await this.duelWeeksService.getDuelWeek(this.duelWeek._id);
       newDuelWeek.games = newDuelWeek.games.map(newGame => {
         if (newGame.startTime < +new Date()) { return newGame; }
         return this.duelWeek.games.find(game => newGame.id === game.id) || newGame;
@@ -54,7 +57,7 @@ export class DuelWeekComponent implements OnInit, OnDestroy {
     this.route.paramMap.subscribe(
       async (params: ParamMap) => {
         try {
-          this.duelWeek = await this.duelsService.getWeek(params.get('id') as string);
+          this.duelWeek = await this.duelWeeksService.getDuelWeek(params.get('id') as string);
           this.titleService.setTitle(
             `${this.duelWeek.sport} Week ${this.duelWeek.weekNum} vs. ${this.opponentName()} | BuddyDuel`,
           );
@@ -67,12 +70,12 @@ export class DuelWeekComponent implements OnInit, OnDestroy {
   }
 
   save(): void {
-    this.duelsService.save(this.duelWeek)
-    .then(() => {
-      this.toastr.success('Picks locked in!');
-      this.duelWeek.games.forEach(game => game.updated = false);
-    })
-    .catch(err => this.toastr.error('Failed to save picks'));
+    this.duelWeeksService.updateDuelWeek(this.duelWeek)
+      .then(() => {
+        this.toastr.success('Picks locked in!');
+        this.duelWeek.games.forEach(game => game.updated = false);
+      })
+      .catch(err => this.toastr.error('Failed to save picks'));
   }
 
   hasLiveGames(): boolean {

@@ -1,16 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { DuelComponent } from '../duels/duel.component';
-import { DuelWeekComponent } from '../duels/duel-week.component';
+import { DuelComponent } from './duel.component';
 
-const duelRoutes: Routes = [
+const duelsRoutes: Routes = [
   { path: 'duels/:id', component: DuelComponent },
-  { path: 'duel-weeks/:id', component: DuelWeekComponent },
 ];
 @NgModule({
   imports: [
-    RouterModule.forChild(duelRoutes),
+    RouterModule.forChild(duelsRoutes),
   ],
   exports: [
     RouterModule,

@@ -1,5 +1,5 @@
 import { Game } from './game';
-import { Player } from './player';
+import { Player } from '../duels/player';
 
 export class DuelWeek {
   games = new Array<Game>();

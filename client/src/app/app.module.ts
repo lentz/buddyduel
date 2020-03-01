@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthService } from './auth/auth.service';
 import { DuelsModule } from './duels/duels.module';
+import { DuelWeeksModule } from './duel-weeks/duel-weeks.module';
 import { HomeComponent } from './home/home.component';
 import { NavComponent } from './nav/nav.component';
 import { SharedModule } from './shared/shared.module';
@@ -26,6 +27,7 @@ export function getToken() {
     BrowserModule,
     BrowserAnimationsModule,
     DuelsModule,
+    DuelWeeksModule,
     FormsModule,
     HttpClientModule,
     ToastrModule.forRoot(),

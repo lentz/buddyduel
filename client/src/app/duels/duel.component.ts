@@ -7,12 +7,13 @@ import { switchMap } from 'rxjs/operators';
 
 import { AuthService } from '../auth/auth.service'
 import { Duel } from './duel';
-import { DuelWeek } from './duel-week';
+import { DuelWeek } from '../duel-weeks/duel-week';
 import { DuelsService } from './duels.service';
+import { DuelWeeksService } from '../duel-weeks/duel-weeks.service';
 
 @Component({
   selector: 'duel-summary',
-  providers: [DuelsService],
+  providers: [DuelsService, DuelWeeksService],
   templateUrl: './duel.component.html',
   styleUrls: ['./duel.component.css'],
 })
@@ -21,6 +22,7 @@ export class DuelComponent implements OnInit {
   duelWeeks: DuelWeek[] = [];
 
   constructor(private duelsService: DuelsService,
+              private duelWeeksService: DuelWeeksService,
               private route: ActivatedRoute,
               private titleService: Title,
               private toastr: ToastrService,
@@ -112,7 +114,7 @@ export class DuelComponent implements OnInit {
           const duelId = params.get('id');
           if (!duelId) { throw new Error('Duel ID not found!'); }
           this.duel = await this.duelsService.getDuel(duelId);
-          const duelWeeks = await this.duelsService.getDuelWeeks({ duelId: duelId });
+          const duelWeeks = await this.duelWeeksService.getDuelWeeks({ duelId: duelId });
           this.duelWeeks = duelWeeks;
           this.titleService.setTitle(
             `${this.duel.sport } vs. ${this.duelsService.opponentForPlayers(duelWeeks[0].players).name} | BuddyDuel`

@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs'
 
 import { AuthService } from '../auth/auth.service'
-import { Game } from './game';
-import { DuelWeek } from './duel-week';
 import { Duel } from './duel';
 import { Player } from './player';
 
@@ -13,7 +10,6 @@ import { Player } from './player';
 export class DuelsService {
   private headers = { 'Content-Type': 'application/json' };
 
-  private duelWeeksURL = 'api/duel-weeks';
   private duelsURL = 'api/duels';
 
   private duelCreatedSource = new Subject<Duel>();
@@ -21,7 +17,6 @@ export class DuelsService {
 
   duelCreated$ = this.duelCreatedSource.asObservable();
   duelAccepted$ = this.duelAcceptedSource.asObservable();
-
 
   constructor(private http: HttpClient,
               private authService: AuthService, ) { }
@@ -45,20 +40,6 @@ export class DuelsService {
                     .toPromise()
                     .then((response: any) => response as Duel[])
                     .catch(this.handleError);
-  }
-
-  getDuelWeeks(params = {}): Promise<DuelWeek[]> {
-    return this.http.get(`${this.duelWeeksURL}`, { params })
-               .toPromise()
-               .then((response: any) => response as DuelWeek[])
-               .catch(this.handleError);
-  }
-
-  getWeek(id: string): Promise<DuelWeek> {
-    return this.http.get(`${this.duelWeeksURL}/${id}`)
-               .toPromise()
-               .then((response: any) => response as DuelWeek)
-               .catch(this.handleError);
   }
 
   acceptDuel(code: string): Promise<any> {
@@ -86,20 +67,11 @@ export class DuelsService {
                  .catch(this.handleError);
   }
 
-  create(duelOpts: { betAmount: number, sport: string }): Promise<any> {
+  createDuel(duelOpts: { betAmount: number, sport: string }): Promise<any> {
     return this.http.post(`${this.duelsURL}`, duelOpts, { headers: this.headers })
                         .toPromise()
                         .then((response: any) => this.duelCreatedSource.next(response as Duel))
                         .catch(this.handleError);
-  }
-
-  save(duelWeek: DuelWeek): Promise<DuelWeek> {
-    return this.http.put(`${this.duelWeeksURL}/${duelWeek._id}`,
-                         JSON.stringify(duelWeek),
-                         { headers: this.headers })
-                    .toPromise()
-                    .then((response: any) => response as DuelWeek)
-                    .catch(this.handleError);
   }
 
   getSports(): Promise<string[]> {

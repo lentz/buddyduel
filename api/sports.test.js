@@ -1,4 +1,4 @@
-const { sports, getCurrentWeek, getGameWeek } = require('../sports');
+const { sports, getCurrentWeek, getGameWeek } = require('./sports');
 
 const ncaab = sports.find(s => s.name === 'NCAAB');
 const nfl = sports.find(s => s.name === 'NFL');

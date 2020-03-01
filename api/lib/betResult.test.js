@@ -1,4 +1,4 @@
-const betResult = require('../../lib/betResult');
+const betResult = require('./betResult');
 
 describe('#betResult()', () => {
   test('is empty string when the game does not have a score', () => {

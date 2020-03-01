@@ -2,19 +2,18 @@
   "name": "buddyduel",
   "version": "1.0.0",
   "description": "Weekly NFL Buddy Bets",
-  "main": "server/server.js",
   "repository": "git@github.com:lentz/buddyduel.git",
   "author": "Jesse Lentz <jesselentz@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "ng build",
-    "build-prod": "ng build --prod",
-    "build-watch": "ng build --watch",
+    "build": "cd ./client && ng build",
+    "build-prod": "cd ./client && ng build --prod",
+    "build-watch": "cd ./client && ng build --watch",
     "ci": "jest --coverage --testPathIgnorePatterns 'integration'",
-    "start": "node server/server.js",
-    "lint": "eslint 'server/**/*.js'",
+    "start": "node api/server.js",
+    "lint": "eslint 'api/**/*.js'",
     "lint-staged": "lint-staged",
-    "postlint": "ng lint buddyduel --type-check",
+    "postlint": "cd ./client && ng lint buddyduel --type-check",
     "test": "jest --coverage",
     "test-watch": "jest --watch",
     "heroku-postbuild": "npm run build-prod"
@@ -93,19 +92,13 @@
   },
   "jest": {
     "testMatch": [
-      "**/__tests__/**/*.test.js"
-    ]
-  },
-  "greenkeeper": {
-    "ignore": [
-      "typescript",
-      "@types/node"
+      "<rootDir>/api/**/*.test.js"
     ]
   },
   "nodemonConfig": {
     "ignore": [
-      "public/",
-      "src/"
+      "*.test.*",
+      "client/"
     ],
     "nodeArgs": "--inspect"
   },
@@ -115,6 +108,6 @@
   ],
   "lint-staged": {
     "src/**/*": "tslint -p src/tsconfig.app.json",
-    "server/**/*.js": "eslint"
+    "api/**/*.js": "eslint"
   }
 }

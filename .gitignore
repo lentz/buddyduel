@@ -24,10 +24,8 @@ node_modules
 /tags
 
 # Angular
-/e2e/*.js
-/e2e/*.map
 /dist
-/public
+/client/public
 
 # Dotenv
 /.env

@@ -42,9 +42,9 @@ app.set('view engine', 'pug');
 app.get('/auth/callback', usersController.authenticate);
 app.get('/logout', usersController.logout);
 app.use('/api', routes);
-app.use(express.static(path.join(__dirname, '..', 'public')));
+app.use(express.static(path.join(__dirname, '..', 'client', 'public')));
 app.get('*', (_req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
+  res.sendFile(path.join(__dirname, '..', 'client', 'public', 'index.html'));
 });
 app.use((err, req, res, _next) => {
   logger.error(err.stack);

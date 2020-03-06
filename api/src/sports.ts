@@ -25,7 +25,7 @@ export const sports: ISport[] = [
     name: 'XFL',
     paths: ['/football/xfl'],
     seasonYear: 2020,
-    weekOne: Date.parse('2020-02-08T04:00:00Z'),
+    weekOne: Date.parse('2020-02-04T04:00:00Z'),
   },
 ];
 

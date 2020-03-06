@@ -59,7 +59,7 @@ describe('sports', () => {
         expect(getGameWeek(
           { startTime: Date.parse(`${xfl.seasonYear}-02-28`) } as IGame,
           xfl,
-        )).toEqual(3);
+        )).toEqual(4);
       });
     });
   });

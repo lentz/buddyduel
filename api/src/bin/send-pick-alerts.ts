@@ -4,7 +4,6 @@ import * as dotenv from 'dotenv';
 import * as moment from 'moment';
 import * as sgMail from '@sendgrid/mail';
 import db from '../lib/db';
-import { getCurrentWeek, sports } from '../sports';
 import { default as DuelWeek, IDuelWeek } from '../models/DuelWeek';
 import * as user from '../services/user';
 import IGame from '../models/IGame';
@@ -50,24 +49,31 @@ async function sendAlert(duelWeek: IDuelWeek, games: IGame[]) {
   });
 }
 
-function isApproachingUnpicked(game: IGame) {
-  return !game.selectedTeam && game.startTime > +new Date()
-    && moment().isSameOrAfter(moment(game.startTime).subtract(1.5, 'hours'));
+function isApproachingUnpicked(game: IGame, startsWithinTime: Date) {
+  return !game.selectedTeam && game.startTime > new Date()
+    && game.startTime < startsWithinTime;
 }
 
 async function run() {
-  const startTime = Date.now();
+  const beginTime = Date.now();
   try {
-    const query: any = { 'games.selectedTeam': null };
-    query.$or = sports.map(sport => ({
-      sport: sport.name,
-      weekNum: getCurrentWeek(sport),
-    }));
+    const startsWithinTime = moment().add(1.5, 'hours').toDate();
+    const query = {
+      games: {
+        $elemMatch: {
+          selectedTeam: null,
+          startTime: { $gt: Date.now(), $lt: startsWithinTime },
+        },
+      },
+      skipped: false,
+    };
     const duelWeeks = await DuelWeek.find(query).exec() as IDuelWeek[];
 
     /* eslint-disable-next-line no-restricted-syntax */
     for (const duelWeek of duelWeeks) {
-      const unpickedGames = duelWeek.games.filter(isApproachingUnpicked);
+      const unpickedGames = duelWeek.games.filter(game => {
+        return isApproachingUnpicked(game, startsWithinTime);
+      });
       if (unpickedGames.length) {
         await sendAlert(duelWeek, unpickedGames);
       }
@@ -76,7 +82,7 @@ async function run() {
     console.error('Error sending pick alerts:', err);
   } finally {
     db.close();
-    console.log('Completed in', Date.now() - startTime, 'ms');
+    console.log('Completed in', Date.now() - beginTime, 'ms');
     process.exit();
   }
 }

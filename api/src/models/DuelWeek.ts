@@ -20,7 +20,7 @@ const duelWeekSchema = new mongoose.Schema({
     awayTeam: { type: String, required: true },
     awaySpread: { type: Number, required: true },
     awayScore: Number,
-    startTime: Number,
+    startTime: Date,
     selectedTeam: String,
     time: String,
     result: String,

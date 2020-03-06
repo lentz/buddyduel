@@ -9,7 +9,7 @@ describe('#betResult()', () => {
       awaySpread: -1,
       homeTeam: 'Home Team',
       awayTeam: 'Away Team',
-      startTime: 1,
+      startTime: new Date(),
     })).toEqual('');
 
     expect(betResult({
@@ -18,7 +18,7 @@ describe('#betResult()', () => {
       awaySpread: -1,
       homeTeam: 'Home Team',
       awayTeam: 'Away Team',
-      startTime: 1,
+      startTime: new Date(),
     })).toEqual('');
   });
 
@@ -31,7 +31,7 @@ describe('#betResult()', () => {
       awaySpread: -1,
       homeTeam: 'Home Team',
       awayTeam: 'Away Team',
-      startTime: 1,
+      startTime: new Date(),
     });
 
     expect(result).toEqual('Loss');
@@ -47,7 +47,7 @@ describe('#betResult()', () => {
       homeTeam: 'Home Team',
       awayTeam: 'Away Team',
       selectedTeam: 'Home Team',
-      startTime: 1,
+      startTime: new Date(),
     });
 
     expect(result).toEqual('Push');
@@ -63,7 +63,7 @@ describe('#betResult()', () => {
       homeTeam: 'Home Team',
       awayTeam: 'Away Team',
       selectedTeam: 'Away Team',
-      startTime: 1,
+      startTime: new Date(),
     });
 
     expect(result).toEqual('Push');
@@ -79,7 +79,7 @@ describe('#betResult()', () => {
       homeTeam: 'Home Team',
       awayTeam: 'Away Team',
       selectedTeam: 'Home Team',
-      startTime: 1,
+      startTime: new Date(),
     });
 
     expect(result).toEqual('Win');
@@ -95,7 +95,7 @@ describe('#betResult()', () => {
       homeTeam: 'Home Team',
       awayTeam: 'Away Team',
       selectedTeam: 'Away Team',
-      startTime: 1,
+      startTime: new Date(),
     });
 
     expect(result).toEqual('Win');
@@ -111,7 +111,7 @@ describe('#betResult()', () => {
       homeTeam: 'Home Team',
       awayTeam: 'Away Team',
       selectedTeam: 'Home Team',
-      startTime: 1,
+      startTime: new Date(),
     });
 
     expect(result).toEqual('Loss');
@@ -127,7 +127,7 @@ describe('#betResult()', () => {
       homeTeam: 'Home Team',
       awayTeam: 'Away Team',
       selectedTeam: 'Away Team',
-      startTime: 1,
+      startTime: new Date(),
     });
 
     expect(result).toEqual('Loss');

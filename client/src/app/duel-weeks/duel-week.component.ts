@@ -46,7 +46,7 @@ export class DuelWeekComponent implements OnInit, OnDestroy {
       if (!this.duelWeek) { return; }
       const newDuelWeek = await this.duelWeeksService.getDuelWeek(this.duelWeek._id);
       newDuelWeek.games = newDuelWeek.games.map(newGame => {
-        if (newGame.startTime < +new Date()) { return newGame; }
+        if (!Game.hasStarted(newGame)) { return newGame; }
         return this.duelWeek.games.find(game => newGame.id === game.id) || newGame;
       });
       this.duelWeek = newDuelWeek;
@@ -89,7 +89,7 @@ export class DuelWeekComponent implements OnInit, OnDestroy {
   canModifyPicks(): boolean {
     return this.isPicker() &&
            this.duelWeek.games.some(game => {
-             return (!game.selectedTeam && game.startTime > +new Date()) || game.updated
+             return (!game.selectedTeam && !Game.hasStarted(game)) || game.updated
            });
   }
 

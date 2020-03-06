@@ -1,8 +1,9 @@
 /* eslint no-param-reassign: "off" */
 
 import { Request, Response } from 'express';
+import { sortBy } from 'lodash';
+import * as moment from 'moment';
 import { default as DuelWeek, IDuelWeek } from '../models/DuelWeek';
-import { getCurrentWeek, sports } from '../sports';
 import IGame from '../models/IGame';
 
 export async function index(req: Request, res: Response) {
@@ -10,27 +11,12 @@ export async function index(req: Request, res: Response) {
   if (req.query.duelId) {
     filter.duelId = req.query.duelId;
   } else if (req.query.current) {
-    filter.$or = sports.map(sport => ({
-      sport: sport.name,
-      weekNum: { $in: [getCurrentWeek(sport), getCurrentWeek(sport) - 1] },
-      year: sport.seasonYear,
-    }));
+    filter['games.startTime'] = {
+      $gt: moment().subtract(1, 'day'),
+      $lt: moment().add(5, 'days'),
+    };
   }
-  res.json(await DuelWeek.find(filter).sort({ year: -1, weekNum: -1 }).exec());
-}
-
-function sortGames(duelWeek: IDuelWeek) {
-  duelWeek.games.sort((a, b) => {
-    if (a.startTime !== b.startTime) { return a.startTime - b.startTime; }
-    if (a.awayTeam < b.awayTeam) {
-      return -1;
-    }
-    if (a.awayTeam > b.awayTeam) {
-      return 1;
-    }
-    return 0;
-  });
-  return duelWeek;
+  res.json(await DuelWeek.find(filter).sort({ createdAt: -1 }).exec());
 }
 
 export async function show(req: Request, res: Response) {
@@ -41,7 +27,9 @@ export async function show(req: Request, res: Response) {
   if (!duelWeek) {
     return res.status(404).json({ message: 'Duel week not found' });
   }
-  return res.json(sortGames(duelWeek));
+  duelWeek.games = sortBy(duelWeek.games, ['startTime', 'awayTeam']);
+
+  return res.json(duelWeek);
 }
 
 function setSelections(duelWeek: IDuelWeek, pickedGames: IGame[]) {

@@ -8,5 +8,5 @@ export default interface IGame {
   id: string;
   result?: string;
   selectedTeam?: string;
-  startTime: number;
+  startTime: Date;
 }

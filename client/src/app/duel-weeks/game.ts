@@ -1,4 +1,8 @@
 export class Game {
+  static hasStarted(game: Game) {
+    return Date.parse(game.startTime) < Date.now();
+  }
+
   constructor(
     public id: string,
     public updated: boolean,
@@ -8,10 +12,9 @@ export class Game {
     public awayTeam: string,
     public awaySpread: number,
     public awayScore: number,
-    public startTime: number,
+    public startTime: string,
     public selectedTeam: string | undefined,
     public time: string,
-    public result: string, ) {
-
-  }
+    public result: string,
+  ) { }
 }

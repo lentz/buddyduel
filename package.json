@@ -102,10 +102,10 @@
   },
   "nodemonConfig": {
     "exec": "node -r ts-node/register ./api/src/server.ts",
+    "ext": "ts",
     "ignore": [
       "*.test.*",
-      "client/",
-      "api/dist"
+      "client/"
     ],
     "nodeArgs": "--inspect"
   },

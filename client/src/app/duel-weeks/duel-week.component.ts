@@ -59,7 +59,7 @@ export class DuelWeekComponent implements OnInit, OnDestroy {
         try {
           this.duelWeek = await this.duelWeeksService.getDuelWeek(params.get('id') as string);
           this.titleService.setTitle(
-            `${this.duelWeek.sport} Week ${this.duelWeek.weekNum} vs. ${this.opponentName()} | BuddyDuel`,
+            `${this.duelWeek.sport} ${this.duelWeek.description} vs. ${this.opponentName()} | BuddyDuel`,
           );
           if (this.hasLiveGames()) { this.startLiveUpdate(); }
         } catch (err) {

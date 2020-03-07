@@ -5,7 +5,7 @@ import { default as PlayerSchema, IPlayer } from './PlayerSchema';
 const duelWeekSchema = new mongoose.Schema({
   duelId: { type: mongoose.Schema.Types.ObjectId, required: true },
   year: { type: Number, required: true },
-  weekNum: { type: Number, required: true },
+  description: { type: String, required: true },
   betAmount: { type: Number, required: true },
   players: [PlayerSchema],
   picker: PlayerSchema,
@@ -38,6 +38,7 @@ export interface IDuelWeek extends mongoose.Document {
     wins: number;
   };
   sport: string;
+  description: string;
   winnings: number;
 }
 

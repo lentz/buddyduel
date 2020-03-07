@@ -2,7 +2,7 @@
 
 import { groupBy } from 'lodash';
 import * as bovada from '../services/bovada';
-import { getGameWeek, sports } from '../sports';
+import { sports } from '../sports';
 import { default as DuelWeek, IDuelWeek } from '../models/DuelWeek';
 import IGame from '../models/IGame';
 import { IDuel } from '../models/Duel';
@@ -37,10 +37,10 @@ export async function call(duels: IDuel[]) {
     const sport = sports.find(s => s.name === duel.sport);
     if (!sport) { continue; }
     const games = await bovada.getPreMatchLines(sport);
-    const weekMap = groupBy(games, (game: IGame) => getGameWeek(game, sport));
-    for (const [weekNum, newGames] of Object.entries(weekMap)) {
+    const weekMap = groupBy(games, (game: IGame) => sport.getWeekDescription(game));
+    for (const [description, newGames] of Object.entries(weekMap)) {
       const duelWeek = await DuelWeek.findOneAndUpdate(
-        { year: sport.seasonYear, weekNum, duelId: duel.id },
+        { year: sport.seasonYear, description, duelId: duel.id },
         {
           betAmount: duel.betAmount,
           picker: await getPicker(duel),

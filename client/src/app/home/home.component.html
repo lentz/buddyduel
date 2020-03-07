@@ -6,7 +6,7 @@
         <ul class="active-duels">
           <li *ngFor="let duelWeek of currentDuelWeeks">
             <a [routerLink]="[ '/duel-weeks', duelWeek._id ]">
-              {{ duelWeek.sport }} Week {{ duelWeek.weekNum }} vs {{ opponentName(duelWeek) }}
+              {{ duelWeek.sport }} {{ duelWeek.description }} vs {{ opponentName(duelWeek) }}
               <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
             </a>
           </li>

@@ -8,7 +8,7 @@ export class DuelWeek {
     public _id: string,
     public duelId: string,
     public year: number,
-    public weekNum: number,
+    public description: string,
     public betAmount: number,
     public picker: Player,
     public players: Player[],

@@ -4,3 +4,4 @@ a, a:hover { color: #E55812; }
 ul { list-style: none; padding-left: 0; }
 .content { margin-bottom: 2rem; }
 .card { color: #000000; margin-top: 1rem; }
+.btn { cursor: pointer; }

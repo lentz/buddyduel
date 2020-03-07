@@ -2,11 +2,15 @@
   <div class="col-md-7">
     <div class="card">
       <div class="card-header">Current Duel Weeks</div>
-      <div class="card-body">
-        <ul class="active-duels">
+      <div class="card-body active-duels">
+        <ul>
           <li *ngFor="let duelWeek of currentDuelWeeks">
             <a [routerLink]="[ '/duel-weeks', duelWeek._id ]">
-              {{ duelWeek.sport }} {{ duelWeek.description }} vs {{ opponentName(duelWeek) }}
+              <span class="week-description">
+                {{ duelWeek.sport }} {{ duelWeek.description }}
+                <br />
+                <span class="opponent">vs {{ opponentName(duelWeek) }}</span>
+              </span>
               <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
             </a>
           </li>

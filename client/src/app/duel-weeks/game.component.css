@@ -5,7 +5,9 @@
 .badge-primary { background-color: #01B8F1; color: #ffffff; }
 .btn-outline-primary { color: #01B8F1; border-color: #01B8F1; }
 .btn-outline-primary:hover, .btn-outline-primary.active {
-  background-color: #01B8F1; border-color: #01B8F1; color: #ffffff;
+  background-color: #01B8F1;
+  border-color: #01B8F1;
+  color: #ffffff;
 }
 .table-bordered { margin-bottom: 0; border-bottom: none; }
 .table-bordered td { border-bottom: none; }

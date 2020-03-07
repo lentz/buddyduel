@@ -11,8 +11,24 @@ export interface ISport {
 export const sports: ISport[] = [
   {
     getWeekDescription: (game: IGame) => {
-      const weekOne = new Date('2019-11-05T04:00:00Z');
-      return `Week ${moment(game.startTime).diff(moment(weekOne), 'weeks') + 1}`;
+      if (game.startTime < new Date('2020-03-19')) {
+        const weekOne = new Date('2019-11-05');
+        return `Week ${moment(game.startTime).diff(moment(weekOne), 'weeks') + 1}`;
+      } else if (game.startTime < new Date('2020-03-21')) {
+        return 'Round 1';
+      } else if (game.startTime < new Date('2020-03-26')) {
+        return 'Round 2';
+      } else if (game.startTime < new Date('2020-03-28')) {
+        return 'Sweet 16';
+      } else if (game.startTime < new Date('2020-04-04')) {
+        return 'Elite 8';
+      } else if (game.startTime < new Date('2020-04-06')) {
+        return 'Final Four';
+      } else if (game.startTime < new Date('2020-04-07')) {
+        return 'Championship';
+      } else {
+        return 'TDB';
+      }
     },
     name: 'NCAAB',
     paths: ['/basketball/college-basketball'],
@@ -30,8 +46,16 @@ export const sports: ISport[] = [
   {
     name: 'XFL',
     getWeekDescription: (game: IGame) => {
-      const weekOne = new Date('2020-02-04T04:00:00Z');
-      return `Week ${moment(game.startTime).diff(moment(weekOne), 'weeks') + 1}`;
+      if (game.startTime < new Date('2020-04-18')) {
+        const weekOne = new Date('2020-02-04T04:00:00Z');
+        return `Week ${moment(game.startTime).diff(moment(weekOne), 'weeks') + 1}`;
+      } else if (game.startTime < new Date('2020-04-26')) {
+        return 'Playoffs';
+      } else if (game.startTime < new Date('2020-04-27')) {
+        return 'Championship';
+      } else {
+        return 'TDB';
+      }
     },
     paths: ['/football/xfl'],
     seasonYear: 2020,

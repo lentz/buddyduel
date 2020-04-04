@@ -76,7 +76,7 @@
     "@types/lodash": "^4.14.149",
     "@types/mongoose": "^5.7.8",
     "@types/morgan": "^1.9.0",
-    "@types/node": "^10.17.17",
+    "@types/node": "^10.17.18",
     "@types/shortid": "0.0.29",
     "@typescript-eslint/eslint-plugin": "^2.25.0",
     "@typescript-eslint/parser": "^2.25.0",

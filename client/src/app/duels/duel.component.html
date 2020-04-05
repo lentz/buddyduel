@@ -3,7 +3,10 @@
     <h2 class="text-truncate">{{ duel.sport }} vs. {{ opponentName() }}</h2>
   </div>
   <div class="col">
-    <button class="btn btn-outline-secondary float-md-right" (click)="toggleStatus()">
+    <button
+      class="btn btn-outline-secondary float-md-right"
+      (click)="toggleStatus()"
+    >
       {{ isActive() ? 'Suspend' : 'Re-activate' }} Duel
     </button>
   </div>
@@ -14,24 +17,39 @@
       <div class="card-header font-weight-bold">All Seasons</div>
       <div class="card-body">
         <div>
-          Your overall record: {{ userRecord() | record }}
-          ({{ userRecord() | winPercentage | number:'1.3-3' }})
+          Your overall record: {{ userRecord() | record }} ({{
+            userRecord() | winPercentage | number: '1.3-3'
+          }})
         </div>
         <div>
           Your overall winnings:
-          <span class="badge" [ngClass]="{'badge-success': userWinnings() >= 0, 'badge-danger': userWinnings() < 0}">
-            {{ userWinnings() | currency:'USD':'symbol' }}
+          <span
+            class="badge"
+            [ngClass]="{
+              'badge-success': userWinnings() >= 0,
+              'badge-danger': userWinnings() < 0
+            }"
+          >
+            {{ userWinnings() | currency: 'USD':'symbol' }}
           </span>
         </div>
         <br />
         <div>
-          {{ opponentName() }}'s overall record: {{ opponentRecord() | record }}
-          ({{ opponentRecord() | winPercentage | number:'1.3-3' }})
+          {{ opponentName() }}'s overall record:
+          {{ opponentRecord() | record }} ({{
+            opponentRecord() | winPercentage | number: '1.3-3'
+          }})
         </div>
         <div>
           {{ opponentName() }}'s overall winnings:
-          <span class="badge" [ngClass]="{'badge-success': opponentWinnings() >= 0, 'badge-danger': opponentWinnings() < 0}">
-            {{ opponentWinnings() | currency:'USD':'symbol' }}
+          <span
+            class="badge"
+            [ngClass]="{
+              'badge-success': opponentWinnings() >= 0,
+              'badge-danger': opponentWinnings() < 0
+            }"
+          >
+            {{ opponentWinnings() | currency: 'USD':'symbol' }}
           </span>
         </div>
       </div>
@@ -40,32 +58,50 @@
       <div class="card-header font-weight-bold">{{ year }}</div>
       <div class="card-body">
         <div>
-          Your season record: {{ userRecord(year) | record }}
-          ({{ userRecord(year) | winPercentage | number:'1.3-3' }})
+          Your season record: {{ userRecord(year) | record }} ({{
+            userRecord(year) | winPercentage | number: '1.3-3'
+          }})
         </div>
         <div>
           Your season winnings:
-          <span class="badge" [ngClass]="{'badge-success': userWinnings(year) >= 0, 'badge-danger': userWinnings(year) < 0}">
-            {{ userWinnings(year) | currency:'USD':'symbol' }}
+          <span
+            class="badge"
+            [ngClass]="{
+              'badge-success': userWinnings(year) >= 0,
+              'badge-danger': userWinnings(year) < 0
+            }"
+          >
+            {{ userWinnings(year) | currency: 'USD':'symbol' }}
           </span>
         </div>
         <br />
         <div>
-          {{ opponentName() }}'s season record: {{ opponentRecord(year) | record }}
-          ({{ opponentRecord(year) | winPercentage | number:'1.3-3' }})
+          {{ opponentName() }}'s season record:
+          {{ opponentRecord(year) | record }} ({{
+            opponentRecord(year) | winPercentage | number: '1.3-3'
+          }})
         </div>
         <div>
           {{ opponentName() }}'s season winnings:
-          <span class="badge" [ngClass]="{'badge-success': opponentWinnings(year) >= 0, 'badge-danger': opponentWinnings(year) < 0}">
-            {{ opponentWinnings(year) | currency:'USD':'symbol' }}
+          <span
+            class="badge"
+            [ngClass]="{
+              'badge-success': opponentWinnings(year) >= 0,
+              'badge-danger': opponentWinnings(year) < 0
+            }"
+          >
+            {{ opponentWinnings(year) | currency: 'USD':'symbol' }}
           </span>
         </div>
         <ul>
           <li *ngFor="let duelWeek of duelWeeksFor(year)" class="text-truncate">
-            <a [routerLink]="[ '/duel-weeks', duelWeek._id ]">{{ duelWeek.description }}</a>
+            <a [routerLink]="['/duel-weeks', duelWeek._id]">{{
+              duelWeek.description
+            }}</a>
             <span class="text-muted">
-              ({{ duelWeek.record.wins }}-{{ duelWeek.record.losses }}-{{ duelWeek.record.pushes }})
-              &mdash; {{ pickerName(duelWeek) }}
+              ({{ duelWeek.record.wins }}-{{ duelWeek.record.losses }}-{{
+                duelWeek.record.pushes
+              }}) &mdash; {{ pickerName(duelWeek) }}
             </span>
           </li>
         </ul>

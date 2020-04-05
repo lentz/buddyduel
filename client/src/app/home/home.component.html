@@ -1,11 +1,11 @@
-<div *ngIf="authService.isAuthenticated();else unauthenticated" class="row">
+<div *ngIf="authService.isAuthenticated(); else unauthenticated" class="row">
   <div class="col-md-7">
     <div class="card">
       <div class="card-header">Current Duel Weeks</div>
       <div class="card-body active-duels">
         <ul>
           <li *ngFor="let duelWeek of currentDuelWeeks">
-            <a [routerLink]="[ '/duel-weeks', duelWeek._id ]">
+            <a [routerLink]="['/duel-weeks', duelWeek._id]">
               <span class="week-description">
                 {{ duelWeek.sport }} {{ duelWeek.description }}
                 <br />
@@ -15,12 +15,12 @@
             </a>
           </li>
         </ul>
-        <div [ngClass]="{'text-center': true, 'd-none': loadComplete}">
+        <div [ngClass]="{ 'text-center': true, 'd-none': loadComplete }">
           <span class="fa fa-circle-o-notch fa-spin fa-2x"></span>
         </div>
         <span *ngIf="loadComplete && currentDuelWeeks.length < 1">
-          Create a duel and send the code to a buddy to get started or enter a code
-          given to you in the 'Duel Code' box and click 'Accept'.
+          Create a duel and send the code to a buddy to get started or enter a
+          code given to you in the 'Duel Code' box and click 'Accept'.
         </span>
       </div>
     </div>
@@ -30,8 +30,12 @@
         <h6 class="card-subtitle mb-2 text-muted">Give the code to a friend</h6>
         <ul class="pending-duels">
           <li *ngFor="let duel of pendingDuels">
-            <pre>{{ duel.code }}</pre><span>({{ duel.sport }} ${{ duel.betAmount }}/game)</span>
-            <button (click)="deleteDuel(duel._id)" class="btn btn-sm btn-outline-danger">
+            <pre>{{ duel.code }}</pre>
+            <span>({{ duel.sport }} ${{ duel.betAmount }}/game)</span>
+            <button
+              (click)="deleteDuel(duel._id)"
+              class="btn btn-sm btn-outline-danger"
+            >
               Delete
             </button>
           </li>
@@ -47,10 +51,18 @@
           <i class="fa fa-circle-o-notch fa-spin fa-3x"></i>
         </div>
         <form *ngIf="!processingAccept" class="form-inline accept-duel">
-          <input type="text" class="form-control accept-duel" name="acceptCode"
-                 [(ngModel)]="acceptCode" placeholder="Duel Code" />
-          <button (click)="acceptDuel()" class="btn btn-primary"
-                  [disabled]="acceptCode.length < 7">
+          <input
+            type="text"
+            class="form-control accept-duel"
+            name="acceptCode"
+            [(ngModel)]="acceptCode"
+            placeholder="Duel Code"
+          />
+          <button
+            (click)="acceptDuel()"
+            class="btn btn-primary"
+            [disabled]="acceptCode.length < 7"
+          >
             Accept Duel
           </button>
         </form>

@@ -1,10 +1,18 @@
 <div class="card">
   <div class="card-header">Results vs All Opponents</div>
   <div class="card-body">
-    Lifetime record: {{ record | record }} ({{ record | winPercentage | number:'1.3-3' }})<br />
+    Lifetime record: {{ record | record }} ({{
+      record | winPercentage | number: '1.3-3'
+    }})<br />
     Lifetime winnings:
-    <span class="badge" [ngClass]="{ 'badge-success': winnings >= 0, 'badge-danger': winnings < 0}">
-      {{ winnings | currency:'USD':'symbol' }}
+    <span
+      class="badge"
+      [ngClass]="{
+        'badge-success': winnings >= 0,
+        'badge-danger': winnings < 0
+      }"
+    >
+      {{ winnings | currency: 'USD':'symbol' }}
     </span>
   </div>
 </div>
@@ -14,9 +22,12 @@
     <form>
       <div class="form-check">
         <label class="form-check-label">
-          <input type="checkbox" name="reminderEmails"
-                 [(ngModel)]="reminderEmails"
-                 class="form-check-input form-control-lg">
+          <input
+            type="checkbox"
+            name="reminderEmails"
+            [(ngModel)]="reminderEmails"
+            class="form-check-input form-control-lg"
+          />
           Email me unpicked game reminders
         </label>
       </div>

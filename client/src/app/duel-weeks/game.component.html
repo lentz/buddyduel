@@ -2,15 +2,23 @@
   <table class="table table-bordered">
     <tr>
       <td>
-        <button *ngIf="!isReadOnly()" (click)="pick(game.awayTeam)"
-                [class.active]="isSelected(game.awayTeam)"
-                class="btn btn-outline-primary">
+        <button
+          *ngIf="!isReadOnly()"
+          (click)="pick(game.awayTeam)"
+          [class.active]="isSelected(game.awayTeam)"
+          class="btn btn-outline-primary"
+        >
           {{ game.awayTeam }}
         </button>
-        <span *ngIf="isReadOnly()" [ngClass]="{'badge badge-primary': isSelected(game.awayTeam)}">
+        <span
+          *ngIf="isReadOnly()"
+          [ngClass]="{ 'badge badge-primary': isSelected(game.awayTeam) }"
+        >
           {{ game.awayTeam }}
         </span>
-        <small class="text-muted spread">{{ game.awaySpread | pointSpread }}</small>
+        <small class="text-muted spread">{{
+          game.awaySpread | pointSpread
+        }}</small>
       </td>
       <td *ngIf="game.awayScore != null" class="score">
         <span>{{ game.awayScore }}</span>
@@ -18,15 +26,23 @@
     </tr>
     <tr>
       <td>
-        <button *ngIf="!isReadOnly()" (click)="pick(game.homeTeam)"
-                [class.active]="isSelected(game.homeTeam)"
-                class="btn btn-outline-primary">
+        <button
+          *ngIf="!isReadOnly()"
+          (click)="pick(game.homeTeam)"
+          [class.active]="isSelected(game.homeTeam)"
+          class="btn btn-outline-primary"
+        >
           {{ game.homeTeam }}
         </button>
-        <span *ngIf="isReadOnly()" [ngClass]="{'badge badge-primary': isSelected(game.homeTeam)}">
+        <span
+          *ngIf="isReadOnly()"
+          [ngClass]="{ 'badge badge-primary': isSelected(game.homeTeam) }"
+        >
           {{ game.homeTeam }}
         </span>
-        <small class="text-muted spread">{{ game.homeSpread | pointSpread }}</small>
+        <small class="text-muted spread">{{
+          game.homeSpread | pointSpread
+        }}</small>
       </td>
       <td *ngIf="game.homeScore != null" class="score">
         <span>{{ game.homeScore }}</span>
@@ -35,17 +51,27 @@
   </table>
   <div class="card-footer text-center">
     <div *ngIf="game.time">
-      <span *ngIf="game.result" class="badge"
-            [ngClass]="{'badge-success': game.result === 'Win', 'badge-danger': game.result === 'Loss', 'badge-secondary': game.result === 'Push' }">
+      <span
+        *ngIf="game.result"
+        class="badge"
+        [ngClass]="{
+          'badge-success': game.result === 'Win',
+          'badge-danger': game.result === 'Loss',
+          'badge-secondary': game.result === 'Push'
+        }"
+      >
         {{ game.result }}
       </span>
       <span class="text-muted small time">{{ game.time }}</span>
     </div>
     <span *ngIf="!game.time && !showClear()" class="text-muted small">
-      {{ game.startTime | date:'EEE, MMM d h:mm a' }}
+      {{ game.startTime | date: 'EEE, MMM d h:mm a' }}
     </span>
-    <button *ngIf="showClear()" (click)="clear()"
-            class="btn btn-sm btn-outline-danger">
+    <button
+      *ngIf="showClear()"
+      (click)="clear()"
+      class="btn btn-sm btn-outline-danger"
+    >
       <i class="fa fa-remove" aria-hidden="true"></i>
       Clear Pick
     </button>

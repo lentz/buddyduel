@@ -13,17 +13,24 @@
   <div *ngIf="hasResults()" class="row">
     <div class="col alert alert-warning">
       {{ isPicker() ? 'Your' : opponentName() + "'s" }} record this week is
-      {{ duelWeek.record | record }}. You're {{ isWinner() ? 'winning' : 'losing' }}
-      <span class="badge" [ngClass]="{'badge-success': isWinner(), 'badge-danger': !isWinner()}">
-        {{ this.Math.abs(duelWeek.winnings) | currency:'USD':'symbol' }}
+      {{ duelWeek.record | record }}. You're
+      {{ isWinner() ? 'winning' : 'losing' }}
+      <span
+        class="badge"
+        [ngClass]="{ 'badge-success': isWinner(), 'badge-danger': !isWinner() }"
+      >
+        {{ this.Math.abs(duelWeek.winnings) | currency: 'USD':'symbol' }}
       </span>
     </div>
   </div>
   <div class="row">
     <div class="col">
       <div class="d-flex flex-wrap justify-content-around">
-        <duel-game *ngFor="let game of duelWeek.games"
-                   [game]="game" [isPicker]="isPicker()"></duel-game>
+        <duel-game
+          *ngFor="let game of duelWeek.games"
+          [game]="game"
+          [isPicker]="isPicker()"
+        ></duel-game>
       </div>
     </div>
   </div>

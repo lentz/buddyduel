@@ -9,18 +9,8 @@ import { PointSpread } from './point-spread.pipe';
 import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
-  imports: [
-    BrowserModule,
-    DuelWeeksRoutingModule,
-    SharedModule,
-  ],
-  declarations: [
-    GameComponent,
-    DuelWeekComponent,
-    PointSpread,
-  ],
-  providers: [
-    DuelWeeksService,
-  ],
+  imports: [BrowserModule, DuelWeeksRoutingModule, SharedModule],
+  declarations: [GameComponent, DuelWeekComponent, PointSpread],
+  providers: [DuelWeeksService],
 })
-export class DuelWeeksModule { }
+export class DuelWeeksModule {}

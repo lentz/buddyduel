@@ -10,5 +10,5 @@ export class Duel {
     public betAmount: number,
     public players: Player[],
     public sport: string,
-  ) { }
+  ) {}
 }

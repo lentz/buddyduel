@@ -1,15 +1,33 @@
-.navbar { background-color: #95CB15 !important; }
+.navbar {
+  background-color: #95cb15 !important;
+}
 .navbar-collapse a:focus,
 .navbar-collapse a:hover,
 .navbar-collapse a {
-  color: #00364A;
+  color: #00364a;
 }
-.username { color: #ffffff; }
-.btn-outline-light { color: #ffffff; border-color: #ffffff; }
-.btn-outline-light:hover, .btn-outline-light.active {
-  background-color: #ffffff; border-color: #ffffff; color: #00364A;
+.username {
+  color: #ffffff;
 }
-.create-duel { margin-right: 3rem; }
-#create-duel-modal { color: #00364A; }
-#create-duel-modal input.form-control { width: 6rem; }
-#create-duel-modal .input-group { margin: 0 .5rem 0 .5rem; }
+.btn-outline-light {
+  color: #ffffff;
+  border-color: #ffffff;
+}
+.btn-outline-light:hover,
+.btn-outline-light.active {
+  background-color: #ffffff;
+  border-color: #ffffff;
+  color: #00364a;
+}
+.create-duel {
+  margin-right: 3rem;
+}
+#create-duel-modal {
+  color: #00364a;
+}
+#create-duel-modal input.form-control {
+  width: 6rem;
+}
+#create-duel-modal .input-group {
+  margin: 0 0.5rem 0 0.5rem;
+}

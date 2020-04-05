@@ -1,4 +1,13 @@
-.badge { font-size: 90%; font-weight: normal; }
-.header { margin-top: 15px; }
-ul { margin-top: 1rem; }
-li { margin-bottom: .5rem; }
+.badge {
+  font-size: 90%;
+  font-weight: normal;
+}
+.header {
+  margin-top: 15px;
+}
+ul {
+  margin-top: 1rem;
+}
+li {
+  margin-bottom: 0.5rem;
+}

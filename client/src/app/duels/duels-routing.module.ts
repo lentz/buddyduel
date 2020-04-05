@@ -3,15 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { DuelComponent } from './duel.component';
 
-const duelsRoutes: Routes = [
-  { path: 'duels/:id', component: DuelComponent },
-];
+const duelsRoutes: Routes = [{ path: 'duels/:id', component: DuelComponent }];
 @NgModule({
-  imports: [
-    RouterModule.forChild(duelsRoutes),
-  ],
-  exports: [
-    RouterModule,
-  ],
+  imports: [RouterModule.forChild(duelsRoutes)],
+  exports: [RouterModule],
 })
 export class DuelsRoutingModule {}

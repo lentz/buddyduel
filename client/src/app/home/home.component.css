@@ -1,22 +1,46 @@
-input.accept-duel { width: 50%; }
+input.accept-duel {
+  width: 50%;
+}
 
-.active-duels { padding: 1rem; }
-.active-duels li { margin-bottom: 1rem; }
-.active-duels a { display: flex; border-radius: .25rem; padding: 5px; }
+.active-duels {
+  padding: 1rem;
+}
+.active-duels li {
+  margin-bottom: 1rem;
+}
+.active-duels a {
+  display: flex;
+  border-radius: 0.25rem;
+  padding: 5px;
+}
 .active-duels a:hover {
-  background-color: rgba(0, 53, 73, .15);
+  background-color: rgba(0, 53, 73, 0.15);
   text-decoration: none;
- }
-.week-description { flex-grow: 2; }
-.opponent { opacity: .6; }
+}
+.week-description {
+  flex-grow: 2;
+}
+.opponent {
+  opacity: 0.6;
+}
 
-.pending-duels li { margin-bottom: 1rem; }
-.pending-duels pre { color: #000000; display: inline; margin-right: 1rem; }
+.pending-duels li {
+  margin-bottom: 1rem;
+}
+.pending-duels pre {
+  color: #000000;
+  display: inline;
+  margin-right: 1rem;
+}
 
-.btn-light { color: #00364A; border-color: #ffffff; }
+.btn-light {
+  color: #00364a;
+  border-color: #ffffff;
+}
 
-.btn-light:hover, .btn-light.active {
-  background-color: #00364A;
+.btn-light:hover,
+.btn-light.active {
+  background-color: #00364a;
   border-color: #ffffff;
   color: #ffffff;
 }

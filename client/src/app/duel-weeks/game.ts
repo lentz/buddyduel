@@ -16,5 +16,5 @@ export class Game {
     public selectedTeam: string | undefined,
     public time: string,
     public result: string,
-  ) { }
+  ) {}
 }

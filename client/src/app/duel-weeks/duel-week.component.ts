@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Subscription, timer } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
-import { AuthService } from '../auth/auth.service'
+import { AuthService } from '../auth/auth.service';
 import { DuelWeek } from './duel-week';
 import { Game } from './game';
 import { DuelsService } from '../duels/duels.service';
@@ -22,12 +22,13 @@ export class DuelWeekComponent implements OnInit, OnDestroy {
   Math: any;
   liveUpdateSubscription: Subscription | null;
 
-  constructor(private duelsService: DuelsService,
-              private duelWeeksService: DuelWeeksService,
-              private route: ActivatedRoute,
-              private titleService: Title,
-              private toastr: ToastrService,
-              private authService: AuthService,
+  constructor(
+    private duelsService: DuelsService,
+    private duelWeeksService: DuelWeeksService,
+    private route: ActivatedRoute,
+    private titleService: Title,
+    private toastr: ToastrService,
+    private authService: AuthService,
   ) {
     this.Math = Math;
     this.liveUpdateSubscription = null;
@@ -38,44 +39,59 @@ export class DuelWeekComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.liveUpdateSubscription) { this.liveUpdateSubscription.unsubscribe(); }
+    if (this.liveUpdateSubscription) {
+      this.liveUpdateSubscription.unsubscribe();
+    }
   }
 
   private startLiveUpdate(): void {
     this.liveUpdateSubscription = timer(30000, 30000).subscribe(async () => {
-      if (!this.duelWeek) { return; }
-      const newDuelWeek = await this.duelWeeksService.getDuelWeek(this.duelWeek._id);
-      newDuelWeek.games = newDuelWeek.games.map(newGame => {
-        if (!Game.hasStarted(newGame)) { return newGame; }
-        return this.duelWeek.games.find(game => newGame.id === game.id) || newGame;
+      if (!this.duelWeek) {
+        return;
+      }
+      const newDuelWeek = await this.duelWeeksService.getDuelWeek(
+        this.duelWeek._id,
+      );
+      newDuelWeek.games = newDuelWeek.games.map((newGame) => {
+        if (!Game.hasStarted(newGame)) {
+          return newGame;
+        }
+        return (
+          this.duelWeek.games.find((game) => newGame.id === game.id) || newGame
+        );
       });
       this.duelWeek = newDuelWeek;
     });
   }
 
   private loadDuelWeek(): void {
-    this.route.paramMap.subscribe(
-      async (params: ParamMap) => {
-        try {
-          this.duelWeek = await this.duelWeeksService.getDuelWeek(params.get('id') as string);
-          this.titleService.setTitle(
-            `${this.duelWeek.sport} ${this.duelWeek.description} vs. ${this.opponentName()} | BuddyDuel`,
-          );
-          if (this.hasLiveGames()) { this.startLiveUpdate(); }
-        } catch (err) {
-          this.toastr.error(err);
+    this.route.paramMap.subscribe(async (params: ParamMap) => {
+      try {
+        this.duelWeek = await this.duelWeeksService.getDuelWeek(
+          params.get('id') as string,
+        );
+        this.titleService.setTitle(
+          `${this.duelWeek.sport} ${
+            this.duelWeek.description
+          } vs. ${this.opponentName()} | BuddyDuel`,
+        );
+        if (this.hasLiveGames()) {
+          this.startLiveUpdate();
         }
-      },
-    );
+      } catch (err) {
+        this.toastr.error(err);
+      }
+    });
   }
 
   save(): void {
-    this.duelWeeksService.updateDuelWeek(this.duelWeek)
+    this.duelWeeksService
+      .updateDuelWeek(this.duelWeek)
       .then(() => {
         this.toastr.success('Picks locked in!');
-        this.duelWeek.games.forEach(game => game.updated = false);
+        this.duelWeek.games.forEach((game) => (game.updated = false));
       })
-      .catch(err => this.toastr.error('Failed to save picks'));
+      .catch((err) => this.toastr.error('Failed to save picks'));
   }
 
   hasLiveGames(): boolean {
@@ -87,14 +103,16 @@ export class DuelWeekComponent implements OnInit, OnDestroy {
   }
 
   canModifyPicks(): boolean {
-    return this.isPicker() &&
-           this.duelWeek.games.some(game => {
-             return (!game.selectedTeam && !Game.hasStarted(game)) || game.updated
-           });
+    return (
+      this.isPicker() &&
+      this.duelWeek.games.some((game) => {
+        return (!game.selectedTeam && !Game.hasStarted(game)) || game.updated;
+      })
+    );
   }
 
   isPicker(): boolean {
-    return this.duelWeek.picker.id === this.authService.getUser().id
+    return this.duelWeek.picker.id === this.authService.getUser().id;
   }
 
   pickedBy(): string {
@@ -106,13 +124,17 @@ export class DuelWeekComponent implements OnInit, OnDestroy {
   }
 
   isWinner(): boolean {
-    if (this.duelWeek.winnings === 0) { return true; }
-    return (this.isPicker() && this.duelWeek.winnings > 0) ||
-           (!this.isPicker() && this.duelWeek.winnings < 0)
+    if (this.duelWeek.winnings === 0) {
+      return true;
+    }
+    return (
+      (this.isPicker() && this.duelWeek.winnings > 0) ||
+      (!this.isPicker() && this.duelWeek.winnings < 0)
+    );
   }
 
   hasResults(): boolean {
     const record = this.duelWeek.record;
-    return (record.wins + record.losses + record.pushes) > 0;
+    return record.wins + record.losses + record.pushes > 0;
   }
 }

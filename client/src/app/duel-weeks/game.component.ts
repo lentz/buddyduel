@@ -12,7 +12,9 @@ export class GameComponent {
   @Input() isPicker!: boolean;
 
   isReadOnly(): boolean {
-    return !this.isPicker || Game.hasStarted(this.game) || this.selectionSaved();
+    return (
+      !this.isPicker || Game.hasStarted(this.game) || this.selectionSaved()
+    );
   }
 
   pick(team: string): void {
@@ -33,7 +35,10 @@ export class GameComponent {
   }
 
   private selectionSaved(): boolean {
-    return this.game.selectedTeam !== undefined && this.game.selectedTeam !== ''
-      && !this.game.updated;
+    return (
+      this.game.selectedTeam !== undefined &&
+      this.game.selectedTeam !== '' &&
+      !this.game.updated
+    );
   }
 }

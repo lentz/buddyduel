@@ -1,15 +1,45 @@
-.game-card { color: #01B8F1; font-size: .95rem; width: 272px; margin: 0 5px 10px 5px; }
-.game-card .card-footer { padding: 0.5rem; }
-.time { margin-left: 5px; }
-.badge { font-size: 100%; font-weight: normal; }
-.badge-primary { background-color: #01B8F1; color: #ffffff; }
-.btn-outline-primary { color: #01B8F1; border-color: #01B8F1; }
-.btn-outline-primary:hover, .btn-outline-primary.active {
-  background-color: #01B8F1;
-  border-color: #01B8F1;
+.game-card {
+  color: #01b8f1;
+  font-size: 0.95rem;
+  width: 272px;
+  margin: 0 5px 10px 5px;
+}
+.game-card .card-footer {
+  padding: 0.5rem;
+}
+.time {
+  margin-left: 5px;
+}
+.badge {
+  font-size: 100%;
+  font-weight: normal;
+}
+.badge-primary {
+  background-color: #01b8f1;
   color: #ffffff;
 }
-.table-bordered { margin-bottom: 0; border-bottom: none; }
-.table-bordered td { border-bottom: none; }
-.score { color: #00364A; text-align: right; padding-left: .40rem; }
-.spread { margin-left: 5px; }
+.btn-outline-primary {
+  color: #01b8f1;
+  border-color: #01b8f1;
+}
+.btn-outline-primary:hover,
+.btn-outline-primary.active {
+  background-color: #01b8f1;
+  border-color: #01b8f1;
+  color: #ffffff;
+}
+.table-bordered {
+  margin-bottom: 0;
+  border-bottom: none;
+}
+.table-bordered td {
+  border-bottom: none;
+}
+.score {
+  color: #00364a;
+  text-align: right;
+  padding-left: 0.4rem;
+}
+.spread {
+  margin-left: 5px;
+}

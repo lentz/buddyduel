@@ -23,19 +23,23 @@ export class HomeComponent implements OnInit {
   duelCreatedSubscription: Subscription;
   loadComplete = false;
 
-  public constructor(private duelsService: DuelsService,
-                     private duelWeeksService: DuelWeeksService,
-                     public authService: AuthService,
-                     private router: Router,
-                     private titleService: Title,
-                     private toastr: ToastrService, ) {
-    this.duelCreatedSubscription = duelsService.duelCreated$.subscribe(
-      duel => this.pendingDuels.push(duel)
+  public constructor(
+    private duelsService: DuelsService,
+    private duelWeeksService: DuelWeeksService,
+    public authService: AuthService,
+    private router: Router,
+    private titleService: Title,
+    private toastr: ToastrService,
+  ) {
+    this.duelCreatedSubscription = duelsService.duelCreated$.subscribe((duel) =>
+      this.pendingDuels.push(duel),
     );
     if (this.authService.isAuthenticated()) {
-      this.loadDuelWeeks().then(() => { this.loadComplete = true; });
+      this.loadDuelWeeks().then(() => {
+        this.loadComplete = true;
+      });
       this.loadPendingDuels();
-    };
+    }
   }
 
   ngOnInit(): void {
@@ -44,17 +48,19 @@ export class HomeComponent implements OnInit {
 
   private async loadDuelWeeks(): Promise<any> {
     try {
-      this.currentDuelWeeks = await this.duelWeeksService
-        .getDuelWeeks({ current: true });
+      this.currentDuelWeeks = await this.duelWeeksService.getDuelWeeks({
+        current: true,
+      });
     } catch (err) {
       this.toastr.error(err);
     }
   }
 
   private loadPendingDuels(): void {
-    this.duelsService.getDuels({ status: 'pending' })
-      .then(duels => this.pendingDuels = duels)
-      .catch(err => this.toastr.error(err));
+    this.duelsService
+      .getDuels({ status: 'pending' })
+      .then((duels) => (this.pendingDuels = duels))
+      .catch((err) => this.toastr.error(err));
   }
 
   opponentName(duelWeek: DuelWeek): string {
@@ -63,25 +69,29 @@ export class HomeComponent implements OnInit {
 
   acceptDuel(): void {
     this.processingAccept = true;
-    this.duelsService.acceptDuel(this.acceptCode)
-    .then(() => {
-      this.loadDuelWeeks();
-      this.acceptCode = '';
-      this.processingAccept = false;
-      this.toastr.success('Duel accepted!')
-    })
-    .catch(err => {
-      this.processingAccept = false;
-      this.toastr.error(err);
-    });
+    this.duelsService
+      .acceptDuel(this.acceptCode)
+      .then(() => {
+        this.loadDuelWeeks();
+        this.acceptCode = '';
+        this.processingAccept = false;
+        this.toastr.success('Duel accepted!');
+      })
+      .catch((err) => {
+        this.processingAccept = false;
+        this.toastr.error(err);
+      });
   }
 
   deleteDuel(duelId: string): void {
-    this.duelsService.deleteDuel(duelId)
-    .then(() => {
-      this.pendingDuels = this.pendingDuels.filter(duel => duel._id !== duelId);
-      this.toastr.success('Duel deleted')
-    })
-    .catch(err => this.toastr.error(err));
+    this.duelsService
+      .deleteDuel(duelId)
+      .then(() => {
+        this.pendingDuels = this.pendingDuels.filter(
+          (duel) => duel._id !== duelId,
+        );
+        this.toastr.success('Duel deleted');
+      })
+      .catch((err) => this.toastr.error(err));
   }
 }

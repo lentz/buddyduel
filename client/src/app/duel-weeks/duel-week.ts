@@ -12,9 +12,9 @@ export class DuelWeek {
     public betAmount: number,
     public picker: Player,
     public players: Player[],
-    public record: { wins: number, losses: number, pushes: number },
+    public record: { wins: number; losses: number; pushes: number },
     public winnings: number,
     public sport: string,
     games: Game[],
-  ) { }
+  ) {}
 }

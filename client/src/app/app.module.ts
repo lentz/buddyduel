@@ -33,16 +33,13 @@ export function getToken() {
     SharedModule,
     AppRoutingModule,
   ],
-  providers: [
-    AuthService,
-    UserProfileService,
-  ],
+  providers: [AuthService, UserProfileService],
   declarations: [
     AppComponent,
     HomeComponent,
     NavComponent,
     UserProfileComponent,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

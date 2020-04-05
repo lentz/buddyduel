@@ -10,26 +10,35 @@ const COOKIE_MAX_AGE = 1000 * 60 * 60 * 24 * 365; // 1 year
 const USE_SECURE_COOKIE = (process.env.BASE_URL || '').startsWith('https');
 
 async function getPerformance(userId: string) {
-  const duelWeeks = await DuelWeek.find({ 'picker.id': userId }).exec() as IDuelWeek[];
-  return duelWeeks.reduce((performance, duelWeek) => {
-    performance.winnings += duelWeek.winnings;
-    performance.record.wins += duelWeek.record.wins;
-    performance.record.losses += duelWeek.record.losses;
-    performance.record.pushes += duelWeek.record.pushes;
-    return performance;
-  }, { winnings: 0, record: { wins: 0, losses: 0, pushes: 0 } });
+  const duelWeeks = (await DuelWeek.find({
+    'picker.id': userId,
+  }).exec()) as IDuelWeek[];
+  return duelWeeks.reduce(
+    (performance, duelWeek) => {
+      performance.winnings += duelWeek.winnings;
+      performance.record.wins += duelWeek.record.wins;
+      performance.record.losses += duelWeek.record.losses;
+      performance.record.pushes += duelWeek.record.pushes;
+      return performance;
+    },
+    { winnings: 0, record: { wins: 0, losses: 0, pushes: 0 } },
+  );
 }
 
 async function getPreferences(userId: string) {
   return {
     preferences: Object.assign(
       { reminderEmails: true },
-      (await user.getInfo(userId)).user_metadata || {}
+      (await user.getInfo(userId)).user_metadata || {},
     ),
   };
 }
 
-export async function authenticate(req: Request, res: Response, next: NextFunction) {
+export async function authenticate(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
   const response = await axios.post(
     `https://${process.env.AUTH0_DOMAIN}/oauth/token`,
     {
@@ -41,14 +50,22 @@ export async function authenticate(req: Request, res: Response, next: NextFuncti
     },
     {
       headers: { 'content-type': 'application/json' },
-    }
+    },
   );
   const jwt = jwtDecode<{ sub: string; name: string }>(response.data.id_token);
-  if (!req.session) { return next(new Error('No session!')); }
+  if (!req.session) {
+    return next(new Error('No session!'));
+  }
   req.session.userId = jwt.sub;
   req.session.userName = jwt.name;
-  res.cookie('userId', jwt.sub, { maxAge: COOKIE_MAX_AGE, secure: USE_SECURE_COOKIE });
-  res.cookie('userName', jwt.name, { maxAge: COOKIE_MAX_AGE, secure: USE_SECURE_COOKIE });
+  res.cookie('userId', jwt.sub, {
+    maxAge: COOKIE_MAX_AGE,
+    secure: USE_SECURE_COOKIE,
+  });
+  res.cookie('userName', jwt.name, {
+    maxAge: COOKIE_MAX_AGE,
+    secure: USE_SECURE_COOKIE,
+  });
   next();
 }
 
@@ -60,10 +77,12 @@ export async function logout(req: Request, res: Response, next: NextFunction) {
 }
 
 export async function show(req: Request, res: Response) {
-  return res.json(Object.assign(
-    await getPerformance(req.session && req.session.userId),
-    await getPreferences(req.session && req.session.userId)
-  ));
+  return res.json(
+    Object.assign(
+      await getPerformance(req.session && req.session.userId),
+      await getPreferences(req.session && req.session.userId),
+    ),
+  );
 }
 
 export async function update(req: Request, res: Response) {

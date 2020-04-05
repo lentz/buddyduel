@@ -6,7 +6,9 @@ import { sports, ISport } from '../sports';
 import * as bovada from './bovada';
 
 function createTimeString(clock: bovada.ILiveScore['clock']) {
-  return clock.period === 'FINAL' ? 'Final' : `${clock.period} ${clock.gameTime}`;
+  return clock.period === 'FINAL'
+    ? 'Final'
+    : `${clock.period} ${clock.gameTime}`;
 }
 
 async function updateScores(sport: ISport) {
@@ -27,10 +29,10 @@ async function updateScores(sport: ISport) {
       );
     }
 
-    const duelWeeks = await DuelWeek.find({
-      'games.id': { $in: liveScores.map(score => score.eventId) },
+    const duelWeeks = (await DuelWeek.find({
+      'games.id': { $in: liveScores.map((score) => score.eventId) },
       skipped: false,
-    }).exec() as IDuelWeek[];
+    }).exec()) as IDuelWeek[];
 
     /* eslint-disable-next-line no-restricted-syntax */
     for (const duelWeek of duelWeeks) {

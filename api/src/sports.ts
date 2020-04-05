@@ -13,7 +13,9 @@ export const sports: ISport[] = [
     getWeekDescription: (game: IGame) => {
       if (game.startTime < new Date('2020-03-19')) {
         const weekOne = new Date('2019-11-05');
-        return `Week ${moment(game.startTime).diff(moment(weekOne), 'weeks') + 1}`;
+        return `Week ${
+          moment(game.startTime).diff(moment(weekOne), 'weeks') + 1
+        }`;
       } else if (game.startTime < new Date('2020-03-21')) {
         return 'Round 1';
       } else if (game.startTime < new Date('2020-03-26')) {
@@ -38,7 +40,9 @@ export const sports: ISport[] = [
     name: 'NFL',
     getWeekDescription: (game: IGame) => {
       const weekOne = new Date('2019-09-04T04:00:00Z');
-      return `Week ${moment(game.startTime).diff(moment(weekOne), 'weeks') + 1}`;
+      return `Week ${
+        moment(game.startTime).diff(moment(weekOne), 'weeks') + 1
+      }`;
     },
     paths: ['/football/nfl', '/football/nfl-playoffs', '/football/super-bowl'],
     seasonYear: 2019,
@@ -48,7 +52,9 @@ export const sports: ISport[] = [
     getWeekDescription: (game: IGame) => {
       if (game.startTime < new Date('2020-04-18')) {
         const weekOne = new Date('2020-02-04T04:00:00Z');
-        return `Week ${moment(game.startTime).diff(moment(weekOne), 'weeks') + 1}`;
+        return `Week ${
+          moment(game.startTime).diff(moment(weekOne), 'weeks') + 1
+        }`;
       } else if (game.startTime < new Date('2020-04-26')) {
         return 'Playoffs';
       } else if (game.startTime < new Date('2020-04-27')) {

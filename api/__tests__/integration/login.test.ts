@@ -15,7 +15,8 @@ describe('login API', () => {
     test('access is allowed when the session exists', async () => {
       const sessionCookie = await createSession(user1);
 
-      return request(app).get('/api/duels?status=active')
+      return request(app)
+        .get('/api/duels?status=active')
         .set('Cookie', [sessionCookie])
         .expect(200);
     });

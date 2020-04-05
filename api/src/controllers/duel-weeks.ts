@@ -20,10 +20,10 @@ export async function index(req: Request, res: Response) {
 }
 
 export async function show(req: Request, res: Response) {
-  const duelWeek = await DuelWeek.findOne({
+  const duelWeek = (await DuelWeek.findOne({
     _id: req.params.id,
     'players.id': req.session && req.session.userId,
-  }).exec() as IDuelWeek;
+  }).exec()) as IDuelWeek;
   if (!duelWeek) {
     return res.status(404).json({ message: 'Duel week not found' });
   }
@@ -34,17 +34,21 @@ export async function show(req: Request, res: Response) {
 
 function setSelections(duelWeek: IDuelWeek, pickedGames: IGame[]) {
   return duelWeek.games.map((game) => {
-    const currentGame = pickedGames.find(pickedGame => pickedGame.id === game.id);
-    if (currentGame) { game.selectedTeam = currentGame.selectedTeam; }
+    const currentGame = pickedGames.find(
+      (pickedGame) => pickedGame.id === game.id,
+    );
+    if (currentGame) {
+      game.selectedTeam = currentGame.selectedTeam;
+    }
     return game;
   });
 }
 
 export async function update(req: Request, res: Response) {
-  const duelWeek = await DuelWeek.findOne({
+  const duelWeek = (await DuelWeek.findOne({
     _id: req.body._id,
     'players.id': req.session && req.session.userId,
-  }).exec() as IDuelWeek;
+  }).exec()) as IDuelWeek;
   if (!duelWeek) {
     return res.status(404).json({ message: 'Duel week not found' });
   }

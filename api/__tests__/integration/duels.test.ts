@@ -93,13 +93,15 @@ describe('duels API', () => {
         .set('Cookie', [user2SessionCookie])
         .expect(200);
 
-      expect(acceptedDuelResponse.body).toEqual(expect.objectContaining({
-        status: 'active',
-        players: [
-          { id: user1.id, name: user1.name },
-          { id: user2.id, name: user2.name },
-        ],
-      }));
+      expect(acceptedDuelResponse.body).toEqual(
+        expect.objectContaining({
+          status: 'active',
+          players: [
+            { id: user1.id, name: user1.name },
+            { id: user2.id, name: user2.name },
+          ],
+        }),
+      );
     });
   });
 
@@ -152,9 +154,11 @@ describe('duels API', () => {
         .set('Cookie', [sessionCookie])
         .expect(200);
 
-      expect(duelResponse.body).toEqual(expect.objectContaining({
-        status: 'suspended',
-      }));
+      expect(duelResponse.body).toEqual(
+        expect.objectContaining({
+          status: 'suspended',
+        }),
+      );
     });
   });
 });

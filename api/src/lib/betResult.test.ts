@@ -2,24 +2,28 @@ import betResult from './betResult';
 
 describe('#betResult()', () => {
   test('is empty string when the game does not have a score', () => {
-    expect(betResult({
-      id: '1',
-      homeScore: 1,
-      homeSpread: 1,
-      awaySpread: -1,
-      homeTeam: 'Home Team',
-      awayTeam: 'Away Team',
-      startTime: new Date(),
-    })).toEqual('');
+    expect(
+      betResult({
+        id: '1',
+        homeScore: 1,
+        homeSpread: 1,
+        awaySpread: -1,
+        homeTeam: 'Home Team',
+        awayTeam: 'Away Team',
+        startTime: new Date(),
+      }),
+    ).toEqual('');
 
-    expect(betResult({
-      id: '1',
-      homeSpread: 1,
-      awaySpread: -1,
-      homeTeam: 'Home Team',
-      awayTeam: 'Away Team',
-      startTime: new Date(),
-    })).toEqual('');
+    expect(
+      betResult({
+        id: '1',
+        homeSpread: 1,
+        awaySpread: -1,
+        homeTeam: 'Home Team',
+        awayTeam: 'Away Team',
+        startTime: new Date(),
+      }),
+    ).toEqual('');
   });
 
   test('is Loss when a team was not selected', () => {

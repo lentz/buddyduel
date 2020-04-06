@@ -66,7 +66,7 @@ export async function authenticate(
     maxAge: COOKIE_MAX_AGE,
     secure: USE_SECURE_COOKIE,
   });
-  next();
+  req.session.save(next);
 }
 
 export async function logout(req: Request, res: Response, next: NextFunction) {

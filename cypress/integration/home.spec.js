@@ -1,0 +1,54 @@
+describe('Home', () => {
+  beforeEach(() => {
+    cy.visit('/');
+  });
+
+  describe('when user is not logged in', () => {
+    it('loads the home page for non-logged in users', () => {
+      cy.get('.navbar-brand').should('contain', 'BuddyDuel');
+      cy.get('a.btn').should('contain', 'Login');
+    });
+  });
+
+  describe('when user is logged in', () => {
+    beforeEach(() => {
+      cy.setCookie('userId', 'google-oauth2|1234567');
+      cy.setCookie('userName', 'Test User');
+    });
+
+    it('shows the current duel weeks, pending duels, and navigation options', () => {
+      cy.server();
+
+      cy.fixture('activeDuels').as('activeDuelsJson');
+      cy.fixture('pendingDuels').as('pendingDuelsJson');
+      cy.fixture('currentDuelWeeks').as('currentDuelWeeks');
+
+      cy.route('GET', '/api/duels?status=active,suspended', '@activeDuelsJson');
+      cy.route('GET', '/api/duels/sports', ['NFL', 'XFL']);
+      cy.route('GET', '/api/duel-weeks?current=true', '@currentDuelWeeks');
+      cy.route('GET', '/api/duels?status=pending', '@pendingDuelsJson');
+
+      cy.reload();
+
+      cy.get('.navbar a').should('contain', 'Test User');
+      cy.get('.navbar a').should('contain', 'Logout');
+
+      cy.get('#navbarNavDropdown a').should(
+        'contain',
+        'NFL vs. Another User ($5/game)',
+      );
+      cy.get('#navbarNavDropdown a').should(
+        'contain',
+        'XFL vs. email-user@gmail.com ($10/game)',
+      );
+
+      cy.get('a').should('contain', 'NFL Week 22 vs Another User');
+      cy.get('a').should('contain', 'XFL Week 5 vs email-user@gmail.com');
+
+      cy.get('ul.pending-duels li').should('contain', '1CbU_Iyi9');
+      cy.get('ul.pending-duels li').should('contain', 'NFL $15/game');
+      cy.get('ul.pending-duels li').should('contain', '8wkr0MWJ');
+      cy.get('ul.pending-duels li').should('contain', 'XFL $20/game');
+    });
+  });
+});

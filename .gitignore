@@ -30,3 +30,6 @@ public
 /.env
 
 .eslintcache
+
+cypress/videos
+cypress/screenshots

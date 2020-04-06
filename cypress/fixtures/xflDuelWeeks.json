@@ -1,0 +1,212 @@
+[
+  {
+    "skipped": false,
+    "_id": "5e66e1c184d2910004dfb74a",
+    "description": "Week 6",
+    "duelId": "5e5ad520dad2ae00176bf7a4",
+    "year": 2020,
+    "__v": 3,
+    "betAmount": 5,
+    "createdAt": "2020-03-10T00:39:29.522Z",
+    "games": [
+      {
+        "id": "7017375",
+        "homeTeam": "New York Guardians",
+        "homeSpread": 6.5,
+        "awayTeam": "Houston Roughnecks",
+        "awaySpread": -6.5,
+        "startTime": "2020-03-14T18:00:00.000Z"
+      },
+      {
+        "id": "7017376",
+        "homeTeam": "DC Defenders",
+        "homeSpread": -4,
+        "awayTeam": "Dallas Renegades",
+        "awaySpread": 4,
+        "startTime": "2020-03-15T20:00:00.000Z",
+        "selectedTeam": "Dallas Renegades"
+      },
+      {
+        "id": "7017373",
+        "homeTeam": "Seattle Dragons",
+        "homeSpread": 3,
+        "awayTeam": "Los Angeles Wildcats",
+        "awaySpread": -3,
+        "startTime": "2020-03-15T23:00:00.000Z",
+        "selectedTeam": "Los Angeles Wildcats"
+      },
+      {
+        "id": "7060035",
+        "homeTeam": "Tampa Bay Vipers",
+        "homeSpread": 3.5,
+        "awayTeam": "St. Louis BattleHawks",
+        "awaySpread": -3.5,
+        "startTime": "2020-03-14T21:00:00.000Z",
+        "selectedTeam": "St. Louis BattleHawks"
+      }
+    ],
+    "picker": {
+      "id": "auth0|abc123",
+      "name": "Another User"
+    },
+    "players": [
+      { "id": "google-oauth2|1234567", "name": "Test User" },
+      {
+        "id": "auth0|abc123",
+        "name": "Another User"
+      }
+    ],
+    "sport": "XFL",
+    "updatedAt": "2020-03-14T20:12:39.731Z",
+    "winnings": 0,
+    "record": { "wins": 0, "losses": 0, "pushes": 0 },
+    "id": "5e66e1c184d2910004dfb74a"
+  },
+  {
+    "skipped": false,
+    "_id": "5e5d65a4160b7a00048eb003",
+    "duelId": "5e5ad520dad2ae00176bf7a4",
+    "year": 2020,
+    "__v": 2,
+    "betAmount": 5,
+    "createdAt": "2020-03-02T19:59:32.559Z",
+    "games": [
+      {
+        "id": "6974347",
+        "homeTeam": "Houston Roughnecks",
+        "homeSpread": -12.5,
+        "awayTeam": "Seattle Dragons",
+        "awaySpread": 12.5,
+        "startTime": "2020-03-07T19:00:00.000Z",
+        "selectedTeam": "Houston Roughnecks",
+        "awayScore": 23,
+        "homeScore": 32,
+        "time": "Final",
+        "result": "Loss"
+      },
+      {
+        "id": "6974349",
+        "homeTeam": "Dallas Renegades",
+        "homeSpread": -7,
+        "awayTeam": "New York Guardians",
+        "awaySpread": 7,
+        "startTime": "2020-03-07T22:00:00.000Z",
+        "selectedTeam": "New York Guardians",
+        "result": "Win",
+        "awayScore": 30,
+        "homeScore": 12,
+        "time": "Final"
+      },
+      {
+        "id": "6974360",
+        "homeTeam": "DC Defenders",
+        "homeSpread": 6,
+        "awayTeam": "St. Louis BattleHawks",
+        "awaySpread": -6,
+        "startTime": "2020-03-08T19:00:00.000Z",
+        "selectedTeam": "DC Defenders",
+        "result": "Win",
+        "awayScore": 6,
+        "homeScore": 15,
+        "time": "Final"
+      },
+      {
+        "id": "7017374",
+        "homeTeam": "Los Angeles Wildcats",
+        "homeSpread": -2.5,
+        "awayTeam": "Tampa Bay Vipers",
+        "awaySpread": 2.5,
+        "startTime": "2020-03-09T01:00:00.000Z",
+        "selectedTeam": "Tampa Bay Vipers",
+        "result": "Loss",
+        "awayScore": 34,
+        "homeScore": 41,
+        "time": "Final"
+      }
+    ],
+    "picker": {
+      "id": "google-oauth2|1234567",
+      "name": "Test User"
+    },
+    "players": [
+      { "id": "google-oauth2|1234567", "name": "Test User" },
+      {
+        "id": "auth0|abc123",
+        "name": "Another User"
+      }
+    ],
+    "sport": "XFL",
+    "updatedAt": "2020-03-09T04:25:01.081Z",
+    "description": "Week 5",
+    "winnings": 0,
+    "record": { "wins": 2, "losses": 2, "pushes": 0 },
+    "id": "5e5d65a4160b7a00048eb003"
+  },
+  {
+    "skipped": false,
+    "_id": "5e5addd150b1b200173c1f16",
+    "duelId": "5e5ad520dad2ae00176bf7a4",
+    "year": 2019,
+    "__v": 1,
+    "betAmount": 5,
+    "createdAt": "2020-02-29T21:55:29.826Z",
+    "games": [
+      {
+        "id": "6974354",
+        "homeTeam": "St. Louis BattleHawks",
+        "homeSpread": -13,
+        "awayTeam": "Seattle Dragons",
+        "awaySpread": 13,
+        "startTime": "2020-02-29T22:00:00.000Z",
+        "selectedTeam": "Seattle Dragons",
+        "awayScore": 16,
+        "homeScore": 23,
+        "time": "Final",
+        "result": "Win"
+      },
+      {
+        "id": "6974348",
+        "homeTeam": "Dallas Renegades",
+        "homeSpread": 3,
+        "awayTeam": "Houston Roughnecks",
+        "awaySpread": -3,
+        "startTime": "2020-03-01T21:00:00.000Z",
+        "selectedTeam": "Houston Roughnecks",
+        "result": "Win",
+        "awayScore": 27,
+        "homeScore": 20,
+        "time": "Final"
+      },
+      {
+        "id": "6974358",
+        "homeTeam": "Tampa Bay Vipers",
+        "homeSpread": 3,
+        "awayTeam": "DC Defenders",
+        "awaySpread": -3,
+        "startTime": "2020-03-02T00:00:00.000Z",
+        "selectedTeam": "DC Defenders",
+        "result": "Loss",
+        "awayScore": 0,
+        "homeScore": 25,
+        "time": "Final"
+      }
+    ],
+    "picker": {
+      "id": "auth0|abc123",
+      "name": "Another User"
+    },
+    "players": [
+      { "id": "google-oauth2|1234567", "name": "Test User" },
+      {
+        "id": "auth0|abc123",
+        "name": "Another User"
+      }
+    ],
+    "sport": "XFL",
+    "updatedAt": "2020-03-02T02:40:01.509Z",
+    "description": "Week 1",
+    "winnings": 5,
+    "record": { "wins": 2, "losses": 1, "pushes": 0 },
+    "id": "5e5addd150b1b200173c1f16"
+  }
+]

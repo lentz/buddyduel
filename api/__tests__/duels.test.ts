@@ -1,9 +1,9 @@
 /* eslint-disable arrow-body-style */
-process.env.MONGODB_URI = 'mongodb://localhost:27017/buddyduel-test';
+process.env.MONGODB_URI = 'mongodb://localhost/buddyduel-test';
 import * as request from 'supertest';
-import app from '../../src/app';
+import app from '../src/app';
 import { createSession, user1, user2 } from './support';
-import logger from '../../src/lib/logger';
+import logger from '../src/lib/logger';
 
 let sessionCookie;
 

@@ -15,7 +15,7 @@
     "lint": "eslint 'api/**/*.ts'",
     "lint-staged": "lint-staged",
     "postlint": "cd ./client && ng lint buddyduel --type-check",
-    "test": "jest --coverage",
+    "test": "jest --coverage --forceExit",
     "test-unit": "jest --coverage --testPathIgnorePatterns 'integration'",
     "test-watch": "jest --watch",
     "heroku-postbuild": "npm run build-api && npm run build-client-prod"

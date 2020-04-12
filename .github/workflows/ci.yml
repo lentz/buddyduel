@@ -9,6 +9,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      AUTH0_DOMAIN: fake-domain.auth0.com
+      SENDGRID_API_KEY: SG.TEST_KEY
+      SESSION_SECRET: test
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v1
@@ -16,7 +20,8 @@ jobs:
         node_version: '10.X'
     - run: npm ci
     - run: npm run lint
-    - run: npm run test-unit
     - run: npm run heroku-postbuild
-    env:
-      SENDGRID_API_KEY: SG.TEST_KEY
+    - uses: supercharge/mongodb-github-action@1.3.0
+      with:
+        mongodb-version: '3.6'
+    - run: npm run test

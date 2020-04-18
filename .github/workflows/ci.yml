@@ -3,7 +3,7 @@ name: Node.js CI
 on:
   push:
     branches:
-     - master
+      - master
   pull_request:
 
 jobs:
@@ -14,14 +14,28 @@ jobs:
       SENDGRID_API_KEY: SG.TEST_KEY
       SESSION_SECRET: test
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v1
-      with:
-        node_version: '10.X'
-    - run: npm ci
-    - run: npm run lint
-    - run: npm run heroku-postbuild
-    - uses: supercharge/mongodb-github-action@1.3.0
-      with:
-        mongodb-version: '3.6'
-    - run: npm run test
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node_version: '10.X'
+      - name: Install
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Build
+        run: npm run heroku-postbuild
+      - name: Install MongoDB
+        uses: supercharge/mongodb-github-action@1.3.0
+        with:
+          mongodb-version: '3.6'
+      - name: Test
+        run: npm run test
+      - name: E2E Test
+        uses: cypress-io/github-action@v1
+        env:
+          MONGODB_URI: 'mongodb://localhost/buddyduel-e2e'
+          PORT: 3000
+        with:
+          start: npm start

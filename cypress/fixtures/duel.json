@@ -1,0 +1,17 @@
+{
+  "_id": "5e5ad520dad2ae00176bf7a4",
+  "betAmount": 5,
+  "players": [
+    { "id": "google-oauth2|1234567", "name": "Test User" },
+    {
+      "id": "auth0|abc123",
+      "name": "Another User"
+    }
+  ],
+  "sport": "XFL",
+  "status": "active",
+  "code": "8wkr0MWJ",
+  "createdAt": "2020-02-29T21:18:24.874Z",
+  "updatedAt": "2020-02-29T21:55:29.194Z",
+  "__v": 0
+}

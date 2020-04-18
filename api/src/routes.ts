@@ -2,6 +2,7 @@ import * as express from 'express';
 import * as duelsController from './controllers/duels';
 import * as duelWeeksController from './controllers/duel-weeks';
 import * as usersController from './controllers/users';
+import logger from './lib/logger';
 
 const router = express.Router();
 
@@ -9,6 +10,16 @@ router.all(
   '*',
   (req: express.Request, res: express.Response, next: express.NextFunction) => {
     if (!req.session || !req.session.userId) {
+      logger.warn(
+        `Unauthorized request! ${JSON.stringify(
+          {
+            headers: req.headers,
+            session: req.session,
+          },
+          null,
+          2,
+        )}`,
+      );
       return res.status(401).json({ message: 'You are not logged in' });
     }
     return next();

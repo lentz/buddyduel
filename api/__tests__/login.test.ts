@@ -1,11 +1,14 @@
 /* eslint-disable arrow-body-style, jest/expect-expect */
-process.env.MONGODB_URI = 'mongodb://localhost:27017/buddyduel-test';
+process.env.MONGODB_URI = 'mongodb://localhost/buddyduel-test';
 import * as request from 'supertest';
-import app from '../../src/app';
+import app from '../src/app';
 import { createSession, user1 } from './support';
+import logger from '../src/lib/logger';
 
 describe('login API', () => {
   test('access is denied when no session cookie is present', () => {
+    jest.spyOn(logger, 'warn').mockReturnValue(null);
+
     return request(app)
       .get('/api/duels')
       .expect(401, { message: 'You are not logged in' });

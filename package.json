@@ -11,18 +11,17 @@
     "build-client": "cd ./client && ng build",
     "build-client-prod": "cd ./client && ng build --prod",
     "build-client-watch": "cd ./client && ng build --watch",
-    "start": "node api/dist/server.js",
+    "e2e-test": "cypress run",
+    "heroku-postbuild": "npm run build-api && npm run build-client-prod",
     "lint": "eslint 'api/**/*.ts'",
     "lint-staged": "lint-staged",
     "postlint": "cd ./client && ng lint buddyduel --type-check",
+    "start": "node api/dist/server.js",
     "test": "jest --coverage --forceExit",
-    "test-unit": "jest --coverage --testPathIgnorePatterns 'integration'",
-    "test-watch": "jest --watch",
-    "heroku-postbuild": "npm run build-api && npm run build-client-prod"
+    "test-watch": "jest --watch"
   },
   "engines": {
-    "node": "^10.0.0",
-    "npm": "^6.0.0"
+    "node": "^10.0.0"
   },
   "dependencies": {
     "@angular/animations": "9.1.0",
@@ -81,6 +80,7 @@
     "@typescript-eslint/eslint-plugin": "^2.28.0",
     "@typescript-eslint/parser": "^2.28.0",
     "codelyzer": "^5.1.2",
+    "cypress": "^4.4.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.1",
     "eslint-plugin-import": "^2.20.2",

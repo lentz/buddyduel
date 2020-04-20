@@ -118,6 +118,6 @@
   "lint-staged": {
     "src/**/*": "tslint -p src/tsconfig.app.json",
     "api/**/*.ts": "eslint --cache --fix",
-    "*.{html,js,json,css,md,ts}": "prettier --write"
+    "*.{html,js,json,css,md,ts,yml}": "prettier --write"
   }
 }

@@ -1,9 +1,7 @@
 [
   {
     "_id": "5968223a71a6680011553183",
-    "players": [
-      { "id": "google-oauth2|1234567", "name": "Test User" }
-    ],
+    "players": [{ "id": "google-oauth2|1234567", "name": "Test User" }],
     "status": "pending",
     "betAmount": 15,
     "createdAt": "2018-10-25T03:33:36.282Z",
@@ -14,9 +12,7 @@
   {
     "_id": "5e5ad520dad2ae00176bf7a4",
     "betAmount": 20,
-    "players": [
-      { "id": "google-oauth2|1234567", "name": "Test User" }
-    ],
+    "players": [{ "id": "google-oauth2|1234567", "name": "Test User" }],
     "sport": "XFL",
     "status": "pending",
     "code": "8wkr0MWJ",

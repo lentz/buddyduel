@@ -87,7 +87,7 @@ describe('sports', () => {
           nfl.getWeekDescription({
             startTime: new Date(`${nfl.seasonYear}-12-29`),
           } as IGame),
-        ).toEqual('Week 17');
+        ).toEqual('Week 16');
       });
     });
 

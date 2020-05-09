@@ -39,13 +39,13 @@ export const sports: ISport[] = [
   {
     name: 'NFL',
     getWeekDescription: (game: IGame) => {
-      const weekOne = new Date('2019-09-04T04:00:00Z');
+      const weekOne = new Date('2020-09-08T04:00:00Z');
       return `Week ${
         moment(game.startTime).diff(moment(weekOne), 'weeks') + 1
       }`;
     },
     paths: ['/football/nfl', '/football/nfl-playoffs', '/football/super-bowl'],
-    seasonYear: 2019,
+    seasonYear: 2020,
   },
   {
     name: 'XFL',

@@ -49,7 +49,6 @@ export async function call(duels: IDuel[]) {
         { year: sport.seasonYear, description, duelId: duel.id },
         {
           betAmount: duel.betAmount,
-          picker: await getPicker(duel),
           players: duel.players,
           sport: duel.sport,
         },
@@ -60,6 +59,7 @@ export async function call(duels: IDuel[]) {
           new: true,
         },
       ).exec()) as IDuelWeek;
+      duelWeek.picker = duelWeek.picker || (await getPicker(duel));
       duelWeek.games = updateGames(duelWeek.games, newGames);
       await duelWeek.save();
     }

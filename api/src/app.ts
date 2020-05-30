@@ -41,8 +41,6 @@ app.use(
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.set('view engine', 'pug');
-
 app.get('/auth/callback', usersController.authenticate);
 app.get('/logout', usersController.logout);
 app.use('/api', routes);

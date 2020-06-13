@@ -85,7 +85,7 @@
     "eslint-plugin-import": "^2.21.2",
     "eslint-plugin-jest": "^23.13.2",
     "jest": "^25.5.4",
-    "lint-staged": "^10.2.9",
+    "lint-staged": "^10.2.10",
     "nock": "^12.0.3",
     "pre-commit": "^1.2.2",
     "prettier": "2.0.5",

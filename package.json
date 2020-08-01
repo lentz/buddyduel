@@ -54,7 +54,7 @@
     "mongoose": "^5.9.27",
     "morgan": "^1.10.0",
     "ngx-toastr": "^12.1.0",
-    "rxjs": "^6.6.0",
+    "rxjs": "^6.6.2",
     "shortid": "^2.2.15",
     "tslib": "^1.13.0",
     "typescript": "3.8.3",

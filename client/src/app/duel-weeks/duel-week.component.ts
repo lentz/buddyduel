@@ -53,7 +53,7 @@ export class DuelWeekComponent implements OnInit, OnDestroy {
         this.duelWeek._id,
       );
       newDuelWeek.games = newDuelWeek.games.map((newGame) => {
-        if (!Game.hasStarted(newGame)) {
+        if (Game.hasStarted(newGame)) {
           return newGame;
         }
         return (

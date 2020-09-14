@@ -6,9 +6,14 @@ import { sports, ISport } from '../sports';
 import * as bovada from './bovada';
 
 function createTimeString(clock: bovada.ILiveScore['clock']) {
-  return clock.period === 'FINAL'
-    ? 'Final'
-    : `${clock.period} ${clock.gameTime}`;
+  if (
+    clock.period === 'FINAL' ||
+    (clock.period === '4Q' && clock.gameTime === '0:00')
+  ) {
+    return 'Final';
+  }
+
+  return `${clock.period} ${clock.gameTime}`;
 }
 
 async function updateScores(sport: ISport) {

@@ -1,11 +1,8 @@
 .game-card {
   color: #01b8f1;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   width: 272px;
   margin: 0 5px 10px 5px;
-}
-.game-card button {
-  font-size: 0.9rem;
 }
 .game-card .card-footer {
   padding: 0.5rem;

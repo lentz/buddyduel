@@ -21,8 +21,8 @@ function parseGame(game: IGame): IGame | null {
       (team: { type: string }) => team.type === 'A',
     );
     if (
-      !home.description.match(teamRegex) ||
-      !away.description.match(teamRegex)
+      !home?.description?.match(teamRegex) ||
+      !away?.description?.match(teamRegex)
     ) {
       return null;
     }

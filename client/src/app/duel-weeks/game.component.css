@@ -4,6 +4,9 @@
   width: 272px;
   margin: 0 5px 10px 5px;
 }
+.game-card .btn {
+  font-size: 0.9rem;
+}
 .game-card .card-footer {
   padding: 0.5rem;
 }

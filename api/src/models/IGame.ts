@@ -9,4 +9,5 @@ export default interface IGame {
   result?: string;
   selectedTeam?: string;
   startTime: Date;
+  time?: string;
 }

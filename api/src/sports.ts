@@ -39,7 +39,7 @@ export const sports: ISport[] = [
   {
     name: 'NFL',
     getWeekDescription: (game: IGame) => {
-      const weekOne = new Date('2020-09-08T04:00:00Z');
+      const weekOne = new Date('2020-09-09T04:00:00Z');
       return `Week ${
         moment(game.startTime).diff(moment(weekOne), 'weeks') + 1
       }`;

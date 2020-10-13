@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 
-import { groupBy } from 'lodash';
-import * as bovada from '../services/bovada';
+import betResult from '../lib/betResult';
+import * as gracenote from '../services/gracenote';
 import { sports } from '../sports';
 import { default as DuelWeek, IDuelWeek } from '../models/DuelWeek';
 import IGame from '../models/IGame';
@@ -14,10 +14,14 @@ function unpickedAndNotBegun(game: IGame) {
 function updateGames(games: IGame[], lines: IGame[]) {
   lines.forEach((line) => {
     const existingGame = games.find((game) => line.id === game.id);
-    if (existingGame === undefined) {
+    if (!existingGame) {
       games.push(line);
     } else {
+      existingGame.awayScore = line.awayScore;
+      existingGame.homeScore = line.homeScore;
       existingGame.startTime = line.startTime;
+      existingGame.result = betResult(existingGame);
+      existingGame.time = line.time;
       if (unpickedAndNotBegun(existingGame)) {
         existingGame.homeSpread = line.homeSpread;
         existingGame.awaySpread = line.awaySpread;
@@ -40,28 +44,24 @@ export async function call(duels: IDuel[]) {
     if (!sport) {
       continue;
     }
-    const games = await bovada.getPreMatchLines(sport);
-    const weekMap = groupBy(games, (game: IGame) =>
-      sport.getWeekDescription(game),
-    );
-    for (const [description, newGames] of Object.entries(weekMap)) {
-      const duelWeek = (await DuelWeek.findOneAndUpdate(
-        { year: sport.seasonYear, description, duelId: duel.id },
-        {
-          betAmount: duel.betAmount,
-          players: duel.players,
-          sport: duel.sport,
-        },
-        {
-          upsert: true,
-          setDefaultsOnInsert: true,
-          runValidators: true,
-          new: true,
-        },
-      ).exec()) as IDuelWeek;
-      duelWeek.picker = duelWeek.picker || (await getPicker(duel));
-      duelWeek.games = updateGames(duelWeek.games, newGames);
-      await duelWeek.save();
-    }
+    const description = sport.currentWeek();
+    const newGames = await gracenote.getGames(sport, description);
+    const duelWeek = (await DuelWeek.findOneAndUpdate(
+      { year: sport.seasonYear, description, duelId: duel.id },
+      {
+        betAmount: duel.betAmount,
+        players: duel.players,
+        sport: duel.sport,
+      },
+      {
+        upsert: true,
+        setDefaultsOnInsert: true,
+        runValidators: true,
+        new: true,
+      },
+    ).exec()) as IDuelWeek;
+    duelWeek.picker = duelWeek.picker || (await getPicker(duel));
+    duelWeek.games = updateGames(duelWeek.games, newGames);
+    await duelWeek.save();
   }
 }

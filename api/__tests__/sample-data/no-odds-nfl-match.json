@@ -1,0 +1,96 @@
+{
+  "scores": {
+    "editionId": "/sport/football/season:236",
+    "matchId": "/sport/football/competition:80895",
+    "dateStart": "2020-11-01T13:00:00-05:00",
+    "gender": "Men",
+    "genderShort": "M",
+    "phaseId": "/sport/football/nfl/season-phase:2",
+    "matchTypeId": "/sport/football/nfl/game-type:8",
+    "competitionId": "/sport/football/league:1",
+    "neutralSite": "false",
+    "homeTeamId": "/sport/football/team:17",
+    "homeTeamName": "Green Bay",
+    "homeName": "Green Bay",
+    "homeShortName": "GB",
+    "homeNickname": "Packers",
+    "homeConferenceId": "/sport/football/conference:2",
+    "awayConferenceId": "/sport/football/conference:2",
+    "awayTeamId": "/sport/football/team:6",
+    "awayTeamName": "Minnesota",
+    "awayName": "Minnesota",
+    "awayShortName": "MIN",
+    "awayNickname": "Vikings",
+    "homeResult": 0,
+    "awayResult": 0,
+    "venueId": "/sport/football/venue:12",
+    "state": { "status": "scheduled" },
+    "teams": {
+      "homeTeam": {
+        "editionId": "/sport/football/season:236",
+        "competitionId": "/sport/football/league:1",
+        "teamId": "/sport/football/team:17",
+        "teamName": "Green Bay",
+        "teamFirstName": "Green Bay",
+        "teamNickName": "Packers",
+        "teamShortName": "GB",
+        "location": {
+          "city": "Green Bay",
+          "state": "Wisconsin",
+          "country": "USA"
+        },
+        "conference": {
+          "id": "/sport/football/conference:2",
+          "name": "National Football Conference",
+          "shortName": "NFC"
+        },
+        "type": "regular"
+      },
+      "awayTeam": {
+        "editionId": "/sport/football/season:236",
+        "competitionId": "/sport/football/league:1",
+        "teamId": "/sport/football/team:6",
+        "teamName": "Minnesota",
+        "teamFirstName": "Minnesota",
+        "teamNickName": "Vikings",
+        "teamShortName": "MIN",
+        "location": {
+          "city": "Minneapolis",
+          "state": "Minnesota",
+          "country": "USA"
+        },
+        "conference": {
+          "id": "/sport/football/conference:2",
+          "name": "National Football Conference",
+          "shortName": "NFC"
+        },
+        "type": "regular"
+      }
+    },
+    "matchLiveScore": null,
+    "competition": {
+      "competitions": [
+        {
+          "id": "/sport/football/league:1",
+          "fullName": "National Football League",
+          "shortName": "NFL"
+        }
+      ]
+    },
+    "matchType": {
+      "competitionId": "/sport/football/league:1",
+      "matchTypes": [
+        {
+          "matchTypeId": "/sport/football/nfl/game-type:8",
+          "name": "Week 8",
+          "key": "WEEK_8"
+        }
+      ]
+    },
+    "matchupStats": {},
+    "matchPlayerStats": [],
+    "odds": null,
+    "matchTeamStats": null,
+    "matchActions": {}
+  }
+}

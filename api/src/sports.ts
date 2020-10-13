@@ -1,50 +1,55 @@
 import * as moment from 'moment';
-import IGame from './models/IGame';
 
 export interface ISport {
-  getWeekDescription: (game: IGame) => string;
+  competitionId: string;
+  currentWeek: () => string;
+  editionId: string;
+  module: string;
   name: string;
-  paths: string[];
   seasonYear: number;
+  sportId: string;
 }
 
 export const sports: ISport[] = [
   {
-    getWeekDescription: (game: IGame) => {
-      if (game.startTime < new Date('2020-03-19')) {
+    currentWeek: () => {
+      const now = new Date();
+      if (now < new Date('2020-03-19')) {
         const weekOne = new Date('2019-11-05');
-        return `Week ${
-          moment(game.startTime).diff(moment(weekOne), 'weeks') + 1
-        }`;
-      } else if (game.startTime < new Date('2020-03-21')) {
+        return `Week ${moment(now).diff(moment(weekOne), 'weeks') + 1}`;
+      } else if (now < new Date('2020-03-21')) {
         return 'Round 1';
-      } else if (game.startTime < new Date('2020-03-26')) {
+      } else if (now < new Date('2020-03-26')) {
         return 'Round 2';
-      } else if (game.startTime < new Date('2020-03-28')) {
+      } else if (now < new Date('2020-03-28')) {
         return 'Sweet 16';
-      } else if (game.startTime < new Date('2020-04-04')) {
+      } else if (now < new Date('2020-04-04')) {
         return 'Elite 8';
-      } else if (game.startTime < new Date('2020-04-06')) {
+      } else if (now < new Date('2020-04-06')) {
         return 'Final Four';
-      } else if (game.startTime < new Date('2020-04-07')) {
+      } else if (now < new Date('2020-04-07')) {
         return 'Championship';
       } else {
-        return 'TDB';
+        return 'TBD';
       }
     },
+    competitionId: '/sport/basketball/league:7',
+    editionId: '/sport/basketball/season:664634', // Unique to season year
     name: 'NCAAB',
-    paths: ['/basketball/college-basketball'],
-    seasonYear: 2019,
+    module: 'basketball',
+    seasonYear: 2020,
+    sportId: '/sport/basketball',
   },
   {
-    name: 'NFL',
-    getWeekDescription: (game: IGame) => {
+    competitionId: '/sport/football/league:1',
+    currentWeek: () => {
       const weekOne = new Date('2020-09-09T04:00:00Z');
-      return `Week ${
-        moment(game.startTime).diff(moment(weekOne), 'weeks') + 1
-      }`;
+      return `Week ${moment().diff(moment(weekOne), 'weeks') + 1}`;
     },
-    paths: ['/football/nfl', '/football/nfl-playoffs', '/football/super-bowl'],
+    editionId: '/sport/football/season:236', // Unique to season year
+    name: 'NFL',
+    module: 'americanfootball',
     seasonYear: 2020,
+    sportId: '/sport/football',
   },
 ];

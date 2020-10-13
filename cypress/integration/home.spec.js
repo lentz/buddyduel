@@ -24,7 +24,7 @@ describe('Home', () => {
       cy.fixture('currentDuelWeeks').as('currentDuelWeeks');
 
       cy.route('GET', '/api/duels?status=active,suspended', '@activeDuelsJson');
-      cy.route('GET', '/api/duels/sports', ['NFL', 'XFL']);
+      cy.route('GET', '/api/duels/sports', ['NFL', 'NCAAB']);
       cy.route('GET', '/api/duel-weeks?current=true', '@currentDuelWeeks');
       cy.route('GET', '/api/duels?status=pending', '@pendingDuelsJson');
 
@@ -39,16 +39,16 @@ describe('Home', () => {
       );
       cy.get('#navbarNavDropdown a').should(
         'contain',
-        'XFL vs. email-user@gmail.com ($10/game)',
+        'NCAAB vs. email-user@gmail.com ($10/game)',
       );
 
       cy.get('a').should('contain', 'NFL Week 22 vs Another User');
-      cy.get('a').should('contain', 'XFL Week 5 vs email-user@gmail.com');
+      cy.get('a').should('contain', 'NCAAB Week 5 vs email-user@gmail.com');
 
       cy.get('ul.pending-duels li').should('contain', '1CbU_Iyi9');
       cy.get('ul.pending-duels li').should('contain', 'NFL $15/game');
       cy.get('ul.pending-duels li').should('contain', '8wkr0MWJ');
-      cy.get('ul.pending-duels li').should('contain', 'XFL $20/game');
+      cy.get('ul.pending-duels li').should('contain', 'NCAAB $20/game');
     });
   });
 });

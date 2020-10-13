@@ -11,38 +11,38 @@
     "games": [
       {
         "id": "7017375",
-        "homeTeam": "New York Guardians",
+        "homeTeam": "New York Jets",
         "homeSpread": 6.5,
-        "awayTeam": "Houston Roughnecks",
+        "awayTeam": "Houston Texans",
         "awaySpread": -6.5,
         "startTime": "2020-03-14T18:00:00.000Z"
       },
       {
         "id": "7017376",
-        "homeTeam": "DC Defenders",
+        "homeTeam": "Philadelphia Eagles",
         "homeSpread": -4,
-        "awayTeam": "Dallas Renegades",
+        "awayTeam": "Dallas Cowboys",
         "awaySpread": 4,
         "startTime": "2020-03-15T20:00:00.000Z",
-        "selectedTeam": "Dallas Renegades"
+        "selectedTeam": "Dallas Cowboys"
       },
       {
         "id": "7017373",
-        "homeTeam": "Seattle Dragons",
+        "homeTeam": "Seattle Seahawks",
         "homeSpread": 3,
-        "awayTeam": "Los Angeles Wildcats",
+        "awayTeam": "Los Angeles Rams",
         "awaySpread": -3,
         "startTime": "2020-03-15T23:00:00.000Z",
-        "selectedTeam": "Los Angeles Wildcats"
+        "selectedTeam": "Los Angeles Rams"
       },
       {
         "id": "7060035",
-        "homeTeam": "Tampa Bay Vipers",
+        "homeTeam": "Tampa Bay Buccaneers",
         "homeSpread": 3.5,
-        "awayTeam": "St. Louis BattleHawks",
+        "awayTeam": "Kansas City Chiefs",
         "awaySpread": -3.5,
         "startTime": "2020-03-14T21:00:00.000Z",
-        "selectedTeam": "St. Louis BattleHawks"
+        "selectedTeam": "Kansas City Chiefs"
       }
     ],
     "picker": {
@@ -56,7 +56,7 @@
         "name": "Another User"
       }
     ],
-    "sport": "XFL",
+    "sport": "NFL",
     "updatedAt": "2020-03-14T20:12:39.731Z",
     "winnings": 0,
     "record": { "wins": 0, "losses": 0, "pushes": 0 },
@@ -73,12 +73,12 @@
     "games": [
       {
         "id": "6974347",
-        "homeTeam": "Houston Roughnecks",
+        "homeTeam": "Houston Texans",
         "homeSpread": -12.5,
-        "awayTeam": "Seattle Dragons",
+        "awayTeam": "Seattle Seahawks",
         "awaySpread": 12.5,
         "startTime": "2020-03-07T19:00:00.000Z",
-        "selectedTeam": "Houston Roughnecks",
+        "selectedTeam": "Houston Texans",
         "awayScore": 23,
         "homeScore": 32,
         "time": "Final",
@@ -86,12 +86,12 @@
       },
       {
         "id": "6974349",
-        "homeTeam": "Dallas Renegades",
+        "homeTeam": "Dallas Cowboys",
         "homeSpread": -7,
-        "awayTeam": "New York Guardians",
+        "awayTeam": "New York Jets",
         "awaySpread": 7,
         "startTime": "2020-03-07T22:00:00.000Z",
-        "selectedTeam": "New York Guardians",
+        "selectedTeam": "New York Jets",
         "result": "Win",
         "awayScore": 30,
         "homeScore": 12,
@@ -99,12 +99,12 @@
       },
       {
         "id": "6974360",
-        "homeTeam": "DC Defenders",
+        "homeTeam": "Philadelphia Eagles",
         "homeSpread": 6,
-        "awayTeam": "St. Louis BattleHawks",
+        "awayTeam": "Kansas City Chiefs",
         "awaySpread": -6,
         "startTime": "2020-03-08T19:00:00.000Z",
-        "selectedTeam": "DC Defenders",
+        "selectedTeam": "Philadelphia Eagles",
         "result": "Win",
         "awayScore": 6,
         "homeScore": 15,
@@ -112,12 +112,12 @@
       },
       {
         "id": "7017374",
-        "homeTeam": "Los Angeles Wildcats",
+        "homeTeam": "Los Angeles Rams",
         "homeSpread": -2.5,
-        "awayTeam": "Tampa Bay Vipers",
+        "awayTeam": "Tampa Bay Buccaneers",
         "awaySpread": 2.5,
         "startTime": "2020-03-09T01:00:00.000Z",
-        "selectedTeam": "Tampa Bay Vipers",
+        "selectedTeam": "Tampa Bay Buccaneers",
         "result": "Loss",
         "awayScore": 34,
         "homeScore": 41,
@@ -135,7 +135,7 @@
         "name": "Another User"
       }
     ],
-    "sport": "XFL",
+    "sport": "NFL",
     "updatedAt": "2020-03-09T04:25:01.081Z",
     "description": "Week 5",
     "winnings": 0,
@@ -153,12 +153,12 @@
     "games": [
       {
         "id": "6974354",
-        "homeTeam": "St. Louis BattleHawks",
+        "homeTeam": "Kansas City Chiefs",
         "homeSpread": -13,
-        "awayTeam": "Seattle Dragons",
+        "awayTeam": "Seattle Seahawks",
         "awaySpread": 13,
         "startTime": "2020-02-29T22:00:00.000Z",
-        "selectedTeam": "Seattle Dragons",
+        "selectedTeam": "Seattle Seahawks",
         "awayScore": 16,
         "homeScore": 23,
         "time": "Final",
@@ -166,12 +166,12 @@
       },
       {
         "id": "6974348",
-        "homeTeam": "Dallas Renegades",
+        "homeTeam": "Dallas Cowboys",
         "homeSpread": 3,
-        "awayTeam": "Houston Roughnecks",
+        "awayTeam": "Houston Texans",
         "awaySpread": -3,
         "startTime": "2020-03-01T21:00:00.000Z",
-        "selectedTeam": "Houston Roughnecks",
+        "selectedTeam": "Houston Texans",
         "result": "Win",
         "awayScore": 27,
         "homeScore": 20,
@@ -179,12 +179,12 @@
       },
       {
         "id": "6974358",
-        "homeTeam": "Tampa Bay Vipers",
+        "homeTeam": "Tampa Bay Buccaneers",
         "homeSpread": 3,
-        "awayTeam": "DC Defenders",
+        "awayTeam": "Philadelphia Eagles",
         "awaySpread": -3,
         "startTime": "2020-03-02T00:00:00.000Z",
-        "selectedTeam": "DC Defenders",
+        "selectedTeam": "Philadelphia Eagles",
         "result": "Loss",
         "awayScore": 0,
         "homeScore": 25,
@@ -202,7 +202,7 @@
         "name": "Another User"
       }
     ],
-    "sport": "XFL",
+    "sport": "NFL",
     "updatedAt": "2020-03-02T02:40:01.509Z",
     "description": "Week 1",
     "winnings": 5,

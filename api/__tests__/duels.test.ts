@@ -37,7 +37,7 @@ describe('duels API', () => {
       const createResponse = await request(app)
         .post('/api/duels')
         .set('Cookie', [sessionCookie])
-        .send({ betAmount: 7, sport: 'XFL' })
+        .send({ betAmount: 7, sport: 'NFL' })
         .expect(201);
       const duelId = createResponse.body._id;
 
@@ -110,7 +110,7 @@ describe('duels API', () => {
       const createResponse = await request(app)
         .post('/api/duels')
         .set('Cookie', [sessionCookie])
-        .send({ betAmount: 7, sport: 'XFL' })
+        .send({ betAmount: 7, sport: 'NCAAB' })
         .expect(201);
 
       const duelResponse = await request(app)

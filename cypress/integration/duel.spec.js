@@ -4,22 +4,22 @@ describe('Duel', () => {
     cy.setCookie('userName', 'Test User');
     cy.server();
     cy.fixture('duel').as('duel');
-    cy.fixture('xflDuelWeeks').as('xflDuelWeeks');
+    cy.fixture('nflDuelWeeks').as('nflDuelWeeks');
   });
 
   it('displays the duel information', () => {
     cy.route('GET', '/api/duels?status=active,suspended', []);
-    cy.route('GET', '/api/duels/sports', ['NFL', 'XFL']);
+    cy.route('GET', '/api/duels/sports', ['NFL', 'NCAAB']);
     cy.route(
       'GET',
       '/api/duel-weeks?duelId=5e5ad520dad2ae00176bf7a4',
-      '@xflDuelWeeks',
+      '@nflDuelWeeks',
     );
     cy.route('GET', '/api/duels/5e5ad520dad2ae00176bf7a4', '@duel');
 
     cy.visit(`/duels/5e5ad520dad2ae00176bf7a4`);
 
-    cy.get('h2').should('contain', 'XFL vs. Another User');
+    cy.get('h2').should('contain', 'NFL vs. Another User');
 
     cy.get('button').should('contain', 'Suspend Duel');
 

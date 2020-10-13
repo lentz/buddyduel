@@ -51,12 +51,12 @@
     "games": [
       {
         "id": "6974347",
-        "homeTeam": "Houston Roughnecks",
+        "homeTeam": "Penn State Nittany Lions",
         "homeSpread": -12.5,
-        "awayTeam": "Seattle Dragons",
+        "awayTeam": "Indiana Hoosiers",
         "awaySpread": 12.5,
         "startTime": "2020-03-07T19:00:00.000Z",
-        "selectedTeam": "Houston Roughnecks",
+        "selectedTeam": "Penn State Nittany Lions",
         "awayScore": 23,
         "homeScore": 32,
         "time": "Final",
@@ -113,7 +113,7 @@
         "name": "email-user@gmail.com"
       }
     ],
-    "sport": "XFL",
+    "sport": "NCAAB",
     "updatedAt": "2020-03-09T04:25:01.081Z",
     "description": "Week 5",
     "winnings": 0,

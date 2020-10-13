@@ -13,7 +13,7 @@ Object {
       "name": "John Doe",
     },
   ],
-  "sport": "XFL",
+  "sport": "NCAAB",
   "status": "pending",
   "updatedAt": Any<String>,
 }

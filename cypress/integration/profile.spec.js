@@ -6,7 +6,7 @@ describe('Profile', () => {
     cy.server();
 
     cy.route('GET', '/api/duels*', []);
-    cy.route('GET', '/api/duels/sports', ['NFL', 'XFL']);
+    cy.route('GET', '/api/duels/sports', ['NFL', 'NCAAB']);
     cy.route('GET', '/api/profile', {
       winnings: 150,
       record: {

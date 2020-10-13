@@ -13,7 +13,7 @@
     "_id": "5e5ad520dad2ae00176bf7a4",
     "betAmount": 20,
     "players": [{ "id": "google-oauth2|1234567", "name": "Test User" }],
-    "sport": "XFL",
+    "sport": "NCAAB",
     "status": "pending",
     "code": "8wkr0MWJ",
     "createdAt": "2020-02-29T21:18:24.874Z",

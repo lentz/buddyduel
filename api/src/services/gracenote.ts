@@ -41,7 +41,7 @@ function createTimeString(match: IMatch) {
   }
 
   if (match.state.status === 'complete') {
-    return 'Final';
+    return match.state?.overtime ? 'Final/OT' : 'Final';
   }
 
   const clock = match.state?.clock

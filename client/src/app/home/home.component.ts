@@ -43,6 +43,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.router.navigateByUrl('/');
     this.titleService.setTitle('BuddyDuel');
   }
 

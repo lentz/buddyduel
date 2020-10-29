@@ -37,7 +37,7 @@ function setSelections(duelWeek: IDuelWeek, pickedGames: IGame[]) {
     const currentGame = pickedGames.find(
       (pickedGame) => pickedGame.id === game.id,
     );
-    if (currentGame) {
+    if (currentGame && !game.selectedTeam) {
       game.selectedTeam = currentGame.selectedTeam;
     }
     return game;

@@ -54,6 +54,9 @@ describe('gracenote', () => {
       const inProgressMatch = readFileSync(
         './api/__tests__/sample-data/inprogress-nfl-match.json',
       ).toString();
+      const halftimeMatch = readFileSync(
+        './api/__tests__/sample-data/halftime-nfl-match.json',
+      ).toString();
       const completeMatch = readFileSync(
         './api/__tests__/sample-data/complete-nfl-match.json',
       ).toString();
@@ -69,6 +72,7 @@ describe('gracenote', () => {
               matchSortByWeek: {
                 'Week 1': [
                   { matchId: '/sport/football/competition:80827' },
+                  { matchId: '/sport/football/competition:80912' },
                   { matchId: '/sport/football/competition:80823' },
                   { matchId: '/sport/football/competition:80814' },
                 ],
@@ -78,6 +82,9 @@ describe('gracenote', () => {
         })
         .mockResolvedValueOnce({
           data: JSON.parse(inProgressMatch),
+        })
+        .mockResolvedValueOnce({
+          data: JSON.parse(halftimeMatch),
         })
         .mockResolvedValueOnce({
           data: JSON.parse(completeMatch),
@@ -100,6 +107,17 @@ describe('gracenote', () => {
             "id": "/sport/football/competition:80827",
             "startTime": 2020-10-13T00:15:00.000Z,
             "time": "4Q 1:42",
+          },
+          Object {
+            "awayScore": 6,
+            "awaySpread": -13,
+            "awayTeam": "Tampa Bay Buccaneers",
+            "homeScore": 14,
+            "homeSpread": 13,
+            "homeTeam": "New York Giants",
+            "id": "/sport/football/competition:80912",
+            "startTime": 2020-11-03T01:15:00.000Z,
+            "time": "Halftime",
           },
           Object {
             "awayScore": 43,

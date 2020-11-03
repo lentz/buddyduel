@@ -48,6 +48,10 @@ function createTimeString(match: IMatch) {
     ? match.state.clock.replace(/^00:0?/, '')
     : '0:00';
 
+  if (match.state?.period === '2' && clock === '0:00') {
+    return 'Halftime';
+  }
+
   return match.state.overtime
     ? `OT ${clock}`
     : `${match.state?.period}Q ${clock}`;

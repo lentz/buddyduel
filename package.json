@@ -70,7 +70,7 @@
     "@types/jsonpath": "^0.2.0",
     "@types/jwt-decode": "^2.2.1",
     "@types/lodash": "^4.14.165",
-    "@types/mongoose": "^5.7.36",
+    "@types/mongoose": "^5.7.37",
     "@types/morgan": "^1.9.2",
     "@types/node": "^10.17.21",
     "@types/shortid": "0.0.29",

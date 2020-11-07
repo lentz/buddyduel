@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign, @typescript-eslint/camelcase */
 
 import { NextFunction, Request, Response } from 'express';
-import * as jwtDecode from 'jwt-decode';
+import jwtDecode from 'jwt-decode';
 import axios from 'axios';
 import { default as DuelWeek, IDuelWeek } from '../models/DuelWeek';
 import * as user from '../services/user';
@@ -52,7 +52,10 @@ export async function authenticate(
       headers: { 'content-type': 'application/json' },
     },
   );
-  const jwt = jwtDecode<{ sub: string; name: string }>(response.data.id_token);
+  const jwt = jwtDecode(response.data.id_token) as {
+    sub: string;
+    name: string;
+  };
   if (!req.session) {
     return next(new Error('No session!'));
   }

@@ -7,6 +7,21 @@
 .game-card .btn {
   font-size: 0.9rem;
 }
+.game-card .team-logo {
+  height: 1rem;
+  width: 1rem;
+}
+.game-card .btn .team-logo {
+  vertical-align: bottom;
+}
+.game-card .team-name {
+  display: inline-block;
+  max-width: 175px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: top;
+  white-space: nowrap;
+}
 .game-card .card-footer {
   padding: 0.5rem;
 }

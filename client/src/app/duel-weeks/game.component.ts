@@ -34,6 +34,10 @@ export class GameComponent {
     return this.game.selectedTeam === team;
   }
 
+  logoPath(teamName: string): string {
+    return `team-logos/${teamName.replace(/\s+/g, '-').toLowerCase()}.png`;
+  }
+
   private selectionSaved(): boolean {
     return (
       this.game.selectedTeam !== undefined &&

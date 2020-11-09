@@ -8,12 +8,15 @@
           [class.active]="isSelected(game.awayTeam)"
           class="btn btn-outline-primary"
         >
+          <img class="team-logo" src="{{ logoPath(game.awayTeam) }}" />
           {{ game.awayTeam }}
         </button>
         <span
           *ngIf="isReadOnly()"
+          class="team-name"
           [ngClass]="{ 'badge badge-primary': isSelected(game.awayTeam) }"
         >
+          <img class="team-logo" src="{{ logoPath(game.awayTeam) }}" />
           {{ game.awayTeam }}
         </span>
         <small class="text-muted spread">{{
@@ -32,12 +35,15 @@
           [class.active]="isSelected(game.homeTeam)"
           class="btn btn-outline-primary"
         >
+          <img class="team-logo" src="{{ logoPath(game.homeTeam) }}" />
           {{ game.homeTeam }}
         </button>
         <span
           *ngIf="isReadOnly()"
+          class="team-name"
           [ngClass]="{ 'badge badge-primary': isSelected(game.homeTeam) }"
         >
+          <img class="team-logo" src="{{ logoPath(game.homeTeam) }}" />
           {{ game.homeTeam }}
         </span>
         <small class="text-muted spread">{{

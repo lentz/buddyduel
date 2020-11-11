@@ -6,6 +6,9 @@
 }
 .game-card .btn {
   font-size: 0.9rem;
+  max-width: 210px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .game-card .team-logo {
   height: 1rem;

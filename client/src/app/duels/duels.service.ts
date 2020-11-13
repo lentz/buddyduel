@@ -23,10 +23,7 @@ export class DuelsService {
   opponentForPlayers(players: Player[]): Player {
     const currentPlayerId = this.authService.getUser().id;
     const opponent = players.find((player) => player.id !== currentPlayerId);
-    if (!opponent) {
-      throw new Error('Could not determine opponent');
-    }
-    return opponent;
+    return opponent ?? new Player();
   }
 
   getDuel(id: string): Promise<Duel> {

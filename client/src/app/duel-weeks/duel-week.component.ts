@@ -1,9 +1,10 @@
+import { HttpResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
-import { Subscription, timer } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { Subject, Subscription, timer } from 'rxjs';
+import { distinctUntilChanged, switchMap, takeUntil } from 'rxjs/operators';
 
 import { AuthService } from '../auth/auth.service';
 import { DuelWeek } from './duel-week';
@@ -18,9 +19,10 @@ import { DuelWeeksService } from './duel-weeks.service';
   styleUrls: ['./duel-week.component.css'],
 })
 export class DuelWeekComponent implements OnInit, OnDestroy {
-  duelWeek!: DuelWeek;
+  duelWeek = new DuelWeek({});
   Math: any;
-  liveUpdateSubscription: Subscription | null;
+  updateSubscription$: Subscription | null = null;
+  noLiveGamesSubject = new Subject();
 
   constructor(
     private duelsService: DuelsService,
@@ -31,57 +33,48 @@ export class DuelWeekComponent implements OnInit, OnDestroy {
     private authService: AuthService,
   ) {
     this.Math = Math;
-    this.liveUpdateSubscription = null;
   }
 
   ngOnInit(): void {
-    this.loadDuelWeek();
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      this.updateSubscription$ = timer(0, 30000)
+        .pipe(
+          switchMap(() =>
+            this.duelWeeksService.getDuelWeek(params.get('id') as string),
+          ),
+          takeUntil(this.noLiveGamesSubject),
+          distinctUntilChanged(
+            (
+              prevRes: HttpResponse<DuelWeek>,
+              currRes: HttpResponse<DuelWeek>,
+            ) => {
+              return (
+                prevRes.headers.get('etag') === currRes.headers.get('etag')
+              );
+            },
+          ),
+        )
+        .subscribe(
+          (res: HttpResponse<DuelWeek>) => {
+            this.duelWeek = res.body ?? new DuelWeek({});
+            if (!this.hasLiveGames()) {
+              this.noLiveGamesSubject.next();
+            }
+            this.titleService.setTitle(
+              `${this.duelWeek.sport} ${
+                this.duelWeek.description
+              } vs. ${this.opponentName()} | BuddyDuel`,
+            );
+          },
+          (err) => {
+            this.toastr.error(err.error?.message ?? err.statusText);
+          },
+        );
+    });
   }
 
   ngOnDestroy(): void {
-    if (this.liveUpdateSubscription) {
-      this.liveUpdateSubscription.unsubscribe();
-    }
-  }
-
-  private startLiveUpdate(): void {
-    this.liveUpdateSubscription = timer(30000, 30000).subscribe(async () => {
-      if (!this.duelWeek) {
-        return;
-      }
-      const newDuelWeek = await this.duelWeeksService.getDuelWeek(
-        this.duelWeek._id,
-      );
-      newDuelWeek.games = newDuelWeek.games.map((newGame) => {
-        if (Game.hasStarted(newGame)) {
-          return newGame;
-        }
-        return (
-          this.duelWeek.games.find((game) => newGame.id === game.id) || newGame
-        );
-      });
-      this.duelWeek = newDuelWeek;
-    });
-  }
-
-  private loadDuelWeek(): void {
-    this.route.paramMap.subscribe(async (params: ParamMap) => {
-      try {
-        this.duelWeek = await this.duelWeeksService.getDuelWeek(
-          params.get('id') as string,
-        );
-        this.titleService.setTitle(
-          `${this.duelWeek.sport} ${
-            this.duelWeek.description
-          } vs. ${this.opponentName()} | BuddyDuel`,
-        );
-        if (this.hasLiveGames()) {
-          this.startLiveUpdate();
-        }
-      } catch (err) {
-        this.toastr.error(err);
-      }
-    });
+    this.updateSubscription$?.unsubscribe();
   }
 
   save(): void {
@@ -94,8 +87,8 @@ export class DuelWeekComponent implements OnInit, OnDestroy {
       .catch((err) => this.toastr.error('Failed to save picks'));
   }
 
-  hasLiveGames(): boolean {
-    return this.duelWeek.games.some(this.isLiveGame);
+  hasLiveGames() {
+    return this.duelWeek?.games.some(this.isLiveGame);
   }
 
   isLiveGame(game: Game): boolean {

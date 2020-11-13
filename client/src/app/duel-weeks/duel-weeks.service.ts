@@ -20,12 +20,11 @@ export class DuelWeeksService {
       .catch(this.handleError);
   }
 
-  getDuelWeek(id: string): Promise<DuelWeek> {
-    return this.http
-      .get(`${this.duelWeeksURL}/${id}`)
-      .toPromise()
-      .then((response: any) => response as DuelWeek)
-      .catch(this.handleError);
+  getDuelWeek(id: string) {
+    return this.http.get<DuelWeek>(`${this.duelWeeksURL}/${id}`, {
+      observe: 'response',
+      responseType: 'json',
+    });
   }
 
   updateDuelWeek(duelWeek: DuelWeek): Promise<DuelWeek> {

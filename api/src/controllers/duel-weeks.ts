@@ -7,7 +7,7 @@ import { default as DuelWeek, IDuelWeek } from '../models/DuelWeek';
 import IGame from '../models/IGame';
 
 export async function index(req: Request, res: Response) {
-  const filter: any = { 'players.id': req.session && req.session.userId };
+  const filter: any = { 'players.id': req.session.userId };
   if (req.query.duelId) {
     filter.duelId = req.query.duelId;
   } else if (req.query.current) {
@@ -22,7 +22,7 @@ export async function index(req: Request, res: Response) {
 export async function show(req: Request, res: Response) {
   const duelWeek = (await DuelWeek.findOne({
     _id: req.params.id,
-    'players.id': req.session && req.session.userId,
+    'players.id': req.session.userId,
   }).exec()) as IDuelWeek;
   if (!duelWeek) {
     return res.status(404).json({ message: 'Duel week not found' });
@@ -47,7 +47,7 @@ function setSelections(duelWeek: IDuelWeek, pickedGames: IGame[]) {
 export async function update(req: Request, res: Response) {
   const duelWeek = (await DuelWeek.findOne({
     _id: req.body._id,
-    'players.id': req.session && req.session.userId,
+    'players.id': req.session.userId,
   }).exec()) as IDuelWeek;
   if (!duelWeek) {
     return res.status(404).json({ message: 'Duel week not found' });

@@ -4,6 +4,10 @@
       <div class="card-header">Current Duel Weeks</div>
       <div class="card-body active-duels">
         <ul>
+          <li *ngIf="!loadComplete" class="skeleton">
+            <span class="description-loading"></span>
+            <span class="opponent-loading"></span>
+          </li>
           <li *ngFor="let duelWeek of currentDuelWeeks">
             <a [routerLink]="['/duel-weeks', duelWeek._id]">
               <span class="week-description">
@@ -15,9 +19,6 @@
             </a>
           </li>
         </ul>
-        <div [ngClass]="{ 'text-center': true, 'd-none': loadComplete }">
-          <span class="fa fa-circle-o-notch fa-spin fa-2x"></span>
-        </div>
         <span *ngIf="loadComplete && currentDuelWeeks.length < 1">
           Create a duel and send the code to a buddy to get started or enter a
           code given to you in the 'Duel Code' box and click 'Accept'.

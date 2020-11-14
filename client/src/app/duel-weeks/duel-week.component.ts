@@ -20,9 +20,10 @@ import { DuelWeeksService } from './duel-weeks.service';
 })
 export class DuelWeekComponent implements OnInit, OnDestroy {
   duelWeek = new DuelWeek({});
-  Math: any;
-  updateSubscription$: Subscription | null = null;
+  initialLoadComplete = false;
+  math = Math;
   noLiveGamesSubject = new Subject();
+  updateSubscription$: Subscription | null = null;
 
   constructor(
     private duelsService: DuelsService,
@@ -31,9 +32,7 @@ export class DuelWeekComponent implements OnInit, OnDestroy {
     private titleService: Title,
     private toastr: ToastrService,
     private authService: AuthService,
-  ) {
-    this.Math = Math;
-  }
+  ) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params: ParamMap) => {
@@ -56,6 +55,7 @@ export class DuelWeekComponent implements OnInit, OnDestroy {
         )
         .subscribe(
           (res: HttpResponse<DuelWeek>) => {
+            this.initialLoadComplete = true;
             this.duelWeek = res.body ?? new DuelWeek({});
             if (!this.hasLiveGames()) {
               this.noLiveGamesSubject.next();

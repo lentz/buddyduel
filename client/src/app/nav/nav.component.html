@@ -114,11 +114,11 @@
                 name="sport"
                 [(ngModel)]="sport"
               >
-                <option *ngFor="let value of sports" [ngValue]="value">{{
-                  value
-                }}</option
-                ><option> </option
-              ></select>
+                <option *ngFor="let value of sports" [ngValue]="value">
+                  {{ value }}
+                </option>
+                <option></option>
+              </select>
             </div>
           </div>
         </form>

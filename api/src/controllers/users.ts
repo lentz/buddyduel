@@ -73,19 +73,19 @@ export async function logout(req: Request, res: Response, next: NextFunction) {
   res.clearCookie('connect.sid', { secure: USE_SECURE_COOKIE });
   res.clearCookie('userId', { secure: USE_SECURE_COOKIE });
   res.clearCookie('userName', { secure: USE_SECURE_COOKIE });
-  req.session && req.session.destroy(next);
+  req.session.destroy(next);
 }
 
 export async function show(req: Request, res: Response) {
   return res.json(
     Object.assign(
-      await getPerformance(req.session && req.session.userId),
-      await getPreferences(req.session && req.session.userId),
+      await getPerformance(req.session.userId ?? ''),
+      await getPreferences(req.session.userId ?? ''),
     ),
   );
 }
 
 export async function update(req: Request, res: Response) {
-  await user.updateMetadata(req.session && req.session.userId, req.body);
+  await user.updateMetadata(req.session.userId ?? '', req.body);
   return res.status(204).send();
 }

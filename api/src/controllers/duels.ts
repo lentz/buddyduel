@@ -10,7 +10,7 @@ async function alreadyInDuel(code: string, userId: string) {
 export async function index(req: Request, res: Response) {
   const duels = await Duel.find({
     status: (req.query.status as string).split(','),
-    'players.id': req.session && req.session.userId,
+    'players.id': req.session.userId,
   }).exec();
 
   return res.json(duels);
@@ -19,7 +19,7 @@ export async function index(req: Request, res: Response) {
 export async function show(req: Request, res: Response) {
   const duel = await Duel.findOne({
     _id: req.params.id,
-    'players.id': req.session && req.session.userId,
+    'players.id': req.session.userId,
   }).exec();
   if (!duel) {
     return res.status(404).json({ message: 'Duel not found!' });
@@ -33,8 +33,8 @@ export async function create(req: Request, res: Response) {
     betAmount: req.body.betAmount,
     players: [
       {
-        id: req.session && req.session.userId,
-        name: req.session && req.session.userName,
+        id: req.session.userId,
+        name: req.session.userName,
       },
     ],
     sport: req.body.sport,
@@ -52,7 +52,7 @@ export async function update(req: Request, res: Response) {
   await Duel.findOneAndUpdate(
     {
       _id: req.params.id,
-      'players.id': req.session && req.session.userId,
+      'players.id': req.session.userId,
     },
     updates,
   ).exec();
@@ -62,7 +62,7 @@ export async function update(req: Request, res: Response) {
 
 export async function accept(req: Request, res: Response) {
   const code = req.body.code.trim();
-  if (await alreadyInDuel(code, req.session && req.session.userId)) {
+  if (await alreadyInDuel(code, req.session.userId ?? '')) {
     throw Error('You are already in this duel!');
   }
   const duel = (await Duel.findOneAndUpdate(
@@ -71,8 +71,8 @@ export async function accept(req: Request, res: Response) {
       status: 'active',
       $push: {
         players: {
-          id: req.session && req.session.userId,
-          name: req.session && req.session.userName,
+          id: req.session.userId,
+          name: req.session.userName,
         },
       },
     },
@@ -90,7 +90,7 @@ export async function deleteDuel(req: Request, res: Response) {
   const result = await Duel.findOneAndRemove({
     _id: req.params.id,
     status: 'pending',
-    'players.id': req.session && req.session.userId,
+    'players.id': req.session.userId,
   }).exec();
   if (!result) {
     return res.status(404).json({ message: 'Duel not found' });

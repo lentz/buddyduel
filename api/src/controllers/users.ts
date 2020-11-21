@@ -52,10 +52,7 @@ export async function authenticate(
       headers: { 'content-type': 'application/json' },
     },
   );
-  const jwt = jwtDecode(response.data.id_token) as {
-    sub: string;
-    name: string;
-  };
+  const jwt = jwtDecode<{ name: string; sub: string }>(response.data.id_token);
   if (!req.session) {
     return next(new Error('No session!'));
   }

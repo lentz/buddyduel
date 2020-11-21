@@ -40,7 +40,7 @@ jobs:
       - name: Test
         run: npm run test
       - name: E2E Test
-        uses: cypress-io/github-action@v1
+        uses: cypress-io/github-action@v2
         env:
           MONGODB_URI: 'mongodb://localhost/buddyduel-e2e'
           PORT: 3000

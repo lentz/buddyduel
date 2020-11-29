@@ -3,11 +3,9 @@ describe('Profile', () => {
     cy.setCookie('userId', 'google-oauth2|1234567');
     cy.setCookie('userName', 'Test User');
 
-    cy.server();
-
-    cy.route('GET', '/api/duels*', []);
-    cy.route('GET', '/api/duels/sports', ['NFL', 'NCAAB']);
-    cy.route('GET', '/api/profile', {
+    cy.intercept('GET', '/api/duels', []);
+    cy.intercept('GET', '/api/duels/sports', ['NFL', 'NCAAB']);
+    cy.intercept('GET', '/api/profile', {
       winnings: 150,
       record: {
         wins: 88,

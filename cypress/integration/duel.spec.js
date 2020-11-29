@@ -2,20 +2,17 @@ describe('Duel', () => {
   beforeEach(() => {
     cy.setCookie('userId', 'google-oauth2|1234567');
     cy.setCookie('userName', 'Test User');
-    cy.server();
-    cy.fixture('duel').as('duel');
-    cy.fixture('nflDuelWeeks').as('nflDuelWeeks');
   });
 
   it('displays the duel information', () => {
-    cy.route('GET', '/api/duels?status=active,suspended', []);
-    cy.route('GET', '/api/duels/sports', ['NFL', 'NCAAB']);
-    cy.route(
-      'GET',
-      '/api/duel-weeks?duelId=5e5ad520dad2ae00176bf7a4',
-      '@nflDuelWeeks',
-    );
-    cy.route('GET', '/api/duels/5e5ad520dad2ae00176bf7a4', '@duel');
+    cy.intercept('GET', '/api/duels?status=active,suspended', []);
+    cy.intercept('GET', '/api/duels/sports', ['NFL', 'NCAAB']);
+    cy.intercept('GET', '/api/duel-weeks?duelId=5e5ad520dad2ae00176bf7a4', {
+      fixture: 'nflDuelWeeks',
+    });
+    cy.intercept('GET', '/api/duels/5e5ad520dad2ae00176bf7a4', {
+      fixture: 'duel',
+    });
 
     cy.visit(`/duels/5e5ad520dad2ae00176bf7a4`);
 

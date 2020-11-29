@@ -17,16 +17,16 @@ describe('Home', () => {
     });
 
     it('shows the current duel weeks, pending duels, and navigation options', () => {
-      cy.server();
-
-      cy.fixture('activeDuels').as('activeDuelsJson');
-      cy.fixture('pendingDuels').as('pendingDuelsJson');
-      cy.fixture('currentDuelWeeks').as('currentDuelWeeks');
-
-      cy.route('GET', '/api/duels?status=active,suspended', '@activeDuelsJson');
-      cy.route('GET', '/api/duels/sports', ['NFL', 'NCAAB']);
-      cy.route('GET', '/api/duel-weeks?current=true', '@currentDuelWeeks');
-      cy.route('GET', '/api/duels?status=pending', '@pendingDuelsJson');
+      cy.intercept('GET', '/api/duels?status=active,suspended', {
+        fixture: 'activeDuels',
+      });
+      cy.intercept('GET', '/api/duels/sports', ['NFL', 'NCAAB']);
+      cy.intercept('GET', '/api/duel-weeks?current=true', {
+        fixture: 'currentDuelWeeks',
+      });
+      cy.intercept('GET', '/api/duels?status=pending', {
+        fixture: 'pendingDuels',
+      });
 
       cy.reload();
 

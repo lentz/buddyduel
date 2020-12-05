@@ -25,7 +25,7 @@ describe('gracenote', () => {
       expect(games).toEqual([]);
     });
 
-    test('only returns games with odds', async () => {
+    test('sets spreads undefined for games without odds', async () => {
       const noOddsMatch = readFileSync(
         './api/__tests__/sample-data/no-odds-nfl-match.json',
       ).toString();
@@ -47,7 +47,14 @@ describe('gracenote', () => {
 
       const games = await gracenote.getGames(nfl, 'Week 1');
 
-      expect(games).toEqual([]);
+      expect(games).toEqual([
+        {
+          awayTeam: 'Minnesota Vikings',
+          homeTeam: 'Green Bay Packers',
+          id: '/sport/football/competition:80895',
+          startTime: new Date('2020-11-01T18:00:00.000Z'),
+        },
+      ]);
     });
 
     test('returns the games for each match in the week', async () => {

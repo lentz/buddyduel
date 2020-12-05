@@ -23,8 +23,8 @@ function updateGames(games: IGame[], lines: IGame[]) {
       existingGame.result = betResult(existingGame);
       existingGame.time = line.time;
       if (unpickedAndNotBegun(existingGame)) {
-        existingGame.homeSpread = line.homeSpread;
-        existingGame.awaySpread = line.awaySpread;
+        existingGame.homeSpread = line.homeSpread ?? existingGame.homeSpread;
+        existingGame.awaySpread = line.awaySpread ?? existingGame.awaySpread;
       }
     }
   });

@@ -109,19 +109,17 @@ export async function getGames(
     const match: IMatch = res.data.scores;
     const homeSpread = match.odds?.activePointSpread?.homeHandicap;
 
-    if (homeSpread !== undefined) {
-      games.push({
-        awaySpread: homeSpread * -1,
-        awayScore: matchStarted(match) ? match.awayResult : undefined,
-        awayTeam: `${match.awayName} ${match.awayNickname}`,
-        homeSpread,
-        homeScore: matchStarted(match) ? match.homeResult : undefined,
-        homeTeam: `${match.homeName} ${match.homeNickname}`,
-        id: matchId,
-        startTime: new Date(match.dateStart),
-        time: createTimeString(match),
-      });
-    }
+    games.push({
+      awaySpread: homeSpread ? homeSpread * -1 : undefined,
+      awayScore: matchStarted(match) ? match.awayResult : undefined,
+      awayTeam: `${match.awayName} ${match.awayNickname}`,
+      homeSpread,
+      homeScore: matchStarted(match) ? match.homeResult : undefined,
+      homeTeam: `${match.homeName} ${match.homeNickname}`,
+      id: matchId,
+      startTime: new Date(match.dateStart),
+      time: createTimeString(match),
+    });
   }
 
   return games;

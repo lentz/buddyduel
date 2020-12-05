@@ -13,7 +13,10 @@ export class GameComponent {
 
   isReadOnly(): boolean {
     return (
-      !this.isPicker || Game.hasStarted(this.game) || this.selectionSaved()
+      !this.isPicker ||
+      Game.hasStarted(this.game) ||
+      this.selectionSaved() ||
+      this.game.homeSpread === undefined
     );
   }
 

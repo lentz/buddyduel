@@ -7,8 +7,10 @@ export class PointSpread implements PipeTransform {
       return 'pick';
     } else if (value > 0) {
       return `+${value}`;
-    } else {
+    } else if (value < 0) {
       return value.toString();
+    } else {
+      return 'TBD';
     }
   }
 }

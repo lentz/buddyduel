@@ -1,7 +1,12 @@
 import IGame from '../models/IGame';
 
 export default function (game: IGame) {
-  if (game.homeScore === undefined || game.awayScore === undefined) {
+  if (
+    game.homeScore === undefined ||
+    game.awayScore === undefined ||
+    game.homeSpread === undefined ||
+    game.awaySpread === undefined
+  ) {
     return '';
   }
 

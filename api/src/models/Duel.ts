@@ -28,4 +28,4 @@ export interface IDuel extends mongoose.Document {
   updatedAt: string;
 }
 
-export default mongoose.model('Duel', duelSchema);
+export default mongoose.model<IDuel>('Duel', duelSchema);

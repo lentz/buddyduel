@@ -9,7 +9,9 @@ async function alreadyInDuel(code: string, userId: string) {
 
 export async function index(req: Request, res: Response) {
   const duels = await Duel.find({
-    status: (req.query.status as string).split(','),
+    status: {
+      $in: (req.query.status as string).split(',') as IDuel['status'][],
+    },
     'players.id': req.session.userId,
   }).exec();
 
@@ -19,7 +21,7 @@ export async function index(req: Request, res: Response) {
 export async function show(req: Request, res: Response) {
   const duel = await Duel.findOne({
     _id: req.params.id,
-    'players.id': req.session.userId,
+    'players.id': req.session.userId as string,
   }).exec();
   if (!duel) {
     return res.status(404).json({ message: 'Duel not found!' });
@@ -29,7 +31,7 @@ export async function show(req: Request, res: Response) {
 }
 
 export async function create(req: Request, res: Response) {
-  const duel = await Duel.create({
+  const duel = new Duel({
     betAmount: req.body.betAmount,
     players: [
       {
@@ -40,6 +42,8 @@ export async function create(req: Request, res: Response) {
     sport: req.body.sport,
     status: 'pending',
   });
+
+  await duel.save();
 
   return res.status(201).json(duel);
 }
@@ -71,8 +75,8 @@ export async function accept(req: Request, res: Response) {
       status: 'active',
       $push: {
         players: {
-          id: req.session.userId,
-          name: req.session.userName,
+          id: req.session.userId as string,
+          name: req.session.userName as string,
         },
       },
     },

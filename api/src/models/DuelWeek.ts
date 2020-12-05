@@ -2,6 +2,23 @@ import * as mongoose from 'mongoose';
 import IGame from './IGame';
 import { default as PlayerSchema, IPlayer } from './PlayerSchema';
 
+const GameSchema = new mongoose.Schema(
+  {
+    id: { type: String, required: true },
+    homeTeam: { type: String, required: true },
+    homeSpread: Number,
+    homeScore: Number,
+    awayTeam: { type: String, required: true },
+    awaySpread: Number,
+    awayScore: Number,
+    startTime: { type: Date, required: true },
+    selectedTeam: String,
+    time: String,
+    result: String,
+  },
+  { _id: false },
+);
+
 const duelWeekSchema = new mongoose.Schema(
   {
     duelId: { type: mongoose.Schema.Types.ObjectId, required: true },
@@ -12,22 +29,7 @@ const duelWeekSchema = new mongoose.Schema(
     picker: PlayerSchema,
     skipped: { type: Boolean, default: false },
     sport: String,
-    games: [
-      {
-        _id: false,
-        id: { type: String, required: true },
-        homeTeam: { type: String, required: true },
-        homeSpread: Number,
-        homeScore: Number,
-        awayTeam: { type: String, required: true },
-        awaySpread: Number,
-        awayScore: Number,
-        startTime: { type: Date, required: true },
-        selectedTeam: String,
-        time: String,
-        result: String,
-      },
-    ],
+    games: [GameSchema],
   },
   { timestamps: true, toJSON: { virtuals: true } },
 );
@@ -79,4 +81,4 @@ duelWeekSchema.virtual('record').get(function record(this: IDuelWeek) {
   return calculateRecord(this);
 });
 
-export default mongoose.model('DuelWeek', duelWeekSchema);
+export default mongoose.model<IDuelWeek>('DuelWeek', duelWeekSchema);

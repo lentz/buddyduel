@@ -10,15 +10,18 @@ describe('gracenote', () => {
     const nfl = sports.find((sport) => sport.name === 'NFL');
 
     test('returns empty array when there are no matches for the week', async () => {
-      jest.spyOn(axios, 'get').mockResolvedValueOnce({
-        data: {
-          datepicker: {
-            matchSortByWeek: {
-              'Week 1': [],
+      jest
+        .spyOn(axios, 'get')
+        .mockResolvedValueOnce({
+          data: {
+            datepicker: {
+              matchSortByWeek: {
+                'Week 1': [],
+              },
             },
           },
-        },
-      });
+        })
+        .mockResolvedValueOnce({ data: {} });
 
       const games = await gracenote.getGames(nfl, 'Week 1');
 
@@ -26,8 +29,8 @@ describe('gracenote', () => {
     });
 
     test('sets spreads undefined for games without odds', async () => {
-      const noOddsMatch = readFileSync(
-        './api/__tests__/sample-data/no-odds-nfl-match.json',
+      const scheduledMatch = readFileSync(
+        './api/__tests__/sample-data/scheduled-nfl-match.json',
       ).toString();
 
       jest
@@ -36,23 +39,24 @@ describe('gracenote', () => {
           data: {
             datepicker: {
               matchSortByWeek: {
-                'Week 1': [{ matchId: '/sport/football/competition:80895' }],
+                'Week 1': [{ matchId: '/sport/football/competition:80814' }],
               },
             },
           },
         })
+        .mockResolvedValueOnce({ data: { oddsSportsBooks: { matches: [] } } })
         .mockResolvedValueOnce({
-          data: JSON.parse(noOddsMatch),
+          data: JSON.parse(scheduledMatch),
         });
 
       const games = await gracenote.getGames(nfl, 'Week 1');
 
       expect(games).toEqual([
         {
-          awayTeam: 'Minnesota Vikings',
-          homeTeam: 'Green Bay Packers',
-          id: '/sport/football/competition:80895',
-          startTime: new Date('2020-11-01T18:00:00.000Z'),
+          awayTeam: 'Buffalo Bills',
+          homeTeam: 'Tennessee Titans',
+          id: '/sport/football/competition:80814',
+          startTime: new Date('2020-10-13T23:00:00.000Z'),
         },
       ]);
     });
@@ -70,6 +74,9 @@ describe('gracenote', () => {
       const scheduledMatch = readFileSync(
         './api/__tests__/sample-data/scheduled-nfl-match.json',
       ).toString();
+      const odds = readFileSync(
+        './api/__tests__/sample-data/odds.json',
+      ).toString();
 
       jest
         .spyOn(axios, 'get')
@@ -86,6 +93,9 @@ describe('gracenote', () => {
               },
             },
           },
+        })
+        .mockResolvedValueOnce({
+          data: JSON.parse(odds),
         })
         .mockResolvedValueOnce({
           data: JSON.parse(inProgressMatch),

@@ -117,28 +117,7 @@
         }
       ]
     },
-    "odds": {
-      "editionId": "/sport/football/season:236",
-      "matchId": "/sport/football/competition:80827",
-      "openingOverUnder": {
-        "id": "/sport/football/odds:166277",
-        "total": 51.5,
-        "overOdds": { "american": -108 },
-        "underOdds": { "american": -103 }
-      },
-      "activeOverUnder": {
-        "id": "/sport/football/odds:166275",
-        "total": 49.5,
-        "overOdds": { "american": 104 },
-        "underOdds": { "american": -116 }
-      },
-      "activePointSpread": {
-        "id": "/sport/football/odds:166274",
-        "homeOdds": { "american": -103 },
-        "awayOdds": { "american": -107 },
-        "homeHandicap": -7
-      }
-    },
+    "odds": null,
     "matchupStats": {
       "editionId": "/sport/football/season:236",
       "matchId": "/sport/football/competition:80827",

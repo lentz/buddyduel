@@ -18,11 +18,6 @@ interface IMatch {
   homeName: string;
   homeNickname: string;
   homeResult: number;
-  odds?: {
-    activePointSpread: {
-      homeHandicap: number;
-    };
-  };
   state: {
     clock?: string;
     status: string;
@@ -84,12 +79,37 @@ async function getMatchIdsForWeek(sport: ISport, week: string) {
   return matches.map((match: { matchId: string }) => match.matchId);
 }
 
+function getHomeSpreadForMatch(matchId: string, oddsRes: any) {
+  const match = oddsRes.data.oddsSportsBooks.matches.find(
+    (m: { matchId: string }) => {
+      return m.matchId === matchId;
+    },
+  );
+
+  const mgmOdds = match?.odds.find((bookOdds: any) => {
+    return bookOdds.book === 'betmgm';
+  });
+
+  return mgmOdds?.activePointSpread[0].homeHandicap;
+}
+
 export async function getGames(
   sport: ISport,
   weekDescription: string,
 ): Promise<IGame[]> {
   const matchIds = await getMatchIdsForWeek(sport, weekDescription);
   const games: IGame[] = [];
+
+  const oddsRes = await axios.get('api/OddsSportsBooks/Competition', {
+    params: {
+      competitionId: sport.competitionId,
+      customerId: 1379,
+      languageCode: 2,
+      module: 'na_teamsports',
+      sportId: sport.sportId,
+      type: 'oddssportsbooks',
+    },
+  });
 
   for (const matchId of matchIds) {
     const opts = {
@@ -107,7 +127,7 @@ export async function getGames(
 
     const res = await axios.get('/api/Scores/match', opts);
     const match: IMatch = res.data.scores;
-    const homeSpread = match.odds?.activePointSpread?.homeHandicap;
+    const homeSpread = getHomeSpreadForMatch(matchId, oddsRes);
 
     games.push({
       awaySpread: homeSpread ? homeSpread * -1 : undefined,

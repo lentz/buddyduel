@@ -88,33 +88,7 @@
       ]
     },
     "matchPlayerStats": [],
-    "odds": {
-      "editionId": "/sport/football/season:236",
-      "matchId": "/sport/football/competition:80814",
-      "activeMoneyLine": {
-        "id": "/betting/odds:204307491",
-        "sportsbook": "covers",
-        "sportsbook-id": "/betting/sportsbook:103",
-        "homeOdds": { "american": 162 },
-        "awayOdds": { "american": -181 }
-      },
-      "activeOverUnder": {
-        "id": "/betting/odds:204298894",
-        "sportsbook": "covers",
-        "sportsbook-id": "/betting/sportsbook:103",
-        "total": 53,
-        "overOdds": { "american": -105 },
-        "underOdds": { "american": -106 }
-      },
-      "activePointSpread": {
-        "id": "/betting/odds:204307493",
-        "sportsbook": "covers",
-        "sportsbook-id": "/betting/sportsbook:103",
-        "homeOdds": { "american": 115 },
-        "awayOdds": { "american": -127 },
-        "homeHandicap": 3
-      }
-    },
+    "odds": null,
     "matchupStats": {
       "editionId": "/sport/football/season:236",
       "matchId": "/sport/football/competition:80814",

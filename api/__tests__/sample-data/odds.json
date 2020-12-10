@@ -1,0 +1,58 @@
+{
+  "oddsSportsBooks": {
+    "matches": [
+      {
+        "matchId": "/sport/football/competition:80827",
+        "odds": [
+          {
+            "book": "betmgm",
+            "activePointSpread": [
+              {
+                "homeHandicap": -7
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "matchId": "/sport/football/competition:80912",
+        "odds": [
+          {
+            "book": "betmgm",
+            "activePointSpread": [
+              {
+                "homeHandicap": 13
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "matchId": "/sport/football/competition:80823",
+        "odds": [
+          {
+            "book": "betmgm",
+            "activePointSpread": [
+              {
+                "homeHandicap": -8.5
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "matchId": "/sport/football/competition:80814",
+        "odds": [
+          {
+            "book": "betmgm",
+            "activePointSpread": [
+              {
+                "homeHandicap": 3
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

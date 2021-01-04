@@ -44,7 +44,18 @@ export const sports: ISport[] = [
     competitionId: '/sport/football/league:1',
     currentWeek: () => {
       const weekOne = new Date('2020-09-09T04:00:00Z');
-      return `Week ${moment().diff(moment(weekOne), 'weeks') + 1}`;
+      const weekNum = moment().diff(moment(weekOne), 'weeks') + 1;
+      if (weekNum === 18) {
+        return 'Wildcard';
+      } else if (weekNum === 19) {
+        return 'Divisonal';
+      } else if (weekNum === 20) {
+        return 'Conference';
+      } else if (weekNum === 21) {
+        return 'Super Bowl';
+      } else {
+        return `Week ${weekNum}`;
+      }
     },
     editionId: '/sport/football/season:236', // Unique to season year
     name: 'NFL',

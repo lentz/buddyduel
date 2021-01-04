@@ -48,7 +48,7 @@ export const sports: ISport[] = [
       if (weekNum === 18) {
         return 'Wildcard';
       } else if (weekNum === 19) {
-        return 'Divisonal';
+        return 'Divisional Playoffs';
       } else if (weekNum === 20) {
         return 'Conference';
       } else if (weekNum === 21) {

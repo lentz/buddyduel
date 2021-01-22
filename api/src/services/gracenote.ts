@@ -90,7 +90,9 @@ function getHomeSpreadForMatch(matchId: string, oddsRes: any) {
     return bookOdds.book === 'betmgm';
   });
 
-  return mgmOdds?.activePointSpread[0].homeHandicap;
+  return mgmOdds?.activePointSpread.find((spread: any) => {
+    return !spread.scope;
+  }).homeHandicap;
 }
 
 export async function getGames(

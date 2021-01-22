@@ -8,6 +8,10 @@
             "book": "betmgm",
             "activePointSpread": [
               {
+                "scope": "1h",
+                "homeHandicap": -3
+              },
+              {
                 "homeHandicap": -7
               }
             ]
@@ -22,6 +26,10 @@
             "activePointSpread": [
               {
                 "homeHandicap": 13
+              },
+              {
+                "scope": "1h",
+                "homeHandicap": 7
               }
             ]
           }
@@ -33,6 +41,10 @@
           {
             "book": "betmgm",
             "activePointSpread": [
+              {
+                "scope": "1h",
+                "homeHandicap": -4
+              },
               {
                 "homeHandicap": -8.5
               }
@@ -48,6 +60,10 @@
             "activePointSpread": [
               {
                 "homeHandicap": 3
+              },
+              {
+                "scope": "1h",
+                "homeHandicap": 1.5
               }
             ]
           }

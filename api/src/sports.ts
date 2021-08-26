@@ -43,15 +43,15 @@ export const sports: ISport[] = [
   {
     competitionId: '/sport/football/league:1',
     currentWeek: () => {
-      const weekOne = new Date('2020-09-09T04:00:00Z');
+      const weekOne = new Date('2021-09-08T04:00:00Z');
       const weekNum = moment().diff(moment(weekOne), 'weeks') + 1;
-      if (weekNum < 18) {
+      if (weekNum < 19) {
         return `Week ${weekNum}`;
-      } else if (weekNum === 18) {
-        return 'Wildcard';
       } else if (weekNum === 19) {
-        return 'Divisional Playoffs';
+        return 'Wildcard';
       } else if (weekNum === 20) {
+        return 'Divisional Playoffs';
+      } else if (weekNum === 21) {
         return 'Conference Championships';
       } else if (weekNum === 22) {
         return 'Super Bowl';
@@ -59,10 +59,10 @@ export const sports: ISport[] = [
         return null;
       }
     },
-    editionId: '/sport/football/season:236', // Unique to season year
+    editionId: '/sport/football/season:240', // Unique to season year
     name: 'NFL',
     module: 'americanfootball',
-    seasonYear: 2020,
+    seasonYear: 2021,
     sportId: '/sport/football',
   },
 ];

@@ -86,11 +86,11 @@ function getHomeSpreadForMatch(matchId: string, oddsRes: any) {
     },
   );
 
-  const mgmOdds = match?.odds.find((bookOdds: any) => {
-    return bookOdds.book === 'betmgm';
+  const matchOdds = match?.odds.find((bookOdds: any) => {
+    return bookOdds.book === 'pinnacle';
   });
 
-  return mgmOdds?.activePointSpread.find((spread: any) => {
+  return matchOdds?.activePointSpread.find((spread: any) => {
     return !spread.scope;
   }).homeHandicap;
 }

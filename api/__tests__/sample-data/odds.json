@@ -5,7 +5,7 @@
         "matchId": "/sport/football/competition:80827",
         "odds": [
           {
-            "book": "betmgm",
+            "book": "pinnacle",
             "activePointSpread": [
               {
                 "scope": "1h",
@@ -22,7 +22,7 @@
         "matchId": "/sport/football/competition:80912",
         "odds": [
           {
-            "book": "betmgm",
+            "book": "pinnacle",
             "activePointSpread": [
               {
                 "homeHandicap": 13
@@ -39,7 +39,7 @@
         "matchId": "/sport/football/competition:80823",
         "odds": [
           {
-            "book": "betmgm",
+            "book": "pinnacle",
             "activePointSpread": [
               {
                 "scope": "1h",
@@ -56,7 +56,7 @@
         "matchId": "/sport/football/competition:80814",
         "odds": [
           {
-            "book": "betmgm",
+            "book": "pinnacle",
             "activePointSpread": [
               {
                 "homeHandicap": 3

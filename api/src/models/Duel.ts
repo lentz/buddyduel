@@ -2,7 +2,18 @@ import * as mongoose from 'mongoose';
 import * as shortid from 'shortid';
 import { default as PlayerSchema, IPlayer } from './PlayerSchema';
 
-const duelSchema = new mongoose.Schema(
+export interface IDuel {
+  id: string;
+  code: string;
+  createdAt: Date;
+  status: 'active' | 'pending' | 'suspended';
+  betAmount: number;
+  players: IPlayer[];
+  sport: string;
+  updatedAt: string;
+}
+
+const duelSchema = new mongoose.Schema<IDuel>(
   {
     code: { type: String, default: shortid.generate },
     status: {
@@ -16,16 +27,5 @@ const duelSchema = new mongoose.Schema(
   },
   { timestamps: true },
 );
-
-export interface IDuel extends mongoose.Document {
-  id: string;
-  code: string;
-  createdAt: Date;
-  status: 'active' | 'pending' | 'suspended';
-  betAmount: number;
-  players: IPlayer[];
-  sport: string;
-  updatedAt: string;
-}
 
 export default mongoose.model<IDuel>('Duel', duelSchema);

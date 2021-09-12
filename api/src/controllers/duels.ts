@@ -10,7 +10,7 @@ async function alreadyInDuel(code: string, userId: string) {
 export async function index(req: Request, res: Response) {
   const duels = await Duel.find({
     status: {
-      $in: (req.query.status as string).split(',') as IDuel['status'][],
+      $in: (req.query.status as string).split(',') as any[],
     },
     'players.id': req.session.userId,
   }).exec();

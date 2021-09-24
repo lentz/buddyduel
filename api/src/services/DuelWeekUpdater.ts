@@ -31,9 +31,10 @@ function updateGames(games: IGame[], lines: IGame[]) {
   return games;
 }
 
-async function getPicker(duel: IDuel) {
+async function getPicker(duel: IDuel, year: number) {
   const duelWeekCount = await DuelWeek.countDocuments({
     duelId: duel.id,
+    year,
   }).exec();
   return duel.players[duelWeekCount % 2];
 }
@@ -63,7 +64,8 @@ export async function call(duels: IDuel[]) {
         new: true,
       },
     ).exec()) as IDuelWeek;
-    duelWeek.picker = duelWeek.picker || (await getPicker(duel));
+    duelWeek.picker =
+      duelWeek.picker ?? (await getPicker(duel, sport.seasonYear));
     duelWeek.games = updateGames(duelWeek.games, newGames);
     await duelWeek.save();
   }

@@ -68,6 +68,23 @@
             ]
           }
         ]
+      },
+      {
+        "matchId": "/sport/football/competition:83448",
+        "odds": [
+          {
+            "book": "pinnacle",
+            "activePointSpread": [
+              {
+                "homeHandicap": -2.5
+              },
+              {
+                "scope": "1h",
+                "homeHandicap": -1.5
+              }
+            ]
+          }
+        ]
       }
     ]
   }

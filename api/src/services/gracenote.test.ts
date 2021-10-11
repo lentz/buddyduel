@@ -74,6 +74,9 @@ describe('gracenote', () => {
       const scheduledMatch = readFileSync(
         './api/__tests__/sample-data/scheduled-nfl-match.json',
       ).toString();
+      const delayedMatch = readFileSync(
+        './api/__tests__/sample-data/delayed-nfl-match.json',
+      ).toString();
       const odds = readFileSync(
         './api/__tests__/sample-data/odds.json',
       ).toString();
@@ -89,6 +92,7 @@ describe('gracenote', () => {
                   { matchId: '/sport/football/competition:80912' },
                   { matchId: '/sport/football/competition:80823' },
                   { matchId: '/sport/football/competition:80814' },
+                  { matchId: '/sport/football/competition:83448' },
                 ],
               },
             },
@@ -108,6 +112,9 @@ describe('gracenote', () => {
         })
         .mockResolvedValueOnce({
           data: JSON.parse(scheduledMatch),
+        })
+        .mockResolvedValueOnce({
+          data: JSON.parse(delayedMatch),
         });
 
       const games = await gracenote.getGames(nfl, 'Week 1');
@@ -157,6 +164,17 @@ describe('gracenote', () => {
             "id": "/sport/football/competition:80814",
             "startTime": 2020-10-13T23:00:00.000Z,
             "time": undefined,
+          },
+          Object {
+            "awayScore": 24,
+            "awaySpread": 2.5,
+            "awayTeam": "Buffalo Bills",
+            "homeScore": 13,
+            "homeSpread": -2.5,
+            "homeTeam": "Kansas City Chiefs",
+            "id": "/sport/football/competition:83448",
+            "startTime": 2021-10-11T00:20:00.000Z,
+            "time": "Delayed 2Q",
           },
         ]
       `);

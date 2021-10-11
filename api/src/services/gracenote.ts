@@ -27,7 +27,7 @@ interface IMatch {
 }
 
 function matchStarted(match: IMatch) {
-  return ['in-progress', 'complete'].includes(match.state.status);
+  return ['delay-rain', 'in-progress', 'complete'].includes(match.state.status);
 }
 
 function createTimeString(match: IMatch) {
@@ -37,6 +37,8 @@ function createTimeString(match: IMatch) {
 
   if (match.state.status === 'complete') {
     return match.state?.overtime ? 'Final/OT' : 'Final';
+  } else if (/delay/i.test(match.state?.status)) {
+    return `Delayed ${match.state?.period}Q`;
   }
 
   const clock = match.state?.clock

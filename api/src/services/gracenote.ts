@@ -70,15 +70,18 @@ async function getMatchIdsForWeek(sport: ISport, week: string) {
     },
   };
 
-  const res = await axios.get('/api/DatePickers/all', opts);
+  type DatepickerResponse = {
+    datepicker: { matchSortByWeek: { [key: string]: { matchId: string }[] } };
+  };
+  const res = await axios.get<DatepickerResponse>('/api/DatePickers/all', opts);
 
-  const matches = res?.data?.datepicker?.matchSortByWeek?.[week];
+  const matches = res.data?.datepicker?.matchSortByWeek?.[week];
 
   if (!matches) {
     return [];
   }
 
-  return matches.map((match: { matchId: string }) => match.matchId);
+  return matches.map((match) => match.matchId);
 }
 
 function getHomeSpreadForMatch(matchId: string, oddsRes: any) {
@@ -129,8 +132,8 @@ export async function getGames(
       },
     };
 
-    const res = await axios.get('/api/Scores/match', opts);
-    const match: IMatch = res.data.scores;
+    const res = await axios.get<{ scores: IMatch }>('/api/Scores/match', opts);
+    const match = res.data.scores;
     const homeSpread = getHomeSpreadForMatch(matchId, oddsRes);
 
     games.push({

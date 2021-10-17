@@ -39,7 +39,7 @@ export async function authenticate(
   res: Response,
   next: NextFunction,
 ) {
-  const response = await axios.post(
+  const response = await axios.post<any, { data: { id_token: string } }>(
     `https://${process.env.AUTH0_DOMAIN}/oauth/token`,
     {
       grant_type: 'authorization_code',

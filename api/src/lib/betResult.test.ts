@@ -12,7 +12,7 @@ describe('#betResult()', () => {
         awayTeam: 'Away Team',
         startTime: new Date(),
       }),
-    ).toEqual('');
+    ).toBe('');
 
     expect(
       betResult({
@@ -23,7 +23,7 @@ describe('#betResult()', () => {
         awayTeam: 'Away Team',
         startTime: new Date(),
       }),
-    ).toEqual('');
+    ).toBe('');
   });
 
   test('is Loss when a team was not selected', () => {
@@ -38,7 +38,7 @@ describe('#betResult()', () => {
       startTime: new Date(),
     });
 
-    expect(result).toEqual('Loss');
+    expect(result).toBe('Loss');
   });
 
   test('is Push when the selected home team matches the spread', () => {
@@ -54,7 +54,7 @@ describe('#betResult()', () => {
       startTime: new Date(),
     });
 
-    expect(result).toEqual('Push');
+    expect(result).toBe('Push');
   });
 
   test('is Push when the selected away team matches the spread', () => {
@@ -70,7 +70,7 @@ describe('#betResult()', () => {
       startTime: new Date(),
     });
 
-    expect(result).toEqual('Push');
+    expect(result).toBe('Push');
   });
 
   test('is Win when the selected home team covers the spread', () => {
@@ -86,7 +86,7 @@ describe('#betResult()', () => {
       startTime: new Date(),
     });
 
-    expect(result).toEqual('Win');
+    expect(result).toBe('Win');
   });
 
   test('is Win when the selected away team covers the spread', () => {
@@ -102,7 +102,7 @@ describe('#betResult()', () => {
       startTime: new Date(),
     });
 
-    expect(result).toEqual('Win');
+    expect(result).toBe('Win');
   });
 
   test('is Loss when the selected home team does not cover the spread', () => {
@@ -118,7 +118,7 @@ describe('#betResult()', () => {
       startTime: new Date(),
     });
 
-    expect(result).toEqual('Loss');
+    expect(result).toBe('Loss');
   });
 
   test('is Loss when the selected away team does not cover the spread', () => {
@@ -134,6 +134,6 @@ describe('#betResult()', () => {
       startTime: new Date(),
     });
 
-    expect(result).toEqual('Loss');
+    expect(result).toBe('Loss');
   });
 });

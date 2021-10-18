@@ -3,7 +3,7 @@
 import axios from 'axios';
 
 async function getToken() {
-  const response = await axios.post(
+  const response = await axios.post<any, { data: { access_token: string } }>(
     `https://${process.env.AUTH0_DOMAIN}/oauth/token`,
     {
       grant_type: 'client_credentials',
@@ -19,7 +19,7 @@ async function getToken() {
 }
 
 export async function getInfo(userId: string) {
-  const response = await axios.get(
+  const response = await axios.get<{ email: string; user_metadata: any }>(
     `https://${process.env.AUTH0_DOMAIN}/api/v2/users/${userId}`,
     {
       headers: { Authorization: `Bearer ${await getToken()}` },

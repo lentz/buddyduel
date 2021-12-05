@@ -84,7 +84,7 @@
     "lint-staged": "^12.1.2",
     "nock": "^13.2.1",
     "pre-commit": "^1.2.2",
-    "prettier": "2.5.0",
+    "prettier": "2.5.1",
     "supertest": "^6.1.6",
     "ts-jest": "^25.5.1",
     "ts-node": "^10.4.0",

@@ -85,7 +85,7 @@
     "nock": "^13.2.2",
     "pre-commit": "^1.2.2",
     "prettier": "2.5.1",
-    "supertest": "^6.1.6",
+    "supertest": "^6.2.1",
     "ts-jest": "^25.5.1",
     "ts-node": "^10.4.0",
     "tslint": "^6.1.3"

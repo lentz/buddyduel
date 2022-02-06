@@ -57,7 +57,7 @@
     "shortid": "^2.2.16",
     "tslib": "^1.14.1",
     "typescript": "3.8.3",
-    "winston": "^3.5.0",
+    "winston": "^3.5.1",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {

@@ -53,7 +53,7 @@ export const sports: ISport[] = [
         return 'Divisional Playoffs';
       } else if (weekNum === 21) {
         return 'Conference Championships';
-      } else if (weekNum === 22) {
+      } else if (weekNum === 22 || weekNum === 23) {
         return 'Super Bowl';
       } else {
         return null;

@@ -23,7 +23,7 @@
           game.awaySpread | pointSpread
         }}</small>
       </td>
-      <td *ngIf="game.awayScore != null" class="score">
+      <td *ngIf="game.awayScore !== null" class="score">
         <span>{{ game.awayScore }}</span>
       </td>
     </tr>
@@ -50,7 +50,7 @@
           game.homeSpread | pointSpread
         }}</small>
       </td>
-      <td *ngIf="game.homeScore != null" class="score">
+      <td *ngIf="game.homeScore !== null" class="score">
         <span>{{ game.homeScore }}</span>
       </td>
     </tr>

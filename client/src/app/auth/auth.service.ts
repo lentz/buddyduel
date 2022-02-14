@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import * as Cookies from 'js-cookie';
+import Cookies from 'js-cookie';
 import { environment } from '../../environments/environment';
 
 @Injectable()

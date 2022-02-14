@@ -4,6 +4,7 @@
   },
   "compileOnSave": false,
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
     "downlevelIteration": true,
     "outDir": "./dist/out-tsc",
     "baseUrl": "src",

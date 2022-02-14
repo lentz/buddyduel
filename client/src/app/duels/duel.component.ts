@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
-import { Subscription } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
 
 import { AuthService } from '../auth/auth.service';
 import { Duel } from './duel';
@@ -94,7 +92,7 @@ export class DuelComponent implements OnInit {
       await this.duelsService.updateDuel(this.duel);
       this.toastr.success('Duel updated');
     } catch (err) {
-      this.toastr.error(err);
+      this.toastr.error((err as Error).toString());
     }
   }
 
@@ -138,7 +136,7 @@ export class DuelComponent implements OnInit {
           } | BuddyDuel`,
         );
       } catch (err) {
-        this.toastr.error(err);
+        this.toastr.error((err as Error).toString());
       }
     });
   }

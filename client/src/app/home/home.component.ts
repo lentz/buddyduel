@@ -53,7 +53,7 @@ export class HomeComponent implements OnInit {
         current: true,
       });
     } catch (err) {
-      this.toastr.error(err);
+      this.toastr.error((err as Error).toString());
     }
   }
 

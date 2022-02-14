@@ -1,5 +1,3 @@
-/* eslint-disable no-param-reassign, @typescript-eslint/camelcase */
-
 import { NextFunction, Request, Response } from 'express';
 import jwtDecode from 'jwt-decode';
 import axios from 'axios';

@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
-
 import axios from 'axios';
 
 async function getToken() {

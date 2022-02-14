@@ -18,6 +18,13 @@ const app = express();
 app.use(morgan('combined'));
 app.set('trust proxy', 1);
 
+declare module 'express-session' {
+  interface SessionData {
+    userName: string;
+    userId: string;
+  }
+}
+
 const MongoDBStore = connectMongodbSession(session);
 const store = new MongoDBStore({
   uri: process.env.MONGODB_URI || '',

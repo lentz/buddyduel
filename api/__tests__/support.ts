@@ -5,7 +5,6 @@ import app from '../src/app';
 export async function createSession(user) {
   nock(`https://${process.env.AUTH0_DOMAIN}`)
     .post('/oauth/token')
-    /* eslint-disable-next-line @typescript-eslint/camelcase */
     .reply(200, { id_token: user.idToken });
 
   const authResp = await supertest(app).get('/auth/callback').expect(200);

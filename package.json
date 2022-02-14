@@ -92,6 +92,15 @@
     "typescript": "^4.4.4"
   },
   "jest": {
+    "globals": {
+      "ts-jest": {
+        "diagnostics": {
+          "ignoreCodes": [
+            151001
+          ]
+        }
+      }
+    },
     "preset": "ts-jest",
     "testEnvironment": "node",
     "testMatch": [

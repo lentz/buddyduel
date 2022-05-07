@@ -16,6 +16,7 @@
     "lint": "eslint 'api/**/*.ts'",
     "lint-staged": "lint-staged",
     "postlint": "cd ./client && ng lint",
+    "serve": "ts-node-dev --inspect -- api/src/server.ts",
     "start": "node api/dist/server.js",
     "test": "jest --coverage --forceExit",
     "test-watch": "jest --watch"
@@ -92,6 +93,7 @@
     "supertest": "^6.2.2",
     "ts-jest": "^27.1.4",
     "ts-node": "^10.7.0",
+    "ts-node-dev": "^1.1.8",
     "typescript": "^4.5.5"
   },
   "jest": {

@@ -27,7 +27,7 @@ declare module 'express-session' {
 
 const MongoDBStore = connectMongodbSession(session);
 const store = new MongoDBStore({
-  uri: process.env.MONGODB_URI || '',
+  uri: `${process.env.MONGODB_URI}/${process.env.DATABASE_NAME}`,
   collection: 'sessions',
 });
 store.on('error', (err: any) => logger.error(err));

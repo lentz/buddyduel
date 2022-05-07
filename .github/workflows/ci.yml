@@ -13,6 +13,8 @@ jobs:
       AUTH0_DOMAIN: fake-domain.auth0.com
       SENDGRID_API_KEY: SG.TEST_KEY
       SESSION_SECRET: test
+      MONGODB_URI: 'mongodb://localhost'
+      PORT: 3000
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -38,11 +40,12 @@ jobs:
         with:
           mongodb-version: '4.2'
       - name: Test
+        env:
+          DATABASE_NAME: 'integration'
         run: npm run test
       - name: E2E Test
         uses: cypress-io/github-action@v2
         env:
-          MONGODB_URI: 'mongodb://localhost/buddyduel-e2e'
-          PORT: 3000
+          DATABASE_NAME: 'e2e'
         with:
           start: npm start

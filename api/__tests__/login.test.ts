@@ -1,5 +1,5 @@
 /* eslint-disable arrow-body-style, jest/expect-expect */
-process.env.MONGODB_URI = 'mongodb://localhost/buddyduel-test';
+process.env.DATABASE_NAME = 'test';
 import * as request from 'supertest';
 import app from '../src/app';
 import { createSession, user1 } from './support';

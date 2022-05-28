@@ -1,4 +1,4 @@
-import * as moment from 'moment';
+import { differenceInWeeks } from 'date-fns';
 
 export interface ISport {
   competitionId: string;
@@ -16,7 +16,7 @@ export const sports: ISport[] = [
       const now = new Date();
       if (now < new Date('2020-03-19')) {
         const weekOne = new Date('2019-11-05');
-        return `Week ${moment(now).diff(moment(weekOne), 'weeks') + 1}`;
+        return `Week ${differenceInWeeks(weekOne, now) + 1}`;
       } else if (now < new Date('2020-03-21')) {
         return 'Round 1';
       } else if (now < new Date('2020-03-26')) {
@@ -44,7 +44,7 @@ export const sports: ISport[] = [
     competitionId: '/sport/football/league:1',
     currentWeek: () => {
       const weekOne = new Date('2021-09-08T04:00:00Z');
-      const weekNum = moment().diff(moment(weekOne), 'weeks') + 1;
+      const weekNum = differenceInWeeks(weekOne, new Date()) + 1;
       if (weekNum < 19) {
         return `Week ${weekNum}`;
       } else if (weekNum === 19) {

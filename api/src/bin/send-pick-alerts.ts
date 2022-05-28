@@ -1,7 +1,7 @@
 /* eslint no-console: 0 */
 
 import * as dotenv from 'dotenv';
-import * as moment from 'moment';
+import { addMinutes } from 'date-fns';
 import * as sgMail from '@sendgrid/mail';
 import db from '../lib/db';
 import { default as DuelWeek, IDuelWeek } from '../models/DuelWeek';
@@ -79,7 +79,7 @@ function isApproachingUnpicked(game: IGame, startsWithinTime: Date) {
 async function run() {
   const beginTime = Date.now();
   try {
-    const startsWithinTime = moment().add(1.5, 'hours').toDate();
+    const startsWithinTime = addMinutes(new Date(), 90);
     const query = {
       games: {
         $elemMatch: {

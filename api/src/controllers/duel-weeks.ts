@@ -2,7 +2,7 @@
 
 import { Request, Response } from 'express';
 import { sortBy } from 'lodash';
-import * as moment from 'moment';
+import { addDays, subDays } from 'date-fns';
 import { default as DuelWeek, IDuelWeek } from '../models/DuelWeek';
 import IGame from '../models/IGame';
 
@@ -12,8 +12,8 @@ export async function index(req: Request, res: Response) {
     filter.duelId = req.query.duelId;
   } else if (req.query.current) {
     filter['games.startTime'] = {
-      $gt: moment().subtract(1, 'day'),
-      $lt: moment().add(5, 'days'),
+      $gt: subDays(new Date(), 1),
+      $lt: addDays(new Date(), 5),
     };
   }
   res.json(await DuelWeek.find(filter).sort({ createdAt: -1 }).exec());

@@ -1,10 +1,10 @@
 import * as dotenv from 'dotenv';
 import * as bodyParser from 'body-parser';
-import * as express from 'express';
-import * as session from 'express-session';
+import express from 'express';
+import session from 'express-session';
 import connectMongodbSession = require('connect-mongodb-session');
 import 'express-async-errors';
-import * as morgan from 'morgan';
+import morgan from 'morgan';
 import * as path from 'path';
 import * as usersController from './controllers/users';
 import logger from './lib/logger';

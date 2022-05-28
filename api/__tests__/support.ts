@@ -1,15 +1,15 @@
-import * as nock from 'nock';
-import * as supertest from 'supertest';
+import nock from 'nock';
+import supertest from 'supertest';
 import app from '../src/app';
 
-export async function createSession(user) {
+export async function createSession(user: any) {
   nock(`https://${process.env.AUTH0_DOMAIN}`)
     .post('/oauth/token')
     .reply(200, { id_token: user.idToken });
 
   const authResp = await supertest(app).get('/auth/callback').expect(200);
   return authResp.headers['set-cookie']
-    .find((header) => /connect.sid/.test(header))
+    .find((header: string) => /connect.sid/.test(header))
     .split(';')[0];
 }
 

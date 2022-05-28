@@ -2,7 +2,7 @@ import * as dotenv from 'dotenv';
 import * as bodyParser from 'body-parser';
 import express from 'express';
 import session from 'express-session';
-import connectMongodbSession = require('connect-mongodb-session');
+import connectMongodbSession from 'connect-mongodb-session';
 import 'express-async-errors';
 import morgan from 'morgan';
 import * as path from 'path';

@@ -1,6 +1,6 @@
 /* eslint-disable arrow-body-style, jest/expect-expect */
 process.env.DATABASE_NAME = 'test';
-import * as request from 'supertest';
+import request from 'supertest';
 import app from '../src/app';
 import { createSession, user1 } from './support';
 import logger from '../src/lib/logger';

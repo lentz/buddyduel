@@ -44,7 +44,7 @@ jobs:
           DATABASE_NAME: 'integration'
         run: npm run test
       - name: E2E Test
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4
         env:
           DATABASE_NAME: 'e2e'
         with:

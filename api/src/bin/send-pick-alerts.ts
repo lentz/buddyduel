@@ -2,7 +2,7 @@
 
 import * as dotenv from 'dotenv';
 import { addMinutes } from 'date-fns';
-import * as sgMail from '@sendgrid/mail';
+import sgMail from '@sendgrid/mail';
 import db from '../lib/db';
 import { default as DuelWeek, IDuelWeek } from '../models/DuelWeek';
 import * as user from '../services/user';

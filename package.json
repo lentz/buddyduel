@@ -8,7 +8,7 @@
   "scripts": {
     "build-api": "cd ./api && tsc",
     "build-client": "cd ./client && ng build",
-    "build-client-prod": "cd ./client && ng build --prod",
+    "build-client-prod": "cd ./client && ng build --configuration production",
     "build-client-watch": "cd ./client && ng build --watch",
     "e2e-test": "cypress run",
     "heroku-postbuild": "npm run build-api && npm run build-client-prod",

@@ -38,7 +38,9 @@ export class GameComponent {
   }
 
   logoPath(teamName: string): string {
-    return `team-logos/${teamName.replace(/\s+/g, '-').toLowerCase()}.png`;
+    return `assets/team-logos/${teamName
+      .replace(/\s+/g, '-')
+      .toLowerCase()}.png`;
   }
 
   private selectionSaved(): boolean {

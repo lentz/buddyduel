@@ -24,8 +24,8 @@ export class AuthService {
 
   getUser(): { id: string; name: string } {
     return {
-      id: Cookies.get('userId') || 'unknown',
-      name: Cookies.get('userName') || 'Guest',
+      id: Cookies.get('userId') ?? 'unknown',
+      name: Cookies.get('userName') ?? 'Guest',
     };
   }
 

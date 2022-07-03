@@ -4,7 +4,6 @@ import request from 'supertest';
 
 import app from '../src/app';
 import { createSession, user1, user2 } from './support';
-import * as DuelWeekUpdater from '../src/services/DuelWeekUpdater';
 import logger from '../src/lib/logger';
 
 let sessionCookie: string;
@@ -76,7 +75,7 @@ describe('duels API', () => {
     });
 
     test('accepting a duel succeeds if the user is not already in it', async () => {
-      jest.spyOn(DuelWeekUpdater, 'call').mockResolvedValue(null);
+      /* If this test breaks in the future, use nock to mock HTTP calls to Gracenote */
 
       const createResponse = await request(app)
         .post('/api/duels')

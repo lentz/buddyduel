@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, merge, Observable, Subscription } from 'rxjs';
 
 import { AuthService } from '../auth/auth.service';
 import { DuelsService } from '../duels/duels.service';
 import { Duel } from '../duels/duel';
+import { switchMap } from 'rxjs/operators';
 
 declare var jQuery: any;
 
@@ -16,8 +17,8 @@ declare var jQuery: any;
 })
 export class NavComponent {
   betAmount = 0;
-  duels: Duel[] = [];
-  duelAcceptedSubscription: Subscription;
+  refreshDuels$ = new BehaviorSubject<boolean>(true);
+  duels$!: Observable<Duel[]>;
   sport = '';
   sports: string[] = [];
 
@@ -27,26 +28,15 @@ export class NavComponent {
     private toastr: ToastrService,
   ) {
     if (this.authService.isAuthenticated()) {
-      this.loadDuels();
+      this.duels$ = merge(this.refreshDuels$, duelsService.duelAccepted$).pipe(
+        switchMap(() =>
+          this.duelsService.getDuels({ status: 'active,suspended' }),
+        ),
+      );
       duelsService.getSports().then((sports) => {
         this.sports = sports;
       });
     }
-    this.duelAcceptedSubscription = duelsService.duelAccepted$.subscribe(
-      this.loadDuels.bind(this),
-    );
-  }
-
-  private loadDuels(): void {
-    this.duelsService
-      .getDuels({ status: 'active,suspended' })
-      .then((duels) => {
-        this.duels = duels;
-      })
-      .catch((err) => {
-        console.error(err);
-        this.toastr.error('Failed to get duels!');
-      });
   }
 
   opponentName(duel: Duel): string {

@@ -1,6 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+export interface UserProfile {
+  preferences: {
+    reminderEmails: boolean;
+  };
+  record: {
+    losses: number;
+    pushes: number;
+    wins: number;
+  };
+  winnings: number;
+}
+
 @Injectable()
 export class UserProfileService {
   private profileURL = 'api/profile';
@@ -8,26 +20,13 @@ export class UserProfileService {
 
   constructor(private http: HttpClient) {}
 
-  getProfile(): Promise<any> {
-    return this.http
-      .get(this.profileURL)
-      .toPromise()
-      .then((response: any) => response)
-      .catch(this.handleError);
+  getProfile() {
+    return this.http.get<UserProfile>(this.profileURL);
   }
 
-  updateProfile(profile: { reminderEmails: boolean }): Promise<any> {
-    return this.http
-      .put(this.profileURL, profile, { headers: this.headers })
-      .toPromise()
-      .then((response: any) => response)
-      .catch(this.handleError);
-  }
-
-  private handleError(error: any): Promise<any> {
-    if (error.message) {
-      error = error.message;
-    }
-    return Promise.reject(error.statusText || error);
+  updateProfile(profile: { reminderEmails: boolean }) {
+    return this.http.put<void>(this.profileURL, profile, {
+      headers: this.headers,
+    });
   }
 }

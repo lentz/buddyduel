@@ -8,6 +8,8 @@ import { Duel } from './duel';
 import { DuelWeek } from '../duel-weeks/duel-week';
 import { DuelsService } from './duels.service';
 import { DuelWeeksService } from '../duel-weeks/duel-weeks.service';
+import { forkJoin } from 'rxjs';
+import { filter, map, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'duel-summary',
@@ -29,7 +31,32 @@ export class DuelComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadData();
+    this.route.paramMap
+      .pipe(
+        map((params: ParamMap) => params.get('id')),
+        filter(
+          (duelId): duelId is string => duelId !== null && duelId !== undefined,
+        ),
+        switchMap((duelId) => {
+          return forkJoin({
+            duel: this.duelsService.getDuel(duelId),
+            duelWeeks: this.duelWeeksService.getDuelWeeks({ duelId }),
+          });
+        }),
+      )
+      .subscribe(
+        (val) => {
+          this.duelWeeks = val.duelWeeks;
+          this.duel = val.duel;
+          this.titleService.setTitle(
+            `${this.duel.sport} vs. ${
+              this.duelsService.opponentForPlayers(this.duelWeeks[0].players)
+                .name
+            } | BuddyDuel`,
+          );
+        },
+        (err) => this.toastr.error((err as Error).toString()),
+      );
   }
 
   years(): number[] {
@@ -116,28 +143,5 @@ export class DuelComponent implements OnInit {
         },
         { wins: 0, losses: 0, pushes: 0 },
       );
-  }
-
-  private loadData(): void {
-    this.route.paramMap.subscribe(async (params: ParamMap) => {
-      try {
-        const duelId = params.get('id');
-        if (!duelId) {
-          throw new Error('Duel ID not found!');
-        }
-        this.duel = await this.duelsService.getDuel(duelId);
-        const duelWeeks = await this.duelWeeksService.getDuelWeeks({
-          duelId: duelId,
-        });
-        this.duelWeeks = duelWeeks;
-        this.titleService.setTitle(
-          `${this.duel.sport} vs. ${
-            this.duelsService.opponentForPlayers(duelWeeks[0].players).name
-          } | BuddyDuel`,
-        );
-      } catch (err) {
-        this.toastr.error((err as Error).toString());
-      }
-    });
   }
 }

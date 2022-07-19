@@ -26,20 +26,12 @@ export class DuelsService {
     return opponent ?? new Player();
   }
 
-  getDuel(id: string): Promise<Duel> {
-    return this.http
-      .get(`${this.duelsURL}/${id}`)
-      .toPromise()
-      .then((response: any) => response as Duel)
-      .catch(this.handleError);
+  getDuel(id: string) {
+    return this.http.get<Duel>(`${this.duelsURL}/${id}`);
   }
 
-  getDuels(params = {}): Promise<Duel[]> {
-    return this.http
-      .get(this.duelsURL, { params })
-      .toPromise()
-      .then((response: any) => response as Duel[])
-      .catch(this.handleError);
+  getDuels(params = {}) {
+    return this.http.get<Duel[]>(this.duelsURL, { params });
   }
 
   acceptDuel(code: string): Promise<any> {

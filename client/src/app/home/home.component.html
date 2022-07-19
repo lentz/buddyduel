@@ -4,11 +4,11 @@
       <div class="card-header">Current Duel Weeks</div>
       <div class="card-body active-duels">
         <ul>
-          <li *ngIf="!loadComplete" class="skeleton">
+          <li *ngIf="(currentDuelWeeks$ | async) === null" class="skeleton">
             <span class="description-loading"></span>
             <span class="opponent-loading"></span>
           </li>
-          <li *ngFor="let duelWeek of currentDuelWeeks">
+          <li *ngFor="let duelWeek of currentDuelWeeks$ | async">
             <a [routerLink]="['/duel-weeks', duelWeek._id]">
               <span class="week-description">
                 {{ duelWeek.sport }} {{ duelWeek.description }}
@@ -19,18 +19,18 @@
             </a>
           </li>
         </ul>
-        <span *ngIf="loadComplete && currentDuelWeeks.length < 1">
+        <span *ngIf="(currentDuelWeeks$ | async)?.length === 0">
           Create a duel and send the code to a buddy to get started or enter a
           code given to you in the 'Duel Code' box and click 'Accept'.
         </span>
       </div>
     </div>
-    <div class="card" *ngIf="pendingDuels.length > 0">
+    <div class="card" *ngIf="(pendingDuels$ | async)?.length">
       <div class="card-header">Pending Duels</div>
       <div class="card-body">
         <h6 class="card-subtitle mb-2 text-muted">Give the code to a friend</h6>
         <ul class="pending-duels">
-          <li *ngFor="let duel of pendingDuels">
+          <li *ngFor="let duel of pendingDuels$ | async">
             <pre>{{ duel.code }}</pre>
             <span>({{ duel.sport }} ${{ duel.betAmount }}/game)</span>
             <button

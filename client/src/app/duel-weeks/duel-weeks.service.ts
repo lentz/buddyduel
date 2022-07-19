@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { AuthService } from '../auth/auth.service';
 import { DuelWeek } from './duel-week';
 
 @Injectable()
@@ -10,14 +9,10 @@ export class DuelWeeksService {
 
   private duelWeeksURL = 'api/duel-weeks';
 
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  constructor(private http: HttpClient) {}
 
-  getDuelWeeks(params = {}): Promise<DuelWeek[]> {
-    return this.http
-      .get(`${this.duelWeeksURL}`, { params })
-      .toPromise()
-      .then((response: any) => response as DuelWeek[])
-      .catch(this.handleError);
+  getDuelWeeks(params = {}) {
+    return this.http.get<DuelWeek[]>(`${this.duelWeeksURL}`, { params });
   }
 
   getDuelWeek(id: string) {
@@ -27,20 +22,13 @@ export class DuelWeeksService {
     });
   }
 
-  updateDuelWeek(duelWeek: DuelWeek): Promise<DuelWeek> {
-    return this.http
-      .put(`${this.duelWeeksURL}/${duelWeek._id}`, JSON.stringify(duelWeek), {
+  updateDuelWeek(duelWeek: DuelWeek) {
+    return this.http.put<DuelWeek>(
+      `${this.duelWeeksURL}/${duelWeek._id}`,
+      JSON.stringify(duelWeek),
+      {
         headers: this.headers,
-      })
-      .toPromise()
-      .then((response: any) => response as DuelWeek)
-      .catch(this.handleError);
-  }
-
-  private handleError(res: any): Promise<any> {
-    if (res.error.message) {
-      return Promise.reject(res.error.message);
-    }
-    return Promise.reject(res.statusText);
+      },
+    );
   }
 }

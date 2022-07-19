@@ -77,14 +77,14 @@ export class DuelWeekComponent implements OnInit, OnDestroy {
     this.updateSubscription$?.unsubscribe();
   }
 
-  save(): void {
-    this.duelWeeksService
-      .updateDuelWeek(this.duelWeek)
-      .then(() => {
+  save() {
+    this.duelWeeksService.updateDuelWeek(this.duelWeek).subscribe(
+      () => {
         this.toastr.success('Picks locked in!');
         this.duelWeek.games.forEach((game) => (game.updated = false));
-      })
-      .catch((err) => this.toastr.error('Failed to save picks'));
+      },
+      () => this.toastr.error('Failed to save picks'),
+    );
   }
 
   hasLiveGames() {

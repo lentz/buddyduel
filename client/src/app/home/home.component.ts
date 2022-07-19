@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 
 import { AuthService } from '../auth/auth.service';
 import { Duel } from '../duels/duel';
 import { DuelsService } from '../duels/duels.service';
 import { DuelWeek } from '../duel-weeks/duel-week';
 import { DuelWeeksService } from '../duel-weeks/duel-weeks.service';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -18,10 +19,11 @@ import { DuelWeeksService } from '../duel-weeks/duel-weeks.service';
 export class HomeComponent implements OnInit {
   acceptCode = '';
   processingAccept = false;
-  currentDuelWeeks: DuelWeek[] = [];
-  pendingDuels: Duel[] = [];
+  refreshDuelWeeks$ = new BehaviorSubject<boolean>(true);
+  currentDuelWeeks$!: Observable<DuelWeek[]>;
+  refreshPendingDuels$ = new BehaviorSubject<boolean>(true);
+  pendingDuels$!: Observable<Duel[]>;
   duelCreatedSubscription: Subscription;
-  loadComplete = false;
 
   public constructor(
     private duelsService: DuelsService,
@@ -32,36 +34,21 @@ export class HomeComponent implements OnInit {
     private toastr: ToastrService,
   ) {
     this.duelCreatedSubscription = duelsService.duelCreated$.subscribe((duel) =>
-      this.pendingDuels.push(duel),
+      this.refreshPendingDuels$.next(true),
     );
     if (this.authService.isAuthenticated()) {
-      this.loadDuelWeeks().then(() => {
-        this.loadComplete = true;
-      });
-      this.loadPendingDuels();
+      this.currentDuelWeeks$ = this.refreshDuelWeeks$.pipe(
+        switchMap(() => this.duelWeeksService.getDuelWeeks({ current: true })),
+      );
+      this.pendingDuels$ = this.refreshPendingDuels$.pipe(
+        switchMap(() => this.duelsService.getDuels({ status: 'pending' })),
+      );
     }
   }
 
   ngOnInit(): void {
     this.router.navigateByUrl('/');
     this.titleService.setTitle('BuddyDuel');
-  }
-
-  private async loadDuelWeeks(): Promise<any> {
-    try {
-      this.currentDuelWeeks = await this.duelWeeksService.getDuelWeeks({
-        current: true,
-      });
-    } catch (err) {
-      this.toastr.error((err as Error).toString());
-    }
-  }
-
-  private loadPendingDuels(): void {
-    this.duelsService
-      .getDuels({ status: 'pending' })
-      .then((duels) => (this.pendingDuels = duels))
-      .catch((err) => this.toastr.error(err));
   }
 
   opponentName(duelWeek: DuelWeek): string {
@@ -73,7 +60,7 @@ export class HomeComponent implements OnInit {
     this.duelsService
       .acceptDuel(this.acceptCode)
       .then(() => {
-        this.loadDuelWeeks();
+        this.refreshDuelWeeks$.next(true);
         this.acceptCode = '';
         this.processingAccept = false;
         this.toastr.success('Duel accepted!');
@@ -88,9 +75,7 @@ export class HomeComponent implements OnInit {
     this.duelsService
       .deleteDuel(duelId)
       .then(() => {
-        this.pendingDuels = this.pendingDuels.filter(
-          (duel) => duel._id !== duelId,
-        );
+        this.refreshPendingDuels$.next(true);
         this.toastr.success('Duel deleted');
       })
       .catch((err) => this.toastr.error(err));

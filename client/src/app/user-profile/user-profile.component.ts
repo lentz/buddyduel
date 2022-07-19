@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
-import { Subscription } from 'rxjs';
 
-import { AuthService } from '../auth/auth.service';
 import { UserProfileService } from './user-profile.service';
 
 @Component({
@@ -19,36 +17,29 @@ export class UserProfileComponent implements OnInit {
   constructor(
     private titleService: Title,
     private toastr: ToastrService,
-    private authService: AuthService,
     private userProfileService: UserProfileService,
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.titleService.setTitle('My Profile | BuddyDuel');
-    this.loadProfile();
+    this.userProfileService.getProfile().subscribe(
+      (profile) => {
+        this.record = profile.record;
+        this.reminderEmails = profile.preferences.reminderEmails;
+        this.winnings = profile.winnings;
+      },
+      () => {
+        this.toastr.error('Failed to load user profile');
+      },
+    );
   }
 
-  savePreferences(): void {
+  savePreferences() {
     this.userProfileService
       .updateProfile({ reminderEmails: this.reminderEmails })
-      .then(() => this.toastr.success('Preferences saved'))
-      .catch((err) => {
-        console.error(err);
-        this.toastr.error('Failed to save preferences');
-      });
-  }
-
-  private loadProfile(): void {
-    this.userProfileService
-      .getProfile()
-      .then((profile) => {
-        this.record = profile.record;
-        this.winnings = profile.winnings;
-        this.reminderEmails = profile.preferences.reminderEmails;
-      })
-      .catch((err) => {
-        console.error(err);
-        this.toastr.error('Failed to load user profile');
-      });
+      .subscribe(
+        () => this.toastr.success('Preferences saved'),
+        () => this.toastr.error('Failed to save preferences'),
+      );
   }
 }

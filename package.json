@@ -23,7 +23,7 @@
     "typecheck": "tsc --watch --noEmit -p ./api/tsconfig.json"
   },
   "engines": {
-    "node": "^14.0.0"
+    "node": "^16.0.0"
   },
   "dependencies": {
     "@angular/animations": "13.2.2",

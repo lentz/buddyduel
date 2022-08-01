@@ -57,7 +57,7 @@
     "shortid": "^2.2.16",
     "tslib": "^2.4.0",
     "winston": "^3.8.1",
-    "zone.js": "~0.11.6"
+    "zone.js": "~0.11.7"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~13.2.3",

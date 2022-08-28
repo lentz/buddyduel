@@ -13,7 +13,7 @@ export class DuelsService {
   private duelsURL = 'api/duels';
 
   private duelCreatedSource = new Subject<Duel>();
-  private duelAcceptedSource = new Subject<Duel>();
+  private duelAcceptedSource = new Subject<boolean>();
 
   duelCreated$ = this.duelCreatedSource.asObservable();
   duelAccepted$ = this.duelAcceptedSource.asObservable();
@@ -34,11 +34,15 @@ export class DuelsService {
     return this.http.get<Duel[]>(this.duelsURL, { params });
   }
 
-  acceptDuel(code: string): Promise<any> {
+  async acceptDuel(code: string): Promise<any> {
     return this.http
-      .put(`${this.duelsURL}/accept`, { code }, { headers: this.headers })
+      .put<{ message: string }>(
+        `${this.duelsURL}/accept`,
+        { code },
+        { headers: this.headers },
+      )
       .toPromise()
-      .then(() => this.duelAcceptedSource.next())
+      .then(() => this.duelAcceptedSource.next(true))
       .catch(this.handleError);
   }
 

@@ -22,7 +22,7 @@ export class DuelWeekComponent implements OnInit, OnDestroy {
   duelWeek = new DuelWeek({});
   initialLoadComplete = false;
   math = Math;
-  noLiveGamesSubject = new Subject();
+  noLiveGamesSubject = new Subject<boolean>();
   updateSubscription$: Subscription | null = null;
 
   constructor(
@@ -58,7 +58,7 @@ export class DuelWeekComponent implements OnInit, OnDestroy {
             this.initialLoadComplete = true;
             this.duelWeek = res.body ?? new DuelWeek({});
             if (!this.hasLiveGames()) {
-              this.noLiveGamesSubject.next();
+              this.noLiveGamesSubject.next(true);
             }
             this.titleService.setTitle(
               `${this.duelWeek.sport} ${

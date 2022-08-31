@@ -49,6 +49,9 @@ export async function call(duels: IDuel[]) {
     if (!description) {
       continue;
     }
+    console.log(
+      `Updating ${sport.name} ${sport.seasonYear} ${description} for duel ID ${duel.id}`,
+    );
     const newGames = await gracenote.getGames(sport, description);
     const duelWeek = (await DuelWeek.findOneAndUpdate(
       { year: sport.seasonYear, description, duelId: duel.id },

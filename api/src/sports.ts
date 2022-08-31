@@ -43,7 +43,7 @@ export const sports: ISport[] = [
   {
     competitionId: '/sport/football/league:1',
     currentWeek: () => {
-      const weekOne = new Date('2021-09-08T04:00:00Z');
+      const weekOne = new Date('2022-09-06T04:00:00Z');
       const weekNum = differenceInWeeks(new Date(), weekOne) + 1;
       if (weekNum < 19) {
         return `Week ${weekNum}`;
@@ -59,10 +59,10 @@ export const sports: ISport[] = [
         return null;
       }
     },
-    editionId: '/sport/football/season:240', // Unique to season year
+    editionId: '/sport/football/season:242', // Unique to season year
     name: 'NFL',
     module: 'americanfootball',
-    seasonYear: 2021,
+    seasonYear: 2022,
     sportId: '/sport/football',
   },
 ];

@@ -6,7 +6,7 @@
 }
 .game-card .btn {
   font-size: 0.9rem;
-  max-width: 210px;
+  max-width: 202px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -19,7 +19,6 @@
 }
 .game-card .team-name {
   display: inline-block;
-  max-width: 175px;
   overflow: hidden;
   text-overflow: ellipsis;
   vertical-align: top;

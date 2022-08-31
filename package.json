@@ -18,8 +18,8 @@
     "postlint": "cd ./client && ng lint",
     "serve": "tsnd --inspect --rs --transpile-only --transpiler ts-node/transpilers/swc -- ./api/src/server.ts",
     "start": "node api/dist/server.js",
-    "test": "jest --coverage --forceExit",
-    "test-watch": "jest --watch",
+    "test": "DATABASE_NAME=test jest --coverage --forceExit",
+    "test-watch": "DATABASE_NAME=test jest --watch",
     "typecheck": "tsc --watch --noEmit -p ./api/tsconfig.json"
   },
   "engines": {

@@ -1,5 +1,4 @@
 /* eslint-disable arrow-body-style */
-process.env.DATABASE_NAME = 'test';
 import request from 'supertest';
 
 import app from '../src/app';

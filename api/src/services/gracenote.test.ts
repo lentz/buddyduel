@@ -120,8 +120,8 @@ describe('gracenote', () => {
       const games = await gracenote.getGames(nfl, 'Week 1');
 
       expect(games).toMatchInlineSnapshot(`
-        Array [
-          Object {
+        [
+          {
             "awayScore": 27,
             "awaySpread": 7,
             "awayTeam": "Los Angeles Chargers",
@@ -132,7 +132,7 @@ describe('gracenote', () => {
             "startTime": 2020-10-13T00:15:00.000Z,
             "time": "4Q 1:42",
           },
-          Object {
+          {
             "awayScore": 6,
             "awaySpread": -13,
             "awayTeam": "Tampa Bay Buccaneers",
@@ -143,7 +143,7 @@ describe('gracenote', () => {
             "startTime": 2020-11-03T01:15:00.000Z,
             "time": "Halftime",
           },
-          Object {
+          {
             "awayScore": 43,
             "awaySpread": 8.5,
             "awayTeam": "Miami Dolphins",
@@ -154,7 +154,7 @@ describe('gracenote', () => {
             "startTime": 2020-10-11T20:05:00.000Z,
             "time": "Final",
           },
-          Object {
+          {
             "awayScore": undefined,
             "awaySpread": -3,
             "awayTeam": "Buffalo Bills",
@@ -165,7 +165,7 @@ describe('gracenote', () => {
             "startTime": 2020-10-13T23:00:00.000Z,
             "time": undefined,
           },
-          Object {
+          {
             "awayScore": 24,
             "awaySpread": 2.5,
             "awayTeam": "Buffalo Bills",

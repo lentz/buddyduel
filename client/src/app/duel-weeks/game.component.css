@@ -20,6 +20,7 @@
 .game-card .team-name {
   display: inline-block;
   overflow: hidden;
+  max-width: 180px;
   text-overflow: ellipsis;
   vertical-align: top;
   white-space: nowrap;

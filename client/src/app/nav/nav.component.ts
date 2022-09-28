@@ -46,14 +46,16 @@ export class NavComponent {
   createDuel(): void {
     this.duelsService
       .createDuel({ betAmount: this.betAmount, sport: this.sport })
-      .then(() => {
-        jQuery('#create-duel-modal').modal('hide');
-        this.betAmount = 0;
-        this.toastr.success('Duel created!');
-      })
-      .catch((err) => {
-        console.error(err);
-        this.toastr.error('Failed to create duel!');
+      .subscribe({
+        next: () => {
+          jQuery('#create-duel-modal').modal('hide');
+          this.betAmount = 0;
+          this.toastr.success('Duel created!');
+        },
+        error: (err: unknown) => {
+          console.error(err);
+          this.toastr.error('Failed to create duel!');
+        },
       });
   }
 }

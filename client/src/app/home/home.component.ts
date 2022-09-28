@@ -10,6 +10,7 @@ import { DuelsService } from '../duels/duels.service';
 import { DuelWeek } from '../duel-weeks/duel-week';
 import { DuelWeeksService } from '../duel-weeks/duel-weeks.service';
 import { switchMap } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
@@ -33,7 +34,7 @@ export class HomeComponent implements OnInit {
     private titleService: Title,
     private toastr: ToastrService,
   ) {
-    this.duelCreatedSubscription = duelsService.duelCreated$.subscribe((duel) =>
+    this.duelCreatedSubscription = duelsService.duelCreated$.subscribe(() =>
       this.refreshPendingDuels$.next(true),
     );
     if (this.authService.isAuthenticated()) {
@@ -72,12 +73,12 @@ export class HomeComponent implements OnInit {
   }
 
   deleteDuel(duelId: string): void {
-    this.duelsService
-      .deleteDuel(duelId)
-      .then(() => {
+    this.duelsService.deleteDuel(duelId).subscribe({
+      next: () => {
         this.refreshPendingDuels$.next(true);
         this.toastr.success('Duel deleted');
-      })
-      .catch((err) => this.toastr.error(err));
+      },
+      error: (err: HttpErrorResponse) => this.toastr.error(err.error.message),
+    });
   }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Subject } from 'rxjs';
+import { Subject, tap } from 'rxjs';
 
 import { AuthService } from '../auth/auth.service';
 import { Duel } from './duel';
@@ -53,19 +53,18 @@ export class DuelsService {
       .catch(this.handleError);
   }
 
-  deleteDuel(duelId: string): Promise<any> {
-    return this.http
-      .delete(`${this.duelsURL}/${duelId}`, { headers: this.headers })
-      .toPromise()
-      .catch(this.handleError);
+  deleteDuel(duelId: string) {
+    return this.http.delete<{ message: string }>(`${this.duelsURL}/${duelId}`, {
+      headers: this.headers,
+    });
   }
 
-  createDuel(duelOpts: { betAmount: number; sport: string }): Promise<any> {
+  createDuel(duelOpts: { betAmount: number; sport: string }) {
     return this.http
-      .post(`${this.duelsURL}`, duelOpts, { headers: this.headers })
-      .toPromise()
-      .then((response: any) => this.duelCreatedSource.next(response as Duel))
-      .catch(this.handleError);
+      .post<Duel>(`${this.duelsURL}`, duelOpts, {
+        headers: this.headers,
+      })
+      .pipe(tap((duel) => this.duelCreatedSource.next(duel)));
   }
 
   getSports(): Promise<string[]> {

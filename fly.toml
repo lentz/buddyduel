@@ -3,19 +3,6 @@ kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
 
-[build]
-  builder = "heroku/buildpacks:20"
-
-[build.args]
-  NODE_ENV = "production"
-
-[env]
-  AUTH0_DOMAIN = "app68395404.auth0.com"
-  BASE_URL = "https://buddyduel.net"
-  DATABASE_NAME = "prod"
-  NODE_ENV = "production"
-  PORT = "8080"
-
 [experimental]
   allowed_public_ports = []
   auto_rollback = true

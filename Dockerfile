@@ -19,4 +19,4 @@ RUN npm run build-client-prod
 
 EXPOSE 8080
 
-CMD ["node", "api/dist/server.js"]
+CMD ["npm", "start"]

@@ -12,7 +12,7 @@ dotenv.config();
 app
   .listen(process.env.PORT)
   .on('listening', () => logger.info(`Listening on port ${process.env.PORT}`))
-  .on('error', logger.error);
+  .on('error', (err: any) => logger.error(err.stack));
 
 new Bree({
   defaultExtension: process.env.TS_NODE_DEV ? 'ts' : 'js',
@@ -31,6 +31,6 @@ new Bree({
   root: join(__dirname, 'jobs'),
 })
   .start()
-  .catch(logger.error);
+  .catch((err: any) => logger.error(err.stack));
 
 export default app;

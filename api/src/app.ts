@@ -64,9 +64,9 @@ app.use(
     res: express.Response,
     _next: express.NextFunction,
   ) => {
-    logger.error(err.stack);
+    logger.error(err);
     if (err.response) {
-      logger.error(err.response.data);
+      logger.error(JSON.stringify(err.response.data, null, 2));
     }
     res.status(500).json({ message: err.message });
   },

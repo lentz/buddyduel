@@ -4,8 +4,8 @@ import { environment } from '../../environments/environment';
 
 @Injectable()
 export class AuthService {
-  private clientId = 'FXEEzHOoJg84RpjeHMyxgocPpPMJt0yc';
-  private auth0URL = 'https://app68395404.auth0.com';
+  private clientId = 'GSkOJccgw4k4qwHUuHu5oKEv8lWUHdF8';
+  private auth0URL = 'https://buddyduel.us.auth0.com';
 
   loginURL = encodeURI(
     `${this.auth0URL}/authorize` +

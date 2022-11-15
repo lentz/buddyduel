@@ -43,7 +43,7 @@ export const sports: ISport[] = [
   {
     competitionId: '/sport/football/league:1',
     currentWeek: () => {
-      const weekOne = new Date('2022-09-06T04:00:00Z');
+      const weekOne = new Date('2022-09-07T04:00:00Z');
       const weekNum = differenceInWeeks(new Date(), weekOne) + 1;
       if (weekNum < 19) {
         return `Week ${weekNum}`;

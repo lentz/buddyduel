@@ -27,7 +27,9 @@ interface IMatch {
 }
 
 function matchStarted(match: IMatch) {
-  return ['delay-rain', 'in-progress', 'complete'].includes(match.state.status);
+  return ['delay-rain', 'suspended', 'in-progress', 'complete'].includes(
+    match.state?.status,
+  );
 }
 
 function createTimeString(match: IMatch) {
@@ -37,8 +39,10 @@ function createTimeString(match: IMatch) {
 
   if (match.state.status === 'complete') {
     return match.state?.overtime ? 'Final/OT' : 'Final';
-  } else if (/delay/i.test(match.state?.status)) {
-    return `Delayed ${match.state?.period}Q`;
+  } else if (/delay/i.test(match.state.status)) {
+    return `Delayed ${match.state.period}Q`;
+  } else if (/suspended/i.test(match.state.status)) {
+    return 'Suspended';
   }
 
   const clock = match.state?.clock

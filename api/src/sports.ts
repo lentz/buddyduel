@@ -1,13 +1,10 @@
 import { differenceInWeeks } from 'date-fns';
 
 export interface ISport {
-  competitionId: string;
+  key: string;
   currentWeek: () => string | null;
-  editionId: string;
-  module: string;
   name: string;
   seasonYear: number;
-  sportId: string;
 }
 
 export const sports: ISport[] = [
@@ -33,15 +30,11 @@ export const sports: ISport[] = [
         return 'TBD';
       }
     },
-    competitionId: '/sport/basketball/league:7',
-    editionId: '/sport/basketball/season:664634', // Unique to season year
+    key: 'basketball_ncaab',
     name: 'NCAAB',
-    module: 'basketball',
     seasonYear: 2020,
-    sportId: '/sport/basketball',
   },
   {
-    competitionId: '/sport/football/league:1',
     currentWeek: () => {
       const weekOne = new Date('2022-09-07T04:00:00Z');
       const weekNum = differenceInWeeks(new Date(), weekOne) + 1;
@@ -59,10 +52,8 @@ export const sports: ISport[] = [
         return null;
       }
     },
-    editionId: '/sport/football/season:242', // Unique to season year
+    key: 'americanfootball_nfl',
     name: 'NFL',
-    module: 'americanfootball',
     seasonYear: 2022,
-    sportId: '/sport/football',
   },
 ];

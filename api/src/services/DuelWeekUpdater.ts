@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 
 import betResult from '../lib/betResult';
-import * as gracenote from '../services/gracenote';
+import * as oddsApi from '../services/odds-api';
 import { sports } from '../sports';
 import { default as DuelWeek, IDuelWeek } from '../models/DuelWeek';
 import IGame from '../models/IGame';
@@ -52,7 +52,7 @@ export async function call(duels: IDuel[]) {
     console.log(
       `Updating ${sport.name} ${sport.seasonYear} ${description} for duel ID ${duel.id}`,
     );
-    const newGames = await gracenote.getGames(sport, description);
+    const newGames = await oddsApi.getGames(sport);
     const duelWeek = (await DuelWeek.findOneAndUpdate(
       { year: sport.seasonYear, description, duelId: duel.id },
       {

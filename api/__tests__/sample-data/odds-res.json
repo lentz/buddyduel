@@ -1,0 +1,102 @@
+[
+  {
+    "id": "a22dba1e3f044281ffb0de4f3f73c530",
+    "sport_key": "americanfootball_nfl",
+    "sport_title": "NFL",
+    "commence_time": "2023-01-21T21:30:00Z",
+    "home_team": "Kansas City Chiefs",
+    "away_team": "Jacksonville Jaguars",
+    "bookmakers": [
+      {
+        "key": "pinnacle",
+        "title": "Pinnacle",
+        "last_update": "2023-01-20T01:20:28Z",
+        "markets": [
+          {
+            "key": "spreads",
+            "last_update": "2023-01-20T01:20:28Z",
+            "outcomes": [
+              { "name": "Jacksonville Jaguars", "price": 1.81, "point": 10.0 },
+              { "name": "Kansas City Chiefs", "price": 2.1, "point": -10.0 }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "aafa26cd93281c198d8cdf671db74f8a",
+    "sport_key": "americanfootball_nfl",
+    "sport_title": "NFL",
+    "commence_time": "2023-01-22T01:15:00Z",
+    "home_team": "Philadelphia Eagles",
+    "away_team": "New York Giants",
+    "bookmakers": [
+      {
+        "key": "pinnacle",
+        "title": "Pinnacle",
+        "last_update": "2023-01-20T01:20:28Z",
+        "markets": [
+          {
+            "key": "spreads",
+            "last_update": "2023-01-20T01:20:28Z",
+            "outcomes": [
+              { "name": "New York Giants", "price": 1.99, "point": 7.5 },
+              { "name": "Philadelphia Eagles", "price": 1.9, "point": -7.5 }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "489f2ff75b6bce303b76e7e9a2a9f8b7",
+    "sport_key": "americanfootball_nfl",
+    "sport_title": "NFL",
+    "commence_time": "2023-01-22T20:00:00Z",
+    "home_team": "Buffalo Bills",
+    "away_team": "Cincinnati Bengals",
+    "bookmakers": [
+      {
+        "key": "pinnacle",
+        "title": "Pinnacle",
+        "last_update": "2023-01-20T01:20:28Z",
+        "markets": [
+          {
+            "key": "spreads",
+            "last_update": "2023-01-20T01:20:28Z",
+            "outcomes": [
+              { "name": "Buffalo Bills", "price": 1.88, "point": -5.0 },
+              { "name": "Cincinnati Bengals", "price": 2.01, "point": 5.0 }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "a8a73adf29fc1d8ad03c12473300513e",
+    "sport_key": "americanfootball_nfl",
+    "sport_title": "NFL",
+    "commence_time": "2023-01-22T23:30:00Z",
+    "home_team": "San Francisco 49ers",
+    "away_team": "Dallas Cowboys",
+    "bookmakers": [
+      {
+        "key": "pinnacle",
+        "title": "Pinnacle",
+        "last_update": "2023-01-20T01:20:28Z",
+        "markets": [
+          {
+            "key": "spreads",
+            "last_update": "2023-01-20T01:20:28Z",
+            "outcomes": [
+              { "name": "Dallas Cowboys", "price": 2.02, "point": 3.5 },
+              { "name": "San Francisco 49ers", "price": 1.87, "point": -3.5 }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,64 @@
+[
+  {
+    "id": "a22dba1e3f044281ffb0de4f3f73c530",
+    "sport_key": "americanfootball_nfl",
+    "sport_title": "NFL",
+    "commence_time": "2023-01-21T21:30:00Z",
+    "completed": true,
+    "home_team": "Kansas City Chiefs",
+    "away_team": "Jacksonville Jaguars",
+    "scores": [
+      {
+        "name": "Kansas City Chiefs",
+        "score": 41
+      },
+      {
+        "name": "Jacksonville Jaguars",
+        "score": 7
+      }
+    ],
+    "last_update": null
+  },
+  {
+    "id": "aafa26cd93281c198d8cdf671db74f8a",
+    "sport_key": "americanfootball_nfl",
+    "sport_title": "NFL",
+    "commence_time": "2023-01-22T01:15:00Z",
+    "completed": false,
+    "home_team": "Philadelphia Eagles",
+    "away_team": "New York Giants",
+    "scores": [
+      {
+        "name": "Philadelphia Eagles",
+        "score": 35
+      },
+      {
+        "name": "New York Giants",
+        "score": 10
+      }
+    ],
+    "last_update": null
+  },
+  {
+    "id": "489f2ff75b6bce303b76e7e9a2a9f8b7",
+    "sport_key": "americanfootball_nfl",
+    "sport_title": "NFL",
+    "commence_time": "2023-01-22T20:00:00Z",
+    "completed": false,
+    "home_team": "Buffalo Bills",
+    "away_team": "Cincinnati Bengals",
+    "scores": null,
+    "last_update": null
+  },
+  {
+    "id": "a8a73adf29fc1d8ad03c12473300513e",
+    "sport_key": "americanfootball_nfl",
+    "sport_title": "NFL",
+    "commence_time": "2023-01-22T23:30:00Z",
+    "completed": false,
+    "home_team": "San Francisco 49ers",
+    "away_team": "Dallas Cowboys",
+    "scores": null,
+    "last_update": null
+  }
+]

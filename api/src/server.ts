@@ -18,7 +18,7 @@ new Bree({
   defaultExtension: process.env.TS_NODE_DEV ? 'ts' : 'js',
   jobs: [
     {
-      interval: '10m',
+      interval: '2h',
       name: 'update-duel-weeks',
       timeout: 0,
     },

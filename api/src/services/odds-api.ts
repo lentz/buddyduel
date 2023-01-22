@@ -1,11 +1,12 @@
 import axios from 'axios';
 
 import IGame from '../models/IGame';
+import betResult from '../lib/betResult';
 import { ISport } from '../sports';
 
 axios.defaults.baseURL = 'https://api.the-odds-api.com/v4/sports';
 
-async function setScores(games: IGame[], sport: ISport) {
+export async function updateScores(games: IGame[], sport: ISport) {
   const opts = {
     params: {
       apiKey: process.env.ODDS_API_KEY,
@@ -44,14 +45,16 @@ async function setScores(games: IGame[], sport: ISport) {
         game.awayScore = score.score;
       }
     });
-  }
 
-  return games;
+    game.result = betResult(game);
+  }
 }
 
-export async function getGames(sport: ISport): Promise<IGame[]> {
-  const games: IGame[] = [];
+function unpickedAndNotBegun(game: IGame) {
+  return !game.selectedTeam && game.startTime > new Date();
+}
 
+export async function updateOdds(existingGames: IGame[], sport: ISport) {
   type EventOdds = {
     away_team: string;
     bookmakers: {
@@ -76,28 +79,31 @@ export async function getGames(sport: ISport): Promise<IGame[]> {
   });
 
   for (const event of oddsRes.data) {
+    const existingGame = existingGames.find((game) => event.id === game.id);
+
     const homeOutcome = event.bookmakers[0].markets[0].outcomes.find(
-      (outcome: any) => {
+      (outcome) => {
         return outcome.name === event.home_team;
       },
     );
 
     if (!homeOutcome) continue;
 
-    games.push({
-      awaySpread: homeOutcome.point * -1,
-      awayTeam: event.away_team,
-      homeSpread: homeOutcome.point,
-      homeTeam: event.home_team,
-      id: event.id,
-      startTime: new Date(event.commence_time),
-    });
+    if (existingGame) {
+      existingGame.startTime = new Date(event.commence_time);
+      if (unpickedAndNotBegun(existingGame)) {
+        existingGame.homeSpread = homeOutcome.point;
+        existingGame.awaySpread = homeOutcome.point * -1;
+      }
+    } else {
+      existingGames.push({
+        awaySpread: homeOutcome.point * -1,
+        awayTeam: event.away_team,
+        homeSpread: homeOutcome.point,
+        homeTeam: event.home_team,
+        id: event.id,
+        startTime: new Date(event.commence_time),
+      });
+    }
   }
-
-  const gamesHaveStarted = games.some((game) => new Date() > game.startTime);
-  if (gamesHaveStarted) {
-    await setScores(games, sport);
-  }
-
-  return games;
 }

@@ -98,5 +98,14 @@
         ]
       }
     ]
+  },
+  {
+    "id": "abc123",
+    "sport_key": "americanfootball_nfl",
+    "sport_title": "NFL",
+    "commence_time": "2023-01-14T23:30:00Z",
+    "home_team": "Minnesota Vikings",
+    "away_team": "New York Giants",
+    "bookmakers": []
   }
 ]

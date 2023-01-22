@@ -81,7 +81,7 @@ export async function updateOdds(existingGames: IGame[], sport: ISport) {
   for (const event of oddsRes.data) {
     const existingGame = existingGames.find((game) => event.id === game.id);
 
-    const homeOutcome = event.bookmakers[0].markets[0].outcomes.find(
+    const homeOutcome = event.bookmakers[0]?.markets[0]?.outcomes.find(
       (outcome) => {
         return outcome.name === event.home_team;
       },

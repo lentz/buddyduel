@@ -33,6 +33,8 @@ async function setScores(games: IGame[], sport: ISport) {
 
     if (currentEvent.completed) {
       game.time = 'Final';
+    } else if (new Date() > game.startTime) {
+      game.time = 'Live';
     }
 
     currentEvent.scores.forEach((score) => {

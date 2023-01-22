@@ -103,6 +103,7 @@ describe('oddsApi', () => {
             "homeTeam": "Philadelphia Eagles",
             "id": "aafa26cd93281c198d8cdf671db74f8a",
             "startTime": 2023-01-22T01:15:00.000Z,
+            "time": "Live",
           },
           {
             "awaySpread": 5,

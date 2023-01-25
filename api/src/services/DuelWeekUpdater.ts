@@ -19,7 +19,7 @@ export async function call(duels: IDuel[]) {
     if (!sport) {
       continue;
     }
-    const description = sport.currentWeek();
+    const { description } = sport.currentWeek();
     if (!description) {
       continue;
     }

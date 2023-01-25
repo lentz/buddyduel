@@ -95,7 +95,7 @@ export async function updateOdds(existingGames: IGame[], sport: ISport) {
         existingGame.homeSpread = homeOutcome.point;
         existingGame.awaySpread = homeOutcome.point * -1;
       }
-    } else {
+    } else if (new Date(event.commence_time) < sport.currentWeek().weekEnd) {
       existingGames.push({
         awaySpread: homeOutcome.point * -1,
         awayTeam: event.away_team,

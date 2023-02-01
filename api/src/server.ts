@@ -18,14 +18,14 @@ new Bree({
   defaultExtension: process.env.TS_NODE_DEV ? 'ts' : 'js',
   jobs: [
     {
-      interval: '2h',
+      interval: 'every 2 hours',
       name: 'update-duel-weeks',
       timeout: 0,
     },
     {
-      interval: '30m',
+      interval: 'every 30 minutes',
       name: 'send-pick-alerts',
-      timeout: 0,
+      timeout: '30m',
     },
   ],
   root: join(__dirname, 'jobs'),

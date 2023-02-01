@@ -1,9 +1,11 @@
 /* eslint no-console: 0 */
+import { parentPort } from 'node:worker_threads';
+import process from 'node:process';
 
 import * as dotenv from 'dotenv';
 import { addMinutes } from 'date-fns';
 import sgMail from '@sendgrid/mail';
-import db from '../lib/db';
+import '../lib/db';
 import { default as DuelWeek, IDuelWeek } from '../models/DuelWeek';
 import * as user from '../services/user';
 import IGame from '../models/IGame';
@@ -89,7 +91,7 @@ async function run() {
       },
       skipped: false,
     };
-    const duelWeeks = (await DuelWeek.find(query).exec()) as IDuelWeek[];
+    const duelWeeks = await DuelWeek.find(query).exec();
 
     /* eslint-disable-next-line no-restricted-syntax */
     for (const duelWeek of duelWeeks) {
@@ -102,11 +104,13 @@ async function run() {
     }
   } catch (err) {
     console.error('Error sending pick alerts:', err);
-  } finally {
-    db.close();
-    console.log('Completed in', Date.now() - beginTime, 'ms');
-    process.exit();
+    process.exit(1);
   }
+
+  console.log('Send pick alerts completed in', Date.now() - beginTime, 'ms');
+
+  if (parentPort) parentPort.postMessage('done');
+  else process.exit(0);
 }
 
 run();

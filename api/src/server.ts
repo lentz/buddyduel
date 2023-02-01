@@ -23,9 +23,9 @@ new Bree({
       timeout: 0,
     },
     {
-      interval: 'every 30 minutes',
+      interval: 'every 45 minutes',
       name: 'send-pick-alerts',
-      timeout: '30m',
+      timeout: '10m',
     },
   ],
   root: join(__dirname, 'jobs'),

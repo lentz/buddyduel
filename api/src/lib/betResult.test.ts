@@ -1,4 +1,6 @@
-import betResult from './betResult';
+import { describe, expect, test } from 'vitest';
+
+import betResult from './betResult.js';
 
 describe('#betResult()', () => {
   test('is empty string when the game does not have a score', () => {

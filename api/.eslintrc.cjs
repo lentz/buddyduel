@@ -6,16 +6,14 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:import/typescript',
     'plugin:import/recommended',
-    'plugin:jest/recommended',
-    'plugin:jest/style',
+    'plugin:vitest/recommended',
     'prettier',
   ],
   env: {
     es6: true,
-    jest: true,
     node: true,
   },
-  plugins: ['@typescript-eslint', 'jest'],
+  plugins: ['@typescript-eslint', 'vitest'],
   rules: {
     '@typescript-eslint/explicit-function-return-type': 'off', // TODO
     '@typescript-eslint/interface-name-prefix': 'off',
@@ -26,7 +24,7 @@ module.exports = {
         argsIgnorePattern: '^_',
       },
     ],
-    'jest/expect-expect': 'error',
+    'import/no-unresolved': 'off',
     'no-await-in-loop': 'off',
     'no-underscore-dangle': ['error', { allow: ['_id'] }],
   },

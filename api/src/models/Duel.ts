@@ -1,6 +1,7 @@
-import * as mongoose from 'mongoose';
-import * as shortid from 'shortid';
-import { default as PlayerSchema, IPlayer } from './PlayerSchema';
+import mongoose from 'mongoose';
+import shortid from 'shortid';
+
+import { default as PlayerSchema, IPlayer } from './PlayerSchema.js';
 
 export interface IDuel {
   id: string;

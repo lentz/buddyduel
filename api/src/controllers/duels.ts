@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
-import { default as Duel, IDuel } from '../models/Duel';
-import { sports } from '../sports';
-import * as DuelWeekUpdater from '../services/DuelWeekUpdater';
+
+import { default as Duel, IDuel } from '../models/Duel.js';
+import { sports } from '../sports.js';
+import * as DuelWeekUpdater from '../services/DuelWeekUpdater.js';
 
 async function alreadyInDuel(code: string, userId: string) {
   return (await Duel.findOne({ code, 'players.id': userId }).exec()) !== null;

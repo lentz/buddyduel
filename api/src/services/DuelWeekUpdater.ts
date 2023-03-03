@@ -1,9 +1,9 @@
 /* eslint-disable no-param-reassign */
 
-import * as oddsApi from '../services/odds-api';
-import { sports } from '../sports';
-import { default as DuelWeek, IDuelWeek } from '../models/DuelWeek';
-import { IDuel } from '../models/Duel';
+import * as oddsApi from '../services/odds-api.js';
+import { sports } from '../sports.js';
+import { default as DuelWeek, IDuelWeek } from '../models/DuelWeek.js';
+import { IDuel } from '../models/Duel.js';
 
 async function getPicker(duel: IDuel, year: number) {
   const duelWeekCount = await DuelWeek.countDocuments({

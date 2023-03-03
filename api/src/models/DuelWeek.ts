@@ -1,6 +1,7 @@
 import * as mongoose from 'mongoose';
-import IGame from './IGame';
-import { default as PlayerSchema, IPlayer } from './PlayerSchema';
+
+import IGame from './IGame.js';
+import { default as PlayerSchema, IPlayer } from './PlayerSchema.js';
 
 const GameSchema = new mongoose.Schema(
   {

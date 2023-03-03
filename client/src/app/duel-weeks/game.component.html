@@ -71,7 +71,7 @@
       <span class="text-muted small time">{{ game.time }}</span>
     </div>
     <span *ngIf="!game.time && !showClear()" class="text-muted small">
-      {{ game.startTime | date: 'EEE, MMM d h:mm a' }}
+      {{ game.startTime | date : 'EEE, MMM d h:mm a' }}
     </span>
     <button
       *ngIf="showClear()"

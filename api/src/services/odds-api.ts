@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-import IGame from '../models/IGame';
-import betResult from '../lib/betResult';
-import { ISport } from '../sports';
+import IGame from '../models/IGame.js';
+import betResult from '../lib/betResult.js';
+import { ISport } from '../sports.js';
 
 axios.defaults.baseURL = 'https://api.the-odds-api.com/v4/sports';
 

@@ -1,4 +1,4 @@
-import IGame from '../models/IGame';
+import IGame from '../models/IGame.js';
 
 export default function (game: IGame) {
   if (

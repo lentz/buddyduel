@@ -1,8 +1,9 @@
 import * as express from 'express';
-import * as duelsController from './controllers/duels';
-import * as duelWeeksController from './controllers/duel-weeks';
-import * as usersController from './controllers/users';
-import logger from './lib/logger';
+
+import * as duelsController from './controllers/duels.js';
+import * as duelWeeksController from './controllers/duel-weeks.js';
+import * as usersController from './controllers/users.js';
+import logger from './lib/logger.js';
 
 const router = express.Router();
 

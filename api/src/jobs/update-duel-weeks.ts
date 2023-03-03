@@ -2,9 +2,9 @@
 import { parentPort } from 'node:worker_threads';
 import process from 'node:process';
 
-import '../lib/db';
-import { default as Duel } from '../models/Duel';
-import * as DuelWeekUpdater from '../services/DuelWeekUpdater';
+import '../lib/db.js';
+import { default as Duel } from '../models/Duel.js';
+import * as DuelWeekUpdater from '../services/DuelWeekUpdater.js';
 
 async function run() {
   const beginTime = Date.now();

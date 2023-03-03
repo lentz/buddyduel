@@ -1,14 +1,15 @@
 /* eslint-disable arrow-body-style */
 import request from 'supertest';
+import { beforeAll, describe, test, expect, vi } from 'vitest';
 
-import * as DuelWeekUpdater from '../src/services/DuelWeekUpdater';
-import app from '../src/app';
-import { createSession, user1, user2 } from './support';
-import logger from '../src/lib/logger';
+import * as DuelWeekUpdater from '../src/services/DuelWeekUpdater.js';
+import app from '../src/app.js';
+import { createSession, user1, user2 } from './support.js';
+import logger from '../src/lib/logger.js';
 
 let sessionCookie: string;
 
-jest.spyOn(logger, 'error').mockReturnValue(null);
+vi.spyOn(logger, 'error').mockReturnValue(null);
 
 describe('duels API', () => {
   beforeAll(async () => {
@@ -33,7 +34,7 @@ describe('duels API', () => {
   });
 
   describe('DELETE /duel/:id', () => {
-    /* eslint-disable-next-line jest/expect-expect */
+    /* eslint-disable-next-line vitest/expect-expect */
     test('deleting a duel succeeds when the user is a player', async () => {
       const createResponse = await request(app)
         .post('/api/duels')
@@ -48,7 +49,7 @@ describe('duels API', () => {
         .expect(200, { message: 'Duel deleted' });
     });
 
-    /* eslint-disable-next-line jest/expect-expect */
+    /* eslint-disable-next-line vitest/expect-expect */
     test('deleting a duel returns a 404 if the duel does not exist', async () => {
       return request(app)
         .delete('/api/duels/5c68438fc2481e3e3a97021c')
@@ -58,7 +59,7 @@ describe('duels API', () => {
   });
 
   describe('PUT /duels/accept', () => {
-    /* eslint-disable-next-line jest/expect-expect */
+    /* eslint-disable-next-line vitest/expect-expect */
     test('accepting a duel fails if the user is already in it', async () => {
       const createResponse = await request(app)
         .post('/api/duels')
@@ -83,7 +84,7 @@ describe('duels API', () => {
 
       const user2SessionCookie = await createSession(user2);
 
-      jest.spyOn(DuelWeekUpdater, 'call').mockResolvedValue();
+      vi.spyOn(DuelWeekUpdater, 'call').mockResolvedValue();
 
       await request(app)
         .put('/api/duels/accept')
@@ -129,7 +130,7 @@ describe('duels API', () => {
       });
     });
 
-    /* eslint-disable-next-line jest/expect-expect */
+    /* eslint-disable-next-line vitest/expect-expect */
     test('getting a duel returns a 404 when not found', async () => {
       return request(app)
         .get('/api/duels/5c68438fc2481e3e3a97021c')

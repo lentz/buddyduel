@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`duels API GET /duels/:id getting a duel returns the duel 1`] = `
+exports[`duels API > GET /duels/:id > getting a duel returns the duel 1`] = `
 {
   "__v": 0,
   "_id": Any<String>,
@@ -19,7 +19,7 @@ exports[`duels API GET /duels/:id getting a duel returns the duel 1`] = `
 }
 `;
 
-exports[`duels API POST /duels creates a new duel 1`] = `
+exports[`duels API > POST /duels > creates a new duel 1`] = `
 {
   "__v": 0,
   "_id": Any<String>,

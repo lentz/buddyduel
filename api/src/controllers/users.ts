@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
-import jwtDecode from 'jwt-decode';
+import jwt_decode from 'jwt-decode';
 import axios from 'axios';
-import { default as DuelWeek, IDuelWeek } from '../models/DuelWeek';
-import * as user from '../services/user';
+
+import { default as DuelWeek, IDuelWeek } from '../models/DuelWeek.js';
+import * as user from '../services/user.js';
 
 const COOKIE_MAX_AGE = 1000 * 60 * 60 * 24 * 365; // 1 year
 const USE_SECURE_COOKIE = (process.env.BASE_URL || '').startsWith('https');
@@ -50,7 +51,9 @@ export async function authenticate(
       headers: { 'content-type': 'application/json' },
     },
   );
-  const jwt = jwtDecode<{ name: string; sub: string }>(response.data.id_token);
+  const jwt = jwt_decode.default<{ name: string; sub: string }>(
+    response.data.id_token,
+  );
   if (!req.session) {
     return next(new Error('No session!'));
   }

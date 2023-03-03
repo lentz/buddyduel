@@ -1,6 +1,7 @@
 import nock from 'nock';
 import supertest from 'supertest';
-import app from '../src/app';
+
+import app from '../src/app.js';
 
 export async function createSession(user: any) {
   nock(`https://${process.env.AUTH0_DOMAIN}`)

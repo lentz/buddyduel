@@ -1,9 +1,10 @@
-import { readFileSync } from 'fs';
+import { readFileSync } from 'node:fs';
 
 import axios from 'axios';
+import { describe, expect, test, vi } from 'vitest';
 
-import { sports } from '../sports';
-import * as oddsApi from './odds-api';
+import { sports } from '../sports.js';
+import * as oddsApi from './odds-api.js';
 
 const oddsRes = JSON.parse(
   readFileSync('./api/__tests__/sample-data/odds-res.json').toString(),
@@ -18,7 +19,7 @@ const nfl = sports.find((sport) => sport.name === 'NFL');
 describe('oddsApi', () => {
   describe('#updateOdds', () => {
     test('does not modify the games when no matches are found', async () => {
-      jest.spyOn(axios, 'get').mockResolvedValue({ data: [] });
+      vi.spyOn(axios, 'get').mockResolvedValue({ data: [] });
       const games = [];
 
       await oddsApi.updateOdds(games, nfl);
@@ -27,7 +28,7 @@ describe('oddsApi', () => {
     });
 
     test('adds new games with odds to the games array', async () => {
-      jest.spyOn(axios, 'get').mockResolvedValueOnce({ data: oddsRes });
+      vi.spyOn(axios, 'get').mockResolvedValueOnce({ data: oddsRes });
 
       const games = [];
 
@@ -72,10 +73,10 @@ describe('oddsApi', () => {
     });
 
     test('updates existing game start times and spreads', async () => {
-      jest.useFakeTimers();
-      jest.setSystemTime(new Date('2023-01-19:00:00Z'));
+      vi.useFakeTimers();
+      vi.setSystemTime(new Date('2023-01-19:00:00Z'));
 
-      jest.spyOn(axios, 'get').mockResolvedValueOnce({ data: oddsRes });
+      vi.spyOn(axios, 'get').mockResolvedValueOnce({ data: oddsRes });
 
       const games = [
         {
@@ -141,10 +142,10 @@ describe('oddsApi', () => {
 
   describe('#updateScores', () => {
     test('updates the scores and result of any games that have score data', async () => {
-      jest.useFakeTimers();
-      jest.setSystemTime(new Date('2023-01-22T02:00:00Z'));
+      vi.useFakeTimers();
+      vi.setSystemTime(new Date('2023-01-22T02:00:00Z'));
 
-      jest.spyOn(axios, 'get').mockResolvedValueOnce({ data: scoresRes });
+      vi.spyOn(axios, 'get').mockResolvedValueOnce({ data: scoresRes });
 
       const games = [
         {

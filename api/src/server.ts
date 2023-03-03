@@ -1,11 +1,12 @@
-import { join } from 'node:path';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 // eslint-disable-next-line import/default
 import Bree from 'bree';
-import * as dotenv from 'dotenv';
+import dotenv from 'dotenv';
 
-import app from './app';
-import logger from './lib/logger';
+import app from './app.js';
+import logger from './lib/logger.js';
 
 dotenv.config();
 
@@ -14,8 +15,8 @@ app
   .on('listening', () => logger.info(`Listening on port ${process.env.PORT}`))
   .on('error', (err: any) => logger.error(err.stack));
 
-new Bree({
-  defaultExtension: process.env.TS_NODE_DEV ? 'ts' : 'js',
+const bree = new Bree({
+  defaultExtension: /dev/.test(process.env.DATABASE_NAME ?? '') ? 'ts' : 'js',
   jobs: [
     {
       interval: 'every 2 hours',
@@ -28,9 +29,8 @@ new Bree({
       timeout: '10m',
     },
   ],
-  root: join(__dirname, 'jobs'),
-})
-  .start()
-  .catch((err: any) => logger.error(err.stack));
+  root: path.join(path.dirname(fileURLToPath(import.meta.url)), 'jobs'),
+});
+await bree.start();
 
 export default app;

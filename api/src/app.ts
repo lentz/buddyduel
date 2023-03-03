@@ -1,15 +1,18 @@
-import * as dotenv from 'dotenv';
-import * as bodyParser from 'body-parser';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+import dotenv from 'dotenv';
+import bodyParser from 'body-parser';
 import express from 'express';
 import session from 'express-session';
 import connectMongodbSession from 'connect-mongodb-session';
 import 'express-async-errors';
 import morgan from 'morgan';
-import * as path from 'path';
-import * as usersController from './controllers/users';
-import logger from './lib/logger';
-import routes from './routes';
-import './lib/db';
+
+import * as usersController from './controllers/users.js';
+import logger from './lib/logger.js';
+import routes from './routes.js';
+import './lib/db.js';
 
 dotenv.config();
 
@@ -48,14 +51,20 @@ app.use(
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const clientDistPath = path.join(
+  path.dirname(fileURLToPath(import.meta.url)),
+  '..',
+  '..',
+  'client',
+  'dist',
+  'buddyduel',
+);
 app.get('/auth/callback', usersController.authenticate);
 app.get('/logout', usersController.logout);
 app.use('/api', routes);
-app.use(express.static(path.join(__dirname, '..', '..', 'client', 'public')));
+app.use(express.static(clientDistPath));
 app.get('*', (_req: express.Request, res: express.Response) => {
-  res.sendFile(
-    path.join(__dirname, '..', '..', 'client', 'public', 'index.html'),
-  );
+  res.sendFile(path.join(clientDistPath, 'index.html'));
 });
 app.use(
   (

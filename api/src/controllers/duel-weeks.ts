@@ -1,10 +1,11 @@
 /* eslint no-param-reassign: "off" */
 
 import { Request, Response } from 'express';
-import { sortBy } from 'lodash';
+import { sortBy } from 'lodash-es';
 import { addDays, subDays } from 'date-fns';
-import { default as DuelWeek, IDuelWeek } from '../models/DuelWeek';
-import IGame from '../models/IGame';
+
+import { default as DuelWeek, IDuelWeek } from '../models/DuelWeek.js';
+import IGame from '../models/IGame.js';
 
 export async function index(req: Request, res: Response) {
   const filter: any = { 'players.id': req.session.userId };

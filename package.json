@@ -77,7 +77,7 @@
     "@types/node": "^16.18.14",
     "@types/shortid": "0.0.29",
     "@types/supertest": "^2.0.12",
-    "@typescript-eslint/eslint-plugin": "^5.43.0",
+    "@typescript-eslint/eslint-plugin": "^5.57.0",
     "@typescript-eslint/parser": "^5.54.0",
     "cypress": "^12.7.0",
     "eslint": "^8.35.0",

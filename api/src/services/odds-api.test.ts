@@ -7,11 +7,13 @@ import { sports } from '../sports.js';
 import * as oddsApi from './odds-api.js';
 
 const oddsRes = JSON.parse(
-  readFileSync('./api/__tests__/sample-data/odds-res.json').toString(),
+  readFileSync('./api/integration-tests/sample-data/odds-res.json').toString(),
 );
 
 const scoresRes = JSON.parse(
-  readFileSync('./api/__tests__/sample-data/scores-res.json').toString(),
+  readFileSync(
+    './api/integration-tests/sample-data/scores-res.json',
+  ).toString(),
 );
 
 const nfl = sports.find((sport) => sport.name === 'NFL');

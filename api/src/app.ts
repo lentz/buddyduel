@@ -18,7 +18,8 @@ dotenv.config();
 
 const app = express();
 
-app.use(morgan('combined'));
+if (!process.env.VITEST) app.use(morgan('combined'));
+
 app.set('trust proxy', 1);
 
 declare module 'express-session' {

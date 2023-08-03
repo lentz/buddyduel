@@ -2,7 +2,7 @@
   <div class="card-header">Results vs All Opponents</div>
   <div class="card-body">
     Lifetime record: {{ record | record }} ({{
-      record | winPercentage | number : '1.3-3'
+      record | winPercentage | number: '1.3-3'
     }})<br />
     Lifetime winnings:
     <span
@@ -12,7 +12,7 @@
         'badge-danger': winnings < 0
       }"
     >
-      {{ winnings | currency : 'USD' : 'symbol' }}
+      {{ winnings | currency: 'USD' : 'symbol' }}
     </span>
   </div>
 </div>

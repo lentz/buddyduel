@@ -20,7 +20,7 @@
         class="badge"
         [ngClass]="{ 'badge-success': isWinner(), 'badge-danger': !isWinner() }"
       >
-        {{ this.math.abs(duelWeek.winnings) | currency : 'USD' : 'symbol' }}
+        {{ this.math.abs(duelWeek.winnings) | currency: 'USD' : 'symbol' }}
       </span>
     </div>
   </div>

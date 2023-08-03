@@ -18,7 +18,7 @@
       <div class="card-body">
         <div>
           Your overall record: {{ userRecord() | record }} ({{
-            userRecord() | winPercentage | number : '1.3-3'
+            userRecord() | winPercentage | number: '1.3-3'
           }})
         </div>
         <div>
@@ -30,14 +30,14 @@
               'badge-danger': userWinnings() < 0
             }"
           >
-            {{ userWinnings() | currency : 'USD' : 'symbol' }}
+            {{ userWinnings() | currency: 'USD' : 'symbol' }}
           </span>
         </div>
         <br />
         <div>
           {{ opponentName() }}'s overall record:
           {{ opponentRecord() | record }} ({{
-            opponentRecord() | winPercentage | number : '1.3-3'
+            opponentRecord() | winPercentage | number: '1.3-3'
           }})
         </div>
         <div>
@@ -49,7 +49,7 @@
               'badge-danger': opponentWinnings() < 0
             }"
           >
-            {{ opponentWinnings() | currency : 'USD' : 'symbol' }}
+            {{ opponentWinnings() | currency: 'USD' : 'symbol' }}
           </span>
         </div>
       </div>
@@ -59,7 +59,7 @@
       <div class="card-body">
         <div>
           Your season record: {{ userRecord(year) | record }} ({{
-            userRecord(year) | winPercentage | number : '1.3-3'
+            userRecord(year) | winPercentage | number: '1.3-3'
           }})
         </div>
         <div>
@@ -71,14 +71,14 @@
               'badge-danger': userWinnings(year) < 0
             }"
           >
-            {{ userWinnings(year) | currency : 'USD' : 'symbol' }}
+            {{ userWinnings(year) | currency: 'USD' : 'symbol' }}
           </span>
         </div>
         <br />
         <div>
           {{ opponentName() }}'s season record:
           {{ opponentRecord(year) | record }} ({{
-            opponentRecord(year) | winPercentage | number : '1.3-3'
+            opponentRecord(year) | winPercentage | number: '1.3-3'
           }})
         </div>
         <div>
@@ -90,7 +90,7 @@
               'badge-danger': opponentWinnings(year) < 0
             }"
           >
-            {{ opponentWinnings(year) | currency : 'USD' : 'symbol' }}
+            {{ opponentWinnings(year) | currency: 'USD' : 'symbol' }}
           </span>
         </div>
         <ul>

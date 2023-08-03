@@ -18,7 +18,10 @@ export class DuelsService {
   duelCreated$ = this.duelCreatedSource.asObservable();
   duelAccepted$ = this.duelAcceptedSource.asObservable();
 
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService,
+  ) {}
 
   opponentForPlayers(players: Player[]): Player {
     const currentPlayerId = this.authService.getUser().id;

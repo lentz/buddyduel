@@ -1,3 +1,6 @@
 export class Player {
-  constructor(public id = 'unknown', public name = 'Unknown') {}
+  constructor(
+    public id = 'unknown',
+    public name = 'Unknown',
+  ) {}
 }

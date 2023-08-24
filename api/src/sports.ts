@@ -39,12 +39,14 @@ export const sports: ISport[] = [
   },
   {
     currentWeek: () => {
-      const weekOne = new Date('2022-09-07T04:00:00Z');
+      const weekOne = new Date('2023-09-06T04:00:00Z');
       const weekNum = differenceInWeeks(new Date(), weekOne) + 1;
 
       let description;
 
-      if (weekNum < 19) {
+      if (weekNum < 1) {
+        description = 'Week 1';
+      } else if (weekNum < 19) {
         description = `Week ${weekNum}`;
       } else if (weekNum === 19) {
         description = 'Wildcard';
@@ -60,6 +62,6 @@ export const sports: ISport[] = [
     },
     key: 'americanfootball_nfl',
     name: 'NFL',
-    seasonYear: 2022,
+    seasonYear: 2023,
   },
 ];

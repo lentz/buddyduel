@@ -63,7 +63,7 @@ const clientDistPath = path.join(
 app.get('/auth/callback', usersController.authenticate);
 app.get('/logout', usersController.logout);
 app.use('/api', routes);
-app.use(express.static(clientDistPath));
+app.use(express.static(clientDistPath, { maxAge: 31556926000 }));
 app.get('*', (_req: express.Request, res: express.Response) => {
   res.sendFile(path.join(clientDistPath, 'index.html'));
 });

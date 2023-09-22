@@ -16,10 +16,7 @@ export class DuelWeeksService {
   }
 
   getDuelWeek(id: string) {
-    return this.http.get<DuelWeek>(`${this.duelWeeksURL}/${id}`, {
-      observe: 'response',
-      responseType: 'json',
-    });
+    return this.http.get<DuelWeek>(`${this.duelWeeksURL}/${id}`);
   }
 
   updateDuelWeek(duelWeek: DuelWeek) {

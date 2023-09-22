@@ -1,24 +1,27 @@
-<div *ngIf="duelWeek">
+<div *ngIf="duelWeek$ | async as duelWeek">
   <div class="row">
     <div class="col-lg-8">
-      <h2 *ngIf="!initialLoadComplete" class="loading"></h2>
-      <h2 *ngIf="initialLoadComplete" class="text-truncate">
+      <h2 *ngIf="loading" class="loading"></h2>
+      <h2 *ngIf="!loading" class="text-truncate">
         {{ duelWeek.sport }} {{ duelWeek.description }}
-        <small class="text-muted">vs {{ opponentName() }}</small>
+        <small class="text-muted">vs {{ opponentName(duelWeek) }}</small>
       </h2>
     </div>
-    <div *ngIf="!hasResults() && initialLoadComplete" class="col-lg">
-      <p class="font-italic">Picked by {{ pickedBy() }}</p>
+    <div *ngIf="!hasResults(duelWeek) && !loading" class="col-lg">
+      <p class="font-italic">Picked by {{ pickedBy(duelWeek) }}</p>
     </div>
   </div>
-  <div *ngIf="hasResults()" class="row">
+  <div *ngIf="hasResults(duelWeek)" class="row">
     <div class="col alert alert-warning">
-      {{ isPicker() ? 'Your' : opponentName() + "'s" }} record this week is
-      {{ duelWeek.record | record }}. You're
-      {{ isWinner() ? 'winning' : 'losing' }}
+      {{ isPicker(duelWeek) ? 'Your' : opponentName(duelWeek) + "'s" }} record
+      this week is {{ duelWeek.record | record }}. You're
+      {{ isWinner(duelWeek) ? 'winning' : 'losing' }}
       <span
         class="badge"
-        [ngClass]="{ 'badge-success': isWinner(), 'badge-danger': !isWinner() }"
+        [ngClass]="{
+          'badge-success': isWinner(duelWeek),
+          'badge-danger': !isWinner(duelWeek)
+        }"
       >
         {{ this.math.abs(duelWeek.winnings) | currency: 'USD' : 'symbol' }}
       </span>
@@ -26,24 +29,21 @@
   </div>
   <div class="row">
     <div class="col">
-      <div
-        *ngIf="!initialLoadComplete"
-        class="d-flex flex-wrap justify-content-around"
-      >
+      <div *ngIf="loading" class="d-flex flex-wrap justify-content-around">
         <div *ngFor="let item of [].constructor(12)" class="loading"></div>
       </div>
       <div class="d-flex flex-wrap justify-content-around">
         <duel-game
           *ngFor="let game of duelWeek.games"
           [game]="game"
-          [isPicker]="isPicker()"
+          [isPicker]="isPicker(duelWeek)"
         ></duel-game>
       </div>
     </div>
   </div>
-  <div *ngIf="canModifyPicks()" class="row">
+  <div *ngIf="canModifyPicks(duelWeek)" class="row">
     <div class="col text-center">
-      <button (click)="save()" class="btn btn-lg btn-danger">
+      <button (click)="save(duelWeek)" class="btn btn-lg btn-danger">
         <i class="fa fa-check-square-o" aria-hidden="true"></i> Lock In Picks
       </button>
       <div class="font-italic lock-in-help">

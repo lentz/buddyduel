@@ -11,7 +11,6 @@ export async function updateScores(games: IGame[], sport: ISport) {
     params: {
       apiKey: process.env.ODDS_API_KEY,
       daysFrom: 1,
-      sport: sport.key,
     },
   };
 

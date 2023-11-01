@@ -73,7 +73,7 @@
     "@types/morgan": "^1.9.6",
     "@types/node": "^16.18.14",
     "@types/shortid": "0.0.29",
-    "@types/supertest": "^2.0.13",
+    "@types/supertest": "^2.0.15",
     "@typescript-eslint/eslint-plugin": "^6.7.3",
     "@typescript-eslint/parser": "^6.5.0",
     "cypress": "^13.0.0",

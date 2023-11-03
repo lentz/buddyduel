@@ -92,7 +92,7 @@ export async function accept(req: Request, res: Response) {
 }
 
 export async function deleteDuel(req: Request, res: Response) {
-  const result = await Duel.findOneAndRemove({
+  const result = await Duel.findOneAndDelete({
     _id: req.params.id,
     status: 'pending',
     'players.id': req.session.userId,

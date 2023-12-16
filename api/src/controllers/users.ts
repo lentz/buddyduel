@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import jwt_decode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import axios from 'axios';
 
 import { default as DuelWeek, IDuelWeek } from '../models/DuelWeek.js';
@@ -51,9 +51,7 @@ export async function authenticate(
       headers: { 'content-type': 'application/json' },
     },
   );
-  const jwt = jwt_decode.default<{ name: string; sub: string }>(
-    response.data.id_token,
-  );
+  const jwt = jwtDecode<{ name: string; sub: string }>(response.data.id_token);
   if (!req.session) {
     return next(new Error('No session!'));
   }

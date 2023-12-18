@@ -1,0 +1,29 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ./api/Dockerfile
+    ports:
+      - '3000:3000'
+      - '9229:9229'
+    env_file: .env
+    environment:
+      AUTH0_CALLBACK_URL: 'http://macbookpro:4200/auth/callback'
+      AUTH0_DOMAIN: 'buddyduel.us.auth0.com'
+      BASE_URL: 'http://macbookpro:4200'
+      DATABASE_NAME: dev
+      PORT: 3000
+    volumes:
+      - ./api:/app/api
+      - ./client/:/app/client
+      - /app/node_modules
+
+  client:
+    build:
+      context: .
+      dockerfile: ./client/Dockerfile
+    ports:
+      - '4200:4200'
+    volumes:
+      - ./client/:/app/client
+      - /app/node_modules

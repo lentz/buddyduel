@@ -6,7 +6,6 @@ COPY package.json package-lock.json .
 
 RUN npm install
 
-EXPOSE 3000
 EXPOSE 9229
 
-CMD ["./node_modules/.bin/tsx", "--watch", "--inspect", "./api/src/server.ts"]
+CMD ["./node_modules/.bin/tsx", "--watch", "--inspect=0.0.0.0", "./api/src/server.ts"]

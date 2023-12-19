@@ -69,7 +69,8 @@
               "browserTarget": "buddyduel:build:production"
             },
             "development": {
-              "browserTarget": "buddyduel:build:development"
+              "browserTarget": "buddyduel:build:development",
+              "proxyConfig": "src/proxy.conf.mjs"
             }
           },
           "defaultConfiguration": "development"

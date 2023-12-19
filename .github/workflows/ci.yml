@@ -8,7 +8,6 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     env:
-      AUTH0_DOMAIN: fake-domain.auth0.com
       SENDGRID_API_KEY: SG.TEST_KEY
       SESSION_SECRET: test
       MONGODB_URI: 'mongodb://localhost'

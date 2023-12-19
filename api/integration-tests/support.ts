@@ -2,9 +2,10 @@ import nock from 'nock';
 import supertest from 'supertest';
 
 import app from '../src/app.js';
+import { AUTH0_DOMAIN } from '../src/services/user.js';
 
 export async function createSession(user: any) {
-  nock(`https://${process.env.AUTH0_DOMAIN}`)
+  nock(`https://${AUTH0_DOMAIN}`)
     .post('/oauth/token')
     .reply(200, { id_token: user.idToken });
 

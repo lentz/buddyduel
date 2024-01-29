@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
 import { jwtDecode } from 'jwt-decode';
-import axios from 'axios';
 
 import { default as DuelWeek, IDuelWeek } from '../models/DuelWeek.js';
 import * as user from '../services/user.js';
@@ -38,20 +37,25 @@ export async function authenticate(
   res: Response,
   next: NextFunction,
 ) {
-  const response = await axios.post<any, { data: { id_token: string } }>(
-    `https://${user.AUTH0_DOMAIN}/oauth/token`,
-    {
+  const response = await fetch(`https://${user.AUTH0_DOMAIN}/oauth/token`, {
+    body: JSON.stringify({
       grant_type: 'authorization_code',
       client_id: process.env.AUTH0_CLIENT_ID,
       client_secret: process.env.AUTH0_CLIENT_SECRET,
       code: req.query.code,
       redirect_uri: `${process.env.BASE_URL}/auth/callback`,
-    },
-    {
-      headers: { 'content-type': 'application/json' },
-    },
-  );
-  const jwt = jwtDecode<{ name: string; sub: string }>(response.data.id_token);
+    }),
+    headers: { 'content-type': 'application/json' },
+    method: 'POST',
+  });
+
+  if (!response.ok) {
+    return next(new Error(`Failed to get token: ${await response.text()}`));
+  }
+
+  const responseBody = await response.json();
+  const jwt = jwtDecode<{ name: string; sub: string }>(responseBody.id_token);
+
   if (!req.session) {
     return next(new Error('No session!'));
   }

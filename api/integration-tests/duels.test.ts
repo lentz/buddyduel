@@ -1,15 +1,14 @@
 /* eslint-disable arrow-body-style */
 import request from 'supertest';
 import { beforeAll, describe, test, expect, vi } from 'vitest';
+import { Logger } from 'winston';
 
-import * as DuelWeekUpdater from '../src/services/DuelWeekUpdater.js';
 import app from '../src/app.js';
-import { createSession, user1, user2 } from './support.js';
 import logger from '../src/lib/logger.js';
+import * as DuelWeekUpdater from '../src/services/DuelWeekUpdater.js';
+import { createSession, user1, user2 } from './support.js';
 
 let sessionCookie: string;
-
-vi.spyOn(logger, 'error').mockReturnValue(null);
 
 describe('duels API', () => {
   beforeAll(async () => {
@@ -61,6 +60,8 @@ describe('duels API', () => {
   describe('PUT /duels/accept', () => {
     /* eslint-disable-next-line vitest/expect-expect */
     test('accepting a duel fails if the user is already in it', async () => {
+      vi.spyOn(logger, 'error').mockReturnValue({} as Logger);
+
       const createResponse = await request(app)
         .post('/api/duels')
         .set('Cookie', [sessionCookie])

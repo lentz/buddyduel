@@ -1,6 +1,7 @@
 /* eslint-disable arrow-body-style */
 import request from 'supertest';
 import { describe, expect, test, vi } from 'vitest';
+import { Logger } from 'winston';
 
 import app from '../src/app.js';
 import { createSession, user1 } from './support.js';
@@ -9,7 +10,7 @@ import logger from '../src/lib/logger.js';
 describe('login API', () => {
   /* eslint-disable-next-line vitest/expect-expect */
   test('access is denied when no session cookie is present', () => {
-    vi.spyOn(logger, 'warn').mockReturnValue(null);
+    vi.spyOn(logger, 'warn').mockReturnValue({} as Logger);
 
     return request(app)
       .get('/api/duels')

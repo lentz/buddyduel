@@ -1,40 +1,42 @@
-import axios from 'axios';
-
 export const AUTH0_DOMAIN = 'buddyduel.us.auth0.com';
 
 async function getToken() {
-  const response = await axios.post<any, { data: { access_token: string } }>(
-    `https://${AUTH0_DOMAIN}/oauth/token`,
-    {
+  const response = await fetch(`https://${AUTH0_DOMAIN}/oauth/token`, {
+    body: JSON.stringify({
       grant_type: 'client_credentials',
       client_id: process.env.AUTH0_CLIENT_ID,
       client_secret: process.env.AUTH0_CLIENT_SECRET,
       audience: `https://${AUTH0_DOMAIN}/api/v2/`,
-    },
-    {
-      headers: { 'content-type': 'application/json' },
-    },
-  );
-  return response.data.access_token;
+    }),
+    headers: { 'content-type': 'application/json' },
+    method: 'POST',
+  });
+
+  const responseBody = await response.json();
+
+  return responseBody.access_token;
 }
 
 export async function getInfo(userId: string) {
-  const response = await axios.get<{ email: string; user_metadata: any }>(
+  const response = await fetch(
     `https://${AUTH0_DOMAIN}/api/v2/users/${userId}`,
     {
       headers: { Authorization: `Bearer ${await getToken()}` },
     },
   );
-  return response.data;
+
+  return await response.json();
 }
 
 export async function updateMetadata(userId: string, userMetadata: any) {
-  const response = await axios.patch(
+  const response = await fetch(
     `https://${AUTH0_DOMAIN}/api/v2/users/${userId}`,
-    { user_metadata: userMetadata },
     {
+      body: JSON.stringify({ user_metadata: userMetadata }),
       headers: { Authorization: `Bearer ${await getToken()}` },
+      method: 'PATCH',
     },
   );
-  return response.data;
+
+  return await response.json();
 }

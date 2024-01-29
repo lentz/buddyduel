@@ -1,9 +1,8 @@
 import { readFileSync } from 'node:fs';
 
-import axios from 'axios';
 import { describe, expect, test, vi } from 'vitest';
 
-import { sports } from '../sports.js';
+import { ISport, sports } from '../sports.js';
 import * as oddsApi from './odds-api.js';
 
 const oddsRes = JSON.parse(
@@ -16,12 +15,15 @@ const scoresRes = JSON.parse(
   ).toString(),
 );
 
-const nfl = sports.find((sport) => sport.name === 'NFL');
+const nfl = sports.find((sport) => sport.name === 'NFL') as ISport;
 
 describe('oddsApi', () => {
   describe('#updateOdds', () => {
     test('does not modify the games when no matches are found', async () => {
-      vi.spyOn(axios, 'get').mockResolvedValue({ data: [] });
+      vi.spyOn(global, 'fetch').mockResolvedValue({
+        json: () => Promise.resolve([]),
+        ok: true,
+      } as Response);
       const games = [];
 
       await oddsApi.updateOdds(games, nfl);
@@ -30,7 +32,10 @@ describe('oddsApi', () => {
     });
 
     test('adds new games with odds to the games array', async () => {
-      vi.spyOn(axios, 'get').mockResolvedValueOnce({ data: oddsRes });
+      vi.spyOn(global, 'fetch').mockResolvedValueOnce({
+        json: () => Promise.resolve(oddsRes),
+        ok: true,
+      } as Response);
 
       const games = [];
 
@@ -78,7 +83,10 @@ describe('oddsApi', () => {
       vi.useFakeTimers();
       vi.setSystemTime(new Date('2023-01-19:00:00Z'));
 
-      vi.spyOn(axios, 'get').mockResolvedValueOnce({ data: oddsRes });
+      vi.spyOn(global, 'fetch').mockResolvedValueOnce({
+        json: () => Promise.resolve(oddsRes),
+        ok: true,
+      } as Response);
 
       const games = [
         {
@@ -147,7 +155,10 @@ describe('oddsApi', () => {
       vi.useFakeTimers();
       vi.setSystemTime(new Date('2023-01-22T02:00:00Z'));
 
-      vi.spyOn(axios, 'get').mockResolvedValueOnce({ data: scoresRes });
+      vi.spyOn(global, 'fetch').mockResolvedValueOnce({
+        json: () => Promise.resolve(scoresRes),
+        ok: true,
+      } as Response);
 
       const games = [
         {

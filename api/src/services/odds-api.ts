@@ -1,19 +1,12 @@
-import axios from 'axios';
+import sgMail from '@sendgrid/mail';
 
 import IGame from '../models/IGame.js';
 import betResult from '../lib/betResult.js';
 import { ISport } from '../sports.js';
 
-axios.defaults.baseURL = 'https://api.the-odds-api.com/v4/sports';
+const BASE_URL = 'https://api.the-odds-api.com/v4/sports';
 
 export async function updateScores(games: IGame[], sport: ISport) {
-  const opts = {
-    params: {
-      apiKey: process.env.ODDS_API_KEY,
-      daysFrom: 1,
-    },
-  };
-
   type Event = {
     id: string;
     commence_time: string;
@@ -25,10 +18,23 @@ export async function updateScores(games: IGame[], sport: ISport) {
       score: number;
     }[];
   };
-  const res = await axios.get<Event[]>(`${sport.key}/scores`, opts);
+
+  const res = await fetch(
+    `${BASE_URL}/${sport.key}/scores?apiKey=${process.env.ODDS_API_KEY}&daysFrom=1`,
+  );
+
+  if (!res.ok) {
+    const errMessage = `Failed to update scores with status ${
+      res.status
+    }: ${await res.text()}`;
+
+    throw new Error(errMessage);
+  }
+
+  const resBody: Event[] = await res.json();
 
   for (const game of games) {
-    const currentEvent = res.data.find((event) => event.id === game.id);
+    const currentEvent = resBody.find((event) => event.id === game.id);
     if (!currentEvent?.scores) continue;
 
     if (currentEvent.completed) {
@@ -69,15 +75,27 @@ export async function updateOdds(existingGames: IGame[], sport: ISport) {
     id: string;
   };
 
-  const oddsRes = await axios.get<EventOdds[]>(`${sport.key}/odds`, {
-    params: {
-      apiKey: process.env.ODDS_API_KEY,
-      bookmakers: 'pinnacle',
-      markets: 'spreads',
-    },
-  });
+  const oddsRes = await fetch(
+    `${BASE_URL}/${sport.key}/odds?apiKey=${process.env.ODDS_API_KEY}&bookmakers=pinnacle&markets=spreads`,
+  );
+  if (!oddsRes.ok) {
+    const errMessage = `Failed to update odds with status ${
+      oddsRes.status
+    }: ${await oddsRes.text()}`;
 
-  for (const event of oddsRes.data) {
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
+    await sgMail.send({
+      to: process.env.ADMIN_EMAIL,
+      from: 'BuddyDuel <alerts@buddyduel.net>',
+      subject: 'Failed to updated game odds',
+      html: errMessage,
+    });
+
+    throw new Error(errMessage);
+  }
+  const oddsResBody: EventOdds[] = await oddsRes.json();
+
+  for (const event of oddsResBody) {
     const existingGame = existingGames.find((game) => event.id === game.id);
 
     const homeOutcome = event.bookmakers[0]?.markets[0]?.outcomes.find(

@@ -72,7 +72,7 @@
     "@types/morgan": "^1.9.9",
     "@types/node": "^18.19.4",
     "@types/shortid": "0.0.32",
-    "@types/supertest": "^2.0.15",
+    "@types/supertest": "^6.0.2",
     "@typescript-eslint/eslint-plugin": "^7.5.0",
     "@typescript-eslint/parser": "^7.5.0",
     "cypress": "^13.7.2",
@@ -83,7 +83,7 @@
     "lint-staged": "^15.2.2",
     "pre-commit": "^1.2.2",
     "prettier": "3.2.5",
-    "supertest": "^6.3.3",
+    "supertest": "^6.3.4",
     "tsx": "^4.7.1",
     "typescript": "^5.1.6",
     "vitest": "^1.4.0"

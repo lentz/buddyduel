@@ -10,3 +10,9 @@ updates:
     ignore:
       - dependency-name: '@angular*'
       - dependency-name: '@types/node'
+  - package-ecosystem: github-actions
+    directory: '/'
+    schedule:
+      interval: weekly
+    assignees:
+      - lentz

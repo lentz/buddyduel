@@ -86,7 +86,7 @@
     "supertest": "^6.3.4",
     "tsx": "^4.7.1",
     "typescript": "^5.1.6",
-    "vitest": "^1.4.0"
+    "vitest": "^1.5.3"
   },
   "pre-commit": [
     "lint-staged",

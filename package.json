@@ -73,7 +73,7 @@
     "@types/node": "^18.19.4",
     "@types/shortid": "0.0.32",
     "@types/supertest": "^6.0.2",
-    "@typescript-eslint/eslint-plugin": "^7.5.0",
+    "@typescript-eslint/eslint-plugin": "^7.8.0",
     "@typescript-eslint/parser": "^7.5.0",
     "cypress": "^13.8.1",
     "eslint": "^8.57.0",

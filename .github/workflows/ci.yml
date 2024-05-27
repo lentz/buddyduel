@@ -31,7 +31,7 @@ jobs:
       - name: Build Client
         run: npm run build-client-prod
       - name: Install MongoDB
-        uses: supercharge/mongodb-github-action@1.10.0
+        uses: supercharge/mongodb-github-action@1.11.0
         with:
           mongodb-version: '6.0'
       - name: Test

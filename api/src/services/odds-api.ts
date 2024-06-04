@@ -86,7 +86,7 @@ export async function updateOdds(existingGames: IGame[], sport: ISport) {
     sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
     await sgMail.send({
       to: process.env.ADMIN_EMAIL,
-      from: 'BuddyDuel <alerts@buddyduel.net>',
+      from: 'BuddyDuel <alerts@buddyduel.fly.dev>',
       subject: 'Failed to updated game odds',
       html: errMessage,
     });

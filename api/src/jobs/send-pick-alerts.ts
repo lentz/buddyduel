@@ -63,7 +63,7 @@ async function sendAlert(duelWeek: IDuelWeek, games: IGame[]) {
   );
   return sgMail.send({
     to: userInfo.email,
-    from: 'BuddyDuel <alerts@buddyduel.net>',
+    from: 'BuddyDuel <alerts@buddyduel.fly.dev>',
     subject:
       `${duelWeek.sport} games starting soon vs ${opponentName(duelWeek)}` +
       ' - get your picks in!',

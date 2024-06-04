@@ -8,7 +8,7 @@ RUN npm ci
 COPY client client
 COPY api api
 
-ENV BASE_URL=https://buddyduel.net
+ENV BASE_URL=https://buddyduel.fly.dev
 ENV DATABASE_NAME=prod
 ENV NODE_ENV=production
 ENV PORT=8080

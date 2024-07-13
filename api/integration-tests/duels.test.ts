@@ -1,6 +1,6 @@
 /* eslint-disable arrow-body-style */
 import request from 'supertest';
-import { beforeAll, describe, test, expect, vi } from 'vitest';
+import { beforeAll, describe, it, expect, vi } from 'vitest';
 import { Logger } from 'winston';
 
 import app from '../src/app.js';
@@ -16,7 +16,7 @@ describe('duels API', () => {
   });
 
   describe('POST /duels', () => {
-    test('creates a new duel', async () => {
+    it('creates a new duel', async () => {
       const response = await request(app)
         .post('/api/duels')
         .set('Cookie', [sessionCookie])
@@ -34,7 +34,7 @@ describe('duels API', () => {
 
   describe('DELETE /duel/:id', () => {
     /* eslint-disable-next-line vitest/expect-expect */
-    test('deleting a duel succeeds when the user is a player', async () => {
+    it('deleting a duel succeeds when the user is a player', async () => {
       const createResponse = await request(app)
         .post('/api/duels')
         .set('Cookie', [sessionCookie])
@@ -49,7 +49,7 @@ describe('duels API', () => {
     });
 
     /* eslint-disable-next-line vitest/expect-expect */
-    test('deleting a duel returns a 404 if the duel does not exist', async () => {
+    it('deleting a duel returns a 404 if the duel does not exist', async () => {
       return request(app)
         .delete('/api/duels/5c68438fc2481e3e3a97021c')
         .set('Cookie', [sessionCookie])
@@ -59,7 +59,7 @@ describe('duels API', () => {
 
   describe('PUT /duels/accept', () => {
     /* eslint-disable-next-line vitest/expect-expect */
-    test('accepting a duel fails if the user is already in it', async () => {
+    it('accepting a duel fails if the user is already in it', async () => {
       vi.spyOn(logger, 'error').mockReturnValue({} as Logger);
 
       const createResponse = await request(app)
@@ -76,7 +76,7 @@ describe('duels API', () => {
         .expect(500, { message: 'You are already in this duel!' });
     });
 
-    test('accepting a duel succeeds if the user is not already in it', async () => {
+    it('accepting a duel succeeds if the user is not already in it', async () => {
       const createResponse = await request(app)
         .post('/api/duels')
         .set('Cookie', [sessionCookie])
@@ -111,7 +111,7 @@ describe('duels API', () => {
   });
 
   describe('GET /duels/:id', () => {
-    test('getting a duel returns the duel', async () => {
+    it('getting a duel returns the duel', async () => {
       const createResponse = await request(app)
         .post('/api/duels')
         .set('Cookie', [sessionCookie])
@@ -132,7 +132,7 @@ describe('duels API', () => {
     });
 
     /* eslint-disable-next-line vitest/expect-expect */
-    test('getting a duel returns a 404 when not found', async () => {
+    it('getting a duel returns a 404 when not found', async () => {
       return request(app)
         .get('/api/duels/5c68438fc2481e3e3a97021c')
         .set('Cookie', [sessionCookie])
@@ -141,7 +141,7 @@ describe('duels API', () => {
   });
 
   describe('PUT /duels/:id', () => {
-    test('updating a duel returns a 204 when found', async () => {
+    it('updating a duel returns a 204 when found', async () => {
       const createResponse = await request(app)
         .post('/api/duels')
         .set('Cookie', [sessionCookie])

@@ -1,7 +1,6 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-// eslint-disable-next-line import/default
 import Bree from 'bree';
 import dotenv from 'dotenv';
 

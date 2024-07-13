@@ -1,6 +1,6 @@
 /* eslint-disable arrow-body-style */
 import request from 'supertest';
-import { describe, expect, test, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { Logger } from 'winston';
 
 import app from '../src/app.js';
@@ -9,7 +9,7 @@ import logger from '../src/lib/logger.js';
 
 describe('login API', () => {
   /* eslint-disable-next-line vitest/expect-expect */
-  test('access is denied when no session cookie is present', () => {
+  it('access is denied when no session cookie is present', () => {
     vi.spyOn(logger, 'warn').mockReturnValue({} as Logger);
 
     return request(app)
@@ -19,7 +19,7 @@ describe('login API', () => {
 
   describe('authenticated access', () => {
     /* eslint-disable-next-line vitest/expect-expect */
-    test('access is allowed when the session exists', async () => {
+    it('access is allowed when the session exists', async () => {
       const sessionCookie = await createSession(user1);
 
       const res = await request(app)

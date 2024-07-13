@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 
-import { describe, expect, test, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import { ISport, sports } from '../sports.js';
 import * as oddsApi from './odds-api.js';
@@ -19,7 +19,7 @@ const nfl = sports.find((sport) => sport.name === 'NFL') as ISport;
 
 describe('oddsApi', () => {
   describe('#updateOdds', () => {
-    test('does not modify the games when no matches are found', async () => {
+    it('does not modify the games when no matches are found', async () => {
       vi.spyOn(global, 'fetch').mockResolvedValue({
         json: () => Promise.resolve([]),
         ok: true,
@@ -31,7 +31,7 @@ describe('oddsApi', () => {
       expect(games).toEqual([]);
     });
 
-    test('adds new games with odds to the games array', async () => {
+    it('adds new games with odds to the games array', async () => {
       vi.spyOn(global, 'fetch').mockResolvedValueOnce({
         json: () => Promise.resolve(oddsRes),
         ok: true,
@@ -79,7 +79,7 @@ describe('oddsApi', () => {
       `);
     });
 
-    test('updates existing game start times and spreads', async () => {
+    it('updates existing game start times and spreads', async () => {
       vi.useFakeTimers();
       vi.setSystemTime(new Date('2023-01-19:00:00Z'));
 
@@ -151,7 +151,7 @@ describe('oddsApi', () => {
   });
 
   describe('#updateScores', () => {
-    test('updates the scores and result of any games that have score data', async () => {
+    it('updates the scores and result of any games that have score data', async () => {
       vi.useFakeTimers();
       vi.setSystemTime(new Date('2023-01-22T02:00:00Z'));
 

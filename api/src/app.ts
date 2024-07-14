@@ -56,6 +56,7 @@ const clientDistPath = path.join(
   'client',
   'dist',
   'buddyduel',
+  'browser',
 );
 app.get('/auth/callback', usersController.authenticate);
 app.get('/logout', usersController.logout);

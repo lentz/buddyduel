@@ -2,20 +2,24 @@ FROM node:22
 
 WORKDIR /app
 
-COPY package*.json .
-RUN npm ci
+COPY ./client/package*.json ./client/
+RUN cd ./client && npm ci
+
+COPY ./api/package*.json ./api/
+RUN cd ./api && npm ci
 
 COPY client client
 COPY api api
 
 ENV BASE_URL=https://buddyduel.fly.dev
+ENV BREE_DEFAULT_EXTENSION=js
 ENV DATABASE_NAME=prod
 ENV NODE_ENV=production
 ENV PORT=8080
 
-RUN npm run build-api
-RUN npm run build-client-prod
+RUN cd ./api && npm run build
+RUN cd ./client && npm run build:prod
 
 EXPOSE 8080
 
-CMD ["npm", "start"]
+CMD ["node", "./api/dist/server.js"]

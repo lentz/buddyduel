@@ -1,7 +1,7 @@
 <div *ngIf="duelWeek$ | async as duelWeek">
   <div class="row">
     <div class="col-lg-8">
-      <h2 *ngIf="loading" class="loading"></h2>
+      <h2 *ngIf="loading" class="loading" title="Loading"></h2>
       <h2 *ngIf="!loading" class="text-truncate">
         {{ duelWeek.sport }} {{ duelWeek.description }}
         <small class="text-muted">vs {{ opponentName(duelWeek) }}</small>
@@ -20,7 +20,7 @@
         class="badge"
         [ngClass]="{
           'badge-success': isWinner(duelWeek),
-          'badge-danger': !isWinner(duelWeek)
+          'badge-danger': !isWinner(duelWeek),
         }"
       >
         {{ this.math.abs(duelWeek.winnings) | currency: 'USD' : 'symbol' }}

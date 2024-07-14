@@ -9,7 +9,7 @@
       class="badge"
       [ngClass]="{
         'badge-success': winnings >= 0,
-        'badge-danger': winnings < 0
+        'badge-danger': winnings < 0,
       }"
     >
       {{ winnings | currency: 'USD' : 'symbol' }}

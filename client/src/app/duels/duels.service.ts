@@ -37,7 +37,7 @@ export class DuelsService {
     return this.http.get<Duel[]>(this.duelsURL, { params });
   }
 
-  async acceptDuel(code: string): Promise<any> {
+  async acceptDuel(code: string) {
     return this.http
       .put<{ message: string }>(
         `${this.duelsURL}/accept`,
@@ -49,7 +49,7 @@ export class DuelsService {
       .catch(this.handleError);
   }
 
-  updateDuel(duel: Duel): Promise<any> {
+  async updateDuel(duel: Duel) {
     return this.http
       .put(`${this.duelsURL}/${duel._id}`, duel, { headers: this.headers })
       .toPromise()
@@ -74,12 +74,15 @@ export class DuelsService {
     return this.http
       .get(`${this.duelsURL}/sports`, { headers: this.headers })
       .toPromise()
-      .then((response: any) => response as string[])
+      .then((response) => response as string[])
       .catch(this.handleError);
   }
 
-  private handleError(res: any): Promise<any> {
-    if (res.error.message) {
+  private handleError(res: {
+    error?: { message: string };
+    statusText?: string;
+  }) {
+    if (res.error?.message) {
       return Promise.reject(res.error.message);
     }
     return Promise.reject(res.statusText);

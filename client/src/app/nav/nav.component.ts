@@ -1,14 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import { Component } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { BehaviorSubject, merge, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, merge, Observable } from 'rxjs';
 
 import { AuthService } from '../auth/auth.service';
 import { DuelsService } from '../duels/duels.service';
 import { Duel } from '../duels/duel';
 import { switchMap } from 'rxjs/operators';
 
-declare var jQuery: any;
+declare const jQuery: (selector: string) => { modal: (toggle: string) => void };
 
 @Component({
   selector: 'app-nav',

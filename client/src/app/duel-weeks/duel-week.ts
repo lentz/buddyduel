@@ -14,6 +14,7 @@ export class DuelWeek {
   winnings: number;
   sport: string;
 
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   constructor(duelWeek: any) {
     this._id = duelWeek._id;
     this.duelId = duelWeek.duelId;

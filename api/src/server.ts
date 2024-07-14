@@ -12,7 +12,7 @@ app
   .on('error', (err: any) => logger.error(err.stack));
 
 const bree = new Bree({
-  defaultExtension: /dev/.test(process.env.DATABASE_NAME ?? '') ? 'ts' : 'js',
+  defaultExtension: process.env.BREE_DEFAULT_EXTENSION || 'js',
   jobs: [
     {
       interval: 'every 2 hours',

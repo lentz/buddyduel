@@ -8,9 +8,9 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     env:
-      SENDGRID_API_KEY: SG.TEST_KEY
-      SESSION_SECRET: test
       MONGODB_URI: 'mongodb://localhost'
+      SENDGRID_API_KEY: 'SG.TEST_KEY'
+      SESSION_SECRET: test
       PORT: 3000
     steps:
       - uses: actions/checkout@v4
@@ -23,24 +23,34 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
-      - run: npm ci
-      - name: Lint
-        run: npm run lint
-      - name: Build API
-        run: npm run build-api
-      - name: Build Client
-        run: npm run build-client-prod
       - name: Install MongoDB
         uses: supercharge/mongodb-github-action@1.11.0
         with:
           mongodb-version: '6.0'
-      - name: Test
+      - name: Install Client Deps
+        run: npm ci
+        working-directory: ./client
+      - name: Lint Client
+        run: npm run lint
+        working-directory: ./client
+      - name: Build Client
+        run: npm run build:prod
+        working-directory: ./client
+      - name: Install API Deps
+        run: npm ci
+        working-directory: ./api
+      - name: Build API
+        run: npm run build
+        working-directory: ./api
+      - name: Test API
         env:
           DATABASE_NAME: 'integration'
         run: npm run test:ci
+        working-directory: ./api
       - name: E2E Test
         uses: cypress-io/github-action@v6
         env:
           DATABASE_NAME: 'e2e'
         with:
-          start: npm start
+          start: node ../api/dist/server.js
+          working-directory: ./client

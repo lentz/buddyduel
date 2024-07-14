@@ -20,8 +20,6 @@ export class AuthService {
       `&returnTo=${environment.baseURL}/logout`,
   );
 
-  constructor() {}
-
   getUser(): { id: string; name: string } {
     return {
       id: Cookies.get('userId') ?? 'unknown',

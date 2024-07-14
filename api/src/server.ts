@@ -2,12 +2,9 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import Bree from 'bree';
-import dotenv from 'dotenv';
 
 import app from './app.js';
 import logger from './lib/logger.js';
-
-dotenv.config();
 
 app
   .listen(process.env.PORT)

@@ -1,7 +1,6 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 import express from 'express';
 import session from 'express-session';
@@ -13,8 +12,6 @@ import * as usersController from './controllers/users.js';
 import logger from './lib/logger.js';
 import routes from './routes.js';
 import './lib/db.js';
-
-dotenv.config();
 
 const app = express();
 

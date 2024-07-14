@@ -2,7 +2,6 @@
 import { parentPort } from 'node:worker_threads';
 import process from 'node:process';
 
-import dotenv from 'dotenv';
 import { addMinutes } from 'date-fns';
 import sgMail from '@sendgrid/mail';
 
@@ -10,8 +9,6 @@ import '../lib/db.js';
 import { default as DuelWeek, IDuelWeek } from '../models/DuelWeek.js';
 import * as user from '../services/user.js';
 import IGame from '../models/IGame.js';
-
-dotenv.config();
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY || '');
 

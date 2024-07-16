@@ -3,16 +3,8 @@
     "target": "ES2021",
     "module": "nodenext",
     "moduleResolution": "nodenext",
-    "lib": [
-      "ES2022",
-      "dom"
-    ],
-    "types": [
-      "cypress",
-      "node"
-    ]
+    "lib": ["ES2022", "dom"],
+    "types": ["cypress", "node"]
   },
-  "include": [
-    "**/*.ts"
-  ]
+  "include": ["**/*.ts"]
 }

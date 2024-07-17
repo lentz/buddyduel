@@ -1,22 +1,26 @@
 services:
   api:
     build:
-      context: .
-      dockerfile: ./api/Dockerfile
+      context: ./api
+      dockerfile: Dockerfile
     ports:
-      - '9229:9229'
-    env_file: .env
+      - 9229:9229
+    env_file: ./api/.env
+    environment:
+      - BASE_URL=http://localhost:4200
+      - BREE_DEFAULT_EXTENSION=ts
+      - DATABASE_NAME=dev
+      - PORT=3000
     volumes:
-      - ./api:/app/api
-      - ./client/:/app/client
+      - ./api:/app
       - /app/node_modules
 
   client:
     build:
-      context: .
-      dockerfile: ./client/Dockerfile
+      context: ./client
+      dockerfile: Dockerfile
     ports:
-      - '4200:4200'
+      - 4200:4200
     volumes:
-      - ./client/:/app/client
+      - ./client:/app
       - /app/node_modules

@@ -1,11 +1,11 @@
-FROM node:18.17.1
+FROM node:22
 
 WORKDIR /app
 
-COPY package.json package-lock.json .
+COPY package*.json .
 
 RUN npm install
 
 EXPOSE 9229
 
-CMD ["./node_modules/.bin/tsx", "--watch", "--inspect=0.0.0.0", "./api/src/server.ts"]
+CMD ["npx", "tsx", "watch", "--inspect=0.0.0.0", "./src/server.ts"]

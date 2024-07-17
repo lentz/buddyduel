@@ -12,8 +12,7 @@
     "cy:run": "cypress run",
     "cy:open": "cypress open --e2e --browser chrome",
     "lint-staged": "lint-staged",
-    "lint": "ng lint",
-    "serve": "ng serve"
+    "lint": "ng lint"
   },
   "dependencies": {
     "@angular/animations": "18.1.0",

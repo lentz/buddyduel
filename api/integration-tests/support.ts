@@ -9,7 +9,7 @@ export async function createSession(user: any) {
     ok: true,
   } as Response);
 
-  const authResp = await supertest(app).get('/auth/callback').expect(200);
+  const authResp = await supertest(app).get('/auth/callback').expect(302);
   return authResp.headers['set-cookie']
     .find((header: string) => /connect.sid/.test(header))
     .split(';')[0];

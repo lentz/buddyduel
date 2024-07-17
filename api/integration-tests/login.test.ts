@@ -18,7 +18,6 @@ describe('login API', () => {
   });
 
   describe('authenticated access', () => {
-    /* eslint-disable-next-line vitest/expect-expect */
     it('access is allowed when the session exists', async () => {
       const sessionCookie = await createSession(user1);
 

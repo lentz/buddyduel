@@ -69,14 +69,18 @@ export async function authenticate(
     maxAge: COOKIE_MAX_AGE,
     secure: USE_SECURE_COOKIE,
   });
-  req.session.save(next);
+  req.session.save(() => {
+    res.redirect('/');
+  });
 }
 
-export async function logout(req: Request, res: Response, next: NextFunction) {
+export async function logout(req: Request, res: Response) {
   res.clearCookie('connect.sid', { secure: USE_SECURE_COOKIE });
   res.clearCookie('userId', { secure: USE_SECURE_COOKIE });
   res.clearCookie('userName', { secure: USE_SECURE_COOKIE });
-  req.session.destroy(next);
+  req.session.destroy(() => {
+    res.redirect('/');
+  });
 }
 
 export async function show(req: Request, res: Response) {

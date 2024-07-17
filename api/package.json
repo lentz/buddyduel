@@ -10,7 +10,6 @@
     "build": "tsc",
     "lint": "eslint '**/*.ts'",
     "lint-staged": "lint-staged",
-    "serve": "tsx watch --env-file .env --inspect ./src/server.ts",
     "test": "DATABASE_NAME=test node --env-file .env ./node_modules/.bin/vitest run",
     "test:watch": "DATABASE_NAME=test node --env-file .env ./node_modules/.bin/vitest",
     "test:ci": "vitest",

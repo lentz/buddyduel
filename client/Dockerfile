@@ -1,13 +1,11 @@
-FROM node:18.17.1
+FROM node:22
 
 WORKDIR /app
 
-COPY package.json package-lock.json .
+COPY package*.json .
 
 RUN npm install
 
 EXPOSE 4200
 
-WORKDIR /app/client
-
-CMD ["../node_modules/.bin/ng", "serve", "--host", "0.0.0.0"]
+CMD ["npx", "ng", "serve", "--disable-host-check", "--host", "0.0.0.0"]

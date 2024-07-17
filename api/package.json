@@ -43,7 +43,7 @@
     "@types/node": "^18.19.4",
     "@types/shortid": "0.0.32",
     "@types/supertest": "^6.0.2",
-    "@typescript-eslint/eslint-plugin": "^7.15.0",
+    "@typescript-eslint/eslint-plugin": "^7.16.1",
     "@typescript-eslint/parser": "^7.16.0",
     "eslint": "^8.57.0",
     "eslint-plugin-vitest": "^0.5.4",

@@ -46,7 +46,6 @@
     "cypress": "^13.13.0",
     "eslint": "^8.57.0",
     "lint-staged": "^15.2.7",
-    "pre-commit": "^1.2.2",
     "prettier": "^3.3.2",
     "typescript": "^5.4.5"
   },

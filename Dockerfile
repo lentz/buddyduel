@@ -16,8 +16,10 @@ ENV DATABASE_NAME=prod
 ENV NODE_ENV=production
 ENV PORT=8080
 
-RUN cd ./api && npm run build
-RUN cd ./client && npm run build:prod
+RUN cd ./api && \
+  npm run build && \
+  cd ../client && \
+  npm run build:prod
 
 EXPOSE 8080
 

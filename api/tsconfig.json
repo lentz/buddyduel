@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "ES2021",
-    "module": "ES2022",
+    "target": "ES2022",
+    "module": "nodenext",
     "esModuleInterop": true,
     "moduleResolution": "nodenext",
     "allowJs": false,
@@ -12,6 +12,11 @@
     "strict": true,
     "incremental": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["./node_modules", "**/*.test.*"]
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "./node_modules",
+    "**/*.test.*"
+  ]
 }

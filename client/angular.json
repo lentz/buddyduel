@@ -17,9 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": {
-              "base": "dist/buddyduel"
-            },
+            "outputPath": "dist/buddyduel",
             "index": "src/index.html",
             "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
@@ -56,8 +54,7 @@
             "development": {
               "optimization": false,
               "extractLicenses": false,
-              "sourceMap": true,
-              "namedChunks": true
+              "sourceMap": true
             }
           },
           "defaultConfiguration": "production"
@@ -66,11 +63,11 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "buddyduel:build:production"
+              "browserTarget": "buddyduel:build:production"
             },
             "development": {
               "proxyConfig": "src/proxy.conf.mjs",
-              "buildTarget": "buddyduel:build:development"
+              "browserTarget": "buddyduel:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -78,7 +75,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "buddyduel:build"
+            "browserTarget": "buddyduel:build"
           }
         },
         "test": {

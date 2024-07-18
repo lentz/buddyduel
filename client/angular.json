@@ -63,11 +63,11 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "buddyduel:build:production"
+              "buildTarget": "buddyduel:build:production"
             },
             "development": {
               "proxyConfig": "src/proxy.conf.mjs",
-              "browserTarget": "buddyduel:build:development"
+              "buildTarget": "buddyduel:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -75,7 +75,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "buddyduel:build"
+            "buildTarget": "buddyduel:build"
           }
         },
         "test": {

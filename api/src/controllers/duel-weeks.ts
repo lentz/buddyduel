@@ -1,7 +1,4 @@
-/* eslint no-param-reassign: "off" */
-
 import { Request, Response } from 'express';
-import { sortBy } from 'lodash-es';
 import { addDays, subDays } from 'date-fns';
 
 import { default as DuelWeek, IDuelWeek } from '../models/DuelWeek.js';
@@ -25,10 +22,18 @@ export async function show(req: Request, res: Response) {
     _id: req.params.id,
     'players.id': req.session.userId,
   }).exec()) as IDuelWeek;
+
   if (!duelWeek) {
     return res.status(404).json({ message: 'Duel week not found' });
   }
-  duelWeek.games = sortBy(duelWeek.games, ['startTime', 'awayTeam']);
+
+  duelWeek.games.sort((game1, game2) => {
+    if (game1.startTime < game2.startTime) return -1;
+    if (game1.startTime > game2.startTime) return 1;
+
+    // If startTimes are equal, sort by awayTeam
+    return game1.awayTeam.localeCompare(game2.awayTeam);
+  });
 
   return res.json(duelWeek);
 }

@@ -1,32 +1,25 @@
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-
-import Bree from 'bree';
+import { CronJob } from 'cron';
 
 import app from './app.js';
 import logger from './lib/logger.js';
+import sendPickAlerts from './jobs/send-pick-alerts.js';
+import updateDuelWeeks from './jobs/update-duel-weeks.js';
 
 app
   .listen(process.env.PORT)
   .on('listening', () => logger.info(`Listening on port ${process.env.PORT}`))
   .on('error', (err: any) => logger.error(err.stack));
 
-const bree = new Bree({
-  defaultExtension: process.env.BREE_DEFAULT_EXTENSION || 'js',
-  jobs: [
-    {
-      interval: 'every 2 hours',
-      name: 'update-duel-weeks',
-      timeout: 0,
-    },
-    {
-      interval: 'every 45 minutes',
-      name: 'send-pick-alerts',
-      timeout: '10m',
-    },
-  ],
-  root: path.join(path.dirname(fileURLToPath(import.meta.url)), 'jobs'),
+CronJob.from({
+  cronTime: '0 0 */2 * * *', // every 2 hours
+  onTick: updateDuelWeeks,
+  start: true,
 });
-await bree.start();
+
+CronJob.from({
+  cronTime: '0 */45 * * * *', // every 45 minutes
+  onTick: sendPickAlerts,
+  start: true,
+});
 
 export default app;

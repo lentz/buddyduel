@@ -1,11 +1,8 @@
-/* eslint no-console: 0 */
-import { parentPort } from 'node:worker_threads';
-import process from 'node:process';
+/* eslint-disable no-console */
 
 import { addMinutes } from 'date-fns';
 import sgMail from '@sendgrid/mail';
 
-import '../lib/db.js';
 import { default as DuelWeek, IDuelWeek } from '../models/DuelWeek.js';
 import * as user from '../services/user.js';
 import IGame from '../models/IGame.js';
@@ -76,7 +73,7 @@ function isApproachingUnpicked(game: IGame, startsWithinTime: Date) {
   );
 }
 
-async function run() {
+export default async function () {
   const beginTime = Date.now();
   try {
     const startsWithinTime = addMinutes(new Date(), 90);
@@ -102,13 +99,7 @@ async function run() {
     }
   } catch (err) {
     console.error('Error sending pick alerts:', err);
-    process.exit(1);
   }
 
   console.log('Send pick alerts completed in', Date.now() - beginTime, 'ms');
-
-  if (parentPort) parentPort.postMessage('done');
-  else process.exit(0);
 }
-
-run();

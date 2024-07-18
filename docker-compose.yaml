@@ -8,7 +8,6 @@ services:
     env_file: ./api/.env
     environment:
       - BASE_URL=http://localhost:4200
-      - BREE_DEFAULT_EXTENSION=ts
       - DATABASE_NAME=dev
       - PORT=3000
     volumes:

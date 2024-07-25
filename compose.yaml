@@ -1,8 +1,6 @@
 services:
   api:
-    build:
-      context: ./api
-      dockerfile: Dockerfile
+    build: ./api
     ports:
       - 9229:9229
     env_file: ./api/.env
@@ -15,9 +13,7 @@ services:
       - /app/node_modules
 
   client:
-    build:
-      context: ./client
-      dockerfile: Dockerfile
+    build: ./client
     ports:
       - 4200:4200
     volumes:

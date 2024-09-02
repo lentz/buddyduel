@@ -22,21 +22,23 @@ const GameSchema = new mongoose.Schema(
 
 const duelWeekSchema = new mongoose.Schema(
   {
-    duelId: { type: mongoose.Schema.Types.ObjectId, required: true },
-    year: { type: Number, required: true },
-    description: { type: String, required: true },
     betAmount: { type: Number, required: true },
-    players: [PlayerSchema],
+    description: { type: String, required: true },
+    duelId: { type: mongoose.Schema.Types.ObjectId, required: true },
+    games: [GameSchema],
     picker: PlayerSchema,
+    players: [PlayerSchema],
     skipped: { type: Boolean, default: false },
     sport: String,
-    games: [GameSchema],
+    year: { type: Number, required: true },
   },
   { timestamps: true, toJSON: { virtuals: true } },
 );
 
 export interface IDuelWeek extends mongoose.Document {
   betAmount: number;
+  description: string;
+  duelId: string;
   games: IGame[];
   picker: IPlayer;
   players: IPlayer[];
@@ -46,8 +48,8 @@ export interface IDuelWeek extends mongoose.Document {
     wins: number;
   };
   sport: string;
-  description: string;
   winnings: number;
+  year: number;
 }
 
 function calculateRecord(duelWeek: IDuelWeek) {

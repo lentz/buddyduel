@@ -87,7 +87,7 @@ export async function updateOdds(existingGames: IGame[], sport: ISport) {
     await sgMail.send({
       to: process.env.ADMIN_EMAIL,
       from: 'BuddyDuel <alerts@buddyduel.fly.dev>',
-      subject: 'Failed to updated game odds',
+      subject: 'Failed to update game odds',
       html: errMessage,
     });
 

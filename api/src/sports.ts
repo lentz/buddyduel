@@ -39,7 +39,7 @@ export const sports: ISport[] = [
   },
   {
     currentWeek: () => {
-      const weekOne = new Date('2023-09-06T04:00:00Z');
+      const weekOne = new Date('2024-09-04T04:00:00Z');
       const weekNum = differenceInWeeks(new Date(), weekOne) + 1;
 
       let description;
@@ -62,6 +62,6 @@ export const sports: ISport[] = [
     },
     key: 'americanfootball_nfl',
     name: 'NFL',
-    seasonYear: 2023,
+    seasonYear: 2024,
   },
 ];

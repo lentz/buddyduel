@@ -8,10 +8,15 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     env:
+      ADMIN_EMAIL: test@example.com
+      AUTH0_CLIENT_ID: fake-client
+      AUTH0_CLIENT_SECRET: fake-secret
+      BUDDYDUEL_URL: http://localhost
       MONGODB_URI: 'mongodb://localhost'
+      ODDS_API_KEY: fake-key
+      PORT: 3000
       SENDGRID_API_KEY: 'SG.TEST_KEY'
       SESSION_SECRET: test
-      PORT: 3000
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

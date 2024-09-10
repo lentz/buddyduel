@@ -3,11 +3,12 @@
 import { addMinutes } from 'date-fns';
 import sgMail from '@sendgrid/mail';
 
+import config from '../config.js';
 import { default as DuelWeek, IDuelWeek } from '../models/DuelWeek.js';
 import * as user from '../services/user.js';
 import IGame from '../models/IGame.js';
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY || '');
+sgMail.setApiKey(config.SENDGRID_API_KEY);
 
 function messageBody(duelWeek: IDuelWeek, games: IGame[]) {
   return `
@@ -23,14 +24,14 @@ function messageBody(duelWeek: IDuelWeek, games: IGame[]) {
         .join('<br />')}
     </p>
     <p>
-      <a href="${process.env.BASE_URL}/duel-weeks/${duelWeek.id}">
+      <a href="${config.BUDDYDUEL_URL}/duel-weeks/${duelWeek.id}">
         Make your picks now
       </a>
     </p>
     <p></p>
     <small>
       You can disable these emails on your <a href="${
-        process.env.BASE_URL
+        config.BUDDYDUEL_URL
       }/profile">BuddyDuel Profile</a>
     </small>
   `;

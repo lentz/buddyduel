@@ -8,6 +8,7 @@ import connectMongodbSession from 'connect-mongodb-session';
 import 'express-async-errors';
 import morgan from 'morgan';
 
+import config from './config.js';
 import * as usersController from './controllers/users.js';
 import logger from './lib/logger.js';
 import routes from './routes.js';
@@ -28,14 +29,14 @@ declare module 'express-session' {
 
 const MongoDBStore = connectMongodbSession(session);
 const store = new MongoDBStore({
-  uri: `${process.env.MONGODB_URI}/${process.env.DATABASE_NAME}`,
+  uri: `${config.MONGODB_URI}/${config.DATABASE_NAME}`,
   collection: 'sessions',
 });
 store.on('error', (err: any) => logger.error(err));
 
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || '',
+    secret: config.SESSION_SECRET,
     cookie: {
       maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year
       secure: false,

@@ -4,8 +4,9 @@ import { describe, expect, it, vi } from 'vitest';
 import { Logger } from 'winston';
 
 import app from '../src/app.js';
-import { createSession, user1 } from './support.js';
 import logger from '../src/lib/logger.js';
+
+import { createSession, user1 } from './support.js';
 
 describe('login API', () => {
   /* eslint-disable-next-line vitest/expect-expect */

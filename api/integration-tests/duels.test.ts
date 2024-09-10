@@ -6,6 +6,7 @@ import { Logger } from 'winston';
 import app from '../src/app.js';
 import logger from '../src/lib/logger.js';
 import * as DuelWeekUpdater from '../src/services/DuelWeekUpdater.js';
+
 import { createSession, user1, user2 } from './support.js';
 
 let sessionCookie: string;

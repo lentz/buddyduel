@@ -1,11 +1,12 @@
 import { NextFunction, Request, Response } from 'express';
 import { jwtDecode } from 'jwt-decode';
 
+import config from '../config.js';
 import { default as DuelWeek, IDuelWeek } from '../models/DuelWeek.js';
 import * as user from '../services/user.js';
 
 const COOKIE_MAX_AGE = 1000 * 60 * 60 * 24 * 365; // 1 year
-const USE_SECURE_COOKIE = (process.env.BASE_URL || '').startsWith('https');
+const USE_SECURE_COOKIE = config.BUDDYDUEL_URL.startsWith('https');
 
 async function getPerformance(userId: string) {
   const duelWeeks = (await DuelWeek.find({
@@ -40,10 +41,10 @@ export async function authenticate(
   const response = await fetch(`https://${user.AUTH0_DOMAIN}/oauth/token`, {
     body: JSON.stringify({
       grant_type: 'authorization_code',
-      client_id: process.env.AUTH0_CLIENT_ID,
-      client_secret: process.env.AUTH0_CLIENT_SECRET,
+      client_id: config.AUTH0_CLIENT_ID,
+      client_secret: config.AUTH0_CLIENT_SECRET,
       code: req.query.code,
-      redirect_uri: `${process.env.BASE_URL}/auth/callback`,
+      redirect_uri: `${config.BUDDYDUEL_URL}/auth/callback`,
     }),
     headers: { 'content-type': 'application/json' },
     method: 'POST',

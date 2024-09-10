@@ -1,13 +1,14 @@
 import { CronJob } from 'cron';
 
 import app from './app.js';
+import config from './config.js';
 import logger from './lib/logger.js';
 import sendPickAlerts from './jobs/send-pick-alerts.js';
 import updateDuelWeeks from './jobs/update-duel-weeks.js';
 
 app
-  .listen(process.env.PORT)
-  .on('listening', () => logger.info(`Listening on port ${process.env.PORT}`))
+  .listen(config.PORT)
+  .on('listening', () => logger.info(`Listening on port ${config.PORT}`))
   .on('error', (err: any) => logger.error(err.stack));
 
 CronJob.from({

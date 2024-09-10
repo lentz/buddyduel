@@ -1,5 +1,7 @@
-node_modules
-.env
-*.test.ts
+**/node_modules
+**/dist
+client/cypress
+**/.env
+**/*.test.ts
 api/integration-tests
 client/.angular/

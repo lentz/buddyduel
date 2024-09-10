@@ -2,10 +2,6 @@ services:
   api:
     build: ./api
     env_file: ./api/.env
-    environment:
-      BASE_URL: 'http://localhost:4200'
-      DATABASE_NAME: dev
-      PORT: 3000
     ports:
       - '9229:9229'
     volumes:

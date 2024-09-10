@@ -1,10 +1,11 @@
 import sgMail from '@sendgrid/mail';
 
+import config from '../config.js';
 import IGame from '../models/IGame.js';
 import betResult from '../lib/betResult.js';
 import { ISport } from '../sports.js';
 
-const BASE_URL = 'https://api.the-odds-api.com/v4/sports';
+const ODDS_API_SPORTS_URL = 'https://api.the-odds-api.com/v4/sports';
 
 export async function updateScores(games: IGame[], sport: ISport) {
   type Event = {
@@ -20,7 +21,7 @@ export async function updateScores(games: IGame[], sport: ISport) {
   };
 
   const res = await fetch(
-    `${BASE_URL}/${sport.key}/scores?apiKey=${process.env.ODDS_API_KEY}&daysFrom=1`,
+    `${ODDS_API_SPORTS_URL}/${sport.key}/scores?apiKey=${config.ODDS_API_KEY}&daysFrom=1`,
   );
 
   if (!res.ok) {
@@ -76,16 +77,16 @@ export async function updateOdds(existingGames: IGame[], sport: ISport) {
   };
 
   const oddsRes = await fetch(
-    `${BASE_URL}/${sport.key}/odds?apiKey=${process.env.ODDS_API_KEY}&bookmakers=pinnacle&markets=spreads`,
+    `${ODDS_API_SPORTS_URL}/${sport.key}/odds?apiKey=${config.ODDS_API_KEY}&bookmakers=pinnacle&markets=spreads`,
   );
   if (!oddsRes.ok) {
     const errMessage = `Failed to update odds with status ${
       oddsRes.status
     }: ${await oddsRes.text()}`;
 
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
+    sgMail.setApiKey(config.SENDGRID_API_KEY!);
     await sgMail.send({
-      to: process.env.ADMIN_EMAIL,
+      to: config.ADMIN_EMAIL,
       from: 'BuddyDuel <alerts@buddyduel.fly.dev>',
       subject: 'Failed to update game odds',
       html: errMessage,

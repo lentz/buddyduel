@@ -1,26 +1,47 @@
-FROM node:22-alpine
+FROM node:22-alpine AS base
 
-WORKDIR /app
+##################
+FROM base AS build
 
-COPY ./client/package*.json ./client/
-RUN cd ./client && npm ci
+WORKDIR /app/api
 
-COPY ./api/package*.json ./api/
-RUN cd ./api && npm ci
+COPY ./api/package*.json ./
 
-COPY client client
-COPY api api
+RUN npm ci
+
+COPY ./api ./
+
+RUN npm run build
+
+WORKDIR /app/client
+
+COPY ./client/package*.json ./
+
+RUN npm ci
+
+COPY client ./
+
+RUN npm run build:prod
+
+##################
+FROM base AS final
 
 ENV BUDDYDUEL_URL=https://buddyduel.fly.dev
 ENV DATABASE_NAME=prod
 ENV NODE_ENV=production
 ENV PORT=8080
 
-RUN cd ./api && \
-  npm run build && \
-  cd ../client && \
-  npm run build:prod
+WORKDIR /app/api
+
+COPY ./api/package*.json ./
+RUN npm ci
+
+COPY --from=build /app/api/dist /app/api
+
+WORKDIR  /app/client
+
+COPY --from=build /app/client/dist ./dist
 
 EXPOSE 8080
 
-CMD ["node", "./api/dist/server.js"]
+CMD ["node", "/app/api/server.js"]

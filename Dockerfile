@@ -27,6 +27,7 @@ RUN npm run build:prod
 FROM base AS final
 
 ENV BUDDYDUEL_URL=https://buddyduel.fly.dev
+ENV CLIENT_DIST_PATH=/app/client/dist/buddyduel/browser
 ENV DATABASE_NAME=prod
 ENV NODE_ENV=production
 ENV PORT=8080

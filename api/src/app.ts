@@ -50,21 +50,16 @@ app.use(
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const clientDistPath = path.join(
-  path.dirname(fileURLToPath(import.meta.url)),
-  '..',
-  '..',
-  'client',
-  'dist',
-  'buddyduel',
-  'browser',
-);
 app.get('/auth/callback', usersController.authenticate);
 app.get('/logout', usersController.logout);
 app.use('/api', routes);
-app.use(express.static(clientDistPath, { maxAge: 31556926000 }));
+app.use(
+  express.static(path.resolve(config.CLIENT_DIST_PATH), {
+    maxAge: 31556926000,
+  }),
+);
 app.get('*', (_req: express.Request, res: express.Response) => {
-  res.sendFile(path.join(clientDistPath, 'index.html'));
+  res.sendFile(path.join(path.resolve(config.CLIENT_DIST_PATH), 'index.html'));
 });
 app.use(
   (

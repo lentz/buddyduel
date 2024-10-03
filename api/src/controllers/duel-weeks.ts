@@ -5,6 +5,7 @@ import { default as DuelWeek, IDuelWeek } from '../models/DuelWeek.js';
 import IGame from '../models/IGame.js';
 
 export async function index(req: Request, res: Response) {
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   const filter: any = { 'players.id': req.session.userId };
   if (req.query.duelId) {
     filter.duelId = req.query.duelId;

@@ -8,7 +8,7 @@
   "type": "module",
   "scripts": {
     "build": "tsc",
-    "lint": "eslint '**/*.ts'",
+    "lint": "eslint .",
     "lint-staged": "lint-staged",
     "test": "DATABASE_NAME=test node --env-file .env ./node_modules/.bin/vitest run",
     "test:watch": "DATABASE_NAME=test node --env-file .env ./node_modules/.bin/vitest",
@@ -32,23 +32,24 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@eslint/js": "^9.11.1",
     "@types/body-parser": "^1.19.5",
     "@types/connect-mongodb-session": "2.4.7",
+    "@types/eslint__js": "^8.42.3",
     "@types/express": "^4.17.21",
     "@types/express-session": "^1.18.0",
     "@types/morgan": "^1.9.9",
     "@types/node": "^20.14.11",
     "@types/shortid": "0.0.32",
     "@types/supertest": "^6.0.2",
-    "@typescript-eslint/eslint-plugin": "^7.16.1",
-    "@typescript-eslint/parser": "^7.18.0",
-    "eslint": "^8.57.0",
-    "eslint-plugin-vitest": "^0.5.4",
+    "@vitest/eslint-plugin": "^1.1.5",
+    "eslint": "^9.11.1",
     "lint-staged": "^15.2.10",
     "prettier": "3.3.3",
     "supertest": "^7.0.0",
     "tsx": "^4.19.1",
     "typescript": "^5.6.2",
+    "typescript-eslint": "^8.8.0",
     "vitest": "^2.1.1"
   },
   "pre-commit": [

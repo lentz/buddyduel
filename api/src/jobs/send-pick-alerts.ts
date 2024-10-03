@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import { addMinutes } from 'date-fns';
 import sgMail from '@sendgrid/mail';
 
@@ -89,7 +87,6 @@ export default async function () {
     };
     const duelWeeks = await DuelWeek.find(query).exec();
 
-    /* eslint-disable-next-line no-restricted-syntax */
     for (const duelWeek of duelWeeks) {
       const unpickedGames = duelWeek.games.filter((game) => {
         return isApproachingUnpicked(game, startsWithinTime);

@@ -1,4 +1,3 @@
-/* eslint-disable arrow-body-style */
 import request from 'supertest';
 import { beforeAll, describe, it, expect, vi } from 'vitest';
 import { Logger } from 'winston';

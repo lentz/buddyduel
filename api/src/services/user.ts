@@ -30,7 +30,10 @@ export async function getInfo(userId: string) {
   return await response.json();
 }
 
-export async function updateMetadata(userId: string, userMetadata: any) {
+export async function updateMetadata(
+  userId: string,
+  userMetadata: { reminderEmails: boolean },
+) {
   const response = await fetch(
     `https://${AUTH0_DOMAIN}/api/v2/users/${userId}`,
     {

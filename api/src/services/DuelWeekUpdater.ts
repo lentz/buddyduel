@@ -1,5 +1,3 @@
-/* eslint-disable no-param-reassign */
-
 import * as oddsApi from '../services/odds-api.js';
 import { sports } from '../sports.js';
 import { default as DuelWeek, IDuelWeek } from '../models/DuelWeek.js';

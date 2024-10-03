@@ -3,7 +3,7 @@ import { vi } from 'vitest';
 
 import app from '../src/app.js';
 
-export async function createSession(user: any) {
+export async function createSession(user: { idToken: string }) {
   vi.spyOn(global, 'fetch').mockResolvedValue({
     json: () => Promise.resolve({ id_token: user.idToken }),
     ok: true,

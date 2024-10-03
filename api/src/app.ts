@@ -1,5 +1,4 @@
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 
 import bodyParser from 'body-parser';
 import express from 'express';
@@ -32,7 +31,7 @@ const store = new MongoDBStore({
   uri: `${config.MONGODB_URI}/${config.DATABASE_NAME}`,
   collection: 'sessions',
 });
-store.on('error', (err: any) => logger.error(err));
+store.on('error', (err: Error) => logger.error(err));
 
 app.use(
   session({
@@ -63,6 +62,7 @@ app.get('*', (_req: express.Request, res: express.Response) => {
 });
 app.use(
   (
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     err: any,
     _req: express.Request,
     res: express.Response,

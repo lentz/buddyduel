@@ -9,7 +9,7 @@ import updateDuelWeeks from './jobs/update-duel-weeks.js';
 app
   .listen(config.PORT)
   .on('listening', () => logger.info(`Listening on port ${config.PORT}`))
-  .on('error', (err: any) => logger.error(err.stack));
+  .on('error', (err: Error) => logger.error(err.stack));
 
 CronJob.from({
   cronTime: '0 0 */2 * * *', // every 2 hours

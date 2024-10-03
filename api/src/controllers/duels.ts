@@ -11,7 +11,7 @@ async function alreadyInDuel(code: string, userId: string) {
 export async function index(req: Request, res: Response) {
   const duels = await Duel.find({
     status: {
-      $in: (req.query.status as string).split(',') as any[],
+      $in: (req.query.status as string).split(','),
     },
     'players.id': req.session.userId,
   }).exec();
@@ -50,10 +50,9 @@ export async function create(req: Request, res: Response) {
 }
 
 export async function update(req: Request, res: Response) {
-  const updates: any = {};
-  if (req.body.status !== undefined) {
-    updates.status = req.body.status;
-  }
+  const updates =
+    req.body.status !== undefined ? { status: req.body.status } : {};
+
   await Duel.findOneAndUpdate(
     {
       _id: req.params.id,
@@ -104,6 +103,6 @@ export async function deleteDuel(req: Request, res: Response) {
   return res.json({ message: 'Duel deleted' });
 }
 
-export async function getSports(req: Request, res: Response) {
+export async function getSports(_req: Request, res: Response) {
   return res.json(sports.map((sport) => sport.name));
 }

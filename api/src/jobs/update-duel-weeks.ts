@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import Duel from '../models/Duel.js';
 import * as DuelWeekUpdater from '../services/DuelWeekUpdater.js';
 

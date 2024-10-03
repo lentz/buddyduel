@@ -44,6 +44,9 @@ jobs:
       - name: Install API Deps
         run: npm ci
         working-directory: ./api
+      - name: Lint API
+        run: npm run lint
+        working-directory: ./api
       - name: Build API
         run: npm run build
         working-directory: ./api

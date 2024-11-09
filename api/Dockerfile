@@ -8,4 +8,4 @@ RUN npm ci
 
 EXPOSE 9229
 
-CMD ["npx", "tsx", "watch", "--inspect=0.0.0.0", "./src/server.ts"]
+CMD ["node", "--watch", "--import", "@swc-node/register/esm-register", "--inspect=0.0.0.0", "./src/server.ts"]

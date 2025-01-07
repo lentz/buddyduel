@@ -1,6 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({ name: 'winPercentage' })
+@Pipe({
+    name: 'winPercentage',
+    standalone: false
+})
 export class WinPercentagePipe implements PipeTransform {
   transform(record: { wins: number; losses: number; pushes: number }): number {
     if (record.wins === 0 && record.losses === 0) {

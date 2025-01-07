@@ -13,10 +13,11 @@ import { DuelsService } from '../duels/duels.service';
 import { DuelWeeksService } from './duel-weeks.service';
 
 @Component({
-  selector: 'duel-week',
-  providers: [DuelWeeksService],
-  templateUrl: './duel-week.component.html',
-  styleUrls: ['./duel-week.component.css'],
+    selector: 'duel-week',
+    providers: [DuelWeeksService],
+    templateUrl: './duel-week.component.html',
+    styleUrls: ['./duel-week.component.css'],
+    standalone: false
 })
 export class DuelWeekComponent implements OnInit {
   duelWeek$?: Observable<DuelWeek>;

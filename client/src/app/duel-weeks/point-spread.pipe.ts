@@ -1,6 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({ name: 'pointSpread' })
+@Pipe({
+    name: 'pointSpread',
+    standalone: false
+})
 export class PointSpread implements PipeTransform {
   transform(value: number): string {
     if (value === 0) {

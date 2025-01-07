@@ -10,9 +10,10 @@ import { switchMap } from 'rxjs/operators';
 declare const jQuery: (selector: string) => { modal: (toggle: string) => void };
 
 @Component({
-  selector: 'app-nav',
-  templateUrl: './nav.component.html',
-  styleUrls: ['./nav.component.css'],
+    selector: 'app-nav',
+    templateUrl: './nav.component.html',
+    styleUrls: ['./nav.component.css'],
+    standalone: false
 })
 export class NavComponent {
   betAmount = 0;

@@ -3,9 +3,10 @@ import { Component, Input } from '@angular/core';
 import { Game } from './game';
 
 @Component({
-  selector: 'duel-game',
-  templateUrl: './game.component.html',
-  styleUrls: ['./game.component.css'],
+    selector: 'duel-game',
+    templateUrl: './game.component.html',
+    styleUrls: ['./game.component.css'],
+    standalone: false
 })
 export class GameComponent {
   @Input() game!: Game;

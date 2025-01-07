@@ -5,9 +5,10 @@ import { ToastrService } from 'ngx-toastr';
 import { UserProfileService } from './user-profile.service';
 
 @Component({
-  selector: 'app-user-profile',
-  templateUrl: './user-profile.component.html',
-  styleUrls: ['./user-profile.component.css'],
+    selector: 'app-user-profile',
+    templateUrl: './user-profile.component.html',
+    styleUrls: ['./user-profile.component.css'],
+    standalone: false
 })
 export class UserProfileComponent implements OnInit {
   record = { wins: 0, losses: 0, pushes: 0 };

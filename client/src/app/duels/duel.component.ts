@@ -12,10 +12,11 @@ import { forkJoin } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
 
 @Component({
-  selector: 'duel-summary',
-  providers: [DuelsService, DuelWeeksService],
-  templateUrl: './duel.component.html',
-  styleUrls: ['./duel.component.css'],
+    selector: 'duel-summary',
+    providers: [DuelsService, DuelWeeksService],
+    templateUrl: './duel.component.html',
+    styleUrls: ['./duel.component.css'],
+    standalone: false
 })
 export class DuelComponent implements OnInit {
   duel: Duel = new Duel('', '', '', 0, [], '');

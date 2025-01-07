@@ -1,14 +1,28 @@
 import { Component, OnInit } from '@angular/core';
+import { NgClass, DecimalPipe, CurrencyPipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
+
 import { ToastrService } from 'ngx-toastr';
+
+import { RecordPipe } from '../shared/record.pipe';
+import { WinPercentagePipe } from '../shared/win-percentage.pipe';
 
 import { UserProfileService } from './user-profile.service';
 
 @Component({
-    selector: 'app-user-profile',
-    templateUrl: './user-profile.component.html',
-    styleUrls: ['./user-profile.component.css'],
-    standalone: false
+  imports: [
+    NgClass,
+    FormsModule,
+    DecimalPipe,
+    CurrencyPipe,
+    RecordPipe,
+    WinPercentagePipe,
+  ],
+  providers: [UserProfileService],
+  selector: 'app-user-profile',
+  styleUrls: ['./user-profile.component.css'],
+  templateUrl: './user-profile.component.html',
 })
 export class UserProfileComponent implements OnInit {
   record = { wins: 0, losses: 0, pushes: 0 };

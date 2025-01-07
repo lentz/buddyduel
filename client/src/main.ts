@@ -1,13 +1,38 @@
-import { enableProdMode } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
+import { enableProdMode, importProvidersFrom } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideRouter, Routes } from '@angular/router';
 
-import { AppModule } from './app/app.module';
-import { environment } from './environments/environment';
+import { ToastrModule } from 'ngx-toastr';
+
+import { AppComponent } from 'app/app.component';
+import { DuelComponent } from 'app/duels/duel.component';
+import { DuelWeekComponent } from 'app/duel-weeks/duel-week.component';
+import { HomeComponent } from 'app/home/home.component';
+import { UserProfileComponent } from 'app/user-profile/user-profile.component';
+import { environment } from 'environments/environment';
 
 if (environment.production) {
   enableProdMode();
 }
 
-platformBrowserDynamic()
-  .bootstrapModule(AppModule)
-  .catch((err) => console.error(err));
+const routes: Routes = [
+  { path: 'duels/:id', component: DuelComponent },
+  { path: 'duel-weeks/:id', component: DuelWeekComponent },
+  { path: 'profile', component: UserProfileComponent },
+  { path: '**', component: HomeComponent },
+];
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    importProvidersFrom(BrowserModule, FormsModule, ToastrModule.forRoot()),
+    provideHttpClient(withInterceptorsFromDi()),
+    provideAnimations(),
+    provideRouter(routes),
+  ],
+}).catch((err) => console.error(err));

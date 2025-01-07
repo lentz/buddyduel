@@ -1,19 +1,24 @@
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
+
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, merge, Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 import { AuthService } from '../auth/auth.service';
 import { DuelsService } from '../duels/duels.service';
 import { Duel } from '../duels/duel';
-import { switchMap } from 'rxjs/operators';
 
 declare const jQuery: (selector: string) => { modal: (toggle: string) => void };
 
 @Component({
-    selector: 'app-nav',
-    templateUrl: './nav.component.html',
-    styleUrls: ['./nav.component.css'],
-    standalone: false
+  imports: [RouterLink, NgIf, NgFor, FormsModule, AsyncPipe],
+  providers: [AuthService, DuelsService],
+  selector: 'app-nav',
+  styleUrls: ['./nav.component.css'],
+  templateUrl: './nav.component.html',
 })
 export class NavComponent {
   betAmount = 0;

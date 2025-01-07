@@ -1,22 +1,42 @@
+import {
+  NgIf,
+  NgClass,
+  NgFor,
+  DecimalPipe,
+  CurrencyPipe,
+} from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { ToastrService } from 'ngx-toastr';
 
-import { AuthService } from '../auth/auth.service';
-import { Duel } from './duel';
-import { DuelWeek } from '../duel-weeks/duel-week';
-import { DuelsService } from './duels.service';
-import { DuelWeeksService } from '../duel-weeks/duel-weeks.service';
+import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
 
+import { AuthService } from '../auth/auth.service';
+import { DuelWeek } from '../duel-weeks/duel-week';
+import { DuelWeeksService } from '../duel-weeks/duel-weeks.service';
+import { RecordPipe } from '../shared/record.pipe';
+import { WinPercentagePipe } from '../shared/win-percentage.pipe';
+
+import { Duel } from './duel';
+import { DuelsService } from './duels.service';
+
 @Component({
-    selector: 'duel-summary',
-    providers: [DuelsService, DuelWeeksService],
-    templateUrl: './duel.component.html',
-    styleUrls: ['./duel.component.css'],
-    standalone: false
+  selector: 'duel-summary',
+  providers: [AuthService, DuelsService, DuelWeeksService],
+  templateUrl: './duel.component.html',
+  styleUrls: ['./duel.component.css'],
+  imports: [
+    NgIf,
+    NgClass,
+    NgFor,
+    RouterLink,
+    DecimalPipe,
+    CurrencyPipe,
+    RecordPipe,
+    WinPercentagePipe,
+  ],
 })
 export class DuelComponent implements OnInit {
   duel: Duel = new Duel('', '', '', 0, [], '');

@@ -1,22 +1,26 @@
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 import { AuthService } from '../auth/auth.service';
 import { Duel } from '../duels/duel';
 import { DuelsService } from '../duels/duels.service';
 import { DuelWeek } from '../duel-weeks/duel-week';
 import { DuelWeeksService } from '../duel-weeks/duel-weeks.service';
-import { switchMap } from 'rxjs/operators';
-import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
-    selector: 'app-home',
-    templateUrl: './home.component.html',
-    styleUrls: ['./home.component.css'],
-    standalone: false
+  imports: [NgIf, NgFor, RouterLink, FormsModule, AsyncPipe],
+  providers: [AuthService, DuelsService, DuelWeeksService],
+  selector: 'app-home',
+  styleUrls: ['./home.component.css'],
+  templateUrl: './home.component.html',
 })
 export class HomeComponent implements OnInit {
   acceptCode = '';

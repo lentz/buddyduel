@@ -7,9 +7,9 @@ import IGame from '../models/IGame.js';
 export async function index(req: Request, res: Response) {
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   const filter: any = { 'players.id': req.session.userId };
-  if (req.query.duelId) {
-    filter.duelId = req.query.duelId;
-  } else if (req.query.current) {
+  if (req.query['duelId']) {
+    filter.duelId = req.query['duelId'];
+  } else if (req.query['current']) {
     filter['games.startTime'] = {
       $gt: subDays(new Date(), 1),
       $lt: addDays(new Date(), 5),
@@ -20,7 +20,7 @@ export async function index(req: Request, res: Response) {
 
 export async function show(req: Request, res: Response) {
   const duelWeek = (await DuelWeek.findOne({
-    _id: req.params.id,
+    _id: req.params['id'],
     'players.id': req.session.userId,
   }).exec()) as IDuelWeek;
 

@@ -7,7 +7,7 @@ export default interface IGame {
   homeTeam: string;
   id: string;
   result?: string;
-  selectedTeam?: string;
+  selectedTeam?: string | undefined;
   startTime: Date;
   time?: string;
 }

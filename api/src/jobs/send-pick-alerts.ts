@@ -37,13 +37,13 @@ function messageBody(duelWeek: IDuelWeek, games: IGame[]) {
 
 function opponentName(duelWeek: IDuelWeek) {
   const opponent = duelWeek.players.find(
-    (player) => player.id !== duelWeek.picker.id,
+    (player) => player.id !== duelWeek.picker?.id,
   );
   return opponent ? opponent.name : 'Unknown';
 }
 
 async function sendAlert(duelWeek: IDuelWeek, games: IGame[]) {
-  const userInfo = await user.getInfo(duelWeek.picker.id);
+  const userInfo = await user.getInfo(duelWeek.picker?.id);
   const preferences = userInfo.user_metadata || {};
   if (preferences.reminderEmails === false) {
     return Promise.resolve();

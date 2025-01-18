@@ -15,7 +15,7 @@ import './lib/db.js';
 
 const app = express();
 
-if (!process.env.VITEST) app.use(morgan('combined'));
+if (!process.env['VITEST']) app.use(morgan('combined'));
 
 app.set('trust proxy', 1);
 

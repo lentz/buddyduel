@@ -2,16 +2,24 @@
   "compilerOptions": {
     "target": "ES2022",
     "module": "nodenext",
-    "esModuleInterop": true,
     "moduleResolution": "nodenext",
-    "allowJs": false,
     "sourceMap": true,
     "outDir": "dist",
     "baseUrl": ".",
-    "skipLibCheck": true,
     "strict": true,
+    "exactOptionalPropertyTypes": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUncheckedIndexedAccess": true,
     "incremental": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["./node_modules", "**/*.test.*"]
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "./node_modules",
+    "**/*.test.*"
+  ]
 }

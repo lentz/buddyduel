@@ -13,7 +13,7 @@ export const sports: ISport[] = [
       const weekOne = new Date('2019-11-05');
       const now = new Date();
       const weekNum = differenceInWeeks(now, weekOne) + 1;
-      let description;
+      let description = '';
 
       if (now < new Date('2020-03-19')) {
         description = `Week ${weekNum}`;
@@ -42,7 +42,7 @@ export const sports: ISport[] = [
       const weekOne = new Date('2024-09-04T04:00:00Z');
       const weekNum = differenceInWeeks(new Date(), weekOne) + 1;
 
-      let description;
+      let description = '';
 
       if (weekNum < 1) {
         description = 'Week 1';

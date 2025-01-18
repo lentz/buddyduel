@@ -40,7 +40,7 @@ export interface IDuelWeek extends mongoose.Document {
   description: string;
   duelId: string;
   games: IGame[];
-  picker: IPlayer;
+  picker: IPlayer | undefined;
   players: IPlayer[];
   record: {
     losses: number;

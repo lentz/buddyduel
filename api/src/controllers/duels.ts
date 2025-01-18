@@ -11,7 +11,7 @@ async function alreadyInDuel(code: string, userId: string) {
 export async function index(req: Request, res: Response) {
   const duels = await Duel.find({
     status: {
-      $in: (req.query.status as string).split(','),
+      $in: (req.query['status'] as string).split(','),
     },
     'players.id': req.session.userId,
   }).exec();
@@ -21,7 +21,7 @@ export async function index(req: Request, res: Response) {
 
 export async function show(req: Request, res: Response) {
   const duel = await Duel.findOne({
-    _id: req.params.id,
+    _id: req.params['id'],
     'players.id': req.session.userId as string,
   }).exec();
   if (!duel) {
@@ -55,7 +55,7 @@ export async function update(req: Request, res: Response) {
 
   await Duel.findOneAndUpdate(
     {
-      _id: req.params.id,
+      _id: req.params['id'],
       'players.id': req.session.userId,
     },
     updates,
@@ -92,7 +92,7 @@ export async function accept(req: Request, res: Response) {
 
 export async function deleteDuel(req: Request, res: Response) {
   const result = await Duel.findOneAndDelete({
-    _id: req.params.id,
+    _id: req.params['id'],
     status: 'pending',
     'players.id': req.session.userId,
   }).exec();

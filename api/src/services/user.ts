@@ -19,7 +19,7 @@ async function getToken() {
   return responseBody.access_token;
 }
 
-export async function getInfo(userId: string) {
+export async function getInfo(userId?: string) {
   const response = await fetch(
     `https://${AUTH0_DOMAIN}/api/v2/users/${userId}`,
     {

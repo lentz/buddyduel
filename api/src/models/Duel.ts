@@ -1,5 +1,6 @@
+import { randomBytes } from 'node:crypto';
+
 import mongoose from 'mongoose';
-import shortid from 'shortid';
 
 import { default as PlayerSchema, IPlayer } from './PlayerSchema.js';
 
@@ -16,7 +17,7 @@ export interface IDuel {
 
 const duelSchema = new mongoose.Schema<IDuel>(
   {
-    code: { type: String, default: shortid.generate },
+    code: { type: String, default: () => randomBytes(4).toString('hex') },
     status: {
       type: String,
       enum: ['active', 'pending', 'suspended'],

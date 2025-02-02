@@ -2,9 +2,9 @@ import { readFileSync } from 'node:fs';
 
 import { describe, expect, it, vi } from 'vitest';
 
-import { ISport, sports } from '../sports.js';
+import { ISport, sports } from '../sports.ts';
 
-import * as oddsApi from './odds-api.js';
+import * as oddsApi from './odds-api.ts';
 
 const oddsRes = JSON.parse(
   readFileSync('./integration-tests/sample-data/odds-res.json').toString(),

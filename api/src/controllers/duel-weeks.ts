@@ -1,8 +1,8 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import { addDays, subDays } from 'date-fns';
 
-import { default as DuelWeek, IDuelWeek } from '../models/DuelWeek.js';
-import IGame from '../models/IGame.js';
+import { default as DuelWeek, type IDuelWeek } from '../models/DuelWeek.ts';
+import type IGame from '../models/IGame.ts';
 
 export async function index(req: Request, res: Response) {
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */

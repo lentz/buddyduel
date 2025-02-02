@@ -1,7 +1,7 @@
 import supertest from 'supertest';
 import { vi } from 'vitest';
 
-import app from '../src/app.js';
+import app from '../src/app.ts';
 
 export async function createSession(user: { idToken: string }) {
   vi.spyOn(global, 'fetch').mockResolvedValue({

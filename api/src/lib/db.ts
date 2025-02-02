@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 
-import config from '../config.js';
+import config from '../config.ts';
 
-import logger from './logger.js';
+import logger from './logger.ts';
 
 mongoose.set('strictQuery', true);
 mongoose.connect(`${config.MONGODB_URI}/${config.DATABASE_NAME}`);

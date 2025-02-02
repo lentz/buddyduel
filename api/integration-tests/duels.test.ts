@@ -2,11 +2,11 @@ import request from 'supertest';
 import { beforeAll, describe, it, expect, vi } from 'vitest';
 import { Logger } from 'winston';
 
-import app from '../src/app.js';
-import logger from '../src/lib/logger.js';
-import * as DuelWeekUpdater from '../src/services/DuelWeekUpdater.js';
+import app from '../src/app.ts';
+import logger from '../src/lib/logger.ts';
+import * as DuelWeekUpdater from '../src/services/DuelWeekUpdater.ts';
 
-import { createSession, user1, user2 } from './support.js';
+import { createSession, user1, user2 } from './support.ts';
 
 let sessionCookie: string;
 

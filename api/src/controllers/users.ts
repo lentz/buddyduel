@@ -1,9 +1,9 @@
-import { NextFunction, Request, Response } from 'express';
+import type { NextFunction, Request, Response } from 'express';
 import { jwtDecode } from 'jwt-decode';
 
-import config from '../config.js';
-import { default as DuelWeek, IDuelWeek } from '../models/DuelWeek.js';
-import * as user from '../services/user.js';
+import config from '../config.ts';
+import { default as DuelWeek, type IDuelWeek } from '../models/DuelWeek.ts';
+import * as user from '../services/user.ts';
 
 const COOKIE_MAX_AGE = 1000 * 60 * 60 * 24 * 365; // 1 year
 const USE_SECURE_COOKIE = config.BUDDYDUEL_URL.startsWith('https');

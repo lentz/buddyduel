@@ -1,10 +1,10 @@
 import { addMinutes } from 'date-fns';
 import sgMail from '@sendgrid/mail';
 
-import config from '../config.js';
-import { default as DuelWeek, IDuelWeek } from '../models/DuelWeek.js';
-import * as user from '../services/user.js';
-import IGame from '../models/IGame.js';
+import config from '../config.ts';
+import { default as DuelWeek, type IDuelWeek } from '../models/DuelWeek.ts';
+import * as user from '../services/user.ts';
+import type IGame from '../models/IGame.ts';
 
 sgMail.setApiKey(config.SENDGRID_API_KEY);
 

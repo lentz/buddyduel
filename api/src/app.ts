@@ -7,11 +7,11 @@ import connectMongodbSession from 'connect-mongodb-session';
 import 'express-async-errors';
 import morgan from 'morgan';
 
-import config from './config.js';
-import * as usersController from './controllers/users.js';
-import logger from './lib/logger.js';
-import routes from './routes.js';
-import './lib/db.js';
+import config from './config.ts';
+import * as usersController from './controllers/users.ts';
+import logger from './lib/logger.ts';
+import routes from './routes.ts';
+import './lib/db.ts';
 
 const app = express();
 

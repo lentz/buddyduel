@@ -1,5 +1,5 @@
-import Duel from '../models/Duel.js';
-import * as DuelWeekUpdater from '../services/DuelWeekUpdater.js';
+import Duel from '../models/Duel.ts';
+import * as DuelWeekUpdater from '../services/DuelWeekUpdater.ts';
 
 export default async function () {
   const beginTime = Date.now();

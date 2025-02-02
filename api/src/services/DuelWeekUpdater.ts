@@ -1,7 +1,7 @@
-import * as oddsApi from '../services/odds-api.js';
-import { sports } from '../sports.js';
-import { default as DuelWeek, IDuelWeek } from '../models/DuelWeek.js';
-import { IDuel } from '../models/Duel.js';
+import * as oddsApi from '../services/odds-api.ts';
+import { sports } from '../sports.ts';
+import { default as DuelWeek, type IDuelWeek } from '../models/DuelWeek.ts';
+import type { IDuel } from '../models/Duel.ts';
 
 async function getPicker(duel: IDuel, year: number) {
   const duelWeekCount = await DuelWeek.countDocuments({

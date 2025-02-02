@@ -1,4 +1,4 @@
-import config from '../config.js';
+import config from '../config.ts';
 
 export const AUTH0_DOMAIN = 'buddyduel.us.auth0.com';
 

@@ -1,25 +1,40 @@
 import sgMail from '@sendgrid/mail';
 
-import config from '../config.js';
-import IGame from '../models/IGame.js';
-import betResult from '../lib/betResult.js';
-import { ISport } from '../sports.js';
+import config from '../config.ts';
+import type IGame from '../models/IGame.ts';
+import betResult from '../lib/betResult.ts';
+import type { ISport } from '../sports.ts';
+
+type Event = {
+  id: string;
+  commence_time: string;
+  completed: boolean;
+  home_team: string;
+  away_team: string;
+  scores?: {
+    name: string;
+    score: number;
+  }[];
+};
+
+type EventOdds = {
+  away_team: string;
+  bookmakers: {
+    markets: {
+      outcomes: {
+        name: string;
+        point: number;
+      }[];
+    }[];
+  }[];
+  commence_time: string;
+  home_team: string;
+  id: string;
+};
 
 const ODDS_API_SPORTS_URL = 'https://api.the-odds-api.com/v4/sports';
 
 export async function updateScores(games: IGame[], sport: ISport) {
-  type Event = {
-    id: string;
-    commence_time: string;
-    completed: boolean;
-    home_team: string;
-    away_team: string;
-    scores?: {
-      name: string;
-      score: number;
-    }[];
-  };
-
   const res = await fetch(
     `${ODDS_API_SPORTS_URL}/${sport.key}/scores?apiKey=${config.ODDS_API_KEY}&daysFrom=1`,
   );
@@ -61,21 +76,6 @@ function unpickedAndNotBegun(game: IGame) {
 }
 
 export async function updateOdds(existingGames: IGame[], sport: ISport) {
-  type EventOdds = {
-    away_team: string;
-    bookmakers: {
-      markets: {
-        outcomes: {
-          name: string;
-          point: number;
-        }[];
-      }[];
-    }[];
-    commence_time: string;
-    home_team: string;
-    id: string;
-  };
-
   const oddsRes = await fetch(
     `${ODDS_API_SPORTS_URL}/${sport.key}/odds?apiKey=${config.ODDS_API_KEY}&bookmakers=pinnacle&markets=spreads`,
   );

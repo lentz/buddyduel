@@ -1,4 +1,4 @@
-import IGame from '../models/IGame.js';
+import type IGame from '../models/IGame.ts';
 
 export default function (game: IGame) {
   if (

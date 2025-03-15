@@ -1,6 +1,7 @@
 services:
   api:
     build: ./api
+    pull_policy: build
     env_file: ./api/.env
     ports:
       - '9229:9229'
@@ -10,6 +11,7 @@ services:
 
   client:
     build: ./client
+    pull_policy: build
     ports:
       - '4200:4200'
     volumes:

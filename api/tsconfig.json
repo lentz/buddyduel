@@ -16,7 +16,8 @@
     "incremental": true,
     "allowImportingTsExtensions": true,
     "rewriteRelativeImportExtensions": true,
-    "verbatimModuleSyntax": true
+    "verbatimModuleSyntax": true,
+    "erasableSyntaxOnly": true
   },
   "include": [
     "src/**/*"

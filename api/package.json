@@ -43,7 +43,7 @@
     "@types/supertest": "^6.0.2",
     "@vitest/eslint-plugin": "^1.1.39",
     "eslint": "^9.23.0",
-    "lint-staged": "^15.5.0",
+    "lint-staged": "^15.5.1",
     "prettier": "3.5.2",
     "supertest": "^7.1.0",
     "typescript": "^5.8.2",

@@ -45,7 +45,7 @@
     "@types/js-cookie": "^3.0.6",
     "angular-eslint": "^19.3.0",
     "cypress": "^14.3.2",
-    "eslint": "^9.23.0",
+    "eslint": "^9.25.1",
     "lint-staged": "^15.5.1",
     "prettier": "^3.5.3",
     "typescript": "^5.5.4",

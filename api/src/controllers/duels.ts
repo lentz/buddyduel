@@ -16,7 +16,7 @@ export async function index(req: Request, res: Response) {
     'players.id': req.session.userId,
   }).exec();
 
-  return res.json(duels);
+  res.json(duels);
 }
 
 export async function show(req: Request, res: Response) {
@@ -25,10 +25,11 @@ export async function show(req: Request, res: Response) {
     'players.id': req.session.userId as string,
   }).exec();
   if (!duel) {
-    return res.status(404).json({ message: 'Duel not found!' });
+    res.status(404).json({ message: 'Duel not found!' });
+    return;
   }
 
-  return res.json(duel);
+  res.json(duel);
 }
 
 export async function create(req: Request, res: Response) {
@@ -46,7 +47,7 @@ export async function create(req: Request, res: Response) {
 
   await duel.save();
 
-  return res.status(201).json(duel);
+  res.status(201).json(duel);
 }
 
 export async function update(req: Request, res: Response) {
@@ -61,7 +62,7 @@ export async function update(req: Request, res: Response) {
     updates,
   ).exec();
 
-  return res.sendStatus(204);
+  res.sendStatus(204);
 }
 
 export async function accept(req: Request, res: Response) {
@@ -87,7 +88,7 @@ export async function accept(req: Request, res: Response) {
   }
   await DuelWeekUpdater.call([duel]);
 
-  return res.json({ message: 'Duel accepted!' });
+  res.json({ message: 'Duel accepted!' });
 }
 
 export async function deleteDuel(req: Request, res: Response) {
@@ -97,12 +98,13 @@ export async function deleteDuel(req: Request, res: Response) {
     'players.id': req.session.userId,
   }).exec();
   if (!result) {
-    return res.status(404).json({ message: 'Duel not found' });
+    res.status(404).json({ message: 'Duel not found' });
+    return;
   }
 
-  return res.json({ message: 'Duel deleted' });
+  res.json({ message: 'Duel deleted' });
 }
 
 export async function getSports(_req: Request, res: Response) {
-  return res.json(sports.map((sport) => sport.name));
+  res.json(sports.map((sport) => sport.name));
 }

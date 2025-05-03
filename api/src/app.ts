@@ -4,7 +4,6 @@ import bodyParser from 'body-parser';
 import express from 'express';
 import session from 'express-session';
 import connectMongodbSession from 'connect-mongodb-session';
-import 'express-async-errors';
 import morgan from 'morgan';
 
 import config from './config.ts';
@@ -57,7 +56,7 @@ app.use(
     maxAge: 31556926000,
   }),
 );
-app.get('*', (_req: express.Request, res: express.Response) => {
+app.get('/{*splat}', (_req: express.Request, res: express.Response) => {
   res.sendFile(path.join(path.resolve(config.CLIENT_DIST_PATH), 'index.html'));
 });
 app.use(

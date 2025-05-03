@@ -85,7 +85,7 @@ export async function logout(req: Request, res: Response) {
 }
 
 export async function show(req: Request, res: Response) {
-  return res.json(
+  res.json(
     Object.assign(
       await getPerformance(req.session.userId ?? ''),
       await getPreferences(req.session.userId ?? ''),
@@ -95,5 +95,5 @@ export async function show(req: Request, res: Response) {
 
 export async function update(req: Request, res: Response) {
   await user.updateMetadata(req.session.userId ?? '', req.body);
-  return res.status(204).send();
+  res.status(204).send();
 }

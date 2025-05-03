@@ -7,8 +7,7 @@ import logger from './lib/logger.ts';
 
 const router = express.Router();
 
-router.all(
-  '*',
+router.use(
   (req: express.Request, res: express.Response, next: express.NextFunction) => {
     if (!req.session || !req.session.userId) {
       logger.warn(
@@ -21,7 +20,8 @@ router.all(
           2,
         )}`,
       );
-      return res.status(401).json({ message: 'You are not logged in' });
+      res.status(401).json({ message: 'You are not logged in' });
+      return;
     }
     return next();
   },

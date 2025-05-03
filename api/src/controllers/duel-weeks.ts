@@ -25,7 +25,8 @@ export async function show(req: Request, res: Response) {
   }).exec()) as IDuelWeek;
 
   if (!duelWeek) {
-    return res.status(404).json({ message: 'Duel week not found' });
+    res.status(404).json({ message: 'Duel week not found' });
+    return;
   }
 
   duelWeek.games.sort((game1, game2) => {
@@ -36,7 +37,7 @@ export async function show(req: Request, res: Response) {
     return game1.awayTeam.localeCompare(game2.awayTeam);
   });
 
-  return res.json(duelWeek);
+  res.json(duelWeek);
 }
 
 function setSelections(duelWeek: IDuelWeek, pickedGames: IGame[]) {
@@ -57,9 +58,10 @@ export async function update(req: Request, res: Response) {
     'players.id': req.session.userId,
   }).exec()) as IDuelWeek;
   if (!duelWeek) {
-    return res.status(404).json({ message: 'Duel week not found' });
+    res.status(404).json({ message: 'Duel week not found' });
+    return;
   }
   duelWeek.games = setSelections(duelWeek, req.body.games);
   await duelWeek.save();
-  return res.json({ message: 'Picks successfully locked in' });
+  res.json({ message: 'Picks successfully locked in' });
 }

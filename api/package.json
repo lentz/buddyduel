@@ -37,7 +37,7 @@
     "@types/express": "^5.0.2",
     "@types/express-session": "^1.18.1",
     "@types/morgan": "^1.9.9",
-    "@types/node": "^20.14.11",
+    "@types/node": "^24.0.7",
     "@types/shortid": "2.2.0",
     "@types/supertest": "^6.0.3",
     "@vitest/eslint-plugin": "^1.2.1",

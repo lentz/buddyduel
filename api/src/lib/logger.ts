@@ -6,6 +6,7 @@ const logger = winston.createLogger({
     winston.format.timestamp(),
     winston.format.align(),
     winston.format.printf(
+      // biome-ignore lint/complexity/useLiteralKeys: Must be index
       (info) => `${info['timestamp']} ${info.level}: ${info.message}`,
     ),
   ),

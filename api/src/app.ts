@@ -1,9 +1,9 @@
 import path from 'node:path';
 
 import bodyParser from 'body-parser';
+import connectMongodbSession from 'connect-mongodb-session';
 import express from 'express';
 import session from 'express-session';
-import connectMongodbSession from 'connect-mongodb-session';
 import morgan from 'morgan';
 
 import config from './config.ts';
@@ -14,7 +14,15 @@ import './lib/db.ts';
 
 const app = express();
 
-if (!process.env['VITEST']) app.use(morgan('combined'));
+declare global {
+  namespace NodeJS {
+    interface ProcessEnv {
+      VITEST?: string;
+    }
+  }
+}
+
+if (!process.env.VITEST) app.use(morgan('combined'));
 
 app.set('trust proxy', 1);
 
@@ -61,7 +69,7 @@ app.get('/{*splat}', (_req: express.Request, res: express.Response) => {
 });
 app.use(
   (
-    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    // biome-ignore lint/suspicious/noExplicitAny: Error
     err: any,
     _req: express.Request,
     res: express.Response,

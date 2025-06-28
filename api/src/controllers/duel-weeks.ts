@@ -1,15 +1,23 @@
-import type { Request, Response } from 'express';
 import { addDays, subDays } from 'date-fns';
+import type { Request, Response } from 'express';
 
 import { default as DuelWeek, type IDuelWeek } from '../models/DuelWeek.ts';
 import type IGame from '../models/IGame.ts';
 
-export async function index(req: Request, res: Response) {
-  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-  const filter: any = { 'players.id': req.session.userId };
-  if (req.query['duelId']) {
-    filter.duelId = req.query['duelId'];
-  } else if (req.query['current']) {
+export async function index(
+  req: Request<null, null, null, { duelId: string; current: boolean }>,
+  res: Response,
+) {
+  const filter: {
+    'players.id': string | undefined;
+    duelId?: string;
+    'games.startTime'?: { $gt: Date; $lt: Date };
+  } = {
+    'players.id': req.session.userId,
+  };
+  if (req.query.duelId) {
+    filter.duelId = req.query.duelId;
+  } else if (req.query.current) {
     filter['games.startTime'] = {
       $gt: subDays(new Date(), 1),
       $lt: addDays(new Date(), 5),
@@ -18,9 +26,9 @@ export async function index(req: Request, res: Response) {
   res.json(await DuelWeek.find(filter).sort({ createdAt: -1 }).exec());
 }
 
-export async function show(req: Request, res: Response) {
+export async function show(req: Request<{ id: string }>, res: Response) {
   const duelWeek = (await DuelWeek.findOne({
-    _id: req.params['id'],
+    _id: req.params.id,
     'players.id': req.session.userId,
   }).exec()) as IDuelWeek;
 

@@ -1,6 +1,6 @@
 import request from 'supertest';
-import { beforeAll, describe, it, expect, vi } from 'vitest';
-import { Logger } from 'winston';
+import { beforeAll, describe, expect, it, vi } from 'vitest';
+import type { Logger } from 'winston';
 
 import app from '../src/app.ts';
 import logger from '../src/lib/logger.ts';
@@ -33,7 +33,6 @@ describe('duels API', () => {
   });
 
   describe('DELETE /duel/:id', () => {
-    /* eslint-disable-next-line vitest/expect-expect */
     it('deleting a duel succeeds when the user is a player', async () => {
       const createResponse = await request(app)
         .post('/api/duels')
@@ -48,7 +47,6 @@ describe('duels API', () => {
         .expect(200, { message: 'Duel deleted' });
     });
 
-    /* eslint-disable-next-line vitest/expect-expect */
     it('deleting a duel returns a 404 if the duel does not exist', async () => {
       return request(app)
         .delete('/api/duels/5c68438fc2481e3e3a97021c')
@@ -58,7 +56,6 @@ describe('duels API', () => {
   });
 
   describe('PUT /duels/accept', () => {
-    /* eslint-disable-next-line vitest/expect-expect */
     it('accepting a duel fails if the user is already in it', async () => {
       vi.spyOn(logger, 'error').mockReturnValue({} as Logger);
 
@@ -131,7 +128,6 @@ describe('duels API', () => {
       });
     });
 
-    /* eslint-disable-next-line vitest/expect-expect */
     it('getting a duel returns a 404 when not found', async () => {
       return request(app)
         .get('/api/duels/5c68438fc2481e3e3a97021c')

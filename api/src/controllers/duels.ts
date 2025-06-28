@@ -1,17 +1,20 @@
 import type { Request, Response } from 'express';
 
 import { default as Duel, type IDuel } from '../models/Duel.ts';
-import { sports } from '../sports.ts';
 import * as DuelWeekUpdater from '../services/DuelWeekUpdater.ts';
+import { sports } from '../sports.ts';
 
 async function alreadyInDuel(code: string, userId: string) {
   return (await Duel.findOne({ code, 'players.id': userId }).exec()) !== null;
 }
 
-export async function index(req: Request, res: Response) {
+export async function index(
+  req: Request<null, null, null, { status: string }>,
+  res: Response,
+) {
   const duels = await Duel.find({
     status: {
-      $in: (req.query['status'] as string).split(','),
+      $in: req.query.status.split(','),
     },
     'players.id': req.session.userId,
   }).exec();
@@ -19,10 +22,10 @@ export async function index(req: Request, res: Response) {
   res.json(duels);
 }
 
-export async function show(req: Request, res: Response) {
+export async function show(req: Request<{ id: string }>, res: Response) {
   const duel = await Duel.findOne({
-    _id: req.params['id'],
-    'players.id': req.session.userId as string,
+    _id: req.params.id,
+    'players.id': req.session.userId,
   }).exec();
   if (!duel) {
     res.status(404).json({ message: 'Duel not found!' });
@@ -50,13 +53,13 @@ export async function create(req: Request, res: Response) {
   res.status(201).json(duel);
 }
 
-export async function update(req: Request, res: Response) {
+export async function update(req: Request<{ id: string }>, res: Response) {
   const updates =
     req.body.status !== undefined ? { status: req.body.status } : {};
 
   await Duel.findOneAndUpdate(
     {
-      _id: req.params['id'],
+      _id: req.params.id,
       'players.id': req.session.userId,
     },
     updates,
@@ -91,9 +94,9 @@ export async function accept(req: Request, res: Response) {
   res.json({ message: 'Duel accepted!' });
 }
 
-export async function deleteDuel(req: Request, res: Response) {
+export async function deleteDuel(req: Request<{ id: string }>, res: Response) {
   const result = await Duel.findOneAndDelete({
-    _id: req.params['id'],
+    _id: req.params.id,
     status: 'pending',
     'players.id': req.session.userId,
   }).exec();

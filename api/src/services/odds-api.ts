@@ -1,8 +1,8 @@
 import sgMail from '@sendgrid/mail';
 
 import config from '../config.ts';
-import type IGame from '../models/IGame.ts';
 import betResult from '../lib/betResult.ts';
+import type IGame from '../models/IGame.ts';
 import type { ISport } from '../sports.ts';
 
 type Event = {

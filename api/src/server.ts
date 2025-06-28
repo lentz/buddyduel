@@ -2,9 +2,9 @@ import { CronJob } from 'cron';
 
 import app from './app.ts';
 import config from './config.ts';
-import logger from './lib/logger.ts';
 import sendPickAlerts from './jobs/send-pick-alerts.ts';
 import updateDuelWeeks from './jobs/update-duel-weeks.ts';
+import logger from './lib/logger.ts';
 
 app
   .listen(config.PORT)

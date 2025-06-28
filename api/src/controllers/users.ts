@@ -34,7 +34,7 @@ async function getPreferences(userId: string) {
 }
 
 export async function authenticate(
-  req: Request,
+  req: Request<null, null, null, { code: string }>,
   res: Response,
   next: NextFunction,
 ) {
@@ -43,7 +43,7 @@ export async function authenticate(
       grant_type: 'authorization_code',
       client_id: config.AUTH0_CLIENT_ID,
       client_secret: config.AUTH0_CLIENT_SECRET,
-      code: req.query['code'],
+      code: req.query.code,
       redirect_uri: `${config.BUDDYDUEL_URL}/auth/callback`,
     }),
     headers: { 'content-type': 'application/json' },

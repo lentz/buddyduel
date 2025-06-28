@@ -1,7 +1,6 @@
 import * as express from 'express';
-
-import * as duelsController from './controllers/duels.ts';
 import * as duelWeeksController from './controllers/duel-weeks.ts';
+import * as duelsController from './controllers/duels.ts';
 import * as usersController from './controllers/users.ts';
 import logger from './lib/logger.ts';
 

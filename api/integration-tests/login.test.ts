@@ -1,6 +1,6 @@
 import request from 'supertest';
 import { describe, expect, it, vi } from 'vitest';
-import { Logger } from 'winston';
+import type { Logger } from 'winston';
 
 import app from '../src/app.ts';
 import logger from '../src/lib/logger.ts';
@@ -8,7 +8,6 @@ import logger from '../src/lib/logger.ts';
 import { createSession, user1 } from './support.ts';
 
 describe('login API', () => {
-  /* eslint-disable-next-line vitest/expect-expect */
   it('access is denied when no session cookie is present', () => {
     vi.spyOn(logger, 'warn').mockReturnValue({} as Logger);
 

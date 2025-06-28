@@ -2,7 +2,7 @@ import { randomBytes } from 'node:crypto';
 
 import mongoose from 'mongoose';
 
-import { default as PlayerSchema, type IPlayer } from './PlayerSchema.ts';
+import { type IPlayer, default as PlayerSchema } from './PlayerSchema.ts';
 
 export interface IDuel {
   id: string;

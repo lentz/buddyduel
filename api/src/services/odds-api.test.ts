@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 
 import { describe, expect, it, vi } from 'vitest';
 
-import { ISport, sports } from '../sports.ts';
+import { type ISport, sports } from '../sports.ts';
 
 import * as oddsApi from './odds-api.ts';
 

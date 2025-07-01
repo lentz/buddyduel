@@ -1,6 +1,5 @@
 import path from 'node:path';
 
-import bodyParser from 'body-parser';
 import connectMongodbSession from 'connect-mongodb-session';
 import express from 'express';
 import session from 'express-session';
@@ -53,8 +52,8 @@ app.use(
   }),
 );
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.get('/auth/callback', usersController.authenticate);
 app.get('/logout', usersController.logout);

@@ -19,7 +19,7 @@ jobs:
       SESSION_SECRET: test
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 24
       - uses: actions/cache@v4

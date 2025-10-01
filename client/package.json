@@ -39,7 +39,7 @@
     "@angular/cli": "^19.0.6",
     "@angular/compiler-cli": "^19.0.5",
     "@angular/language-service": "^19.2.4",
-    "@eslint/js": "^9.32.0",
+    "@eslint/js": "^9.36.0",
     "@types/eslint__js": "^9.14.0",
     "@types/js-cookie": "^3.0.6",
     "angular-eslint": "^19.7.0",

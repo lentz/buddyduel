@@ -24,7 +24,7 @@
     "jwt-decode": "^4.0.0",
     "mongoose": "^8.17.0",
     "morgan": "^1.10.1",
-    "winston": "^3.17.0",
+    "winston": "^3.18.3",
     "zod": "^4.1.11"
   },
   "devDependencies": {

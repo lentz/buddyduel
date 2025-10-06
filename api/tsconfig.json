@@ -4,6 +4,7 @@
     "module": "nodenext",
     "moduleResolution": "nodenext",
     "sourceMap": true,
+    "skipLibCheck": true,
     "outDir": "dist",
     "baseUrl": ".",
     "strict": true,

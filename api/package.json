@@ -19,7 +19,7 @@
     "connect-mongodb-session": "^5.0.0",
     "cron": "^4.3.4",
     "date-fns": "^4.1.0",
-    "express": "^5.1.0",
+    "express": "^5.2.0",
     "express-session": "^1.18.2",
     "jwt-decode": "^4.0.0",
     "mongoose": "^8.20.0",

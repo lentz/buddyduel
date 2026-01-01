@@ -19,7 +19,7 @@
     "connect-mongodb-session": "^5.0.0",
     "cron": "^4.3.4",
     "date-fns": "^4.1.0",
-    "express": "^5.2.0",
+    "express": "^5.2.1",
     "express-session": "^1.18.2",
     "jwt-decode": "^4.0.0",
     "mongoose": "^8.20.0",
@@ -30,7 +30,7 @@
   "devDependencies": {
     "@biomejs/biome": "^2.3.6",
     "@types/connect-mongodb-session": "2.4.8",
-    "@types/express": "^5.0.5",
+    "@types/express": "^5.0.6",
     "@types/express-session": "^1.18.2",
     "@types/morgan": "^1.9.10",
     "@types/node": "^24.0.7",

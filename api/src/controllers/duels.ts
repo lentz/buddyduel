@@ -16,7 +16,7 @@ export async function index(
     status: {
       $in: req.query.status.split(','),
     },
-    'players.id': req.session.userId,
+    'players._id': req.session.userId,
   }).exec();
 
   res.json(duels);
@@ -25,7 +25,7 @@ export async function index(
 export async function show(req: Request<{ id: string }>, res: Response) {
   const duel = await Duel.findOne({
     _id: req.params.id,
-    'players.id': req.session.userId,
+    'players._id': req.session.userId,
   }).exec();
   if (!duel) {
     res.status(404).json({ message: 'Duel not found!' });
@@ -60,7 +60,7 @@ export async function update(req: Request<{ id: string }>, res: Response) {
   await Duel.findOneAndUpdate(
     {
       _id: req.params.id,
-      'players.id': req.session.userId,
+      'players._id': req.session.userId,
     },
     updates,
   ).exec();
@@ -98,7 +98,7 @@ export async function deleteDuel(req: Request<{ id: string }>, res: Response) {
   const result = await Duel.findOneAndDelete({
     _id: req.params.id,
     status: 'pending',
-    'players.id': req.session.userId,
+    'players._id': req.session.userId,
   }).exec();
   if (!result) {
     res.status(404).json({ message: 'Duel not found' });

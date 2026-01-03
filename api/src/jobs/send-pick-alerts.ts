@@ -22,7 +22,7 @@ function messageBody(duelWeek: IDuelWeek, games: IGame[]) {
         .join('<br />')}
     </p>
     <p>
-      <a href="${config.BUDDYDUEL_URL}/duel-weeks/${duelWeek.id}">
+      <a href="${config.BUDDYDUEL_URL}/duel-weeks/${duelWeek._id}">
         Make your picks now
       </a>
     </p>
@@ -52,7 +52,7 @@ async function sendAlert(duelWeek: IDuelWeek, games: IGame[]) {
     'Sending pick alert to',
     userInfo.email,
     'for duel week',
-    duelWeek.id,
+    duelWeek._id,
   );
   return sgMail.send({
     to: userInfo.email,

@@ -9,11 +9,11 @@ export async function index(
   res: Response,
 ) {
   const filter: {
-    'players.id': string | undefined;
+    'players._id': string | undefined;
     duelId?: string;
     'games.startTime'?: { $gt: Date; $lt: Date };
   } = {
-    'players.id': req.session.userId,
+    'players._id': req.session.userId,
   };
   if (req.query.duelId) {
     filter.duelId = req.query.duelId;
@@ -29,7 +29,7 @@ export async function index(
 export async function show(req: Request<{ id: string }>, res: Response) {
   const duelWeek = (await DuelWeek.findOne({
     _id: req.params.id,
-    'players.id': req.session.userId,
+    'players._id': req.session.userId,
   }).exec()) as IDuelWeek;
 
   if (!duelWeek) {
@@ -63,7 +63,7 @@ function setSelections(duelWeek: IDuelWeek, pickedGames: IGame[]) {
 export async function update(req: Request, res: Response) {
   const duelWeek = (await DuelWeek.findOne({
     _id: req.body._id,
-    'players.id': req.session.userId,
+    'players._id': req.session.userId,
   }).exec()) as IDuelWeek;
   if (!duelWeek) {
     res.status(404).json({ message: 'Duel week not found' });

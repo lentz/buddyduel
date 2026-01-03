@@ -28,7 +28,7 @@
     "zod": "^4.2.1"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.3.6",
+    "@biomejs/biome": "^2.3.10",
     "@types/connect-mongodb-session": "2.4.8",
     "@types/express": "^5.0.6",
     "@types/express-session": "^1.18.2",

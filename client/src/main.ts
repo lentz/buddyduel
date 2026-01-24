@@ -2,7 +2,11 @@ import {
   provideHttpClient,
   withInterceptorsFromDi,
 } from '@angular/common/http';
-import { enableProdMode, importProvidersFrom } from '@angular/core';
+import {
+  enableProdMode,
+  importProvidersFrom,
+  provideZoneChangeDetection,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -30,6 +34,7 @@ const routes: Routes = [
 
 bootstrapApplication(AppComponent, {
   providers: [
+    provideZoneChangeDetection(),
     importProvidersFrom(BrowserModule, FormsModule, ToastrModule.forRoot()),
     provideHttpClient(withInterceptorsFromDi()),
     provideAnimations(),

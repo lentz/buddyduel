@@ -21,9 +21,7 @@
     @if (hasResults(duelWeek)) {
       <div class="row">
         <div class="col alert alert-warning">
-          {{
-            isPicker(duelWeek) ? 'Your' : opponentName(duelWeek) + "'s"
-          }}
+          {{ isPicker(duelWeek) ? 'Your' : opponentName(duelWeek) + "'s" }}
           record this week is {{ duelWeek.record | record }}. You're
           {{ isWinner(duelWeek) ? 'winning' : 'losing' }}
           <span

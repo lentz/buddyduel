@@ -1,77 +1,96 @@
-<div *ngIf="authService.isAuthenticated(); else unauthenticated" class="row">
-  <div class="col-md-7">
-    <div class="card">
-      <div class="card-header">Current Duel Weeks</div>
-      <div class="card-body active-duels">
-        <ul>
-          <li *ngIf="(currentDuelWeeks$ | async) === null" class="skeleton">
-            <span class="description-loading"></span>
-            <span class="opponent-loading"></span>
-          </li>
-          <li *ngFor="let duelWeek of currentDuelWeeks$ | async">
-            <a [routerLink]="['/duel-weeks', duelWeek._id]">
-              <span class="week-description">
-                {{ duelWeek.sport }} {{ duelWeek.description }}
-                <br />
-                <span class="opponent">vs {{ opponentName(duelWeek) }}</span>
-              </span>
-              <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
-            </a>
-          </li>
-        </ul>
-        <span *ngIf="(currentDuelWeeks$ | async)?.length === 0">
-          Create a duel and send the code to a buddy to get started or enter a
-          code given to you in the 'Duel Code' box and click 'Accept'.
-        </span>
-      </div>
-    </div>
-    <div class="card" *ngIf="(pendingDuels$ | async)?.length">
-      <div class="card-header">Pending Duels</div>
-      <div class="card-body">
-        <h6 class="card-subtitle mb-2 text-muted">Give the code to a friend</h6>
-        <ul class="pending-duels">
-          <li *ngFor="let duel of pendingDuels$ | async">
-            <pre>{{ duel.code }}</pre>
-            <span>({{ duel.sport }} ${{ duel.betAmount }}/game)</span>
-            <button
-              (click)="deleteDuel(duel._id)"
-              class="btn btn-sm btn-outline-danger"
-            >
-              Delete
-            </button>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-5">
-    <div class="card">
-      <div class="card-header">Accept Duel</div>
-      <div class="card-body">
-        <div *ngIf="processingAccept" class="text-center">
-          <i class="fa fa-circle-o-notch fa-spin fa-3x"></i>
+@if (authService.isAuthenticated()) {
+  <div class="row">
+    <div class="col-md-7">
+      <div class="card">
+        <div class="card-header">Current Duel Weeks</div>
+        <div class="card-body active-duels">
+          <ul>
+            @if ((currentDuelWeeks$ | async) === null) {
+              <li class="skeleton">
+                <span class="description-loading"></span>
+                <span class="opponent-loading"></span>
+              </li>
+            }
+            @for (duelWeek of currentDuelWeeks$ | async; track duelWeek) {
+              <li>
+                <a [routerLink]="['/duel-weeks', duelWeek._id]">
+                  <span class="week-description">
+                    {{ duelWeek.sport }} {{ duelWeek.description }}
+                    <br />
+                    <span class="opponent"
+                      >vs {{ opponentName(duelWeek) }}</span
+                    >
+                  </span>
+                  <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+                </a>
+              </li>
+            }
+          </ul>
+          @if ((currentDuelWeeks$ | async)?.length === 0) {
+            <span>
+              Create a duel and send the code to a buddy to get started or enter
+              a code given to you in the 'Duel Code' box and click 'Accept'.
+            </span>
+          }
         </div>
-        <form *ngIf="!processingAccept" class="form-inline accept-duel">
-          <input
-            type="text"
-            class="form-control accept-duel"
-            name="acceptCode"
-            [(ngModel)]="acceptCode"
-            placeholder="Duel Code"
-          />
-          <button
-            (click)="acceptDuel()"
-            class="btn btn-primary"
-            [disabled]="acceptCode.length < 7"
-          >
-            Accept Duel
-          </button>
-        </form>
+      </div>
+      @if ((pendingDuels$ | async)?.length) {
+        <div class="card">
+          <div class="card-header">Pending Duels</div>
+          <div class="card-body">
+            <h6 class="card-subtitle mb-2 text-muted">
+              Give the code to a friend
+            </h6>
+            <ul class="pending-duels">
+              @for (duel of pendingDuels$ | async; track duel) {
+                <li>
+                  <pre>{{ duel.code }}</pre>
+                  <span>({{ duel.sport }} ${{ duel.betAmount }}/game)</span>
+                  <button
+                    (click)="deleteDuel(duel._id)"
+                    class="btn btn-sm btn-outline-danger"
+                  >
+                    Delete
+                  </button>
+                </li>
+              }
+            </ul>
+          </div>
+        </div>
+      }
+    </div>
+    <div class="col-md-5">
+      <div class="card">
+        <div class="card-header">Accept Duel</div>
+        <div class="card-body">
+          @if (processingAccept) {
+            <div class="text-center">
+              <i class="fa fa-circle-o-notch fa-spin fa-3x"></i>
+            </div>
+          }
+          @if (!processingAccept) {
+            <form class="form-inline accept-duel">
+              <input
+                type="text"
+                class="form-control accept-duel"
+                name="acceptCode"
+                [(ngModel)]="acceptCode"
+                placeholder="Duel Code"
+              />
+              <button
+                (click)="acceptDuel()"
+                class="btn btn-primary"
+                [disabled]="acceptCode.length < 7"
+              >
+                Accept Duel
+              </button>
+            </form>
+          }
+        </div>
       </div>
     </div>
   </div>
-</div>
-<ng-template #unauthenticated>
+} @else {
   <div class="row">
     <div class="col"><h1>Welcome to Buddy Duel!</h1></div>
   </div>
@@ -79,4 +98,4 @@
     <div class="col"><h2>Sign up today to start dueling your friends!</h2></div>
   </div>
   <a [href]="authService.loginURL" class="btn btn-light"> Sign Up / Login </a>
-</ng-template>
+}

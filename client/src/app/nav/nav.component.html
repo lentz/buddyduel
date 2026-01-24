@@ -16,56 +16,61 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav mr-auto">
-        <ng-template [ngIf]="authService.isAuthenticated()">
-          <li *ngIf="duels$ | async" class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              href="#"
-              id="navbarDropdownMenuLink"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              <i class="fa fa-trophy" aria-hidden="true"></i> Duels
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+        @if (authService.isAuthenticated()) {
+          @if (duels$ | async) {
+            <li class="nav-item dropdown">
               <a
-                *ngFor="let duel of duels$ | async"
-                [routerLink]="['/duels', duel._id]"
-                class="dropdown-item"
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdownMenuLink"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
               >
-                {{ duel.sport }} vs. {{ opponentName(duel) }} (${{
-                  duel.betAmount
-                }}/game)
+                <i class="fa fa-trophy" aria-hidden="true"></i> Duels
               </a>
-            </div>
-          </li>
-        </ng-template>
+              <div
+                class="dropdown-menu"
+                aria-labelledby="navbarDropdownMenuLink"
+              >
+                @for (duel of duels$ | async; track duel) {
+                  <a [routerLink]="['/duels', duel._id]" class="dropdown-item">
+                    {{ duel.sport }} vs. {{ opponentName(duel) }} (${{
+                      duel.betAmount
+                    }}/game)
+                  </a>
+                }
+              </div>
+            </li>
+          }
+        }
       </ul>
-      <form *ngIf="authService.isAuthenticated()" class="form-inline">
-        <button
-          class="btn btn-outline-light create-duel"
-          data-toggle="modal"
-          data-target="#create-duel-modal"
-        >
-          Create a Duel
-        </button>
-      </form>
-      <a
-        *ngIf="!authService.isAuthenticated()"
-        [href]="authService.loginURL"
-        class="btn btn-outline-light"
-      >
-        <i class="fa fa-user-circle" aria-hidden="true"></i> Login
-      </a>
-      <span *ngIf="authService.isAuthenticated()" class="username">
-        <a [routerLink]="['/profile']">
-          <i class="fa fa-user-circle" aria-hidden="true"></i>
-          {{ authService.getUser().name }}</a
-        >
-        |
-        <a [href]="authService.logoutURL">Logout</a>
-      </span>
+      @if (authService.isAuthenticated()) {
+        <form class="form-inline">
+          <button
+            class="btn btn-outline-light create-duel"
+            data-toggle="modal"
+            data-target="#create-duel-modal"
+          >
+            Create a Duel
+          </button>
+        </form>
+      }
+      @if (!authService.isAuthenticated()) {
+        <a [href]="authService.loginURL" class="btn btn-outline-light">
+          <i class="fa fa-user-circle" aria-hidden="true"></i> Login
+        </a>
+      }
+      @if (authService.isAuthenticated()) {
+        <span class="username">
+          <a [routerLink]="['/profile']">
+            <i class="fa fa-user-circle" aria-hidden="true"></i>
+            {{ authService.getUser().name }}</a
+          >
+          |
+          <a [href]="authService.logoutURL">Logout</a>
+        </span>
+      }
     </div>
   </div>
 </nav>
@@ -114,9 +119,11 @@
                 name="sport"
                 [(ngModel)]="sport"
               >
-                <option *ngFor="let value of sports" [ngValue]="value">
-                  {{ value }}
-                </option>
+                @for (value of sports; track value) {
+                  <option [ngValue]="value">
+                    {{ value }}
+                  </option>
+                }
                 <option></option>
               </select>
             </div>

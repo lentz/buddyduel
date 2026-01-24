@@ -2,100 +2,111 @@
   <table class="table table-bordered">
     <tr>
       <td>
-        <button
-          *ngIf="!isReadOnly()"
-          (click)="pick(game.awayTeam)"
-          [class.active]="isSelected(game.awayTeam)"
-          class="btn btn-outline-primary"
-        >
-          <img
-            class="team-logo"
-            src="{{ logoPath(game.awayTeam) }}"
-            alt="{{ game.awayTeam }} Logo"
-          />
-          {{ game.awayTeam }}
-        </button>
-        <span
-          *ngIf="isReadOnly()"
-          class="team-name"
-          [ngClass]="{ 'badge badge-primary': isSelected(game.awayTeam) }"
-        >
-          <img
-            class="team-logo"
-            src="{{ logoPath(game.awayTeam) }}"
-            alt="{{ game.awayTeam }} Logo"
-          />
-          {{ game.awayTeam }}
-        </span>
+        @if (!isReadOnly()) {
+          <button
+            (click)="pick(game.awayTeam)"
+            [class.active]="isSelected(game.awayTeam)"
+            class="btn btn-outline-primary"
+          >
+            <img
+              class="team-logo"
+              src="{{ logoPath(game.awayTeam) }}"
+              alt="{{ game.awayTeam }} Logo"
+            />
+            {{ game.awayTeam }}
+          </button>
+        }
+        @if (isReadOnly()) {
+          <span
+            class="team-name"
+            [ngClass]="{ 'badge badge-primary': isSelected(game.awayTeam) }"
+          >
+            <img
+              class="team-logo"
+              src="{{ logoPath(game.awayTeam) }}"
+              alt="{{ game.awayTeam }} Logo"
+            />
+            {{ game.awayTeam }}
+          </span>
+        }
         <small class="text-muted spread">{{
           game.awaySpread | pointSpread
         }}</small>
       </td>
-      <td *ngIf="game.awayScore !== null" class="score">
-        <span>{{ game.awayScore }}</span>
-      </td>
+      @if (game.awayScore !== null) {
+        <td class="score">
+          <span>{{ game.awayScore }}</span>
+        </td>
+      }
     </tr>
     <tr>
       <td>
-        <button
-          *ngIf="!isReadOnly()"
-          (click)="pick(game.homeTeam)"
-          [class.active]="isSelected(game.homeTeam)"
-          class="btn btn-outline-primary"
-        >
-          <img
-            class="team-logo"
-            src="{{ logoPath(game.homeTeam) }}"
-            alt="{{ game.homeTeam }} Logo"
-          />
-          {{ game.homeTeam }}
-        </button>
-        <span
-          *ngIf="isReadOnly()"
-          class="team-name"
-          [ngClass]="{ 'badge badge-primary': isSelected(game.homeTeam) }"
-        >
-          <img
-            class="team-logo"
-            src="{{ logoPath(game.homeTeam) }}"
-            alt="{{ game.homeTeam }} Logo"
-          />
-          {{ game.homeTeam }}
-        </span>
+        @if (!isReadOnly()) {
+          <button
+            (click)="pick(game.homeTeam)"
+            [class.active]="isSelected(game.homeTeam)"
+            class="btn btn-outline-primary"
+          >
+            <img
+              class="team-logo"
+              src="{{ logoPath(game.homeTeam) }}"
+              alt="{{ game.homeTeam }} Logo"
+            />
+            {{ game.homeTeam }}
+          </button>
+        }
+        @if (isReadOnly()) {
+          <span
+            class="team-name"
+            [ngClass]="{ 'badge badge-primary': isSelected(game.homeTeam) }"
+          >
+            <img
+              class="team-logo"
+              src="{{ logoPath(game.homeTeam) }}"
+              alt="{{ game.homeTeam }} Logo"
+            />
+            {{ game.homeTeam }}
+          </span>
+        }
         <small class="text-muted spread">{{
           game.homeSpread | pointSpread
         }}</small>
       </td>
-      <td *ngIf="game.homeScore !== null" class="score">
-        <span>{{ game.homeScore }}</span>
-      </td>
+      @if (game.homeScore !== null) {
+        <td class="score">
+          <span>{{ game.homeScore }}</span>
+        </td>
+      }
     </tr>
   </table>
   <div class="card-footer text-center">
-    <div *ngIf="game.time">
-      <span
-        *ngIf="game.result"
-        class="badge"
-        [ngClass]="{
-          'badge-success': game.result === 'Win',
-          'badge-danger': game.result === 'Loss',
-          'badge-secondary': game.result === 'Push',
-        }"
-      >
-        {{ game.result }}
+    @if (game.time) {
+      <div>
+        @if (game.result) {
+          <span
+            class="badge"
+            [ngClass]="{
+              'badge-success': game.result === 'Win',
+              'badge-danger': game.result === 'Loss',
+              'badge-secondary': game.result === 'Push',
+            }"
+          >
+            {{ game.result }}
+          </span>
+        }
+        <span class="text-muted small time">{{ game.time }}</span>
+      </div>
+    }
+    @if (!game.time && !showClear()) {
+      <span class="text-muted small">
+        {{ game.startTime | date: 'EEE, MMM d h:mm a' }}
       </span>
-      <span class="text-muted small time">{{ game.time }}</span>
-    </div>
-    <span *ngIf="!game.time && !showClear()" class="text-muted small">
-      {{ game.startTime | date: 'EEE, MMM d h:mm a' }}
-    </span>
-    <button
-      *ngIf="showClear()"
-      (click)="clear()"
-      class="btn btn-sm btn-outline-danger"
-    >
-      <i class="fa fa-remove" aria-hidden="true"></i>
-      Clear Pick
-    </button>
+    }
+    @if (showClear()) {
+      <button (click)="clear()" class="btn btn-sm btn-outline-danger">
+        <i class="fa fa-remove" aria-hidden="true"></i>
+        Clear Pick
+      </button>
+    }
   </div>
 </div>

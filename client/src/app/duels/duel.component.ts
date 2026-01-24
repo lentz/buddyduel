@@ -1,10 +1,4 @@
-import {
-  NgIf,
-  NgClass,
-  NgFor,
-  DecimalPipe,
-  CurrencyPipe,
-} from '@angular/common';
+import { NgClass, DecimalPipe, CurrencyPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
@@ -28,9 +22,7 @@ import { DuelsService } from './duels.service';
   templateUrl: './duel.component.html',
   styleUrls: ['./duel.component.css'],
   imports: [
-    NgIf,
     NgClass,
-    NgFor,
     RouterLink,
     DecimalPipe,
     CurrencyPipe,

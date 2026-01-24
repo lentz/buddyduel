@@ -1,4 +1,4 @@
-import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -16,7 +16,7 @@ import { DuelWeek } from '../duel-weeks/duel-week';
 import { DuelWeeksService } from '../duel-weeks/duel-weeks.service';
 
 @Component({
-  imports: [NgIf, NgFor, RouterLink, FormsModule, AsyncPipe],
+  imports: [RouterLink, FormsModule, AsyncPipe],
   providers: [AuthService, DuelsService, DuelWeeksService],
   selector: 'app-home',
   styleUrls: ['./home.component.css'],

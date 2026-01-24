@@ -1,55 +1,75 @@
-<div *ngIf="duelWeek$ | async as duelWeek">
-  <div class="row">
-    <div class="col-lg-8">
-      <h2 *ngIf="loading" class="loading" title="Loading"></h2>
-      <h2 *ngIf="!loading" class="text-truncate">
-        {{ duelWeek.sport }} {{ duelWeek.description }}
-        <small class="text-muted">vs {{ opponentName(duelWeek) }}</small>
-      </h2>
-    </div>
-    <div *ngIf="!hasResults(duelWeek) && !loading" class="col-lg">
-      <p class="font-italic">Picked by {{ pickedBy(duelWeek) }}</p>
-    </div>
-  </div>
-  <div *ngIf="hasResults(duelWeek)" class="row">
-    <div class="col alert alert-warning">
-      {{ isPicker(duelWeek) ? 'Your' : opponentName(duelWeek) + "'s" }} record
-      this week is {{ duelWeek.record | record }}. You're
-      {{ isWinner(duelWeek) ? 'winning' : 'losing' }}
-      <span
-        class="badge"
-        [ngClass]="{
-          'badge-success': isWinner(duelWeek),
-          'badge-danger': !isWinner(duelWeek),
-        }"
-      >
-        {{ this.math.abs(duelWeek.winnings) | currency: 'USD' : 'symbol' }}
-      </span>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <div *ngIf="loading" class="d-flex flex-wrap justify-content-around">
-        <div *ngFor="let item of [].constructor(12)" class="loading"></div>
+@if (duelWeek$ | async; as duelWeek) {
+  <div>
+    <div class="row">
+      <div class="col-lg-8">
+        @if (loading) {
+          <h2 class="loading" title="Loading"></h2>
+        }
+        @if (!loading) {
+          <h2 class="text-truncate">
+            {{ duelWeek.sport }} {{ duelWeek.description }}
+            <small class="text-muted">vs {{ opponentName(duelWeek) }}</small>
+          </h2>
+        }
       </div>
-      <div class="d-flex flex-wrap justify-content-around">
-        <duel-game
-          *ngFor="let game of duelWeek.games"
-          [game]="game"
-          [isPicker]="isPicker(duelWeek)"
-        ></duel-game>
+      @if (!hasResults(duelWeek) && !loading) {
+        <div class="col-lg">
+          <p class="font-italic">Picked by {{ pickedBy(duelWeek) }}</p>
+        </div>
+      }
+    </div>
+    @if (hasResults(duelWeek)) {
+      <div class="row">
+        <div class="col alert alert-warning">
+          {{
+            isPicker(duelWeek) ? 'Your' : opponentName(duelWeek) + "'s"
+          }}
+          record this week is {{ duelWeek.record | record }}. You're
+          {{ isWinner(duelWeek) ? 'winning' : 'losing' }}
+          <span
+            class="badge"
+            [ngClass]="{
+              'badge-success': isWinner(duelWeek),
+              'badge-danger': !isWinner(duelWeek),
+            }"
+          >
+            {{ this.math.abs(duelWeek.winnings) | currency: 'USD' : 'symbol' }}
+          </span>
+        </div>
+      </div>
+    }
+    <div class="row">
+      <div class="col">
+        @if (loading) {
+          <div class="d-flex flex-wrap justify-content-around">
+            @for (item of [].constructor(12); track item) {
+              <div class="loading"></div>
+            }
+          </div>
+        }
+        <div class="d-flex flex-wrap justify-content-around">
+          @for (game of duelWeek.games; track game) {
+            <duel-game
+              [game]="game"
+              [isPicker]="isPicker(duelWeek)"
+            ></duel-game>
+          }
+        </div>
       </div>
     </div>
-  </div>
-  <div *ngIf="canModifyPicks(duelWeek)" class="row">
-    <div class="col text-center">
-      <button (click)="save(duelWeek)" class="btn btn-lg btn-danger">
-        <i class="fa fa-check-square-o" aria-hidden="true"></i> Lock In Picks
-      </button>
-      <div class="font-italic lock-in-help">
-        You can lock in a few picks at a time or all at once. Just be sure your
-        pick has been locked in before each game starts.
+    @if (canModifyPicks(duelWeek)) {
+      <div class="row">
+        <div class="col text-center">
+          <button (click)="save(duelWeek)" class="btn btn-lg btn-danger">
+            <i class="fa fa-check-square-o" aria-hidden="true"></i> Lock In
+            Picks
+          </button>
+          <div class="font-italic lock-in-help">
+            You can lock in a few picks at a time or all at once. Just be sure
+            your pick has been locked in before each game starts.
+          </div>
+        </div>
       </div>
-    </div>
+    }
   </div>
-</div>
+}

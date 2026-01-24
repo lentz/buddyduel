@@ -11,7 +11,7 @@ import { DuelWeek } from './duel-week';
 import { Game } from './game';
 import { DuelsService } from '../duels/duels.service';
 import { DuelWeeksService } from './duel-weeks.service';
-import { NgIf, NgClass, NgFor, AsyncPipe, CurrencyPipe } from '@angular/common';
+import { NgClass, AsyncPipe, CurrencyPipe } from '@angular/common';
 import { GameComponent } from './game.component';
 import { RecordPipe } from '../shared/record.pipe';
 
@@ -20,15 +20,7 @@ import { RecordPipe } from '../shared/record.pipe';
   providers: [AuthService, DuelsService, DuelWeeksService],
   templateUrl: './duel-week.component.html',
   styleUrls: ['./duel-week.component.css'],
-  imports: [
-    NgIf,
-    NgClass,
-    NgFor,
-    GameComponent,
-    AsyncPipe,
-    CurrencyPipe,
-    RecordPipe,
-  ],
+  imports: [NgClass, GameComponent, AsyncPipe, CurrencyPipe, RecordPipe],
 })
 export class DuelWeekComponent implements OnInit {
   duelWeek$?: Observable<DuelWeek>;

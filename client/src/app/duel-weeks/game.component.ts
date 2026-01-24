@@ -1,4 +1,4 @@
-import { NgIf, NgClass, DatePipe } from '@angular/common';
+import { NgClass, DatePipe } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 import { Game } from './game';
@@ -8,7 +8,7 @@ import { PointSpread } from './point-spread.pipe';
   selector: 'duel-game',
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.css'],
-  imports: [NgIf, NgClass, DatePipe, PointSpread],
+  imports: [NgClass, DatePipe, PointSpread],
 })
 export class GameComponent {
   @Input() game!: Game;

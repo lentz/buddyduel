@@ -1,4 +1,4 @@
-import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -14,7 +14,7 @@ import { Duel } from '../duels/duel';
 declare const jQuery: (selector: string) => { modal: (toggle: string) => void };
 
 @Component({
-  imports: [RouterLink, NgIf, NgFor, FormsModule, AsyncPipe],
+  imports: [RouterLink, FormsModule, AsyncPipe],
   providers: [AuthService, DuelsService],
   selector: 'app-nav',
   styleUrls: ['./nav.component.css'],

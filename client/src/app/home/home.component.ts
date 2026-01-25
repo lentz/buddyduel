@@ -1,6 +1,6 @@
 import { AsyncPipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { Router, RouterLink } from '@angular/router';
@@ -23,6 +23,13 @@ import { DuelWeeksService } from '../duel-weeks/duel-weeks.service';
   templateUrl: './home.component.html',
 })
 export class HomeComponent implements OnInit {
+  private duelsService = inject(DuelsService);
+  private duelWeeksService = inject(DuelWeeksService);
+  authService = inject(AuthService);
+  private router = inject(Router);
+  private titleService = inject(Title);
+  private toastr = inject(ToastrService);
+
   acceptCode = '';
   processingAccept = false;
   refreshDuelWeeks$ = new BehaviorSubject<boolean>(true);
@@ -31,14 +38,9 @@ export class HomeComponent implements OnInit {
   pendingDuels$!: Observable<Duel[]>;
   duelCreatedSubscription: Subscription;
 
-  public constructor(
-    private duelsService: DuelsService,
-    private duelWeeksService: DuelWeeksService,
-    public authService: AuthService,
-    private router: Router,
-    private titleService: Title,
-    private toastr: ToastrService,
-  ) {
+  public constructor() {
+    const duelsService = this.duelsService;
+
     this.duelCreatedSubscription = duelsService.duelCreated$.subscribe(() =>
       this.refreshPendingDuels$.next(true),
     );

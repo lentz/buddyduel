@@ -1,5 +1,5 @@
 import { NgClass, DecimalPipe, CurrencyPipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, ParamMap, RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
@@ -31,17 +31,15 @@ import { DuelsService } from './duels.service';
   ],
 })
 export class DuelComponent implements OnInit {
+  private duelsService = inject(DuelsService);
+  private duelWeeksService = inject(DuelWeeksService);
+  private route = inject(ActivatedRoute);
+  private titleService = inject(Title);
+  private toastr = inject(ToastrService);
+  private authService = inject(AuthService);
+
   duel: Duel = new Duel('', '', '', 0, [], '');
   duelWeeks: DuelWeek[] = [];
-
-  constructor(
-    private duelsService: DuelsService,
-    private duelWeeksService: DuelWeeksService,
-    private route: ActivatedRoute,
-    private titleService: Title,
-    private toastr: ToastrService,
-    private authService: AuthService,
-  ) {}
 
   ngOnInit(): void {
     this.route.paramMap

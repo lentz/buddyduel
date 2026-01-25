@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
@@ -21,17 +21,19 @@ declare const jQuery: (selector: string) => { modal: (toggle: string) => void };
   templateUrl: './nav.component.html',
 })
 export class NavComponent {
+  private duelsService = inject(DuelsService);
+  authService = inject(AuthService);
+  private toastr = inject(ToastrService);
+
   betAmount = 0;
   refreshDuels$ = new BehaviorSubject<boolean>(true);
   duels$!: Observable<Duel[]>;
   sport = '';
   sports: string[] = [];
 
-  public constructor(
-    private duelsService: DuelsService,
-    public authService: AuthService,
-    private toastr: ToastrService,
-  ) {
+  public constructor() {
+    const duelsService = this.duelsService;
+
     if (this.authService.isAuthenticated()) {
       this.duels$ = merge(this.refreshDuels$, duelsService.duelAccepted$).pipe(
         switchMap(() =>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { NgClass, DecimalPipe, CurrencyPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
@@ -25,15 +25,13 @@ import { UserProfileService } from './user-profile.service';
   templateUrl: './user-profile.component.html',
 })
 export class UserProfileComponent implements OnInit {
+  private titleService = inject(Title);
+  private toastr = inject(ToastrService);
+  private userProfileService = inject(UserProfileService);
+
   record = { wins: 0, losses: 0, pushes: 0 };
   winnings = 0;
   reminderEmails!: boolean;
-
-  constructor(
-    private titleService: Title,
-    private toastr: ToastrService,
-    private userProfileService: UserProfileService,
-  ) {}
 
   ngOnInit() {
     this.titleService.setTitle('My Profile | BuddyDuel');

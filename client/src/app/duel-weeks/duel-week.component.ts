@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
@@ -23,18 +23,16 @@ import { RecordPipe } from '../shared/record.pipe';
   imports: [NgClass, GameComponent, AsyncPipe, CurrencyPipe, RecordPipe],
 })
 export class DuelWeekComponent implements OnInit {
+  private duelsService = inject(DuelsService);
+  private duelWeeksService = inject(DuelWeeksService);
+  private route = inject(ActivatedRoute);
+  private titleService = inject(Title);
+  private toastr = inject(ToastrService);
+  private authService = inject(AuthService);
+
   duelWeek$?: Observable<DuelWeek>;
   loading = true;
   math = Math;
-
-  constructor(
-    private duelsService: DuelsService,
-    private duelWeeksService: DuelWeeksService,
-    private route: ActivatedRoute,
-    private titleService: Title,
-    private toastr: ToastrService,
-    private authService: AuthService,
-  ) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params: ParamMap) => {

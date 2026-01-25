@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject, tap } from 'rxjs';
 
@@ -8,6 +8,9 @@ import { Player } from './player';
 
 @Injectable()
 export class DuelsService {
+  private http = inject(HttpClient);
+  private authService = inject(AuthService);
+
   private headers = { 'Content-Type': 'application/json' };
 
   private duelsURL = 'api/duels';
@@ -17,11 +20,6 @@ export class DuelsService {
 
   duelCreated$ = this.duelCreatedSource.asObservable();
   duelAccepted$ = this.duelAcceptedSource.asObservable();
-
-  constructor(
-    private http: HttpClient,
-    private authService: AuthService,
-  ) {}
 
   opponentForPlayers(players: Player[]): Player {
     const currentPlayerId = this.authService.getUser().id;

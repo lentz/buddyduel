@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 export interface UserProfile {
@@ -15,10 +15,10 @@ export interface UserProfile {
 
 @Injectable()
 export class UserProfileService {
+  private http = inject(HttpClient);
+
   private profileURL = 'api/profile';
   private headers = { 'Content-Type': 'application/json' };
-
-  constructor(private http: HttpClient) {}
 
   getProfile() {
     return this.http.get<UserProfile>(this.profileURL);

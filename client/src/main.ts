@@ -12,7 +12,7 @@ import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, Routes } from '@angular/router';
 
-import { ToastrModule } from 'ngx-toastr';
+import { provideToastr } from 'ngx-toastr';
 
 import { AppComponent } from 'app/app.component';
 import { DuelComponent } from 'app/duels/duel.component';
@@ -35,7 +35,8 @@ const routes: Routes = [
 bootstrapApplication(AppComponent, {
   providers: [
     provideZoneChangeDetection(),
-    importProvidersFrom(BrowserModule, FormsModule, ToastrModule.forRoot()),
+    importProvidersFrom(BrowserModule, FormsModule),
+    provideToastr(),
     provideHttpClient(withInterceptorsFromDi()),
     provideAnimations(),
     provideRouter(routes),

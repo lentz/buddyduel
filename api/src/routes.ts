@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.use(
   (req: express.Request, res: express.Response, next: express.NextFunction) => {
-    if (!req.session || !req.session.userId) {
+    if (!req.session?.userId) {
       logger.warn(
         `Unauthorized request! ${JSON.stringify(
           {

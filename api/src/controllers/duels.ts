@@ -14,7 +14,9 @@ export async function index(
 ) {
   const duels = await Duel.find({
     status: {
-      $in: req.query.status.split(','),
+      $in: req.query.status.split(',') as Array<
+        'active' | 'pending' | 'suspended'
+      >,
     },
     'players._id': req.session.userId,
   }).exec();

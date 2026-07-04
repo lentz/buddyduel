@@ -36,7 +36,7 @@
     "@angular/language-service": "^21.1.1",
     "@eslint/js": "^10.0.1",
     "@types/js-cookie": "^3.0.6",
-    "angular-eslint": "21.4.0",
+    "angular-eslint": "22.0.0",
     "cypress": "^15.17.0",
     "eslint": "^10.5.0",
     "typescript": "5.9.3",

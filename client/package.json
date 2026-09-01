@@ -40,6 +40,6 @@
     "cypress": "^15.18.1",
     "eslint": "^10.7.0",
     "typescript": "5.9.3",
-    "typescript-eslint": "8.65.0"
+    "typescript-eslint": "8.67.0"
   }
 }

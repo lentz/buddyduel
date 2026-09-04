@@ -22,7 +22,7 @@
     "express": "^5.2.1",
     "express-session": "^1.19.0",
     "jwt-decode": "^4.0.0",
-    "mongoose": "^9.7.4",
+    "mongoose": "^9.9.3",
     "morgan": "^1.11.0",
     "winston": "^3.19.0",
     "zod": "^4.4.3"

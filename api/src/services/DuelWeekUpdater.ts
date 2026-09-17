@@ -35,7 +35,7 @@ export async function call(duels: IDuel[]) {
         upsert: true,
         setDefaultsOnInsert: true,
         runValidators: true,
-        new: true,
+        returnDocument: 'after',
       },
     ).exec()) as IDuelWeek;
 

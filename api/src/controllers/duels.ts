@@ -86,7 +86,7 @@ export async function accept(req: Request, res: Response) {
         },
       },
     },
-    { new: true, runValidators: true },
+    { returnDocument: 'after', runValidators: true },
   ).exec()) as IDuel;
   if (!duel) {
     throw new Error('Invalid duel code!');

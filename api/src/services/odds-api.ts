@@ -34,10 +34,25 @@ type EventOdds = {
 
 const ODDS_API_SPORTS_URL = 'https://api.the-odds-api.com/v4/sports';
 
+function getAPIKey(): string {
+  const apiKey =
+    config.ODDS_API_KEYS[
+      Math.floor(Math.random() * config.ODDS_API_KEYS.length)
+    ];
+
+  if (!apiKey) {
+    throw new Error('No API key set!');
+  }
+
+  return apiKey;
+}
+
 export async function updateScores(games: IGame[], sport: ISport) {
-  const res = await fetch(
-    `${ODDS_API_SPORTS_URL}/${sport.key}/scores?apiKey=${config.ODDS_API_KEY}&daysFrom=1`,
-  );
+  const url = new URL(`${ODDS_API_SPORTS_URL}/${sport.key}/scores`);
+  url.searchParams.set('apiKey', getAPIKey());
+  url.searchParams.set('daysFrom', '1');
+
+  const res = await fetch(url);
 
   if (!res.ok) {
     const errMessage = `Failed to update scores with status ${
@@ -76,9 +91,13 @@ function unpickedAndNotBegun(game: IGame) {
 }
 
 export async function updateOdds(existingGames: IGame[], sport: ISport) {
-  const oddsRes = await fetch(
-    `${ODDS_API_SPORTS_URL}/${sport.key}/odds?apiKey=${config.ODDS_API_KEY}&bookmakers=pinnacle&markets=spreads`,
-  );
+  const url = new URL(`${ODDS_API_SPORTS_URL}/${sport.key}/odds`);
+  url.searchParams.set('apiKey', getAPIKey());
+  url.searchParams.set('bookmakers', 'pinnacle');
+  url.searchParams.set('markets', 'spreads');
+
+  const oddsRes = await fetch(url);
+
   if (!oddsRes.ok) {
     const errMessage = `Failed to update odds with status ${
       oddsRes.status

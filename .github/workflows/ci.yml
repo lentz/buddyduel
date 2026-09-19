@@ -13,7 +13,7 @@ jobs:
       AUTH0_CLIENT_SECRET: fake-secret
       BUDDYDUEL_URL: http://localhost
       MONGODB_URI: 'mongodb://localhost'
-      ODDS_API_KEY: fake-key
+      ODDS_API_KEYS: fake-key-1,fake-key-2
       PORT: 3000
       SENDGRID_API_KEY: 'SG.TEST_KEY'
       SESSION_SECRET: test

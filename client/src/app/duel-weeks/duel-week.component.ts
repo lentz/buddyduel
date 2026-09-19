@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, ParamMap } from '@angular/router';
@@ -20,7 +21,7 @@ import { RecordPipe } from '../shared/record.pipe';
   providers: [AuthService, DuelsService, DuelWeeksService],
   templateUrl: './duel-week.component.html',
   styleUrls: ['./duel-week.component.css'],
-  imports: [NgClass, GameComponent, AsyncPipe, CurrencyPipe, RecordPipe],
+  imports: [DatePipe, NgClass, GameComponent, AsyncPipe, CurrencyPipe, RecordPipe],
 })
 export class DuelWeekComponent implements OnInit {
   private duelsService = inject(DuelsService);
@@ -42,8 +43,7 @@ export class DuelWeekComponent implements OnInit {
           tap((duelWeek) => {
             this.loading = false;
             this.titleService.setTitle(
-              `${duelWeek.sport} ${
-                duelWeek.description
+              `${duelWeek.sport} ${duelWeek.description
               } vs. ${this.opponentName(duelWeek)} | BuddyDuel`,
             );
           }),

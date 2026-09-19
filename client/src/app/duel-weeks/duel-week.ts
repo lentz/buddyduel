@@ -13,6 +13,7 @@ export class DuelWeek {
   record: { wins: number; losses: number; pushes: number };
   winnings: number;
   sport: string;
+  updatedAt: string;
 
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   constructor(duelWeek: any) {
@@ -27,5 +28,6 @@ export class DuelWeek {
     this.record = duelWeek.record ?? {};
     this.winnings = duelWeek.winnings;
     this.sport = duelWeek.sport;
+    this.updatedAt = duelWeek.updatedAt;
   }
 }

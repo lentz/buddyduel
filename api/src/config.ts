@@ -1,4 +1,8 @@
+import { existsSync } from 'node:fs';
+
 import * as z from 'zod';
+
+if (existsSync('.env')) process.loadEnvFile();
 
 const schema = z.object({
   ADMIN_EMAIL: z.email(),

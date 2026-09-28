@@ -9,8 +9,8 @@
   "scripts": {
     "build": "tsc",
     "lint": "biome check --error-on-warnings",
-    "test": "DATABASE_NAME=test node --env-file .env --test --test-force-exit",
-    "test:watch": "DATABASE_NAME=test node --env-file .env --watch --test",
+    "test": "DATABASE_NAME=test node --test --test-force-exit",
+    "test:watch": "node --watch --test",
     "test:ci": "node --test --test-force-exit",
     "typecheck": "tsc --watch --noEmit"
   },

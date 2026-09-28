@@ -2,7 +2,6 @@ services:
   api:
     build: ./api
     pull_policy: build
-    env_file: ./api/.env
     ports:
       - '9229:9229'
     volumes:

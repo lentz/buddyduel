@@ -1,10 +1,11 @@
-import { describe, expect, it } from 'vitest';
+import { deepStrictEqual } from 'node:assert';
+import { describe, it } from 'node:test';
 
 import betResult from './betResult.ts';
 
-describe('#betResult()', () => {
+describe('betResult', () => {
   it('is empty string when the game does not have a score', () => {
-    expect(
+    deepStrictEqual(
       betResult({
         id: '1',
         homeScore: 1,
@@ -14,9 +15,10 @@ describe('#betResult()', () => {
         awayTeam: 'Away Team',
         startTime: new Date(),
       }),
-    ).toBe('');
+      '',
+    );
 
-    expect(
+    deepStrictEqual(
       betResult({
         id: '1',
         homeSpread: 1,
@@ -25,7 +27,8 @@ describe('#betResult()', () => {
         awayTeam: 'Away Team',
         startTime: new Date(),
       }),
-    ).toBe('');
+      '',
+    );
   });
 
   it('is Loss when a team was not selected', () => {
@@ -40,7 +43,7 @@ describe('#betResult()', () => {
       startTime: new Date(),
     });
 
-    expect(result).toBe('Loss');
+    deepStrictEqual(result, 'Loss');
   });
 
   it('is Push when the selected home team matches the spread', () => {
@@ -56,7 +59,7 @@ describe('#betResult()', () => {
       startTime: new Date(),
     });
 
-    expect(result).toBe('Push');
+    deepStrictEqual(result, 'Push');
   });
 
   it('is Push when the selected away team matches the spread', () => {
@@ -72,7 +75,7 @@ describe('#betResult()', () => {
       startTime: new Date(),
     });
 
-    expect(result).toBe('Push');
+    deepStrictEqual(result, 'Push');
   });
 
   it('is Win when the selected home team covers the spread', () => {
@@ -88,7 +91,7 @@ describe('#betResult()', () => {
       startTime: new Date(),
     });
 
-    expect(result).toBe('Win');
+    deepStrictEqual(result, 'Win');
   });
 
   it('is Win when the selected away team covers the spread', () => {
@@ -104,7 +107,7 @@ describe('#betResult()', () => {
       startTime: new Date(),
     });
 
-    expect(result).toBe('Win');
+    deepStrictEqual(result, 'Win');
   });
 
   it('is Loss when the selected home team does not cover the spread', () => {
@@ -120,7 +123,7 @@ describe('#betResult()', () => {
       startTime: new Date(),
     });
 
-    expect(result).toBe('Loss');
+    deepStrictEqual(result, 'Loss');
   });
 
   it('is Loss when the selected away team does not cover the spread', () => {
@@ -136,6 +139,6 @@ describe('#betResult()', () => {
       startTime: new Date(),
     });
 
-    expect(result).toBe('Loss');
+    deepStrictEqual(result, 'Loss');
   });
 });

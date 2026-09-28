@@ -1,8 +1,12 @@
 import type { Request, Response } from 'express';
 
 import { default as Duel, type IDuel } from '../models/Duel.ts';
-import * as DuelWeekUpdater from '../services/DuelWeekUpdater.ts';
+import DuelWeekUpdater from '../services/DuelWeekUpdater.ts';
 import { sports } from '../sports.ts';
+
+export const dependencies = {
+  updateDuelWeeks: DuelWeekUpdater,
+};
 
 async function alreadyInDuel(code: string, userId: string) {
   return (await Duel.findOne({ code, 'players.id': userId }).exec()) !== null;
@@ -91,7 +95,7 @@ export async function accept(req: Request, res: Response) {
   if (!duel) {
     throw new Error('Invalid duel code!');
   }
-  await DuelWeekUpdater.call([duel]);
+  await dependencies.updateDuelWeeks([duel]);
 
   res.json({ message: 'Duel accepted!' });
 }

@@ -16,12 +16,12 @@ const app = express();
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
-      VITEST?: string;
+      NODE_TEST_CONTEXT?: string;
     }
   }
 }
 
-if (!process.env.VITEST) app.use(morgan('combined'));
+if (!process.env.NODE_TEST_CONTEXT) app.use(morgan('combined'));
 
 app.set('trust proxy', 1);
 

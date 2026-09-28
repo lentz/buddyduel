@@ -1,12 +1,12 @@
 import Duel from '../models/Duel.ts';
-import * as DuelWeekUpdater from '../services/DuelWeekUpdater.ts';
+import DuelWeekUpdater from '../services/DuelWeekUpdater.ts';
 
 export default async function () {
   const beginTime = Date.now();
 
   try {
     const duels = await Duel.find({ status: 'active' }).exec();
-    await DuelWeekUpdater.call(duels);
+    await DuelWeekUpdater(duels);
   } catch (err) {
     console.error('Error updating duel weeks:', err);
   }

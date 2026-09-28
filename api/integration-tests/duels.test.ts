@@ -1,39 +1,43 @@
+import { deepStrictEqual, match, strictEqual } from 'node:assert';
+import { describe, it } from 'node:test';
+
 import request from 'supertest';
-import { beforeAll, describe, expect, it, vi } from 'vitest';
 import type { Logger } from 'winston';
 
 import app from '../src/app.ts';
+import { dependencies } from '../src/controllers/duels.ts';
 import logger from '../src/lib/logger.ts';
-import * as DuelWeekUpdater from '../src/services/DuelWeekUpdater.ts';
 
 import { createSession, user1, user2 } from './support.ts';
 
-let sessionCookie: string;
-
 describe('duels API', () => {
-  beforeAll(async () => {
-    sessionCookie = await createSession(user1);
-  });
-
   describe('POST /duels', () => {
-    it('creates a new duel', async () => {
+    it('creates a new duel', async (t) => {
+      const sessionCookie = await createSession(user1, t);
       const response = await request(app)
         .post('/api/duels')
         .set('Cookie', [sessionCookie])
         .send({ betAmount: 7, sport: 'NFL' })
         .expect(201);
 
-      expect(response.body).toMatchSnapshot({
-        _id: expect.any(String),
-        code: expect.any(String),
-        createdAt: expect.any(String),
-        updatedAt: expect.any(String),
-      });
+      match(response.body._id, /^[\da-f]{24}$/);
+      match(response.body.code, /^[\da-f]{8}$/);
+      strictEqual(response.body.status, 'pending');
+      strictEqual(response.body.betAmount, 7);
+      strictEqual(response.body.sport, 'NFL');
+      deepStrictEqual(
+        response.body.players.map((player: { id: string; name: string }) => ({
+          id: player.id,
+          name: player.name,
+        })),
+        [{ id: user1.id, name: user1.name }],
+      );
     });
   });
 
   describe('DELETE /duel/:id', () => {
-    it('deleting a duel succeeds when the user is a player', async () => {
+    it('deleting a duel succeeds when the user is a player', async (t) => {
+      const sessionCookie = await createSession(user1, t);
       const createResponse = await request(app)
         .post('/api/duels')
         .set('Cookie', [sessionCookie])
@@ -41,14 +45,15 @@ describe('duels API', () => {
         .expect(201);
       const duelId = createResponse.body._id;
 
-      return request(app)
+      await request(app)
         .delete(`/api/duels/${duelId}`)
         .set('Cookie', [sessionCookie])
         .expect(200, { message: 'Duel deleted' });
     });
 
-    it('deleting a duel returns a 404 if the duel does not exist', async () => {
-      return request(app)
+    it('deleting a duel returns a 404 if the duel does not exist', async (t) => {
+      const sessionCookie = await createSession(user1, t);
+      await request(app)
         .delete('/api/duels/5c68438fc2481e3e3a97021c')
         .set('Cookie', [sessionCookie])
         .expect(404, { message: 'Duel not found' });
@@ -56,8 +61,9 @@ describe('duels API', () => {
   });
 
   describe('PUT /duels/accept', () => {
-    it('accepting a duel fails if the user is already in it', async () => {
-      vi.spyOn(logger, 'error').mockReturnValue({} as Logger);
+    it('accepting a duel fails if the user is already in it', async (t) => {
+      const sessionCookie = await createSession(user1, t);
+      t.mock.method(logger, 'error', () => ({}) as Logger);
 
       const createResponse = await request(app)
         .post('/api/duels')
@@ -66,23 +72,24 @@ describe('duels API', () => {
         .expect(201);
       const { code } = createResponse.body;
 
-      return request(app)
+      await request(app)
         .put('/api/duels/accept')
         .set('Cookie', [sessionCookie])
         .send({ code })
         .expect(500, { message: 'You are already in this duel!' });
     });
 
-    it('accepting a duel succeeds if the user is not already in it', async () => {
+    it('accepting a duel succeeds if the user is not already in it', async (t) => {
+      const sessionCookie = await createSession(user1, t);
       const createResponse = await request(app)
         .post('/api/duels')
         .set('Cookie', [sessionCookie])
         .send({ betAmount: 7, sport: 'NFL' })
         .expect(201);
 
-      const user2SessionCookie = await createSession(user2);
+      const user2SessionCookie = await createSession(user2, t);
 
-      vi.spyOn(DuelWeekUpdater, 'call').mockResolvedValue();
+      t.mock.method(dependencies, 'updateDuelWeeks', async () => undefined);
 
       await request(app)
         .put('/api/duels/accept')
@@ -95,20 +102,25 @@ describe('duels API', () => {
         .set('Cookie', [user2SessionCookie])
         .expect(200);
 
-      expect(acceptedDuelResponse.body).toEqual(
-        expect.objectContaining({
-          status: 'active',
-          players: [
-            { id: user1.id, name: user1.name },
-            { id: user2.id, name: user2.name },
-          ],
-        }),
+      strictEqual(acceptedDuelResponse.body.status, 'active');
+      deepStrictEqual(
+        acceptedDuelResponse.body.players.map(
+          (player: { id: string; name: string }) => ({
+            id: player.id,
+            name: player.name,
+          }),
+        ),
+        [
+          { id: user1.id, name: user1.name },
+          { id: user2.id, name: user2.name },
+        ],
       );
     });
   });
 
   describe('GET /duels/:id', () => {
-    it('getting a duel returns the duel', async () => {
+    it('getting a duel returns the duel', async (t) => {
+      const sessionCookie = await createSession(user1, t);
       const createResponse = await request(app)
         .post('/api/duels')
         .set('Cookie', [sessionCookie])
@@ -120,16 +132,16 @@ describe('duels API', () => {
         .set('Cookie', [sessionCookie])
         .expect(200);
 
-      expect(duelResponse.body).toMatchSnapshot({
-        _id: expect.any(String),
-        code: expect.any(String),
-        createdAt: expect.any(String),
-        updatedAt: expect.any(String),
-      });
+      match(duelResponse.body._id, /^[\da-f]{24}$/);
+      match(duelResponse.body.code, /^[\da-f]{8}$/);
+      strictEqual(duelResponse.body.status, 'pending');
+      strictEqual(duelResponse.body.betAmount, 7);
+      strictEqual(duelResponse.body.sport, 'NCAAB');
     });
 
-    it('getting a duel returns a 404 when not found', async () => {
-      return request(app)
+    it('getting a duel returns a 404 when not found', async (t) => {
+      const sessionCookie = await createSession(user1, t);
+      await request(app)
         .get('/api/duels/5c68438fc2481e3e3a97021c')
         .set('Cookie', [sessionCookie])
         .expect(404, { message: 'Duel not found!' });
@@ -137,7 +149,8 @@ describe('duels API', () => {
   });
 
   describe('PUT /duels/:id', () => {
-    it('updating a duel returns a 204 when found', async () => {
+    it('updating a duel returns a 204 when found', async (t) => {
+      const sessionCookie = await createSession(user1, t);
       const createResponse = await request(app)
         .post('/api/duels')
         .set('Cookie', [sessionCookie])
@@ -155,11 +168,7 @@ describe('duels API', () => {
         .set('Cookie', [sessionCookie])
         .expect(200);
 
-      expect(duelResponse.body).toEqual(
-        expect.objectContaining({
-          status: 'suspended',
-        }),
-      );
+      strictEqual(duelResponse.body.status, 'suspended');
     });
   });
 });

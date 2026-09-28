@@ -1,18 +1,37 @@
+import type { TestContext } from 'node:test';
+
 import supertest from 'supertest';
-import { vi } from 'vitest';
 
 import app from '../src/app.ts';
 
-export async function createSession(user: { idToken: string }) {
-  vi.spyOn(global, 'fetch').mockResolvedValue({
-    json: () => Promise.resolve({ id_token: user.idToken }),
-    ok: true,
-  } as Response);
+export async function createSession(user: { idToken: string }, t: TestContext) {
+  const fetchMock = t.mock.method(
+    global,
+    'fetch',
+    async () =>
+      ({
+        json: () => Promise.resolve({ id_token: user.idToken }),
+        ok: true,
+      }) as Response,
+  );
 
-  const authResp = await supertest(app).get('/auth/callback').expect(302);
-  return authResp.headers['set-cookie']
-    .find((header: string) => /connect.sid/.test(header))
-    .split(';')[0];
+  try {
+    const authResp = await supertest(app).get('/auth/callback').expect(302);
+    const setCookie = authResp.headers['set-cookie'];
+    const sessionCookie = (
+      Array.isArray(setCookie) ? setCookie : [setCookie]
+    ).find((header) => header?.includes('connect.sid'));
+    if (!sessionCookie) {
+      throw new Error('Session cookie was not returned');
+    }
+    const cookie = sessionCookie.split(';')[0];
+    if (cookie === undefined) {
+      throw new Error('Session cookie was empty');
+    }
+    return cookie;
+  } finally {
+    fetchMock.mock.restore();
+  }
 }
 
 export const user1 = {

@@ -11,7 +11,7 @@ async function getPicker(duel: IDuel, year: number) {
   return duel.players[duelWeekCount % 2];
 }
 
-export async function call(duels: IDuel[]) {
+export default async function (duels: IDuel[]) {
   for (const duel of duels) {
     const sport = sports.find((s) => s.name === duel.sport);
     if (!sport) {

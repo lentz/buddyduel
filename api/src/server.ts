@@ -12,7 +12,7 @@ app
   .on('error', (err: Error) => logger.error(err.stack));
 
 CronJob.from({
-  cronTime: '0 0 */2 * * *', // every 2 hours
+  cronTime: '0 0 */1 * * *', // hourly
   onTick: updateDuelWeeks,
   start: true,
 });

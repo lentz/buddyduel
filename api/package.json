@@ -7,13 +7,13 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "build": "tsc",
+    "start": "node src/server.ts",
     "lint": "biome check --error-on-warnings",
     "test": "DATABASE_NAME=test node --test --test-force-exit",
     "test:watch": "node --watch --test",
     "test:ci": "node --test --test-force-exit",
-    "typecheck": "tsc --watch --noEmit",
-    "update-duel-weeks": "node dist/jobs/update-duel-weeks.js"
+    "typecheck": "tsc --noEmit",
+    "update-duel-weeks": "node src/jobs/update-duel-weeks.ts"
   },
   "dependencies": {
     "connect-mongodb-session": "^5.0.0",

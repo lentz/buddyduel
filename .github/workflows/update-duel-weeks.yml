@@ -28,9 +28,6 @@ jobs:
       - name: Install API dependencies
         run: npm ci
         working-directory: ./api
-      - name: Build API
-        run: npm run build
-        working-directory: ./api
       - name: Run jobs
         run: npm run update-duel-weeks
         working-directory: ./api

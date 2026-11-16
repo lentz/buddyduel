@@ -3,16 +3,6 @@ FROM node:26-alpine AS base
 ##################
 FROM base AS build
 
-WORKDIR /app/api
-
-COPY ./api/package*.json ./
-
-RUN npm ci
-
-COPY ./api ./
-
-RUN npm run build
-
 WORKDIR /app/client
 
 COPY ./client/package*.json ./
@@ -37,7 +27,7 @@ WORKDIR /app/api
 COPY ./api/package*.json ./
 RUN npm ci
 
-COPY --from=build /app/api/dist /app/api
+COPY ./api/src ./src
 
 WORKDIR  /app/client
 
@@ -45,4 +35,4 @@ COPY --from=build /app/client/dist ./dist
 
 EXPOSE 8080
 
-CMD ["node", "/app/api/server.js"]
+CMD ["node", "/app/api/src/server.ts"]

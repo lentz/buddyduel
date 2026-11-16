@@ -18,11 +18,10 @@ cd api && npm ci
 cd client && npm ci
 ```
 
-Run the API locally:
+Run the API locally with Node's native TypeScript type stripping:
 
 ```bash
-cd api && npm run build
-node dist/server.js
+cd api && npm start
 ```
 
 Or use the docker-compose stack in the repo root:
@@ -37,11 +36,10 @@ API (`api/package.json`):
 
 ```bash
 cd api
-npm run build        # tsc
 npm run lint         # biome check --error-on-warnings
 npm run test         # DATABASE_NAME=test node --test --test-force-exit
 npm run test:watch   # node --watch --test
-npm run typecheck    # tsc --watch --noEmit
+npm run typecheck    # tsc --noEmit
 ```
 
 Single API test:
@@ -62,7 +60,7 @@ npm run cy:run       # Cypress E2E run
 npm run cy:open      # Cypress UI
 ```
 
-CI runs the same checks in both apps (`.github/workflows/ci.yml`): install deps, lint, build, API tests, and Cypress E2E.
+CI runs the same checks in both apps (`.github/workflows/ci.yml`): install deps, lint, build the client, typecheck and test the API, and run Cypress E2E.
 
 ## Architecture
 

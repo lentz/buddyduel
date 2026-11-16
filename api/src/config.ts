@@ -14,7 +14,6 @@ const schema = z.object({
   MONGODB_URI: z.url(),
   ODDS_API_KEYS: z.string().transform((s) => s.split(',')),
   PORT: z.coerce.number().default(3000),
-  SENDGRID_API_KEY: z.string(),
   SESSION_SECRET: z.string(),
 });
 

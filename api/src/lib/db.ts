@@ -11,4 +11,4 @@ mongoose.connection.on('error', (err) => {
   process.exit(1);
 });
 
-export default mongoose.connection;
+export default mongoose;

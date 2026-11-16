@@ -1,5 +1,3 @@
-import sgMail from '@sendgrid/mail';
-
 import config from '../config.ts';
 import betResult from '../lib/betResult.ts';
 import type IGame from '../models/IGame.ts';
@@ -102,14 +100,6 @@ export async function updateOdds(existingGames: IGame[], sport: ISport) {
     const errMessage = `Failed to update odds with status ${
       oddsRes.status
     }: ${await oddsRes.text()}`;
-
-    sgMail.setApiKey(config.SENDGRID_API_KEY);
-    await sgMail.send({
-      to: config.ADMIN_EMAIL,
-      from: 'BuddyDuel <alerts@buddyduel.net>', // Continue using buddyduel.net for SendGrid sender auth
-      subject: 'Failed to update game odds',
-      html: errMessage,
-    });
 
     throw new Error(errMessage);
   }

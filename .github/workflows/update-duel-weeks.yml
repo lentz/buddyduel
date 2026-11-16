@@ -1,0 +1,36 @@
+name: Update Duel Weeks
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  update-duel-weeks:
+    runs-on: ubuntu-latest
+    env:
+      ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+      AUTH0_CLIENT_ID: not-used
+      AUTH0_CLIENT_SECRET: not-used
+      BUDDYDUEL_URL: https://buddyduel.fly.dev
+      DATABASE_NAME: prod
+      MONGODB_URI: ${{ secrets.MONGODB_URI }}
+      ODDS_API_KEYS: ${{ secrets.ODDS_API_KEYS }}
+      SESSION_SECRET: not-used
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: api/package-lock.json
+      - name: Install API dependencies
+        run: npm ci
+        working-directory: ./api
+      - name: Build API
+        run: npm run build
+        working-directory: ./api
+      - name: Run jobs
+        run: npm run update-duel-weeks
+        working-directory: ./api

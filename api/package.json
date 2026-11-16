@@ -12,12 +12,11 @@
     "test": "DATABASE_NAME=test node --test --test-force-exit",
     "test:watch": "node --watch --test",
     "test:ci": "node --test --test-force-exit",
-    "typecheck": "tsc --watch --noEmit"
+    "typecheck": "tsc --watch --noEmit",
+    "update-duel-weeks": "node dist/jobs/update-duel-weeks.js"
   },
   "dependencies": {
-    "@sendgrid/mail": "^8.1.6",
     "connect-mongodb-session": "^5.0.0",
-    "cron": "^4.4.0",
     "date-fns": "^4.4.0",
     "express": "^5.3.0",
     "express-session": "^1.19.0",

@@ -15,7 +15,6 @@ jobs:
       MONGODB_URI: 'mongodb://localhost'
       ODDS_API_KEYS: fake-key-1,fake-key-2
       PORT: 3000
-      SENDGRID_API_KEY: 'SG.TEST_KEY'
       SESSION_SECRET: test
     steps:
       - uses: actions/checkout@v7
